@@ -284,7 +284,7 @@ FileChannelImpl_transferTo0(JNIEnv *env, jobject this,
 #endif
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(FileChannelImpl, initIDs, "()J"),
   NATIVE_METHOD(FileChannelImpl, map0, "(IJJ)J"),
   NATIVE_METHOD(FileChannelImpl, unmap0, "(JJ)I"),
