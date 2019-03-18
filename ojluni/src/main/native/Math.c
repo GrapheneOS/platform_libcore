@@ -141,7 +141,7 @@ Math_rint(jdouble d) {
     return rint(d);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   FAST_NATIVE_METHOD(Math, IEEEremainder, "(DD)D"),
   FAST_NATIVE_METHOD(Math, acos, "(D)D"),
   FAST_NATIVE_METHOD(Math, asin, "(D)D"),

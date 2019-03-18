@@ -24,7 +24,7 @@
 static void NativeTestTarget_emptyJniStaticSynchronizedMethod0(JNIEnv*, jclass) { }
 static void NativeTestTarget_emptyJniSynchronizedMethod0(JNIEnv*, jclass) { }
 
-static JNINativeMethod gMethods_NormalOnly[] = {
+static const JNINativeMethod gMethods_NormalOnly[] = {
     NATIVE_METHOD(NativeTestTarget, emptyJniStaticSynchronizedMethod0, "()V"),
     NATIVE_METHOD(NativeTestTarget, emptyJniSynchronizedMethod0, "()V"),
 };
@@ -38,7 +38,7 @@ static void NativeTestTarget_emptyJniStaticMethod6L(JNIEnv*, jclass, jobject, ja
 static void NativeTestTarget_emptyJniStaticMethod0(JNIEnv*, jclass) { }
 static void NativeTestTarget_emptyJniStaticMethod6(JNIEnv*, jclass, int, int, int, int, int, int) { }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(NativeTestTarget, emptyJniMethod0, "()V"),
     NATIVE_METHOD(NativeTestTarget, emptyJniMethod6, "(IIIIII)V"),
     NATIVE_METHOD(NativeTestTarget, emptyJniMethod6L, "(Ljava/lang/String;[Ljava/lang/String;[[ILjava/lang/Object;[Ljava/lang/Object;[[[[Ljava/lang/Object;)V"),
@@ -55,7 +55,7 @@ static void NativeTestTarget_emptyJniStaticMethod6L_Fast(JNIEnv*, jclass, jobjec
 static void NativeTestTarget_emptyJniStaticMethod0_Fast(JNIEnv*, jclass) { }
 static void NativeTestTarget_emptyJniStaticMethod6_Fast(JNIEnv*, jclass, int, int, int, int, int, int) { }
 
-static JNINativeMethod gMethods_Fast[] = {
+static const JNINativeMethod gMethods_Fast[] = {
     NATIVE_METHOD(NativeTestTarget, emptyJniMethod0_Fast, "()V"),
     NATIVE_METHOD(NativeTestTarget, emptyJniMethod6_Fast, "(IIIIII)V"),
     NATIVE_METHOD(NativeTestTarget, emptyJniMethod6L_Fast, "(Ljava/lang/String;[Ljava/lang/String;[[ILjava/lang/Object;[Ljava/lang/Object;[[[[Ljava/lang/Object;)V"),
@@ -68,7 +68,7 @@ static JNINativeMethod gMethods_Fast[] = {
 static void NativeTestTarget_emptyJniStaticMethod0_Critical() { }
 static void NativeTestTarget_emptyJniStaticMethod6_Critical( int, int, int, int, int, int) { }
 
-static JNINativeMethod gMethods_Critical[] = {
+static const JNINativeMethod gMethods_Critical[] = {
     NATIVE_METHOD(NativeTestTarget, emptyJniStaticMethod0_Critical, "()V"),
     NATIVE_METHOD(NativeTestTarget, emptyJniStaticMethod6_Critical, "(IIIIII)V"),
 };

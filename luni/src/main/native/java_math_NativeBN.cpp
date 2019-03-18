@@ -526,7 +526,7 @@ static jboolean NativeBN_BN_primality_test(JNIEnv* env, jclass, jlong candidate,
   return is_probably_prime ? JNI_TRUE : JNI_FALSE;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
    NATIVE_METHOD(NativeBN, BN_add, "(JJJ)V"),
    NATIVE_METHOD(NativeBN, BN_add_word, "(JI)V"),
    NATIVE_METHOD(NativeBN, BN_bin2bn, "([BIZJ)V"),

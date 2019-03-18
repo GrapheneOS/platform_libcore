@@ -240,7 +240,7 @@ Deflater_end(JNIEnv *env, jclass cls, jlong addr)
     }
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Deflater, init, "(IIZ)J"),
   NATIVE_METHOD(Deflater, setDictionary, "(J[BII)V"),
   NATIVE_METHOD(Deflater, deflateBytes, "(J[BIII)I"),
