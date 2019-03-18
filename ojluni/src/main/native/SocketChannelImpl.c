@@ -96,7 +96,7 @@ Java_sun_nio_ch_SocketChannelImpl_sendOutOfBandData(JNIEnv* env, jclass this,
     return convertReturnVal(env, n, JNI_FALSE);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(SocketChannelImpl, checkConnect, "(Ljava/io/FileDescriptor;ZZ)I"),
   NATIVE_METHOD(SocketChannelImpl, sendOutOfBandData, "(Ljava/io/FileDescriptor;B)I"),
 };
