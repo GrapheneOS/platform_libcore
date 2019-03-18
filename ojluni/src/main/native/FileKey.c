@@ -66,7 +66,7 @@ FileKey_init(JNIEnv *env, jobject this, jobject fdo)
     }
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(FileKey, init, "(Ljava/io/FileDescriptor;)V"),
 };
 
