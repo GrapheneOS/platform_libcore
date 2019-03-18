@@ -128,7 +128,7 @@ SocketOutputStream_socketWrite0(JNIEnv *env, jobject this,
     }
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(SocketOutputStream, socketWrite0, "(Ljava/io/FileDescriptor;[BII)V"),
 };
 

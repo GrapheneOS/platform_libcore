@@ -282,7 +282,7 @@ Java_java_nio_Bits_copyToLongArray(JNIEnv *env, jobject this, jlong srcAddr,
     }
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(Bits, copyFromShortArray, "(Ljava/lang/Object;JJJ)V"),
     NATIVE_METHOD(Bits, copyToShortArray, "(JLjava/lang/Object;JJ)V"),
     NATIVE_METHOD(Bits, copyFromIntArray, "(Ljava/lang/Object;JJJ)V"),
