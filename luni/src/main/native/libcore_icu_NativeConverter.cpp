@@ -675,7 +675,7 @@ static jlong NativeConverter_getNativeSize(JNIEnv*, jclass) {
     return 200;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(NativeConverter, charsetForName, "(Ljava/lang/String;)Ljava/nio/charset/Charset;"),
     NATIVE_METHOD(NativeConverter, closeConverter, "(J)V"),
     NATIVE_METHOD(NativeConverter, contains, "(Ljava/lang/String;Ljava/lang/String;)Z"),

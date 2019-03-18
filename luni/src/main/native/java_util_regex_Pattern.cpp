@@ -96,7 +96,7 @@ static jlong Pattern_compileImpl(JNIEnv* env, jclass, jstring javaRegex, jint fl
     return static_cast<jlong>(reinterpret_cast<uintptr_t>(result));
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(Pattern, compileImpl, "(Ljava/lang/String;I)J"),
     NATIVE_METHOD(Pattern, getNativeFinalizer, "()J"),
 };

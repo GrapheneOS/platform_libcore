@@ -269,7 +269,7 @@ static jint Matcher_getMatchedGroupIndex0(JNIEnv* env, jclass, jlong patternAddr
 }
 
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(Matcher, getMatchedGroupIndex0, "(JLjava/lang/String;)I"),
     NATIVE_METHOD(Matcher, findImpl, "(JI[I)Z"),
     NATIVE_METHOD(Matcher, findNextImpl, "(J[I)Z"),
