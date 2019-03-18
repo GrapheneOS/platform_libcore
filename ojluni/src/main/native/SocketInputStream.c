@@ -153,7 +153,7 @@ SocketInputStream_socketRead0(JNIEnv *env, jobject this,
     return nread;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(SocketInputStream, socketRead0, "(Ljava/io/FileDescriptor;[BIII)I"),
 };
 

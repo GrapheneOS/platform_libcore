@@ -63,7 +63,7 @@ Double_doubleToRawLongBits(JNIEnv *env, jclass unused, jdouble v)
     u.d = (double)v;
     return u.l;
 }
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Double, longBitsToDouble, "(J)D"),
   NATIVE_METHOD(Double, doubleToRawLongBits, "(D)J"),
 };

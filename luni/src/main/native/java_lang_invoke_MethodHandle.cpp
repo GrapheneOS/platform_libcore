@@ -27,7 +27,7 @@ static void MethodHandle_invoke(JNIEnv* env, jobject, jobjectArray) {
             "MethodHandle.invoke cannot be invoked reflectively.");
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(MethodHandle, invokeExact, "([Ljava/lang/Object;)Ljava/lang/Object;"),
     NATIVE_METHOD(MethodHandle, invoke, "([Ljava/lang/Object;)Ljava/lang/Object;"),
 };

@@ -72,7 +72,7 @@ Java_java_io_Console_echo(JNIEnv *env,
     return old;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(Console, istty, "()Z"),
     NATIVE_METHOD(Console, encoding, "()Ljava/lang/String;"),
     NATIVE_METHOD(Console, echo, "(Z)Z"),

@@ -40,7 +40,7 @@
 
 #define ARRAY_LENGTH(a) (sizeof(a)/sizeof(a[0]))
 
-static JNINativeMethod methods[] = {
+static const JNINativeMethod methods[] = {
     {"start0",           "(JZ)V",        (void *)&JVM_StartThread},
     {"setPriority0",     "(I)V",       (void *)&JVM_SetThreadPriority},
     {"yield",            "()V",        (void *)&JVM_Yield},

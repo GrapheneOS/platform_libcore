@@ -59,7 +59,7 @@ Float_floatToRawIntBits(JNIEnv *env, jclass unused, jfloat v)
     u.f = (float)v;
     return (jint)u.i;
 }
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Float, intBitsToFloat, "(I)F"),
   NATIVE_METHOD(Float, floatToRawIntBits, "(F)I"),
 };

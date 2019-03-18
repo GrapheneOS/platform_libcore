@@ -193,7 +193,7 @@ static void VarHandle_weakCompareAndSetRelease(JNIEnv* env, jobject, jobjectArra
   ThrowUnsupportedOperationForAccessMode(env, "weakCompareAndSetRelease");
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(VarHandle, compareAndExchange, kVarHandleObjectSignature),
   NATIVE_METHOD(VarHandle, compareAndExchangeAcquire, kVarHandleObjectSignature),
   NATIVE_METHOD(VarHandle, compareAndExchangeRelease, kVarHandleObjectSignature),

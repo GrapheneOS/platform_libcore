@@ -65,7 +65,7 @@ Throwable_getStackTraceElement(JNIEnv *env,
 {
     return JVM_GetStackTraceElement(env, throwable, index);
 }
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Throwable, fillInStackTrace, "(I)Ljava/lang/Throwable;"),
   NATIVE_METHOD(Throwable, getStackTraceDepth, "()I"),
   NATIVE_METHOD(Throwable, getStackTraceElement, "(I)Ljava/lang/StackTraceElement;"),

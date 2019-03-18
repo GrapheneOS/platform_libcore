@@ -262,7 +262,7 @@ static jlong System_currentTimeMillis(JNIEnv* env, jclass unused) {
   return JVM_CurrentTimeMillis(NULL, NULL);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(System, mapLibraryName, "(Ljava/lang/String;)Ljava/lang/String;"),
   NATIVE_METHOD(System, setErr0, "(Ljava/io/PrintStream;)V"),
   NATIVE_METHOD(System, setOut0, "(Ljava/io/PrintStream;)V"),

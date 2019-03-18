@@ -35,7 +35,7 @@ String_intern(JNIEnv *env, jobject this)
 {
     return JVM_InternString(env, this);
 }
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(String, intern, "()Ljava/lang/String;"),
 };
 
