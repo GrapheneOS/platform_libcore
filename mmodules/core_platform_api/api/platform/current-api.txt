@@ -242,6 +242,8 @@ package com.android.org.bouncycastle.asn1 {
   }
 
   public abstract class ASN1Primitive extends com.android.org.bouncycastle.asn1.ASN1Object {
+    method public static com.android.org.bouncycastle.asn1.ASN1Primitive fromByteArray(byte[]) throws java.io.IOException;
+    method public com.android.org.bouncycastle.asn1.ASN1Primitive toASN1Primitive();
   }
 
   public abstract class ASN1Sequence extends com.android.org.bouncycastle.asn1.ASN1Primitive implements com.android.org.bouncycastle.util.Iterable<com.android.org.bouncycastle.asn1.ASN1Encodable> {
@@ -294,6 +296,23 @@ package com.android.org.bouncycastle.asn1.pkcs {
   public class PrivateKeyInfo extends com.android.org.bouncycastle.asn1.ASN1Object {
     method public static com.android.org.bouncycastle.asn1.pkcs.PrivateKeyInfo getInstance(Object);
     method public com.android.org.bouncycastle.asn1.x509.AlgorithmIdentifier getPrivateKeyAlgorithm();
+    method public com.android.org.bouncycastle.asn1.ASN1Encodable parsePrivateKey() throws java.io.IOException;
+  }
+
+}
+
+package com.android.org.bouncycastle.asn1.x500.style {
+
+  public class BCStyle {
+    method public static java.util.Hashtable copyHashTable(java.util.Hashtable);
+    method public com.android.org.bouncycastle.asn1.ASN1Encodable stringToValue(com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier, String);
+    field public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier C;
+    field public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier CN;
+    field public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier E;
+    field public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier L;
+    field public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier O;
+    field public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier OU;
+    field public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier ST;
   }
 
 }
@@ -369,6 +388,44 @@ package com.android.org.bouncycastle.asn1.x9 {
 
 }
 
+package com.android.org.bouncycastle.crypto {
+
+  public interface CipherParameters {
+  }
+
+  public abstract class PBEParametersGenerator {
+    ctor protected PBEParametersGenerator();
+    method public static byte[] PKCS5PasswordToBytes(char[]);
+  }
+
+}
+
+package com.android.org.bouncycastle.crypto.generators {
+
+  public class OpenSSLPBEParametersGenerator extends com.android.org.bouncycastle.crypto.PBEParametersGenerator {
+    ctor public OpenSSLPBEParametersGenerator();
+    method public com.android.org.bouncycastle.crypto.CipherParameters generateDerivedParameters(int);
+    method public void init(byte[], byte[]);
+  }
+
+}
+
+package com.android.org.bouncycastle.crypto.params {
+
+  public class KeyParameter implements com.android.org.bouncycastle.crypto.CipherParameters {
+    method public byte[] getKey();
+  }
+
+}
+
+package com.android.org.bouncycastle.jcajce.util {
+
+  public class DefaultJcaJceHelper {
+    method public javax.crypto.Cipher createCipher(String) throws java.security.NoSuchAlgorithmException, javax.crypto.NoSuchPaddingException;
+  }
+
+}
+
 package com.android.org.bouncycastle.jce {
 
   @Deprecated public class X509Principal extends com.android.org.bouncycastle.asn1.x509.X509Name implements java.security.Principal {
@@ -399,8 +456,13 @@ package com.android.org.bouncycastle.util {
 
 package com.android.org.bouncycastle.util.io.pem {
 
+  public class PemHeader {
+    ctor public PemHeader(String, String);
+  }
+
   public class PemObject implements com.android.org.bouncycastle.util.io.pem.PemObjectGenerator {
     ctor public PemObject(String, byte[]);
+    ctor public PemObject(String, java.util.List, byte[]);
     method public byte[] getContent();
     method public String getType();
   }
@@ -421,6 +483,17 @@ package com.android.org.bouncycastle.util.io.pem {
 }
 
 package com.android.org.bouncycastle.x509 {
+
+  @Deprecated public class X509V1CertificateGenerator {
+    ctor @Deprecated public X509V1CertificateGenerator();
+    method @Deprecated public java.security.cert.X509Certificate generate(java.security.PrivateKey, String) throws java.security.cert.CertificateEncodingException, java.lang.IllegalStateException, java.security.InvalidKeyException, java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException, java.security.SignatureException;
+    method @Deprecated public void setNotAfter(java.util.Date);
+    method @Deprecated public void setNotBefore(java.util.Date);
+    method @Deprecated public void setPublicKey(java.security.PublicKey);
+    method @Deprecated public void setSerialNumber(java.math.BigInteger);
+    method @Deprecated public void setSignatureAlgorithm(String);
+    method @Deprecated public void setSubjectDN(javax.security.auth.x500.X500Principal);
+  }
 
   @Deprecated public class X509V3CertificateGenerator {
     ctor @Deprecated @dalvik.annotation.compat.UnsupportedAppUsage public X509V3CertificateGenerator();
