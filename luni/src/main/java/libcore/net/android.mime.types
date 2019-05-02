@@ -69,6 +69,7 @@ video/avi avi
 video/m4v m4v
 video/mp2p mpeg
 video/mp2ts ts
+video/MP2T m2ts MTS
 video/x-webex wrf
 
 # Special cases where Android has a strong opinion about mappings, so we
