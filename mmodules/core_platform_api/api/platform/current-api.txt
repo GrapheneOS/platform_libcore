@@ -291,6 +291,7 @@ package com.android.org.bouncycastle.asn1.pkcs {
 
   public interface PKCSObjectIdentifiers {
     field @dalvik.annotation.compat.UnsupportedAppUsage public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier sha256WithRSAEncryption;
+    field public static final com.android.org.bouncycastle.asn1.ASN1ObjectIdentifier sha512WithRSAEncryption;
   }
 
   public class PrivateKeyInfo extends com.android.org.bouncycastle.asn1.ASN1Object {
@@ -430,6 +431,7 @@ package com.android.org.bouncycastle.jce {
 
   @Deprecated public class X509Principal extends com.android.org.bouncycastle.asn1.x509.X509Name implements java.security.Principal {
     ctor @Deprecated @dalvik.annotation.compat.UnsupportedAppUsage public X509Principal(byte[]) throws java.io.IOException;
+    ctor @Deprecated public X509Principal(java.util.Vector, java.util.Hashtable);
     method public byte[] getEncoded();
   }
 
@@ -487,6 +489,7 @@ package com.android.org.bouncycastle.x509 {
   @Deprecated public class X509V1CertificateGenerator {
     ctor @Deprecated public X509V1CertificateGenerator();
     method @Deprecated public java.security.cert.X509Certificate generate(java.security.PrivateKey, String) throws java.security.cert.CertificateEncodingException, java.lang.IllegalStateException, java.security.InvalidKeyException, java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException, java.security.SignatureException;
+    method @Deprecated public void setIssuerDN(javax.security.auth.x500.X500Principal);
     method @Deprecated public void setNotAfter(java.util.Date);
     method @Deprecated public void setNotBefore(java.util.Date);
     method @Deprecated public void setPublicKey(java.security.PublicKey);
