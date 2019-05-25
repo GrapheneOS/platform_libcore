@@ -26,6 +26,10 @@ application/x-pem-file pem
 application/x-pkcs12 p12 pfx
 application/x-webarchive webarchive
 application/x-webarchive-xml webarchivexml
+# Note: We rely here on the fact that we're declaring this mapping before the
+# line "text/xml xml" below, because we don't want to change the mapping from
+# extension "xml" back to MIME type "text/xml".
+application/x-wifi-config xml
 application/x-x509-server-cert crt
 application/x-x509-user-cert crt
 

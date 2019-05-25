@@ -441,6 +441,7 @@ public class Thread implements java.lang.Runnable {
 
     private volatile java.lang.Thread.UncaughtExceptionHandler uncaughtExceptionHandler;
 
+    @UnsupportedAppUsage
     private static volatile java.lang.Thread.UncaughtExceptionHandler uncaughtExceptionPreHandler;
 
     @SuppressWarnings({"unchecked", "deprecation", "all"})

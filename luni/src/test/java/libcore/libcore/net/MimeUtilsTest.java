@@ -137,6 +137,11 @@ public class MimeUtilsTest extends TestCase {
         assertMimeTypeFromExtension("audio/mpeg", "m4r");
     }
 
+    public void testWifiConfig_xml() {
+        assertExtensionFromMimeType("xml", "application/x-wifi-config");
+        assertMimeTypeFromExtension("text/xml", "xml");
+    }
+
     // http://b/122734564
     public void testNonLowercaseMimeType() {
         // A mixed-case mimeType that appears in mime.types; we expect guessMimeTypeFromExtension()
