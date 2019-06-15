@@ -76,6 +76,8 @@ Java_java_io_UnixFileSystem_initIDs(JNIEnv *env, jclass cls)
 
 /* -- Path operations -- */
 
+// Android-changed: hidden to avoid conflict with libm (b/135018555)
+__attribute__((visibility("hidden")))
 extern int canonicalize(char *path, const char *out, int len);
 
 JNIEXPORT jstring JNICALL
