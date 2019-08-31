@@ -1426,6 +1426,13 @@
   ]
 },
 {
+  description: "OkHttp flaky test of functionality that's not used on Android",
+  bug: 138134183,
+  names: [
+    "com.squareup.okhttp.internal.framed.Spdy3ConnectionTest#serverSendsSettingsToClient"
+  ]
+},
+{
   description: "libcore.java.text.DecimalFormatSymbolsTest#test_getInstance_unknown_or_invalid_locale assumes fallback to locale other than en_US_POSIX.",
   bug: 17422813,
   names: [
