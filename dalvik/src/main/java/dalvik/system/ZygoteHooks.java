@@ -71,7 +71,7 @@ public final class ZygoteHooks {
      * @hide
      */
     @SystemApi(client = MODULE_LIBRARIES)
-    public static void onBeginPreload() {
+    public static void onBeginPreload(boolean fullPreload) {
         com.android.i18n.system.ZygoteHooks.onBeginPreload();
 
         ICU.initializeCacheInZygote();
@@ -94,12 +94,22 @@ public final class ZygoteHooks {
     }
 
     /**
+     * Called when the zygote begins preloading classes and data.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static void onBeginPreload() {
+        onBeginPreload(true);
+    }
+
+    /**
      * Called when the zygote has completed preloading classes and data.
      *
      * @hide
      */
     @SystemApi(client = MODULE_LIBRARIES)
-    public static void onEndPreload() {
+    public static void onEndPreload(boolean fullPreload) {
         // TODO(b/395108129): Switch to individual modules profile for preloading HttpEngine for
         // devices from S -> V. This should be a cleaner way to do preloading without having the
         // code live in libcore.
@@ -136,6 +146,16 @@ public final class ZygoteHooks {
         FileDescriptor.in.cloneForFork();
         FileDescriptor.out.cloneForFork();
         FileDescriptor.err.cloneForFork();
+    }
+
+    /**
+     * Called when the zygote has completed preloading classes and data.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static void onEndPreload() {
+        onEndPreload(true);
     }
 
     /**
