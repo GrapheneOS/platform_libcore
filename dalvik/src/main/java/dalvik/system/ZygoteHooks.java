@@ -48,15 +48,17 @@ public final class ZygoteHooks {
      */
     @libcore.api.CorePlatformApi
     public static void onBeginPreload(boolean fullPreload) {
-        // Pin ICU data in memory from this point that would normally be held by soft references.
-        // Without this, any references created immediately below or during class preloading
-        // would be collected when the Zygote GC runs in gcAndFinalize().
-        CacheValue.setStrength(CacheValue.Strength.STRONG);
+        if (fullPreload) {
+            // Pin ICU data in memory from this point that would normally be held by soft references.
+            // Without this, any references created immediately below or during class preloading
+            // would be collected when the Zygote GC runs in gcAndFinalize().
+            CacheValue.setStrength(CacheValue.Strength.STRONG);
 
-        // Explicitly exercise code to cache data apps are likely to need.
-        ULocale[] localesToPin = { ULocale.ROOT, ULocale.US, ULocale.getDefault() };
-        for (ULocale uLocale : localesToPin) {
-            new DecimalFormatSymbols(uLocale);
+            // Explicitly exercise code to cache data apps are likely to need.
+            ULocale[] localesToPin = { ULocale.ROOT, ULocale.US, ULocale.getDefault() };
+            for (ULocale uLocale : localesToPin) {
+                new DecimalFormatSymbols(uLocale);
+            }
         }
     }
 
@@ -65,8 +67,10 @@ public final class ZygoteHooks {
      */
     @libcore.api.CorePlatformApi
     public static void onEndPreload(boolean fullPreload) {
-        // All cache references created by ICU from this point will be soft.
-        CacheValue.setStrength(CacheValue.Strength.SOFT);
+        if (fullPreload) {
+            // All cache references created by ICU from this point will be soft.
+            CacheValue.setStrength(CacheValue.Strength.SOFT);
+        }
     }
 
     /**
