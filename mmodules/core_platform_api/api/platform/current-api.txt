@@ -745,8 +745,8 @@ package dalvik.system {
 
   public final class ZygoteHooks {
     method public static void gcAndFinalize();
-    method public static void onBeginPreload();
-    method public static void onEndPreload();
+    method public static void onBeginPreload(boolean);
+    method public static void onEndPreload(boolean);
     method public static void postForkChild(int, boolean, boolean, String);
     method public static void postForkCommon();
     method public static void postForkSystemServer(int);
