@@ -62,7 +62,7 @@ public final class ZygoteHooks {
      */
     @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public static void onBeginPreload() {
+    public static void onBeginPreload(boolean fullPreload) {
         com.android.i18n.system.ZygoteHooks.onBeginPreload();
 
         ICU.initializeCacheInZygote();
@@ -88,7 +88,7 @@ public final class ZygoteHooks {
      */
     @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public static void onEndPreload() {
+    public static void onEndPreload(boolean fullPreload) {
         com.android.i18n.system.ZygoteHooks.onEndPreload();
 
         // Clone standard descriptors as originals closed / rebound during zygote post fork.
