@@ -44,7 +44,7 @@ class CpuFeatures {
             }
         } else if (instructionSet.startsWith("x86")) {
             // x86 CPUs with the "aes" flag and running in 64bit mode should have hardware AES.
-            if (VMRuntime.is64BitInstructionSet(instructionSet)) {
+            if ("x86_64".equals(instructionSet)) {
                 List<String> flags = getListFromCpuinfo("flags");
                 if (flags != null && flags.contains("aes")) {
                     return true;
