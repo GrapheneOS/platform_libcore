@@ -387,23 +387,58 @@ public final class CountryTimeZones {
     }
 
     /**
-     * Returns a time zone for the country, if there is one, that matches the desired properties. If
-     * there are multiple matches and the {@code bias} is one of them then it is returned, otherwise
-     * an arbitrary match is returned based on the {@link #getEffectiveTimeZoneMappingsAt(long)}
-     * ordering.
+     * Returns a time zone for the country, if there is one, that matches the supplied properties.
+     * If there are multiple matches and the {@code bias} is one of them then it is returned,
+     * otherwise an arbitrary match is returned based on the {@link
+     * #getEffectiveTimeZoneMappingsAt(long)} ordering.
      *
+     * @param whenMillis the UTC time to match against
+     * @param bias the time zone to prefer, can be {@code null} to indicate there is no preference
+     * @param totalOffsetMillis the offset from UTC at {@code whenMillis}
+     * @param isDst the Daylight Savings Time state at {@code whenMillis}. {@code true} means DST,
+     *     {@code false} means not DST
+     * @return an {@link OffsetResult} with information about a matching zone, or {@code null} if
+     *     there is no match
+     */
+    @libcore.api.CorePlatformApi
+    public OffsetResult lookupByOffsetWithBias(long whenMillis, TimeZone bias,
+            int totalOffsetMillis, boolean isDst) {
+        return lookupByOffsetWithBiasInternal(whenMillis, bias, totalOffsetMillis, isDst);
+    }
+
+    /**
+     * Returns a time zone for the country, if there is one, that matches the supplied properties.
+     * If there are multiple matches and the {@code bias} is one of them then it is returned,
+     * otherwise an arbitrary match is returned based on the {@link
+     * #getEffectiveTimeZoneMappingsAt(long)} ordering.
+     *
+     * @param whenMillis the UTC time to match against
+     * @param bias the time zone to prefer, can be {@code null} to indicate there is no preference
+     * @param totalOffsetMillis the offset from UTC at {@code whenMillis}
+     * @return an {@link OffsetResult} with information about a matching zone, or {@code null} if
+     *     there is no match
+     */
+    @libcore.api.CorePlatformApi
+    public OffsetResult lookupByOffsetWithBias(long whenMillis, TimeZone bias,
+            int totalOffsetMillis) {
+        final Boolean isDst = null;
+        return lookupByOffsetWithBiasInternal(whenMillis, bias, totalOffsetMillis, isDst);
+    }
+
+    /**
+     * Returns a time zone for the country, if there is one, that matches the supplied properties.
+     * If there are multiple matches and the {@code bias} is one of them then it is returned,
+     * otherwise an arbitrary match is returned based on the {@link
+     * #getEffectiveTimeZoneMappingsAt(long)} ordering.
+     *
+     * @param whenMillis the UTC time to match against
+     * @param bias the time zone to prefer, can be {@code null}
      * @param totalOffsetMillis the offset from UTC at {@code whenMillis}
      * @param isDst the Daylight Savings Time state at {@code whenMillis}. {@code true} means DST,
      *     {@code false} means not DST, {@code null} means unknown
-     * @param dstOffsetMillis the part of {@code totalOffsetMillis} contributed by DST, only used if
-     *     {@code isDst} is {@code true}. The value can be {@code null} if the DST offset is
-     *     unknown
-     * @param whenMillis the UTC time to match against
-     * @param bias the time zone to prefer, can be {@code null}
      */
-    @libcore.api.CorePlatformApi
-    public OffsetResult lookupByOffsetWithBias(int totalOffsetMillis, Boolean isDst,
-            Integer dstOffsetMillis, long whenMillis, TimeZone bias) {
+    private OffsetResult lookupByOffsetWithBiasInternal(long whenMillis, TimeZone bias,
+            int totalOffsetMillis, Boolean isDst) {
         List<TimeZoneMapping> timeZoneMappings = getEffectiveTimeZoneMappingsAt(whenMillis);
         if (timeZoneMappings.isEmpty()) {
             return null;
@@ -414,8 +449,8 @@ public final class CountryTimeZones {
         boolean oneMatch = true;
         for (TimeZoneMapping timeZoneMapping : timeZoneMappings) {
             TimeZone match = timeZoneMapping.getTimeZone();
-            if (match == null || !offsetMatchesAtTime(match, totalOffsetMillis, isDst,
-                    dstOffsetMillis, whenMillis)) {
+            if (match == null
+                    || !offsetMatchesAtTime(whenMillis, match, totalOffsetMillis, isDst)) {
                 continue;
             }
 
@@ -440,18 +475,15 @@ public final class CountryTimeZones {
     }
 
     /**
-     * Returns {@code true} if the specified {@code totalOffset}, {@code isDst},
-     * {@code dstOffsetMillis} would be valid in the {@code timeZone} at time {@code whenMillis}.
+     * Returns {@code true} if the specified {@code totalOffset} and {@code isDst} would be valid in
+     * the {@code timeZone} at time {@code whenMillis}.
      * {@code totalOffetMillis} is always matched.
-     * If {@code isDst} is {@code null} this means the DST state is unknown, so
-     * {@code dstOffsetMillis} is ignored.
-     * If {@code isDst} is {@code false}, {@code dstOffsetMillis} is ignored.
-     * If {@code isDst} is {@code true}, the DST state is considered. When considering DST state
-     * {@code dstOffsetMillis} can be {@code null} if it is unknown but when {@code dstOffsetMillis}
-     * is known then it is also matched.
+     * If {@code isDst} is {@code null}, this means the DST state is unknown.
+     * If {@code isDst} is {@code false}, this means the zone must not be in DST.
+     * If {@code isDst} is {@code true}, this means the zone must be in DST.
      */
-    private static boolean offsetMatchesAtTime(TimeZone timeZone, int totalOffsetMillis,
-            Boolean isDst, Integer dstOffsetMillis, long whenMillis) {
+    private static boolean offsetMatchesAtTime(long whenMillis, TimeZone timeZone,
+            int totalOffsetMillis, Boolean isDst) {
         int[] offsets = new int[2];
         timeZone.getOffset(whenMillis, false /* local */, offsets);
 
@@ -459,15 +491,7 @@ public final class CountryTimeZones {
             return false;
         }
 
-        if (isDst == null) {
-            return true;
-        } else if (!isDst) {
-            return offsets[1] == 0;
-        } else {
-            // isDst
-            return (dstOffsetMillis == null && offsets[1] != 0)
-                    || (dstOffsetMillis != null && dstOffsetMillis == offsets[1]);
-        }
+        return isDst == null || (isDst == (offsets[1] != 0));
     }
 
     private static String normalizeCountryIso(String countryIso) {

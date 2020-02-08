@@ -629,7 +629,6 @@ java_test {
     ],
 
     static_libs: [
-        "archive-patcher",
         "core-compat-test-rules",
         "core-java-9-language-tests",
         "core-test-rules",

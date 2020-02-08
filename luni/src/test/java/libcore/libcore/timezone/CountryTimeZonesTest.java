@@ -153,51 +153,44 @@ public class CountryTimeZonesTest {
         final Boolean isDst = true;
         final Boolean notDst = false;
         final Boolean unkIsDst = null;
-        final Integer goodDstOffset = HOUR_MILLIS; // Every DST used here is one hour ahead.
-        final Integer badDstOffset = HOUR_MILLIS + 1;
-        final Integer unkDstOffset = null;
         final TimeZone noBias = null;
         final OffsetResult noMatch = null;
 
         Object[][] testCases = new Object[][] {
-                // totalOffsetMillis, isDst, dstOffsetMillis, whenMillis, bias, expectedMatch
+                // totalOffsetMillis, isDst, whenMillis, bias, expectedMatch
 
                 // The parameters match the zone: total offset and time.
-                { LON_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_DST, noBias, lonMatch },
-                { LON_NO_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_NO_DST, noBias, lonMatch },
+                { LON_DST_TOTAL_OFFSET, unkIsDst, WHEN_DST, noBias, lonMatch },
+                { LON_NO_DST_TOTAL_OFFSET, unkIsDst, WHEN_NO_DST, noBias, lonMatch },
 
                 // The parameters match the zone: total offset, isDst and time.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, noBias, lonMatch },
-                { LON_DST_TOTAL_OFFSET, isDst, goodDstOffset, WHEN_DST, noBias, lonMatch },
-                { LON_NO_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_NO_DST, noBias, lonMatch },
-
-                // Lookup failures: bad DST offset.
-                { LON_DST_TOTAL_OFFSET, isDst, badDstOffset, WHEN_DST, noBias, noMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_DST, noBias, lonMatch },
+                { LON_NO_DST_TOTAL_OFFSET, notDst, WHEN_NO_DST, noBias, lonMatch },
 
                 // Some lookup failure cases where the total offset, isDst and time do not match the
                 // zone.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { LON_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { LON_NO_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, noBias, noMatch },
-                { LON_NO_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { LON_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_DST, noBias, noMatch },
-                { LON_NO_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_DST, noBias, noMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_NO_DST, noBias, noMatch },
+                { LON_DST_TOTAL_OFFSET, notDst, WHEN_NO_DST, noBias, noMatch },
+                { LON_NO_DST_TOTAL_OFFSET, isDst, WHEN_DST, noBias, noMatch },
+                { LON_NO_DST_TOTAL_OFFSET, isDst, WHEN_NO_DST, noBias, noMatch },
+                { LON_DST_TOTAL_OFFSET, notDst, WHEN_DST, noBias, noMatch },
+                { LON_NO_DST_TOTAL_OFFSET, notDst, WHEN_DST, noBias, noMatch },
 
                 // Some bias cases below.
 
                 // The bias is irrelevant here: it matches what would be returned anyway.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, LON_TZ, lonMatch },
-                { LON_NO_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_NO_DST, LON_TZ, lonMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_DST, LON_TZ, lonMatch },
+                { LON_NO_DST_TOTAL_OFFSET, notDst, WHEN_NO_DST, LON_TZ, lonMatch },
 
                 // A sample of a non-matching case with bias.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_NO_DST, LON_TZ, noMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_NO_DST, LON_TZ, noMatch },
 
                 // The bias should be ignored: it doesn't match any of the country's zones.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, NY_TZ, lonMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_DST, NY_TZ, lonMatch },
 
                 // The bias should still be ignored even though it matches the offset information
                 // given it doesn't match any of the country's zones.
-                { NY_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, NY_TZ, noMatch },
+                { NY_DST_TOTAL_OFFSET, isDst, WHEN_DST, NY_TZ, noMatch },
         };
         executeLookupByOffsetWithBiasTestCases(countryTimeZones, testCases);
     }
@@ -215,9 +208,6 @@ public class CountryTimeZonesTest {
         final Boolean isDst = true;
         final Boolean notDst = false;
         final Boolean unkIsDst = null;
-        final Integer unkDstOffset = null;
-        final Integer goodDstOffset = HOUR_MILLIS; // Every DST used here is one hour ahead.
-        final Integer badDstOffset = HOUR_MILLIS + 1;
         final TimeZone noBias = null;
         final OffsetResult noMatch = null;
 
@@ -225,51 +215,43 @@ public class CountryTimeZonesTest {
                 // totalOffsetMillis, isDst, dstOffsetMillis, whenMillis, bias, expectedMatch
 
                 // The parameters match the zone: total offset and time.
-                { LON_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_DST, noBias, lonMatch },
-                { LON_NO_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_NO_DST, noBias, lonMatch },
-                { NY_NO_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_NO_DST, noBias, nyMatch },
-                { NY_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_DST, noBias, nyMatch },
+                { LON_DST_TOTAL_OFFSET, unkIsDst, WHEN_DST, noBias, lonMatch },
+                { LON_NO_DST_TOTAL_OFFSET, unkIsDst, WHEN_NO_DST, noBias, lonMatch },
+                { NY_NO_DST_TOTAL_OFFSET, unkIsDst, WHEN_NO_DST, noBias, nyMatch },
+                { NY_DST_TOTAL_OFFSET, unkIsDst, WHEN_DST, noBias, nyMatch },
 
                 // The parameters match the zone: total offset, isDst and time.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, noBias, lonMatch },
-                { LON_NO_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_NO_DST, noBias, lonMatch },
-                { NY_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, noBias, nyMatch },
-                { NY_NO_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_NO_DST, noBias, nyMatch },
-
-                // The parameters match the zone: total offset, isDst, DST offset and time.
-                { LON_DST_TOTAL_OFFSET, isDst, goodDstOffset, WHEN_DST, noBias, lonMatch },
-                { NY_DST_TOTAL_OFFSET, isDst, goodDstOffset, WHEN_DST, noBias, nyMatch },
-
-                // Lookup failures: bad DST offset.
-                { LON_DST_TOTAL_OFFSET, isDst, badDstOffset, WHEN_DST, noBias, noMatch },
-                { NY_DST_TOTAL_OFFSET, isDst, badDstOffset, WHEN_DST, noBias, noMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_DST, noBias, lonMatch },
+                { LON_NO_DST_TOTAL_OFFSET, notDst, WHEN_NO_DST, noBias, lonMatch },
+                { NY_DST_TOTAL_OFFSET, isDst, WHEN_DST, noBias, nyMatch },
+                { NY_NO_DST_TOTAL_OFFSET, notDst, WHEN_NO_DST, noBias, nyMatch },
 
                 // Some lookup failure cases where the total offset, isDst and time do not match the
                 // zone. This is a sample, not complete.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { LON_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { LON_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_DST, noBias, noMatch },
-                { LON_NO_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, noBias, noMatch },
-                { LON_NO_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { LON_NO_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_DST, noBias, noMatch },
-                { LON_NO_DST_TOTAL_OFFSET, notDst, unkDstOffset, WHEN_DST, noBias, noMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_NO_DST, noBias, noMatch },
+                { LON_DST_TOTAL_OFFSET, unkIsDst, WHEN_NO_DST, noBias, noMatch },
+                { LON_DST_TOTAL_OFFSET, notDst, WHEN_DST, noBias, noMatch },
+                { LON_NO_DST_TOTAL_OFFSET, isDst, WHEN_DST, noBias, noMatch },
+                { LON_NO_DST_TOTAL_OFFSET, isDst, WHEN_NO_DST, noBias, noMatch },
+                { LON_NO_DST_TOTAL_OFFSET, unkIsDst, WHEN_DST, noBias, noMatch },
+                { LON_NO_DST_TOTAL_OFFSET, notDst, WHEN_DST, noBias, noMatch },
 
                 // Some bias cases below.
 
                 // The bias is irrelevant here: it matches what would be returned anyway.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, LON_TZ, lonMatch },
-                { LON_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_DST, LON_TZ, lonMatch },
-                { LON_NO_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_NO_DST, LON_TZ, lonMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_DST, LON_TZ, lonMatch },
+                { LON_DST_TOTAL_OFFSET, unkIsDst, WHEN_DST, LON_TZ, lonMatch },
+                { LON_NO_DST_TOTAL_OFFSET, unkIsDst, WHEN_NO_DST, LON_TZ, lonMatch },
 
                 // A sample of non-matching cases with bias.
-                { LON_NO_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_NO_DST, LON_TZ, noMatch },
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_NO_DST, LON_TZ, noMatch },
-                { LON_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_NO_DST, LON_TZ, noMatch },
+                { LON_NO_DST_TOTAL_OFFSET, isDst, WHEN_NO_DST, LON_TZ, noMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_NO_DST, LON_TZ, noMatch },
+                { LON_DST_TOTAL_OFFSET, unkIsDst, WHEN_NO_DST, LON_TZ, noMatch },
 
                 // The bias should be ignored: it matches a zone, but the offset is wrong so
                 // should not be considered a match.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, NY_TZ, lonMatch },
-                { LON_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_DST, NY_TZ, lonMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_DST, NY_TZ, lonMatch },
+                { LON_DST_TOTAL_OFFSET, unkIsDst, WHEN_DST, NY_TZ, lonMatch },
         };
         executeLookupByOffsetWithBiasTestCases(countryTimeZones, testCases);
     }
@@ -288,9 +270,6 @@ public class CountryTimeZonesTest {
         final Boolean isDst = true;
         final Boolean notDst = false;
         final Boolean unkIsDst = null;
-        final Integer unkDstOffset = null;
-        final Integer goodDstOffset = HOUR_MILLIS; // Every DST used here is one hour ahead.
-        final Integer badDstOffset = HOUR_MILLIS + 1;
         final TimeZone noBias = null;
         final OffsetResult noMatch = null;
 
@@ -308,49 +287,42 @@ public class CountryTimeZonesTest {
                 // totalOffsetMillis, isDst, dstOffsetMillis, whenMillis, bias, expectedMatch
 
                 // The parameters match one zone: total offset and time.
-                { dstTotalOffset, unkIsDst, unkDstOffset, WHEN_DST, noBias, lonOnlyMatch },
-                { dstTotalOffset, unkIsDst, unkDstOffset, WHEN_DST, noBias, lonOnlyMatch },
+                { dstTotalOffset, unkIsDst, WHEN_DST, noBias, lonOnlyMatch },
+                { dstTotalOffset, unkIsDst, WHEN_DST, noBias, lonOnlyMatch },
 
                 // The parameters match several zones: total offset and time.
-                { noDstTotalOffset, unkIsDst, unkDstOffset, WHEN_NO_DST, noBias, reykBestMatch },
-                { noDstTotalOffset, unkIsDst, unkDstOffset, WHEN_DST, noBias, reykBestMatch },
+                { noDstTotalOffset, unkIsDst, WHEN_NO_DST, noBias, reykBestMatch },
+                { noDstTotalOffset, unkIsDst, WHEN_DST, noBias, reykBestMatch },
 
                 // The parameters match one zone: total offset, isDst and time.
-                { dstTotalOffset, isDst, unkDstOffset, WHEN_DST, noBias, lonOnlyMatch },
-                { dstTotalOffset, isDst, unkDstOffset, WHEN_DST, noBias, lonOnlyMatch },
+                { dstTotalOffset, isDst, WHEN_DST, noBias, lonOnlyMatch },
+                { dstTotalOffset, isDst, WHEN_DST, noBias, lonOnlyMatch },
 
-                // The parameters match one zone: total offset, isDst, DST offset and time.
-                { dstTotalOffset, isDst, goodDstOffset, WHEN_DST, noBias, lonOnlyMatch },
-
-                // The parameters match several zones: total offset, isDst and time.
-                { noDstTotalOffset, notDst, unkDstOffset, WHEN_NO_DST, noBias, reykBestMatch },
-                { noDstTotalOffset, notDst, unkDstOffset, WHEN_DST, noBias, reykBestMatch },
-
-                // Lookup failures: bad DST offset.
-                { dstTotalOffset, isDst, badDstOffset, WHEN_DST, noBias, noMatch },
+                { noDstTotalOffset, notDst, WHEN_NO_DST, noBias, reykBestMatch },
+                { noDstTotalOffset, notDst, WHEN_DST, noBias, reykBestMatch },
 
                 // Some lookup failure cases where the total offset, isDst and time do not match any
                 // zone.
-                { dstTotalOffset, isDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { dstTotalOffset, unkIsDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { noDstTotalOffset, isDst, unkDstOffset, WHEN_NO_DST, noBias, noMatch },
-                { noDstTotalOffset, isDst, unkDstOffset, WHEN_DST, noBias, noMatch },
+                { dstTotalOffset, isDst, WHEN_NO_DST, noBias, noMatch },
+                { dstTotalOffset, unkIsDst, WHEN_NO_DST, noBias, noMatch },
+                { noDstTotalOffset, isDst, WHEN_NO_DST, noBias, noMatch },
+                { noDstTotalOffset, isDst, WHEN_DST, noBias, noMatch },
 
                 // Some bias cases below.
 
                 // Multiple zones match but Reykjavik is the bias.
-                { noDstTotalOffset, notDst, unkDstOffset, WHEN_NO_DST, REYK_TZ, reykBestMatch },
+                { noDstTotalOffset, notDst, WHEN_NO_DST, REYK_TZ, reykBestMatch },
 
                 // Multiple zones match but London is the bias.
-                { noDstTotalOffset, notDst, unkDstOffset, WHEN_NO_DST, LON_TZ, lonBestMatch },
+                { noDstTotalOffset, notDst, WHEN_NO_DST, LON_TZ, lonBestMatch },
 
                 // Multiple zones match but UTC is the bias.
-                { noDstTotalOffset, notDst, unkDstOffset, WHEN_NO_DST, UTC_TZ, utcBestMatch },
+                { noDstTotalOffset, notDst, WHEN_NO_DST, UTC_TZ, utcBestMatch },
 
                 // The bias should be ignored: it matches a zone, but the offset is wrong so
                 // should not be considered a match.
-                { LON_DST_TOTAL_OFFSET, isDst, unkDstOffset, WHEN_DST, REYK_TZ, lonOnlyMatch },
-                { LON_DST_TOTAL_OFFSET, unkIsDst, unkDstOffset, WHEN_DST, REYK_TZ, lonOnlyMatch },
+                { LON_DST_TOTAL_OFFSET, isDst, WHEN_DST, REYK_TZ, lonOnlyMatch },
+                { LON_DST_TOTAL_OFFSET, unkIsDst, WHEN_DST, REYK_TZ, lonOnlyMatch },
         };
         executeLookupByOffsetWithBiasTestCases(countryTimeZones, testCases);
     }
@@ -363,13 +335,18 @@ public class CountryTimeZonesTest {
             Object[] testCase = testCases[i];
             int totalOffsetMillis = (int) testCase[0];
             Boolean isDst = (Boolean) testCase[1];
-            Integer dstOffsetMillis = (Integer) testCase[2];
-            long whenMillis = (Long) testCase[3];
-            TimeZone bias = (TimeZone) testCase[4];
-            OffsetResult expectedMatch = (OffsetResult) testCase[5];
+            long whenMillis = (Long) testCase[2];
+            TimeZone bias = (TimeZone) testCase[3];
+            OffsetResult expectedMatch = (OffsetResult) testCase[4];
 
-            OffsetResult actualMatch = countryTimeZones.lookupByOffsetWithBias(
-                    totalOffsetMillis, isDst, dstOffsetMillis, whenMillis, bias);
+            OffsetResult actualMatch;
+            if (isDst == null) {
+                actualMatch = countryTimeZones.lookupByOffsetWithBias(
+                        whenMillis, bias, totalOffsetMillis);
+            } else {
+                actualMatch = countryTimeZones.lookupByOffsetWithBias(
+                        whenMillis, bias, totalOffsetMillis, isDst);
+            }
 
             if (!offsetResultEquals(expectedMatch, actualMatch)) {
                 Function<TimeZone, String> timeZoneFormatter =
@@ -380,7 +357,6 @@ public class CountryTimeZonesTest {
                 failures.add("Fail: case=" + i
                         + ", totalOffsetMillis=" + totalOffsetMillis
                         + ", isDst=" + isDst
-                        + ", dstOffsetMillis=" + dstOffsetMillis
                         + ", whenMillis=" + whenMillis
                         + ", bias=" + timeZoneFormatter.apply(bias)
                         + ", expectedMatch=" + offsetResultFormatter.apply(expectedMatch)

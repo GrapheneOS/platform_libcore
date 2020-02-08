@@ -1104,7 +1104,8 @@ package libcore.timezone {
     method public boolean hasUtcZone(long);
     method public boolean isDefaultTimeZoneBoosted();
     method public boolean isForCountryCode(String);
-    method public libcore.timezone.CountryTimeZones.OffsetResult lookupByOffsetWithBias(int, Boolean, Integer, long, android.icu.util.TimeZone);
+    method public libcore.timezone.CountryTimeZones.OffsetResult lookupByOffsetWithBias(long, android.icu.util.TimeZone, int, boolean);
+    method public libcore.timezone.CountryTimeZones.OffsetResult lookupByOffsetWithBias(long, android.icu.util.TimeZone, int);
   }
 
   public static final class CountryTimeZones.OffsetResult {

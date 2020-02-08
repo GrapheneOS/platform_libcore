@@ -30,8 +30,7 @@ import com.android.tradefed.util.FileUtil;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
 
 /**
  * Helper class that runs the metric instrumentations on a test device.
@@ -49,12 +48,8 @@ class MetricsRunner {
      */
     static MetricsRunner create(ITestDevice testDevice, TestLogData logs)
             throws DeviceNotAvailableException {
-        // TODO(b/145514052): Work out how to get this dynamically rather than hard-coding.
-        // In theory it should be possible to do this with
-        //   testDevice.executeShellCommand("echo -n ${EXTERNAL_STORAGE}");
-        // but the value returned by that call ("/sdcard") no longer works.
-        // Until that issue is resolved, it should be safe to assume the following path:
-        String deviceParentDirectory = "/storage/emulated/0";
+        String deviceParentDirectory =
+                testDevice.executeShellCommand("echo -n ${EXTERNAL_STORAGE}");
         return new MetricsRunner(testDevice, deviceParentDirectory, logs);
     }
 
@@ -247,10 +242,14 @@ class MetricsRunner {
         }
     }
 
+    /**
+     * Returns the ISO 8601 form of the current time in UTC, for use as a timestamp in filenames.
+     * (Note that using UTC avoids an issue where the timezone indicator includes a + sign for the
+     * offset, which triggers an issue with URL encoding in tradefed, which causes the calls to
+     * {@code testDevice.pullFile()} to fail. See b/149018916.)
+     */
     private static String getCurrentTimeIso8601() {
-        SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-        Date now = new Date();
-        return iso8601Format.format(now);
+        return Instant.now().toString();
     }
 
     /**
