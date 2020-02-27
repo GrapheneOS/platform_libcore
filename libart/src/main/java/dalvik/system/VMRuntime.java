@@ -744,4 +744,15 @@ public final class VMRuntime {
      */
     @libcore.api.CorePlatformApi
     public static native void setProcessDataDirectory(String dataDir);
+
+    /**
+     * Returns whether {@code encodedClassLoaderContext} is a valid encoded class loader context.
+     * A class loader context is an internal opaque format used by the runtime to encode the
+     * class loader hierarchy (including each ClassLoader's classpath) used to load a dex file.
+     *
+     * @return True if encodedClassLoaderContext is a non-null valid encoded class loader context.
+     *   Throws NullPointerException if encodedClassLoaderContext is null.
+     */
+    @libcore.api.CorePlatformApi
+    public static native boolean isValidClassLoaderContext(String encodedClassLoaderContext);
 }

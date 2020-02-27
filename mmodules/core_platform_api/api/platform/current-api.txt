@@ -535,7 +535,7 @@ package dalvik.system {
   }
 
   public static interface BaseDexClassLoader.Reporter {
-    method public void report(java.util.List<java.lang.ClassLoader>, java.util.List<java.lang.String>);
+    method public void report(java.util.Map<java.lang.String,java.lang.String>);
   }
 
   public final class BlockGuard {
@@ -698,6 +698,7 @@ package dalvik.system {
     method public static boolean isBootClassPathOnDisk(String);
     method @dalvik.annotation.optimization.FastNative public boolean isCheckJniEnabled();
     method @dalvik.annotation.optimization.FastNative public boolean isNativeDebuggable();
+    method public static boolean isValidClassLoaderContext(String);
     method @dalvik.annotation.optimization.FastNative public Object newNonMovableArray(Class<?>, int);
     method @dalvik.annotation.optimization.FastNative public Object newUnpaddedArray(Class<?>, int);
     method public void notifyStartupCompleted();

@@ -885,6 +885,7 @@ java_library {
 java_system_modules {
     name: "art-module-public-api-stubs-system-modules",
     visibility: [
+        "//art/build/sdk",
         "//external/conscrypt",
         "//external/icu/android_icu4j",
         "//external/wycheproof",

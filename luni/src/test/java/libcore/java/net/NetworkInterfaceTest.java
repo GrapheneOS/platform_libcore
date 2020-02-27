@@ -16,6 +16,7 @@
 
 package libcore.java.net;
 
+import junit.framework.TestCase;
 
 import android.system.StructIfaddrs;
 import java.io.BufferedReader;
@@ -38,11 +39,6 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import libcore.io.IoUtils;
 import libcore.io.Libcore;
-import libcore.junit.junit3.TestCaseWithRules;
-import libcore.junit.util.SwitchTargetSdkVersionRule;
-import libcore.junit.util.SwitchTargetSdkVersionRule.TargetSdkVersion;
-import org.junit.Rule;
-import org.junit.rules.TestRule;
 
 import static android.system.OsConstants.AF_INET;
 import static android.system.OsConstants.IFF_LOOPBACK;
@@ -53,10 +49,7 @@ import static android.system.OsConstants.IFF_UP;
 import static android.system.OsConstants.SOCK_DGRAM;
 import static java.net.NetworkInterface.getNetworkInterfaces;
 
-public class NetworkInterfaceTest extends TestCaseWithRules {
-    @Rule
-    public TestRule switchTargetSdkVersionRule = SwitchTargetSdkVersionRule.getInstance();
-
+public class NetworkInterfaceTest extends TestCase {
     // http://code.google.com/p/android/issues/detail?id=13784
     private final static int ARPHRD_ETHER = 1; // from if_arp.h
     public void testIPv6() throws Exception {
@@ -114,17 +107,6 @@ public class NetworkInterfaceTest extends TestCaseWithRules {
                         assertNotNull(ia.getBroadcast());
                     }
                 }
-            }
-        }
-    }
-
-    @TargetSdkVersion(29)
-    public void testGetHardwareAddress_compat_returnsHardwareAddress() throws Exception {
-        // Ensure apps with a targetSdk version <= 29 are able to access the MAC address of ethernet
-        // devices.
-        for (NetworkInterface nif : Collections.list(getNetworkInterfaces())) {
-            if (isEthernet(nif.getName())) {
-                assertEquals(6, nif.getHardwareAddress().length);
             }
         }
     }

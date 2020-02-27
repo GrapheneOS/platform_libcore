@@ -34,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,18 +49,15 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public final class BaseDexClassLoaderTest {
     private static class Reporter implements BaseDexClassLoader.Reporter {
-        public final List<ClassLoader> classLoaders = new ArrayList<>();
-        public final List<String> loadedDexPaths = new ArrayList<>();
+        public final Map<String, String> loadedDexMapping = new HashMap<String, String>();
 
         @Override
-        public void report(List<ClassLoader> loaders, List<String> dexPaths) {
-            classLoaders.addAll(loaders);
-            loadedDexPaths.addAll(dexPaths);
+        public void report(Map<String, String> contextMap) {
+            loadedDexMapping.putAll(contextMap);
         }
 
         void reset() {
-            classLoaders.clear();
-            loadedDexPaths.clear();
+            loadedDexMapping.clear();
         }
     }
 
@@ -122,17 +120,15 @@ public final class BaseDexClassLoaderTest {
         BaseDexClassLoader cl1 = new PathClassLoader(jar.getPath(),
             ClassLoader.getSystemClassLoader());
 
-        // Verify the reported data.
-        assertEquals(2, reporter.loadedDexPaths.size());
-        assertEquals(2, reporter.classLoaders.size());
+        assertEquals(1, reporter.loadedDexMapping.size());
 
-        // First class loader should be the one loading the files
-        assertEquals(jar.getPath(), reporter.loadedDexPaths.get(0));
-        assertEquals(cl1, reporter.classLoaders.get(0));
-
-        // Second class loader should be the system class loader.
-        // Don't check the actual classpath as that might vary based on system properties.
-        assertEquals(ClassLoader.getSystemClassLoader(), reporter.classLoaders.get(1));
+        String[] contexts = reporter.loadedDexMapping.get(jar.getPath()).split(";");
+        assertEquals(2, contexts.length);
+        // Verify the context for the loaded dex files.
+        assertEquals("PCL[]", contexts[0]);
+        // We cannot fully verify the context of the system class loader because its classpath
+        // may vary based on system properties and whether or not we are in a test environment.
+        assertTrue(contexts[1].startsWith("PCL["));
     }
 
     @Test
@@ -141,16 +137,10 @@ public final class BaseDexClassLoaderTest {
         ClassLoader unknownLoader = new ClassLoader(ClassLoader.getSystemClassLoader()) {};
         BaseDexClassLoader cl1 = new PathClassLoader(jar.getPath(), unknownLoader);
 
-        assertEquals(3, reporter.loadedDexPaths.size());
-        assertEquals(3, reporter.classLoaders.size());
-
-        assertEquals(jar.getPath(), reporter.loadedDexPaths.get(0));
-        assertEquals(cl1, reporter.classLoaders.get(0));
-
-        assertNull(reporter.loadedDexPaths.get(1));
-        assertEquals(unknownLoader, reporter.classLoaders.get(1));
-
-        assertEquals(ClassLoader.getSystemClassLoader(), reporter.classLoaders.get(2));
+        // Verify the dex path gets reported, but with no class loader context due to the foreign
+        // class loader.
+        assertEquals(Map.of(jar.getPath(), "=UnsupportedClassLoaderContext="),
+                reporter.loadedDexMapping);
     }
 
     @Test
@@ -158,8 +148,15 @@ public final class BaseDexClassLoaderTest {
         BaseDexClassLoader cl1 = new PathClassLoader(jar.getPath(),
             ClassLoader.getSystemClassLoader());
 
-        assertEquals(2, reporter.loadedDexPaths.size());
-        assertEquals(2, reporter.classLoaders.size());
+        assertEquals(1, reporter.loadedDexMapping.size());
+
+        String[] contexts = reporter.loadedDexMapping.get(jar.getPath()).split(";");
+        assertEquals(2, contexts.length);
+        // Verify the context for the loaded dex files.
+        assertEquals("PCL[]", contexts[0]);
+        // We cannot fully verify the context of the system class loader because its classpath
+        // may vary based on system properties and whether or not we are in a test environment.
+        assertTrue(contexts[1].startsWith("PCL["));
 
         // Check we don't report after the reporter is unregistered.
         unregisterReporter();
@@ -169,8 +166,120 @@ public final class BaseDexClassLoaderTest {
         BaseDexClassLoader cl2 = new PathClassLoader(jar.getPath(), pcl);
 
         // Verify nothing reported
-        assertEquals(0, reporter.loadedDexPaths.size());
-        assertEquals(0, reporter.classLoaders.size());
+        assertEquals(Map.<String, String>of(), reporter.loadedDexMapping);
+    }
+
+    @Test
+    public void testReporting_multipleJars() throws Exception {
+        // Load the jar file using a PathClassLoader.
+        BaseDexClassLoader cl1 = new PathClassLoader(
+            String.join(File.pathSeparator, jar.getPath(), jar2.getPath()),
+            ClassLoader.getSystemClassLoader());
+
+        assertEquals(2, reporter.loadedDexMapping.size());
+        // Verify the first jar.
+        String[] contexts = reporter.loadedDexMapping.get(jar.getPath()).split(";");
+        assertEquals(2, contexts.length);
+        // Verify the context for the loaded dex files.
+        assertEquals("PCL[]", contexts[0]);
+        // We cannot fully verify the context of the system class loader because its classpath
+        // may vary based on system properties and whether or not we are in a test environment.
+        assertTrue(contexts[1].startsWith("PCL["));
+
+        // Verify the second jar.
+        String[] contexts2 = reporter.loadedDexMapping.get(jar2.getPath()).split(";");
+        assertEquals(2, contexts2.length);
+        // Verify the context for the loaded dex files.
+        assertEquals("PCL[" + jar.getPath() + "]", contexts2[0]);
+        // We cannot fully verify the context of the system class loader because its classpath
+        // may vary based on system properties and whether or not we are in a test environment.
+        assertTrue(contexts2[1].startsWith("PCL["));
+    }
+
+
+    /**
+      * Separates the system class loader context from the rest of the context.
+      * Returns an array of 2 elements, where index 0 is the application class loader context
+      * without the system class loader and index 0 is the system class loader context.
+      */
+    private String[] separateSystemClassLoaderContext(String context) {
+        int clcSeparatorIndex = context.lastIndexOf(";");
+        String jarContext = context.substring(0, clcSeparatorIndex);
+        String systemClassLoaderContext = context.substring(clcSeparatorIndex + 1);
+        return new String[] {jarContext, systemClassLoaderContext};
+    }
+
+    @Test
+    public void testReporting_withSharedLibraries() throws Exception {
+        final ClassLoader parent = ClassLoader.getSystemClassLoader();
+        final ClassLoader sharedLoaders[] = new ClassLoader[] {
+            new PathClassLoader(jar2.getPath(), /* librarySearchPath */ null, parent),
+        };
+        // Reset so we don't get load reports from creating the shared library CL
+        reporter.reset();
+
+        BaseDexClassLoader bdcl = new PathClassLoader(jar.getPath(), null, parent, sharedLoaders);
+
+        assertEquals(1, reporter.loadedDexMapping.size());
+
+        String[] contexts = separateSystemClassLoaderContext(
+            reporter.loadedDexMapping.get(jar.getPath()));
+        // We cannot fully verify the context of the system class loader because its classpath
+        // may vary based on system properties and whether or not we are in a test environment.
+        assertTrue(contexts[1].startsWith("PCL["));
+        // Verify the context for the loaded dex files. The system class loader should be part
+        // of the shared library class loader.
+        assertEquals("PCL[]{PCL[" + jar2.getPath() + "];" + contexts[1] + "}",
+                     contexts[0]);
+    }
+
+    @Test
+    public void testReporting_multipleJars_withSharedLibraries() throws Exception {
+        final ClassLoader parent = ClassLoader.getSystemClassLoader();
+        final String sharedJarPath = resourcesMap.get("parent.jar").getAbsolutePath();
+        final ClassLoader sharedLoaders[] = new ClassLoader[] {
+            new PathClassLoader(sharedJarPath, /* librarySearchPath */ null, parent),
+        };
+        // Reset so we don't get load reports from creating the shared library CL
+        reporter.reset();
+
+        BaseDexClassLoader bdcl = new PathClassLoader(
+                String.join(File.pathSeparator, jar.getPath(), jar2.getPath()),
+                null, parent, sharedLoaders);
+
+        assertEquals(2, reporter.loadedDexMapping.size());
+
+
+        // Verify the first jar.
+        String[] contexts = separateSystemClassLoaderContext(
+            reporter.loadedDexMapping.get(jar.getPath()));
+        String contextSuffix = "{PCL[" + sharedJarPath + "];" + contexts[1] + "}";
+
+        // We cannot fully verify the context of the system class loader because its classpath
+        // may vary based on system properties and whether or not we are in a test environment.
+        assertTrue(contexts[1].startsWith("PCL["));
+        // Verify the context for the loaded dex files.
+        assertEquals("PCL[]" + contextSuffix, contexts[0]);
+        // We cannot fully verify the context of the system class loader because its classpath
+        // may vary based on system properties and whether or not we are in a test environment.
+        assertTrue(contexts[1].startsWith("PCL["));
+
+        // Verify the second jar.
+        String[] contexts2 = separateSystemClassLoaderContext(
+            reporter.loadedDexMapping.get(jar2.getPath()));
+        String contextSuffix2 = "{PCL[" + sharedJarPath + "];" + contexts2[1] + "}";
+
+        // Verify the context for the loaded dex files.
+        assertEquals("PCL[" + jar.getPath() + "]" + contextSuffix2, contexts2[0]);
+        // We cannot fully verify the context of the system class loader because its classpath
+        // may vary based on system properties and whether or not we are in a test environment.
+        assertTrue(contexts2[1].startsWith("PCL[")) ;
+    }
+
+    @Test
+    public void testReporting_emptyPath() throws Exception {
+        BaseDexClassLoader cl1 = new PathClassLoader("", ClassLoader.getSystemClassLoader());
+        assertEquals(Map.<String, String>of(), reporter.loadedDexMapping);
     }
 
     /* package */ static List<String> readResources(ClassLoader cl, String resourceName)

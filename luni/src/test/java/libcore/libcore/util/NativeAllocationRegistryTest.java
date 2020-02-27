@@ -96,9 +96,15 @@ public class NativeAllocationRegistryTest extends TestCase {
         // Verify most of the allocations have been freed.
         // Since we use fairly large Java objects, this doesn't test the GC triggering
         // effect; we do that elsewhere.
+        // Since native and java objects have the same size, and we can only have max
+        // Java bytes in use, there should be no more than max native bytes in use,
+        // once all enqueued deallocations have been processed. First make sure
+        // that the ReferenceQueueDaemon has processed all pending requests, and then
+        // check.
+        System.runFinalization();
         nativeBytes = getNumNativeBytesAllocated();
         assertTrue("Excessive native bytes still allocated (" + nativeBytes + ")"
-                + " given max memory of (" + max + ")", nativeBytes < 2 * max);
+                + " given max memory of (" + max + ")", nativeBytes <= max);
         // Check that the array is fully populated, and sufficiently many native bytes
         // are live.
         long nativeReachableBytes = numSavedAllocations * nativeSize;

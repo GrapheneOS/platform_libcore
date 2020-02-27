@@ -71,6 +71,7 @@ java_library {
 java_system_modules {
     name: "art-module-intra-core-api-stubs-system-modules",
     visibility: [
+        "//art/build/sdk",
         "//external/bouncycastle",
         "//external/conscrypt",
         "//external/icu/android_icu4j",

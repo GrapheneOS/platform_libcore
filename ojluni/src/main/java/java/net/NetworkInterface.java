@@ -47,7 +47,7 @@ import static android.system.OsConstants.*;
 
 // Android-note: NetworkInterface has been rewritten to avoid native code.
 // Fix upstream bug not returning link-down interfaces. http://b/26238832
-// Android-added: Document restrictions for targetSdkVersion > 29. http://b/141455849
+// Android-added: Document restrictions for targetSdkVersion >= R. http://b/141455849
 /**
  * This class represents a Network Interface made up of a name,
  * and a list of IP addresses assigned to this interface.
@@ -58,9 +58,9 @@ import static android.system.OsConstants.*;
  * <p>
  * <a name="access-restrictions"></a>Note that information about
  * {@link NetworkInterface}s may be restricted. For example, non-system apps
- * with {@code targetSdkVersion > 29} will only have access to information
- * about {@link NetworkInterface}s that are associated with an
- * {@link InetAddress}.
+ * with {@code targetSdkVersion >= android.os.Build.VERSION_CODES.R} will only
+ * have access to information about {@link NetworkInterface}s that are
+ * associated with an {@link InetAddress}.
  *
  * @since 1.4
  */
@@ -272,7 +272,7 @@ public final class NetworkInterface {
         return "".equals(displayName) ? null : displayName;
     }
 
-    // Android-added: Document restrictions for targetSdkVersion > 29. http://b/141455849
+    // Android-added: Document restrictions for targetSdkVersion >= R. http://b/141455849
     /**
      * Searches for the network interface with the specified name.
      *
@@ -304,7 +304,7 @@ public final class NetworkInterface {
         return null;
     }
 
-    // Android-added: Document restrictions for targetSdkVersion > 29. http://b/141455849
+    // Android-added: Document restrictions for targetSdkVersion >= R. http://b/141455849
     /**
      * Get a network interface given its index.
      *
@@ -373,7 +373,7 @@ public final class NetworkInterface {
         return null;
     }
 
-    // Android-added: Document restrictions for targetSdkVersion > 29. http://b/141455849
+    // Android-added: Document restrictions for targetSdkVersion >= R. http://b/141455849
     /**
      * Returns all the interfaces on this machine. The {@code Enumeration}
      * contains at least one element, possibly representing a loopback
@@ -383,7 +383,8 @@ public final class NetworkInterface {
      * NOTE: can use getNetworkInterfaces()+getInetAddresses()
      *       to obtain all IP addresses for this node
      * <p>
-     * For non-system apps with {@code targetSdkVersion > 29}, this
+     * For non-system apps with
+     * {@code targetSdkVersion >= android.os.Build.VERSION_CODES.R}, this
      * method will only return information for {@link NetworkInterface}s that
      * are associated with an {@link InetAddress}.
      *
@@ -558,7 +559,7 @@ public final class NetworkInterface {
         return (getFlags() & IFF_MULTICAST) != 0;
     }
 
-    // Android-added: Document restrictions for targetSdkVersion > 29. http://b/141455849
+    // Android-added: Document restrictions for targetSdkVersion >= R. http://b/141455849
     /**
      * Returns the hardware address (usually MAC) of the interface if it
      * has one and if it can be accessed given the current privileges.
@@ -570,7 +571,8 @@ public final class NetworkInterface {
      *          manager is set and the caller does not have the permission
      *          NetPermission("getNetworkInformation"). For example, this
      *          method will generally return {@code null} when called by
-     *          non-system apps targeting API levels > 29.
+     *          non-system apps having
+     *          {@code targetSdkVersion >= android.os.Build.VERSION_CODES.R}.
      *
      * @exception       SocketException if an I/O error occurs.
      * @since 1.6
