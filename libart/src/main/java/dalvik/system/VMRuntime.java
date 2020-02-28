@@ -73,6 +73,20 @@ public final class VMRuntime {
         PREVENT_META_REFLECTION_BLACKLIST_ACCESS = 142365358; // This is a bug id.
 
     /**
+     * Gating access to greylist-max-p APIs.
+     */
+    @ChangeId
+    @EnabledAfter(targetSdkVersion = VersionCodes.P)
+    private static final long HIDE_MAXTARGETSDK_P_HIDDEN_APIS = 149997251; // This is a bug id.
+
+    /**
+     * Gating access to greylist-max-q APIs.
+     */
+    @ChangeId
+    @EnabledAfter(targetSdkVersion = VersionCodes.Q)
+    private static final long HIDE_MAXTARGETSDK_Q_HIDDEN_APIS = 149994052; // This is a bug id.
+
+    /**
      * Interface for logging hidden API usage events.
      */
     @libcore.api.CorePlatformApi

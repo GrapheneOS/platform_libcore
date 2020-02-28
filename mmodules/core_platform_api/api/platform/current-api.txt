@@ -850,6 +850,11 @@ package java.nio {
     method public final void setAccessible(boolean);
   }
 
+  public final class NIOAccess {
+    method public static Object getBaseArray(java.nio.Buffer);
+    method public static int getBaseArrayOffset(java.nio.Buffer);
+  }
+
   public final class NioUtils {
     method public static void freeDirectBuffer(java.nio.ByteBuffer);
     method public static byte[] unsafeArray(java.nio.ByteBuffer);
