@@ -1417,14 +1417,30 @@ package sun.misc {
 
   public final class Unsafe {
     method public int arrayBaseOffset(Class);
+    method public int arrayIndexScale(Class);
+    method @dalvik.annotation.optimization.FastNative public void copyMemory(long, long, long);
+    method @dalvik.annotation.optimization.FastNative public boolean getBoolean(Object, long);
     method @dalvik.annotation.optimization.FastNative public byte getByte(Object, long);
     method @dalvik.annotation.optimization.FastNative public byte getByte(long);
+    method @dalvik.annotation.optimization.FastNative public double getDouble(Object, long);
+    method @dalvik.annotation.optimization.FastNative public float getFloat(Object, long);
+    method @dalvik.annotation.optimization.FastNative public int getInt(Object, long);
+    method @dalvik.annotation.optimization.FastNative public int getInt(long);
     method @dalvik.annotation.optimization.FastNative public long getLong(Object, long);
     method @dalvik.annotation.optimization.FastNative public long getLong(long);
+    method @dalvik.annotation.optimization.FastNative public Object getObject(Object, long);
     method public static sun.misc.Unsafe getUnsafe();
     method public long objectFieldOffset(java.lang.reflect.Field);
+    method @dalvik.annotation.optimization.FastNative public void putBoolean(Object, long, boolean);
     method @dalvik.annotation.optimization.FastNative public void putByte(Object, long, byte);
     method @dalvik.annotation.optimization.FastNative public void putByte(long, byte);
+    method @dalvik.annotation.optimization.FastNative public void putDouble(Object, long, double);
+    method @dalvik.annotation.optimization.FastNative public void putFloat(Object, long, float);
+    method @dalvik.annotation.optimization.FastNative public void putInt(Object, long, int);
+    method @dalvik.annotation.optimization.FastNative public void putInt(long, int);
+    method @dalvik.annotation.optimization.FastNative public void putLong(Object, long, long);
+    method @dalvik.annotation.optimization.FastNative public void putLong(long, long);
+    method @dalvik.annotation.optimization.FastNative public void putObject(Object, long, Object);
   }
 
 }

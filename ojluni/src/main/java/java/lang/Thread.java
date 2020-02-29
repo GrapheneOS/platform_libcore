@@ -430,28 +430,27 @@ class Thread implements Runnable {
         }
 
         final int nanosPerMilli = 1000000;
-        long start = System.nanoTime();
-        long duration = (millis * nanosPerMilli) + nanos;
+        final long durationNanos;
+        if (millis >= Long.MAX_VALUE / nanosPerMilli - 1L) {
+          // > 292 years. Avoid overflow by capping it at roughly 292 years.
+          durationNanos = Long.MAX_VALUE;
+        } else {
+          durationNanos = (millis * nanosPerMilli) + nanos;
+        }
+        long startNanos = System.nanoTime();
 
         Object lock = currentThread().lock;
 
-        // The native sleep(...) method actually performs a special type of wait, which may return
-        // early, so loop until sleep duration passes.
+        // The native sleep(...) method actually does a monitor wait, which may return
+        // early, so loop until sleep duration passes. The monitor is only notified when
+        // we exit, which can't happen while we're sleeping.
         synchronized (lock) {
-            while (true) {
+            for (long elapsed = 0L; elapsed < durationNanos;
+                    elapsed = System.nanoTime() - startNanos) {
+                final long remaining = durationNanos - elapsed;
+                millis = remaining / nanosPerMilli;
+                nanos = (int) (remaining % nanosPerMilli);
                 sleep(lock, millis, nanos);
-
-                long now = System.nanoTime();
-                long elapsed = now - start;
-
-                if (elapsed >= duration) {
-                    break;
-                }
-
-                duration -= elapsed;
-                start = now;
-                millis = duration / nanosPerMilli;
-                nanos = (int) (duration % nanosPerMilli);
             }
         }
         // END Android-changed: Implement sleep() methods using a shared native implementation.
@@ -1422,6 +1421,8 @@ class Thread implements Runnable {
      *          cleared when this exception is thrown.
      */
     // BEGIN Android-changed: Synchronize on separate lock object not this Thread.
+    // nativePeer and hence isAlive() can change asynchronously, but Thread::Destroy
+    // will always acquire and notify lock after isAlive() changes to false.
     // public final synchronized void join(long millis)
     public final void join(long millis)
     throws InterruptedException {
