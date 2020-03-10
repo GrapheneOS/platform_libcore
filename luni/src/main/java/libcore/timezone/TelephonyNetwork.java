@@ -87,16 +87,25 @@ public final class TelephonyNetwork {
         return mccMnc;
     }
 
+    /**
+     * Returns the Mobile Country Code of the network.
+     */
     @libcore.api.CorePlatformApi
     public String getMcc() {
         return mccMnc.mcc;
     }
 
+    /**
+     * Returns the Mobile Network Code of the network.
+     */
     @libcore.api.CorePlatformApi
     public String getMnc() {
         return mccMnc.mnc;
     }
 
+    /**
+     * Returns the country in which the network operates as an ISO 3166 alpha-2 (lower case).
+     */
     @libcore.api.CorePlatformApi
     public String getCountryIsoCode() {
         return countryIsoCode;

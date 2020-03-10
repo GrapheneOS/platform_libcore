@@ -74,7 +74,7 @@ public class CountryTimeZonesTest {
         CountryTimeZones countryTimeZones = CountryTimeZones.createValidated(
                 "gb", "Europe/London", false /* defaultTimeZoneBoost */,
                 true /* everUsesUtc */, timeZoneMappings("Europe/London"), "test");
-        assertTrue(countryTimeZones.isForCountryCode("gb"));
+        assertTrue(countryTimeZones.matchesCountryCode("gb"));
         assertEquals("Europe/London", countryTimeZones.getDefaultTimeZoneId());
         assertZoneEquals(zone("Europe/London"), countryTimeZones.getDefaultTimeZone());
         assertEquals(timeZoneMappings("Europe/London"), countryTimeZones.getTimeZoneMappings());
@@ -114,13 +114,13 @@ public class CountryTimeZonesTest {
     }
 
     @Test
-    public void isForCountryCode() throws Exception {
+    public void matchesCountryCode() throws Exception {
         CountryTimeZones countryTimeZones = CountryTimeZones.createValidated(
                 "gb", "Europe/London", false /* defaultTimeZoneBoost */, true /* everUsesUtc */,
                 timeZoneMappings("Europe/London"), "test");
-        assertTrue(countryTimeZones.isForCountryCode("GB"));
-        assertTrue(countryTimeZones.isForCountryCode("Gb"));
-        assertTrue(countryTimeZones.isForCountryCode("gB"));
+        assertTrue(countryTimeZones.matchesCountryCode("GB"));
+        assertTrue(countryTimeZones.matchesCountryCode("Gb"));
+        assertTrue(countryTimeZones.matchesCountryCode("gB"));
     }
 
     @Test

@@ -103,6 +103,9 @@ public final class ZoneInfoDb implements AutoCloseable {
     }
   };
 
+  /**
+   * Obtains the singleton instance.
+   */
   @libcore.api.CorePlatformApi
   public static ZoneInfoDb getInstance() {
     return DATA;
@@ -349,6 +352,9 @@ public final class ZoneInfoDb implements AutoCloseable {
     return rawUtcOffsetsCache;
   }
 
+  /**
+   * Returns the tzdb version in use.
+   */
   @libcore.api.CorePlatformApi
   public String getVersion() {
     checkNotClosed();

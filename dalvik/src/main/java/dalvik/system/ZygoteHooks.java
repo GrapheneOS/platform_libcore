@@ -21,6 +21,7 @@ import android.icu.text.DecimalFormatSymbols;
 import android.icu.util.ULocale;
 
 import java.io.File;
+import java.io.FileDescriptor;
 
 /**
  * Provides hooks for the zygote to call back into the runtime to perform
@@ -67,6 +68,11 @@ public final class ZygoteHooks {
     public static void onEndPreload() {
         // All cache references created by ICU from this point will be soft.
         CacheValue.setStrength(CacheValue.Strength.SOFT);
+
+        // Clone standard descriptors as originals closed / rebound during zygote post fork.
+        FileDescriptor.in.cloneForFork();
+        FileDescriptor.out.cloneForFork();
+        FileDescriptor.err.cloneForFork();
     }
 
     /**

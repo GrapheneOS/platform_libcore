@@ -199,7 +199,8 @@ public final class TimeZoneFinder {
     @libcore.api.CorePlatformApi
     public CountryTimeZones lookupCountryTimeZones(String countryIso) {
         synchronized (this) {
-            if (lastCountryTimeZones != null && lastCountryTimeZones.isForCountryCode(countryIso)) {
+            if (lastCountryTimeZones != null
+                    && lastCountryTimeZones.matchesCountryCode(countryIso)) {
                 return lastCountryTimeZones;
             }
         }
@@ -525,5 +526,4 @@ public final class TimeZoneFinder {
             return validatedCountryTimeZones;
         }
     }
-
 }

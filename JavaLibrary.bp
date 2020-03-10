@@ -493,6 +493,7 @@ java_library_static {
         "//frameworks/base/location/tests/locationtests",
         "//frameworks/base/core/tests/coretests",
         "//frameworks/base/wifi/tests",
+        "//cts/tests/tests/util",
     ],
     hostdex: true,
     srcs: [

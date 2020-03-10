@@ -25,7 +25,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Constants and logic associated with the time zone data version file.
+ * Version information associated with the set of time zone data on a device.
+ *
+ * <p>Time Zone Data Sets have a major ({@link #getFormatMajorVersion()}) and minor
+ * ({@link #currentFormatMinorVersion()}) version number:
+ * <ul>
+ *   <li>Major version numbers are mutually incompatible. e.g. v2 is not compatible with a v1 or a
+ *   v3 device.</li>
+ *   <li>Minor version numbers are backwards compatible. e.g. a v2.2 data set will work
+ *   on a v2.1 device but not a v2.3 device. The minor version is reset to 1 when the major version
+ *   is incremented.</li>
+ * </ul>
+ *
+ * <p>Data sets contain time zone rules and other data associated wtih a tzdb release
+ * ({@link #getRulesVersion()}) and an additional Android-specific revision number
+ * ({@link #getRevision()}).
+ *
+ * <p>See platform/system/timezone/README.android for more information.
  * @hide
  */
 @libcore.api.CorePlatformApi
@@ -162,22 +178,26 @@ public final class TzDataSetVersion {
         return readFromFile(new File(tzVersionFileName));
     }
 
+    /** Returns the major version number. See {@link TzDataSetVersion}. */
     @libcore.api.CorePlatformApi
     public int getFormatMajorVersion() {
         return formatMajorVersion;
     }
 
+    /** Returns the minor version number. See {@link TzDataSetVersion}. */
     @libcore.api.CorePlatformApi
     public int getFormatMinorVersion() {
         return formatMinorVersion;
     }
 
+    /** Returns the tzdb version string. See {@link TzDataSetVersion}. */
     @libcore.api.CorePlatformApi
     public String getRulesVersion() {
         return rulesVersion;
     }
 
     // Remove from CorePlatformApi when all users in platform code are removed. http://b/123398797
+    /** Returns the Android revision. See {@link TzDataSetVersion}. */
     @libcore.api.CorePlatformApi
     public int getRevision() {
         return revision;
@@ -210,9 +230,7 @@ public final class TzDataSetVersion {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         TzDataSetVersion that = (TzDataSetVersion) o;
-
         if (formatMajorVersion != that.formatMajorVersion) {
             return false;
         }

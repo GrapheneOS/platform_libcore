@@ -30,7 +30,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A class that can find telephony networks loaded via {@link TelephonyLookup}.
+ * A class that can find telephony network information loaded via {@link TelephonyLookup}.
+ *
  * @hide
  */
 @libcore.api.CorePlatformApi
@@ -70,6 +71,11 @@ public final class TelephonyNetworkFinder {
         this.networksMap = networksMap;
     }
 
+    /**
+     * Returns information held about a specific MCC + MNC combination. It is expected for this
+     * method to return {@code null}. Only known, unusual networks will typically have information
+     * returned, e.g. if they operate in countries other than the one suggested by their MCC.
+     */
     @libcore.api.CorePlatformApi
     public TelephonyNetwork findNetworkByMccMnc(String mcc, String mnc) {
         return networksMap.get(new MccMnc(mcc, mnc));
