@@ -82,7 +82,8 @@ public final class FileDescriptor {
      *
      * @see     java.lang.System#in
      */
-    public static final FileDescriptor in = new FileDescriptor(0);
+    // Android-changed: Duplicates of FDs needed for RuntimeInit#redirectLogStreams
+    public static final FileDescriptor in = dupFd(0);
 
     /**
      * A handle to the standard output stream. Usually, this file
@@ -90,7 +91,8 @@ public final class FileDescriptor {
      * known as <code>System.out</code>.
      * @see     java.lang.System#out
      */
-    public static final FileDescriptor out = new FileDescriptor(1);
+    // Android-changed: Duplicates of FDs needed for RuntimeInit#redirectLogStreams
+    public static final FileDescriptor out = dupFd(1);
 
     /**
      * A handle to the standard error stream. Usually, this file
@@ -99,7 +101,8 @@ public final class FileDescriptor {
      *
      * @see     java.lang.System#err
      */
-    public static final FileDescriptor err = new FileDescriptor(2);
+    // Android-changed: Duplicates of FDs needed for RuntimeInit#redirectLogStreams
+    public static final FileDescriptor err = dupFd(2);
 
     /**
      * Tests if this file descriptor object is valid.
@@ -166,26 +169,6 @@ public final class FileDescriptor {
         this.descriptor = fd;
     }
 
-    // BEGIN Android-added: Method to clone standard file descriptors.
-    // Required as a consequence of RuntimeInit#redirectLogStreams. Cloning is used in
-    // ZygoteHooks.onEndPreload().
-    /**
-     * Clones the current native file descriptor and uses this for this FileDescriptor instance.
-     *
-     * This method does not close the current native file descriptor.
-     *
-     * @hide internal use only
-     */
-    public void cloneForFork() {
-        try {
-            int newDescriptor = Os.fcntlInt(this, F_DUPFD_CLOEXEC, 0);
-            this.descriptor = newDescriptor;
-        } catch (ErrnoException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    // END Android-added: Method to clone standard file descriptors.
-
     // BEGIN Android-added: Methods to enable ownership enforcement of Unix file descriptors.
     /**
      * Returns the owner ID of this FileDescriptor. It's highly unlikely you should be calling this.
@@ -229,6 +212,15 @@ public final class FileDescriptor {
      */
     public boolean isSocket$() {
         return isSocket(descriptor);
+    }
+
+    // Android-added: Needed for RuntimeInit#redirectLogStreams.
+    private static FileDescriptor dupFd(int fd) {
+        try {
+            return new FileDescriptor(Os.fcntlInt(new FileDescriptor(fd), F_DUPFD_CLOEXEC, 0));
+        } catch (ErrnoException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static native boolean isSocket(int descriptor);
