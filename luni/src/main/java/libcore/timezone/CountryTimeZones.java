@@ -165,7 +165,7 @@ public final class CountryTimeZones {
         private final boolean isOnlyMatch;
 
         public OffsetResult(TimeZone timeZone, boolean isOnlyMatch) {
-            this.timeZone = java.util.Objects.requireNonNull(timeZone);
+            this.timeZone = Objects.requireNonNull(timeZone);
             this.isOnlyMatch = isOnlyMatch;
         }
 
@@ -181,8 +181,8 @@ public final class CountryTimeZones {
 
         @Override
         public String toString() {
-            return "Result{"
-                    + "timeZone='" + timeZone + '\''
+            return "OffsetResult{"
+                    + "timeZone(ID)='" + timeZone.getID() + '\''
                     + ", isOnlyMatch=" + isOnlyMatch
                     + '}';
         }
@@ -207,7 +207,7 @@ public final class CountryTimeZones {
     private CountryTimeZones(String countryIso, String defaultTimeZoneId,
             boolean defaultTimeZoneBoosted, boolean everUsesUtc,
             List<TimeZoneMapping> timeZoneMappings) {
-        this.countryIso = java.util.Objects.requireNonNull(countryIso);
+        this.countryIso = Objects.requireNonNull(countryIso);
         this.defaultTimeZoneId = defaultTimeZoneId;
         this.defaultTimeZoneBoosted = defaultTimeZoneBoosted;
         this.everUsesUtc = everUsesUtc;
