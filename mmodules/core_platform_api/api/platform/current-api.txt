@@ -988,8 +988,6 @@ package libcore.icu {
     field public String[] tinyStandAloneMonthNames;
     field public String[] tinyStandAloneWeekdayNames;
     field public String[] tinyWeekdayNames;
-    field public String today;
-    field public String yesterday;
     field public char zeroDigit;
   }
 

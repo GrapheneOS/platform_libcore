@@ -306,7 +306,7 @@ public class OldClassTest extends junit.framework.TestCase {
         }
     }
 
-    // AndroidOnly: Class.forName method throws ClassNotFoundException on Android.
+    // Android-note: Class.forName method throws ClassNotFoundException on Android.
     public void test_forNameLjava_lang_StringLbooleanLClassLoader_AndroidOnly() throws Exception {
 
         // Android doesn't support loading class files from a jar.
@@ -460,7 +460,7 @@ public class OldClassTest extends junit.framework.TestCase {
         assertEquals(AbstractList.class, type.getRawType());
     }
 
-    // AndroidOnly: Uses dalvik.system.PathClassLoader.
+    // Android-note: Uses dalvik.system.PathClassLoader.
     // Different behavior between cts host and run-core-test")
     public void test_getPackage() {
 

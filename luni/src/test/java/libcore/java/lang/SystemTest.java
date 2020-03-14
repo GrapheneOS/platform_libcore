@@ -160,7 +160,7 @@ public class SystemTest extends TestCase {
     }
 
     public void testSystemProperties_immutable() {
-        // Android-specific: The RI does not have a concept of immutable properties.
+        // Android-note: The RI does not have a concept of immutable properties.
 
         // user.dir is an immutable property
         String userDir = System.getProperty("user.dir");
@@ -223,10 +223,10 @@ public class SystemTest extends TestCase {
 
         System.setProperties(newProperties);
 
-        // Android-specific: The RI makes the setProperties() argument the system properties object,
+        // Android-note: The RI makes the setProperties() argument the system properties object.
         // Android makes a new Properties object and copies the properties.
         assertNotSame(newProperties, System.getProperties());
-        // Android-specific: The RI does not have a concept of immutable properties.
+        // Android-note: The RI does not have a concept of immutable properties.
         assertEquals(userDir, System.getProperty("user.dir"));
 
         assertEquals("v2", System.getProperty("p1"));
@@ -242,7 +242,7 @@ public class SystemTest extends TestCase {
 
         properties.clear();
 
-        // Android-specific: The RI clears everything, Android resets to immutable defaults.
+        // Android-note: The RI clears everything, Android resets to immutable defaults.
         assertEquals(userDir, System.getProperty("user.dir"));
         assertNull(System.getProperty("p1"));
     }

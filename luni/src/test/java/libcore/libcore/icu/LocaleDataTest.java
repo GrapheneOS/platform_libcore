@@ -16,16 +16,21 @@
 
 package libcore.libcore.icu;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import java.util.Locale;
 import libcore.icu.LocaleData;
 
 public class LocaleDataTest extends junit.framework.TestCase {
+  static {
+    System.loadLibrary("javacoretests");
+  }
+
   public void testAll() throws Exception {
     // Test that we can get the locale data for all known locales.
     for (Locale l : Locale.getAvailableLocales()) {
       LocaleData d = LocaleData.get(l);
-      // System.err.format("%20s %s %s %s\n", l, d.yesterday, d.today, d.tomorrow);
-      // System.err.format("%20s %10s %10s\n", l, d.timeFormat_hm, d.timeFormat_Hm);
+      System.err.format("%20s %10s %10s\n", l, d.timeFormat_hm, d.timeFormat_Hm);
     }
   }
 
@@ -52,17 +57,6 @@ public class LocaleDataTest extends junit.framework.TestCase {
     assertEquals("Sun", l.shortStandAloneWeekdayNames[1]);
     assertEquals("S", l.tinyStandAloneWeekdayNames[1]);
 
-    assertEquals("Yesterday", l.yesterday);
-    assertEquals("Today", l.today);
-    assertEquals("Tomorrow", l.tomorrow);
-  }
-
-  public void test_de_DE() throws Exception {
-    LocaleData l = LocaleData.get(new Locale("de", "DE"));
-
-    assertEquals("Gestern", l.yesterday);
-    assertEquals("Heute", l.today);
-    assertEquals("Morgen", l.tomorrow);
   }
 
   public void test_cs_CZ() throws Exception {
@@ -75,15 +69,6 @@ public class LocaleDataTest extends junit.framework.TestCase {
     assertEquals("leden", l.longStandAloneMonthNames[0]);
     assertEquals("led", l.shortStandAloneMonthNames[0]);
     assertEquals("1", l.tinyStandAloneMonthNames[0]);
-  }
-
-  public void test_ko_KR() throws Exception {
-    LocaleData l = LocaleData.get(new Locale("ko", "KR"));
-
-    // Ensure the fix for http://b/14493853 doesn't mangle Hangul.
-    assertEquals("어제", l.yesterday);
-    assertEquals("오늘", l.today);
-    assertEquals("내일", l.tomorrow);
   }
 
   public void test_ru_RU() throws Exception {
@@ -145,5 +130,158 @@ public class LocaleDataTest extends junit.framework.TestCase {
    */
   public void testInvalidLocale() {
     LocaleData.get(new Locale("invalidLocale"));
+  }
+
+  // BCP 47 language tags.
+  private static final String[] TEST_LANGUAGE_TAGS = new String[] {
+    "en-US",
+    "en-GB",
+    "ar-EG",
+    "zh-CN",
+    "zh-TW",
+    "nl-NL",
+    "fr-FR",
+    "de-DE",
+    "it-IT",
+    "ja-JP",
+    "ko-KR",
+    "pl-PL",
+    "pt-BR",
+    "ru-RU",
+    "es-ES",
+    "th-TH",
+    "tr-TR",
+    "es-419",
+  };
+
+  public void testInitLocaleData_icu4cConsistency() throws Exception {
+    // Don't test all available locales due to incorrect assumptions in the JNI test code
+    // calling ICU4C. The JNI test code came from libcore, but now moved into this test to load
+    // the locale data from ICU4C. The inappropriate assumptions are the below
+    // 1. Use uloc_getParent as fallback locale in ICU resource bundle format.
+    //    uloc_getParent only truncates the locale ID string tp get parent, but doesn't use the
+    //    parent-child relationships in the locale data.
+    // 2. Truncate single Unicode character, e.g. U+11136 CHAKMA DIGIT ZERO, into single high
+    //    surrogate, e.g. 0xD804.
+    // 3. Does not consider alias in Root Locale
+    //    For AM/PM markers, AmPmMarkersNarrow is specified in the Root Locale as the alias of
+    //    "/LOCALE/calendar/gregorian/AmPmMarkersAbbr".
+
+    for (String languageTag : TEST_LANGUAGE_TAGS) {
+      Locale locale = Locale.forLanguageTag(languageTag);
+      LocaleData localeData = LocaleData.initLocaleData(locale);
+      Icu4cLocaleData testData = new Icu4cLocaleData();
+      assertTrue("Failed to load ICU4C data", initIcu4cLocaleData(locale.toLanguageTag(),
+        testData, Icu4cLocaleData.class));
+      assertLocaleDataEquals(locale, testData, localeData);
+    }
+  }
+
+  /**
+   * This function does not compare all fields in {@code Icu4cLocaleData} and {@code LocaleData}
+   * because some fields, e.g. patternSeparator, in {@Code LocaleData} has always implemented
+   * by ICU4J or always by ICU4C.
+   */
+  private static void assertLocaleDataEquals(Locale locale, Icu4cLocaleData testData,
+      LocaleData localeData) {
+    String baseMsg = "LocaleData provides different value in locale " + locale + " in the field:";
+    assertEquals(baseMsg + "minimalDaysInFirstWeek", testData.firstDayOfWeek, localeData.firstDayOfWeek);
+    assertEquals(baseMsg + "minimalDaysInFirstWeek", testData.minimalDaysInFirstWeek, localeData.minimalDaysInFirstWeek);
+    assertArrayEquals(baseMsg + "amPm", testData.amPm, localeData.amPm);
+    assertArrayEquals(baseMsg + "eras", testData.eras, localeData.eras);
+    assertArrayEquals(baseMsg + "longMonthNames", testData.longMonthNames, localeData.longMonthNames);
+    assertArrayEquals(baseMsg + "shortMonthNames", testData.shortMonthNames, localeData.shortMonthNames);
+    assertArrayEquals(baseMsg + "tinyMonthNames", testData.tinyMonthNames, localeData.tinyMonthNames);
+    assertArrayEquals(baseMsg + "longStandAloneMonthNames", testData.longStandAloneMonthNames, localeData.longStandAloneMonthNames);
+    assertArrayEquals(baseMsg + "shortStandAloneMonthNames", testData.shortStandAloneMonthNames, localeData.shortStandAloneMonthNames);
+    assertArrayEquals(baseMsg + "tinyStandAloneMonthNames", testData.tinyStandAloneMonthNames, localeData.tinyStandAloneMonthNames);
+    assertArrayEquals(baseMsg + "longWeekdayNames", testData.longWeekdayNames, localeData.longWeekdayNames);
+    assertArrayEquals(baseMsg + "shortWeekdayNames", testData.shortWeekdayNames, localeData.shortWeekdayNames);
+    assertArrayEquals(baseMsg + "tinyWeekdayNames", testData.tinyWeekdayNames, localeData.tinyWeekdayNames);
+    assertArrayEquals(baseMsg + "longStandAloneWeekdayNames", testData.longStandAloneWeekdayNames, localeData.longStandAloneWeekdayNames);
+    assertArrayEquals(baseMsg + "shortStandAloneWeekdayNames", testData.shortStandAloneWeekdayNames, localeData.shortStandAloneWeekdayNames);
+    assertArrayEquals(baseMsg + "tinyStandAloneWeekdayNames", testData.tinyStandAloneWeekdayNames, localeData.tinyStandAloneWeekdayNames);
+
+    assertEquals(baseMsg + "fullTimeFormat", testData.fullTimeFormat, localeData.fullTimeFormat);
+    assertEquals(baseMsg + "longTimeFormat", testData.longTimeFormat, localeData.longTimeFormat);
+    assertEquals(baseMsg + "mediumTimeFormat", testData.mediumTimeFormat, localeData.mediumTimeFormat);
+    assertEquals(baseMsg + "shortTimeFormat", testData.shortTimeFormat, localeData.shortTimeFormat);
+    assertEquals(baseMsg + "fullDateFormat", testData.fullDateFormat, localeData.fullDateFormat);
+    assertEquals(baseMsg + "longDateFormat", testData.longDateFormat, localeData.longDateFormat);
+    assertEquals(baseMsg + "mediumDateFormat", testData.mediumDateFormat, localeData.mediumDateFormat);
+    assertEquals(baseMsg + "shortDateFormat", testData.shortDateFormat, localeData.shortDateFormat);
+    assertEquals(baseMsg + "narrowAm", testData.narrowAm, localeData.narrowAm);
+    assertEquals(baseMsg + "narrowPm", testData.narrowPm, localeData.narrowPm);
+
+    assertEquals(baseMsg + "zeroDigit", testData.zeroDigit, localeData.zeroDigit);
+    assertEquals(baseMsg + "decimalSeparator", testData.decimalSeparator, localeData.decimalSeparator);
+    assertEquals(baseMsg + "groupingSeparator", testData.groupingSeparator, localeData.groupingSeparator);
+    assertEquals(baseMsg + "percent", testData.percent, localeData.percent);
+    assertEquals(baseMsg + "perMill", testData.perMill, localeData.perMill);
+    assertEquals(baseMsg + "monetarySeparator", testData.monetarySeparator, localeData.monetarySeparator);
+    assertEquals(baseMsg + "minusSign", testData.minusSign, localeData.minusSign);
+    assertEquals(baseMsg + "exponentSeparator", testData.exponentSeparator, localeData.exponentSeparator);
+    assertEquals(baseMsg + "infinity", testData.infinity, localeData.infinity);
+    assertEquals(baseMsg + "NaN", testData.NaN, localeData.NaN);
+    assertEquals(baseMsg + "numberPattern", testData.numberPattern, localeData.numberPattern);
+    assertEquals(baseMsg + "currencyPattern", testData.currencyPattern, localeData.currencyPattern);
+    assertEquals(baseMsg + "percentPattern", testData.percentPattern, localeData.percentPattern);
+  }
+
+  private static native boolean initIcu4cLocaleData(String languageTag,
+    Icu4cLocaleData icu4cLocaleData, Class<Icu4cLocaleData> Icu4cLocaleData);
+
+  private static class Icu4cLocaleData {
+      public Integer firstDayOfWeek;
+      public Integer minimalDaysInFirstWeek;
+
+      public String[] amPm; // "AM", "PM".
+      public String[] eras; // "BC", "AD".
+      public String[] longMonthNames; // "January", ...
+      public String[] shortMonthNames; // "Jan", ...
+      public String[] tinyMonthNames; // "J", ...
+      public String[] longStandAloneMonthNames; // "January", ...
+      public String[] shortStandAloneMonthNames; // "Jan", ...
+      public String[] tinyStandAloneMonthNames; // "J", ...
+      public String[] longWeekdayNames; // "Sunday", ...
+      public String[] shortWeekdayNames; // "Sun", ...
+      public String[] tinyWeekdayNames; // "S", ...
+      public String[] longStandAloneWeekdayNames; // "Sunday", ...
+      public String[] shortStandAloneWeekdayNames; // "Sun", ...
+      public String[] tinyStandAloneWeekdayNames; // "S", ...
+
+      public String fullTimeFormat;
+      public String longTimeFormat;
+      public String mediumTimeFormat;
+      public String shortTimeFormat;
+
+      public String fullDateFormat;
+      public String longDateFormat;
+      public String mediumDateFormat;
+      public String shortDateFormat;
+
+      // Used by TimePicker. Not currently used by UTS#35.
+      public String narrowAm; // "a".
+      public String narrowPm; // "p".
+
+      // Used by DecimalFormatSymbols.
+      public char zeroDigit;
+      public char decimalSeparator;
+      public char groupingSeparator;
+      public char patternSeparator;
+      public String percent;
+      public String perMill;
+      public char monetarySeparator;
+      public String minusSign;
+      public String exponentSeparator;
+      public String infinity;
+      public String NaN;
+
+      // Used by DecimalFormat and NumberFormat.
+      public String numberPattern;
+      public String currencyPattern;
+      public String percentPattern;
+
+      private Icu4cLocaleData() {}
   }
 }

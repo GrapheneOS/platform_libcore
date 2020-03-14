@@ -485,10 +485,10 @@ class Thread implements Runnable {
         this.name = name;
 
         Thread parent = currentThread();
-        // Android-removed: SecurityManager stubbed out on Android
+        // Android-removed: SecurityManager stubbed out on Android.
         // SecurityManager security = System.getSecurityManager();
         if (g == null) {
-            // Android-changed: SecurityManager stubbed out on Android
+            // Android-changed: SecurityManager stubbed out on Android.
             /*
             /* Determine if it's an applet or not *
 
@@ -506,7 +506,7 @@ class Thread implements Runnable {
             // }
         }
 
-        // Android-removed: SecurityManager stubbed out on Android
+        // Android-removed: SecurityManager stubbed out on Android.
         /*
         /* checkAccess regardless of whether or not threadgroup is
            explicitly passed in. *
@@ -1579,7 +1579,7 @@ class Thread implements Runnable {
      * @see        SecurityManager#checkAccess(Thread)
      */
     public final void checkAccess() {
-        // Android-removed: SecurityManager stubbed out on Android
+        // Android-removed: SecurityManager stubbed out on Android.
         // SecurityManager security = System.getSecurityManager();
         // if (security != null) {
         //     security.checkAccess(this);
@@ -1631,7 +1631,7 @@ class Thread implements Runnable {
      */
     @CallerSensitive
     public ClassLoader getContextClassLoader() {
-        // Android-removed: SecurityManager stubbed out on Android
+        // Android-removed: SecurityManager stubbed out on Android.
         /*
         if (contextClassLoader == null)
             return null;
@@ -1667,7 +1667,7 @@ class Thread implements Runnable {
      * @since 1.2
      */
     public void setContextClassLoader(ClassLoader cl) {
-        // Android-removed: SecurityManager stubbed out on Android
+        // Android-removed: SecurityManager stubbed out on Android.
         // SecurityManager sm = System.getSecurityManager();
         // if (sm != null) {
         //     sm.checkPermission(new RuntimePermission("setContextClassLoader"));
@@ -1774,7 +1774,7 @@ class Thread implements Runnable {
      * @since 1.5
      */
     public static Map<Thread, StackTraceElement[]> getAllStackTraces() {
-        // Android-removed: SecurityManager stubbed out on Android
+        // Android-removed: SecurityManager stubbed out on Android.
         /*
         // check for getStackTrace permission
         SecurityManager security = System.getSecurityManager();
@@ -2098,7 +2098,7 @@ class Thread implements Runnable {
      * @since 1.5
      */
     public static void setDefaultUncaughtExceptionHandler(UncaughtExceptionHandler eh) {
-        // Android-removed: SecurityManager stubbed out on Android
+        // Android-removed: SecurityManager stubbed out on Android.
         /*
         SecurityManager sm = System.getSecurityManager();
         if (sm != null) {

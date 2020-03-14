@@ -103,7 +103,7 @@ public final class IDN {
      * @throws IllegalArgumentException   if the input string doesn't conform to RFC 3490 specification
      */
     public static String toASCII(String input, int flag) {
-        // BEGIN Android-changed: Use ICU4J implementation
+        // BEGIN Android-changed: Use ICU4J implementation.
         try {
             return IDNA.convertIDNToASCII(input, flag).toString();
         } catch (android.icu.text.StringPrepParseException e) {
@@ -114,7 +114,7 @@ public final class IDN {
             }
             throw new IllegalArgumentException("Invalid input to toASCII: " + input, e);
         }
-        // END Android-changed: Use ICU4J implementation
+        // END Android-changed: Use ICU4J implementation.
     }
 
 
@@ -158,7 +158,7 @@ public final class IDN {
      * @return          the translated {@code String}
      */
     public static String toUnicode(String input, int flag) {
-        // BEGIN Android-changed: Use ICU4J implementation
+        // BEGIN Android-changed: Use ICU4J implementation.
         try {
             // ICU only translates separators to ASCII for toASCII.
             // Java expects the translation for toUnicode too.
@@ -168,10 +168,10 @@ public final class IDN {
             // the original string is returned.
             return input;
         }
-        // END Android-changed: Use ICU4J implementation
+        // END Android-changed: Use ICU4J implementation.
     }
 
-    // BEGIN Android-added: Use ICU4J implementation
+    // BEGIN Android-added: Use ICU4J implementation.
     private static boolean isLabelSeperator(char c) {
         return (c == '\u3002' || c == '\uff0e' || c == '\uff61');
     }
@@ -184,7 +184,7 @@ public final class IDN {
         }
         return input;
     }
-    // END Android-added: Use ICU4J implementation
+    // END Android-added: Use ICU4J implementation.
 
     /**
      * Translates a string from ASCII Compatible Encoding (ACE) to Unicode,
