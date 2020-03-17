@@ -674,16 +674,6 @@ public final class VMRuntime {
     }
 
     /**
-     * Prevent initialization of the caller's class if they are calling
-     * from their clinit method. This works because calling a JNI method
-     * from clinit causes the transactional runtime to abort the current
-     * transaction.
-     * @hide
-     */
-    @CriticalNative
-    public static native void doNotInitializeInAot();
-
-    /**
      * Return false if the boot class path for the given instruction
      * set mapped from disk storage, versus being interpretted from
      * dirty pages in memory.
