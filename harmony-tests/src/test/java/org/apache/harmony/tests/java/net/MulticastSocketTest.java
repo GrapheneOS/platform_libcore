@@ -17,6 +17,13 @@
 
 package org.apache.harmony.tests.java.net;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 import java.net.BindException;
 import java.net.DatagramPacket;
@@ -32,12 +39,15 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import libcore.junit.junit3.TestCaseWithRules;
+
 import libcore.junit.util.ResourceLeakageDetector;
+
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
+import org.junit.Test;
 
-public class MulticastSocketTest extends TestCaseWithRules {
+public class MulticastSocketTest {
     @Rule
     public TestRule guardRule = ResourceLeakageDetector.getRule();
 
@@ -63,8 +73,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
     private NetworkInterface ipv6NetworkInterface;
     private boolean supportsMulticast;
 
-    @Override
-    protected void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         // The loopback interface isn't actually useful for sending/receiving multicast messages
         // but it can be used as a dummy for tests where that does not matter.
         loopbackInterface = NetworkInterface.getByInetAddress(InetAddress.getLoopbackAddress());
@@ -104,7 +114,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
                 ipv4NetworkInterface != null && ipv6NetworkInterface != null);
     }
 
-    public void test_Constructor() throws IOException {
+    @Test
+    public void constructor() throws IOException {
         if (!supportsMulticast) {
             return;
         }
@@ -116,7 +127,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         s.close();
     }
 
-    public void test_ConstructorI() throws IOException {
+    @Test
+    public void constructorI() throws IOException {
         if (!supportsMulticast) {
             return;
         }
@@ -130,7 +142,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         dup.close();
     }
 
-    public void test_getInterface() throws Exception {
+    @Test
+    public void getInterface() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -157,7 +170,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_getNetworkInterface() throws IOException {
+    @Test
+    public void getNetworkInterface() throws IOException {
         if (!supportsMulticast) {
             return;
         }
@@ -202,7 +216,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_getTimeToLive() throws Exception {
+    @Test
+    public void getTimeToLive() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -214,7 +229,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_getTTL() throws Exception {
+    @Test
+    public void getTTL() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -224,14 +240,16 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_joinGroupLjava_net_InetAddress_IPv4() throws Exception {
+    @Test
+    public void joinGroupLjava_net_InetAddress_IPv4() throws Exception {
         if (!supportsMulticast) {
             return;
         }
         test_joinGroupLjava_net_InetAddress(GOOD_IPv4);
     }
 
-    public void test_joinGroupLjava_net_InetAddress_IPv6() throws Exception {
+    @Test
+    public void joinGroupLjava_net_InetAddress_IPv6() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -258,7 +276,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         receivingSocket.close();
     }
 
-    public void test_joinGroup_null_null() throws Exception {
+    @Test
+    public void joinGroup_null_null() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -271,7 +290,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_joinGroup_non_multicast_address_IPv4() throws Exception {
+    @Test
+    public void joinGroup_non_multicast_address_IPv4() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -284,7 +304,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_joinGroup_non_multicast_address_IPv6() throws Exception {
+    @Test
+    public void joinGroup_non_multicast_address_IPv6() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -297,35 +318,39 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv4()
+    @Test
+    public void joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv4()
             throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
+        check_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
                 ipv4NetworkInterface, GOOD_IPv4, BAD_IPv4);
     }
 
-    public void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv6()
+    @Test
+    public void joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv6()
             throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
+        check_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
                 ipv6NetworkInterface, GOOD_IPv6, BAD_IPv6);
     }
 
-    public void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv4_nullInterface()
+    @Test
+    public void joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv4_nullInterface()
             throws Exception {
-        test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(null, GOOD_IPv4, BAD_IPv4);
+        check_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(null, GOOD_IPv4, BAD_IPv4);
     }
 
-    public void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv6_nullInterface()
+    @Test
+    public void joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv6_nullInterface()
             throws Exception {
-        test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(null, GOOD_IPv6, BAD_IPv6);
+        check_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(null, GOOD_IPv6, BAD_IPv6);
     }
 
-    private void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
+    private void check_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
             NetworkInterface networkInterface, InetAddress group, InetAddress group2)
             throws Exception {
         // Create the sending socket and specify the interface to use as needed (otherwise use the
@@ -383,7 +408,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         sendingSocket.close();
     }
 
-    public void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface() throws Exception {
+    @Test
+    public void joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -453,25 +479,27 @@ public class MulticastSocketTest extends TestCaseWithRules {
         }
     }
 
-    public void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins_IPv4()
+    @Test
+    public void joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins_IPv4()
             throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins(
+        check_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins(
                 ipv4NetworkInterface, GOOD_IPv4);
     }
 
-    public void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins_IPv6()
+    @Test
+    public void joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins_IPv6()
             throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins(
+        check_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins(
                 ipv6NetworkInterface, GOOD_IPv6);
     }
 
-    private void test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins(
+    private void check_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_multiple_joins(
             NetworkInterface networkInterface, InetAddress group) throws Exception {
         // Validate that we can join the same address on two different interfaces but not on the
         // same interface.
@@ -487,21 +515,23 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_leaveGroupLjava_net_InetAddress_IPv4() throws Exception {
+    @Test
+    public void leaveGroupLjava_net_InetAddress_IPv4() throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_leaveGroupLjava_net_InetAddress(GOOD_IPv4);
+        check_leaveGroupLjava_net_InetAddress(GOOD_IPv4);
     }
 
-    public void test_leaveGroupLjava_net_InetAddress_IPv6() throws Exception {
+    @Test
+    public void leaveGroupLjava_net_InetAddress_IPv6() throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_leaveGroupLjava_net_InetAddress(GOOD_IPv6);
+        check_leaveGroupLjava_net_InetAddress(GOOD_IPv6);
     }
 
-    private void test_leaveGroupLjava_net_InetAddress(InetAddress group) throws Exception {
+    private void check_leaveGroupLjava_net_InetAddress(InetAddress group) throws Exception {
         String msg = "Hello World";
         MulticastSocket mss = new MulticastSocket(0);
         InetSocketAddress groupAddress = new InetSocketAddress(group, mss.getLocalPort());
@@ -516,7 +546,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_leaveGroup_null_null() throws Exception {
+    @Test
+    public void leaveGroup_null_null() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -529,7 +560,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_leaveGroup_non_multicast_address_IPv4() throws Exception {
+    @Test
+    public void leaveGroup_non_multicast_address_IPv4() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -542,7 +574,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_leaveGroup_non_multicast_address_IPv6() throws Exception {
+    @Test
+    public void leaveGroup_non_multicast_address_IPv6() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -555,25 +588,27 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv4()
+    @Test
+    public void leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv4()
             throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
+        check_leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
                 ipv4NetworkInterface, GOOD_IPv4, BAD_IPv4);
     }
 
-    public void test_leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv6()
+    @Test
+    public void leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv6()
             throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
+        check_leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
                 ipv6NetworkInterface, GOOD_IPv6, BAD_IPv6);
     }
 
-    private void test_leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
+    private void check_leaveGroupLjava_net_SocketAddressLjava_net_NetworkInterface(
             NetworkInterface networkInterface, InetAddress group, InetAddress group2)
             throws Exception {
         SocketAddress groupSockAddr = null;
@@ -609,21 +644,23 @@ public class MulticastSocketTest extends TestCaseWithRules {
         }
     }
 
-    public void test_sendLjava_net_DatagramPacketB_IPv4() throws Exception {
+    @Test
+    public void sendLjava_net_DatagramPacketB_IPv4() throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_sendLjava_net_DatagramPacketB(GOOD_IPv4);
+        check_sendLjava_net_DatagramPacketB(GOOD_IPv4);
     }
 
-    public void test_sendLjava_net_DatagramPacketB_IPv6() throws Exception {
+    @Test
+    public void sendLjava_net_DatagramPacketB_IPv6() throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_sendLjava_net_DatagramPacketB(GOOD_IPv6);
+        check_sendLjava_net_DatagramPacketB(GOOD_IPv6);
     }
 
-    private void test_sendLjava_net_DatagramPacketB(InetAddress group) throws Exception {
+    private void check_sendLjava_net_DatagramPacketB(InetAddress group) throws Exception {
         String msg = "Hello World";
         MulticastSocket sendingSocket = new MulticastSocket(0);
         MulticastSocket receivingSocket = createReceivingSocket(sendingSocket.getLocalPort());
@@ -641,7 +678,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         receivingSocket.close();
     }
 
-    public void test_setInterfaceLjava_net_InetAddress() throws Exception {
+    @Test
+    public void setInterfaceLjava_net_InetAddress() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -662,14 +700,16 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_setInterface_unbound_address_IPv4() throws Exception {
+    @Test
+    public void setInterface_unbound_address_IPv4() throws Exception {
         if (!supportsMulticast) {
             return;
         }
         test_setInterface_unbound_address(GOOD_IPv4);
     }
 
-    public void test_setInterface_unbound_address_IPv6() throws Exception {
+    @Test
+    public void setInterface_unbound_address_IPv6() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -687,7 +727,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_setNetworkInterfaceLjava_net_NetworkInterface_null() throws Exception {
+    @Test
+    public void setNetworkInterfaceLjava_net_NetworkInterface_null() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -701,7 +742,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_setNetworkInterfaceLjava_net_NetworkInterface_round_trip() throws Exception {
+    @Test
+    public void setNetworkInterfaceLjava_net_NetworkInterface_round_trip() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -713,21 +755,23 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_setNetworkInterfaceLjava_net_NetworkInterface_IPv4() throws Exception {
+    @Test
+    public void setNetworkInterfaceLjava_net_NetworkInterface_IPv4() throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_setNetworkInterfaceLjava_net_NetworkInterface(GOOD_IPv4);
+        check_setNetworkInterfaceLjava_net_NetworkInterface(GOOD_IPv4);
     }
 
-    public void test_setNetworkInterfaceLjava_net_NetworkInterface_IPv6() throws Exception {
+    @Test
+    public void setNetworkInterfaceLjava_net_NetworkInterface_IPv6() throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_setNetworkInterfaceLjava_net_NetworkInterface(GOOD_IPv6);
+        check_setNetworkInterfaceLjava_net_NetworkInterface(GOOD_IPv6);
     }
 
-    private void test_setNetworkInterfaceLjava_net_NetworkInterface(InetAddress group)
+    private void check_setNetworkInterfaceLjava_net_NetworkInterface(InetAddress group)
             throws IOException, InterruptedException {
         // Set up the receiving socket and join the group.
         Enumeration theInterfaces = NetworkInterface.getNetworkInterfaces();
@@ -761,7 +805,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         }
     }
 
-    public void test_setTimeToLiveI() throws Exception {
+    @Test
+    public void setTimeToLiveI() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -773,7 +818,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_setTTLB() throws Exception {
+    @Test
+    public void setTTLB() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -783,7 +829,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         mss.close();
     }
 
-    public void test_ConstructorLjava_net_SocketAddress() throws Exception {
+    @Test
+    public void constructorLjava_net_SocketAddress() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -817,7 +864,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         s.close();
     }
 
-    public void test_getLoopbackMode() throws Exception {
+    @Test
+    public void getLoopbackMode() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -829,7 +877,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         assertTrue("should be closed", ms.isClosed());
     }
 
-    public void test_setLoopbackModeZ() throws Exception {
+    @Test
+    public void setLoopbackModeZ() throws Exception {
         if (!supportsMulticast) {
             return;
         }
@@ -842,21 +891,23 @@ public class MulticastSocketTest extends TestCaseWithRules {
         assertTrue("should be closed", ms.isClosed());
     }
 
-    public void test_setLoopbackModeSendReceive_IPv4() throws Exception {
+    @Test
+    public void setLoopbackModeSendReceive_IPv4() throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_setLoopbackModeSendReceive(GOOD_IPv4);
+        check_setLoopbackModeSendReceive(GOOD_IPv4);
     }
 
-    public void test_setLoopbackModeSendReceive_IPv6() throws Exception {
+    @Test
+    public void setLoopbackModeSendReceive_IPv6() throws Exception {
         if (!supportsMulticast) {
             return;
         }
-        test_setLoopbackModeSendReceive(GOOD_IPv6);
+        check_setLoopbackModeSendReceive(GOOD_IPv6);
     }
 
-    private void test_setLoopbackModeSendReceive(InetAddress group) throws IOException {
+    private void check_setLoopbackModeSendReceive(InetAddress group) throws IOException {
         // Test send receive.
         final String message = "Hello, world!";
 
@@ -878,7 +929,8 @@ public class MulticastSocketTest extends TestCaseWithRules {
         socket.close();
     }
 
-    public void test_setReuseAddressZ() throws Exception {
+    @Test
+    public void setReuseAddressZ() throws Exception {
         if (!supportsMulticast) {
             return;
         }

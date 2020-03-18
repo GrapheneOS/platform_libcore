@@ -24,18 +24,11 @@
 },
 {
   description: "multicast not supported in virtual device testing infra",
-  names: ["org.apache.harmony.tests.java.net.MulticastSocketTest#test_joinGroupLjava_net_InetAddress_IPv4",
-          "org.apache.harmony.tests.java.net.MulticastSocketTest#test_joinGroupLjava_net_InetAddress_IPv6",
-          "org.apache.harmony.tests.java.net.MulticastSocketTest#test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv4_nullInterface",
-          "org.apache.harmony.tests.java.net.MulticastSocketTest#test_joinGroupLjava_net_SocketAddressLjava_net_NetworkInterface_IPv6_nullInterface",
-          "org.apache.harmony.tests.java.net.MulticastSocketTest#test_leaveGroupLjava_net_InetAddress_IPv4",
-          "org.apache.harmony.tests.java.net.MulticastSocketTest#test_sendLjava_net_DatagramPacketB_IPv4",
-          "org.apache.harmony.tests.java.net.MulticastSocketTest#test_sendLjava_net_DatagramPacketB_IPv6",
-          "org.apache.harmony.tests.java.net.MulticastSocketTest#test_setLoopbackModeSendReceive_IPv4",
-          "org.apache.harmony.tests.java.net.MulticastSocketTest#test_setLoopbackModeSendReceive_IPv6",
+  names: ["org.apache.harmony.tests.java.net.MulticastSocketTest",
           "libcore.java.net.MulticastSocketTest#testGroupReceiveIPv6",
           "libcore.java.nio.channels.DatagramChannelMulticastTest#test_joinAnySource_IPv4",
-          "libcore.java.nio.channels.DatagramChannelMulticastTest#test_joinAnySource_multicastLoopOption_IPv4"
+          "libcore.java.nio.channels.DatagramChannelMulticastTest#test_joinAnySource_multicastLoopOption_IPv4",
+	  "libcore.java.nio.channels.DatagramChannelMulticastTest#test_joinSourceSpecific_anyBind_ipv6"
           ],
   bug: 35922755
 },
