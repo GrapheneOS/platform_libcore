@@ -29,6 +29,7 @@
 #include <pwd.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/capability.h>
 #include <sys/ioctl.h>
 #include <sys/mman.h>
@@ -2470,7 +2471,7 @@ static jobject Linux_statvfs(JNIEnv* env, jobject, jstring javaPath) {
 
 static jstring Linux_strerror(JNIEnv* env, jobject, jint errnum) {
     char buffer[BUFSIZ];
-    const char* message = jniStrError(errnum, buffer, sizeof(buffer));
+    const char* message = strerror_r(errnum, buffer, sizeof(buffer));
     return env->NewStringUTF(message);
 }
 
