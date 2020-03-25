@@ -490,6 +490,7 @@ java_library_static {
     visibility: [
         "//art/build/sdk",
         "//external/conscrypt",
+        "//external/conscrypt/apex/tests",
         "//frameworks/base/location/tests/locationtests",
         "//frameworks/base/core/tests/coretests",
         "//frameworks/base/wifi/tests",
