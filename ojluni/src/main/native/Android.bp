@@ -37,7 +37,6 @@ filegroup {
         "SocketChannelImpl.c",
         "FileChannelImpl.c",
         "FileDispatcherImpl.c",
-        "FileOutputStream_md.c",
         "FileInputStream.c",
         "FileSystemPreferences.c",
         "EPoll.c",

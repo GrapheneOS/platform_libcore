@@ -385,40 +385,6 @@ java_library {
     plugins: ["unsupportedappusage-annotation-processor"],
 }
 
-//
-// Guaranteed unstripped versions of core-oj and core-libart.
-//
-// The build system may or may not strip the core-oj and core-libart jars,
-// but these will not be stripped. See b/24535627.
-//
-
-java_library {
-    name: "core-oj-testdex",
-    installable: true,
-    static_libs: ["core-oj"],
-    sdk_version: "none",
-    system_modules: "core-all-system-modules",
-    dxflags: ["--core-library"],
-    dex_preopt: {
-        enabled: false,
-    },
-    java_version: "1.9",
-    notice: "ojluni/NOTICE",
-}
-
-java_library {
-    name: "core-libart-testdex",
-    installable: true,
-    static_libs: ["core-libart"],
-    sdk_version: "none",
-    system_modules: "core-all-system-modules",
-    dxflags: ["--core-library"],
-    dex_preopt: {
-        enabled: false,
-    },
-    notice: "ojluni/NOTICE",
-}
-
 java_defaults {
     name: "core_lambda_stubs_defaults",
     defaults: ["libcore_java_defaults"],
