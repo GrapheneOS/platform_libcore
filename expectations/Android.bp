@@ -16,14 +16,16 @@ expectations_visibility = [
     "//cts/tests/libcore:__subpackages__",
 ]
 
-filegroup {
-    name: "libcore-expectations-knownfailures",
+java_library {
+    name: "libcore-expectations-knownfailures-jar",
     visibility: expectations_visibility,
-    srcs: ["knownfailures.txt"],
+    java_resources: ["knownfailures.txt"],
+    sdk_version: "core_current",
 }
 
-filegroup {
-    name: "libcore-expectations-virtualdeviceknownfailures",
+java_library {
+    name: "libcore-expectations-virtualdeviceknownfailures-jar",
     visibility: expectations_visibility,
-    srcs: ["virtualdeviceknownfailures.txt"],
+    java_resources: ["virtualdeviceknownfailures.txt"],
+    sdk_version: "core_current",
 }

@@ -22,10 +22,7 @@ build = [
 ]
 
 genrule {
-    name: "notices-for-framework-stubs",
-    visibility: [
-        "//frameworks/base",
-    ],
+    name: "notices-for-framework-stubs-gen",
     tool_files: [
         "NOTICE",
         "ojluni/NOTICE",
@@ -35,4 +32,16 @@ genrule {
         "NOTICES/libcore-NOTICE",
         "NOTICES/ojluni-NOTICE",
     ],
+}
+
+java_library {
+    name: "art-notices-for-framework-stubs-jar",
+    visibility: [
+        "//art/build/sdk",
+        "//frameworks/base",
+    ],
+    java_resources: [
+        ":notices-for-framework-stubs-gen",
+    ],
+    sdk_version: "core_current",
 }
