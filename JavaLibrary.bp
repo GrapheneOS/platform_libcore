@@ -109,46 +109,6 @@ filegroup {
     ],
 }
 
-// The set of files for the core library that have been marked up with @hide
-// for the public SDK APIs. Used from frameworks/base/ to indicate the source
-// files for inclusion in the public SDK docs.
-//
-// Deprecated: Will be replaced by core-current-stubs-source.
-filegroup {
-    name: "core_public_api_files",
-    visibility: [
-        "//frameworks/base",
-    ],
-    srcs: [
-        ":android_icu4j_public_api_files",
-    ],
-}
-
-// Contains the stubs source for the part of the Android SDK public API which
-// is provided by the core libraries.
-//
-// Currently is only a placeholder that creates an empty srcjar due to issues
-// caused by http://b/142113901.
-//
-// TODO(http://b/142113521) - Add stubs source for the core library modules.
-genrule {
-    name: "core-current-stubs-source",
-    visibility: [
-        "//frameworks/base",
-    ],
-    tools: [
-        "merge_zips",
-    ],
-    srcs: [
-        ":art-module-public-api-stubs-source",
-        ":conscrypt-module-public-api-stubs-source",
-    ],
-    out: ["core-current-stubs-source.srcjar"],
-    cmd: "$(location merge_zips) $(out)" +
-        " $(location :art-module-public-api-stubs-source)" +
-        " $(location :conscrypt-module-public-api-stubs-source)",
-}
-
 // The set of files for the ART module that contribute to one or more API
 // surfaces. This includes files that are in the public API as well as those
 // that are not but which have been marked up with @hide plus one or more of
@@ -805,9 +765,13 @@ rewrite_openjdk_doc_args = "--replace-documentation " +
 
 // Generates stubs for the parts of the public SDK API provided by the ART module.
 //
-// Only for use by art.module.public.api.stubs target below.
+// Only for use by art.module.public.api.stubs target below and the building of the
+// public API.
 droidstubs {
     name: "art-module-public-api-stubs-source",
+    visibility: [
+        "//frameworks/base",
+    ],
     srcs: [
         ":core_oj_api_files",
         ":core_libart_api_files",

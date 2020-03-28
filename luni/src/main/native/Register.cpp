@@ -41,7 +41,6 @@ jint JNI_OnLoad(JavaVM* vm, void*) {
     REGISTER(register_java_lang_invoke_VarHandle);
     REGISTER(register_java_math_NativeBN);
     REGISTER(register_libcore_icu_ICU);
-    REGISTER(register_libcore_icu_TimeZoneNames);
     REGISTER(register_libcore_io_AsynchronousCloseMonitor);
     REGISTER(register_libcore_io_Linux);
     REGISTER(register_libcore_io_Memory);

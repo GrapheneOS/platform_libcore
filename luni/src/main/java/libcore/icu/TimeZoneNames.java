@@ -16,6 +16,7 @@
 
 package libcore.icu;
 
+import com.android.icu.text.TimeZoneNamesNative;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -51,14 +52,8 @@ public final class TimeZoneNames {
         @Override protected String[][] create(Locale locale) {
             long start = System.nanoTime();
 
-            // Set up the 2D array used to hold the names. The first column contains the Olson ids.
-            String[][] result = new String[availableTimeZoneIds.length][5];
-            for (int i = 0; i < availableTimeZoneIds.length; ++i) {
-                result[i][0] = availableTimeZoneIds[i];
-            }
-
             long nativeStart = System.nanoTime();
-            fillZoneStrings(locale.toLanguageTag(), result);
+            String[][] result = TimeZoneNamesNative.getFilledZoneStrings(locale, availableTimeZoneIds);
             long nativeEnd = System.nanoTime();
 
             addOffsetStrings(result);
@@ -151,5 +146,4 @@ public final class TimeZoneNames {
         return cachedZoneStrings.get(locale);
     }
 
-    private static native void fillZoneStrings(String locale, String[][] result);
 }
