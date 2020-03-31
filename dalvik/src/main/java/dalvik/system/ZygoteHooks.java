@@ -59,6 +59,12 @@ public final class ZygoteHooks {
         for (ULocale uLocale : localesToPin) {
             new DecimalFormatSymbols(uLocale);
         }
+
+        // Framework's LocalLog is used during app start-up. It indirectly uses the current ICU time
+        // zone. Pre-loading the current time zone in ICU improves app startup time. b/150605074
+        // We're being explicit about the fully qualified name of the TimeZone class to avoid
+        // confusion with java.util.TimeZome.getDefault().
+        android.icu.util.TimeZone.getDefault();
     }
 
     /**
