@@ -531,6 +531,7 @@ package dalvik.system {
     method public void addDexPath(String);
     method public void addNativePath(java.util.Collection<java.lang.String>);
     method public String getLdLibraryPath();
+    method public void reportClassLoaderChain();
     method public static void setReporter(dalvik.system.BaseDexClassLoader.Reporter);
   }
 

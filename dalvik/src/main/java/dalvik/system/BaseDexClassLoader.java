@@ -128,15 +128,20 @@ public class BaseDexClassLoader extends ClassLoader {
                 : Arrays.copyOf(sharedLibraryLoaders, sharedLibraryLoaders.length);
         this.pathList = new DexPathList(this, dexPath, librarySearchPath, null, isTrusted);
 
-        if (reporter != null) {
-            reportClassLoaderChain();
-        }
+        reportClassLoaderChain();
     }
 
     /**
      * Reports the current class loader chain to the registered {@code reporter}.
+     *
+     * @hide
      */
-    private void reportClassLoaderChain() {
+    @libcore.api.CorePlatformApi
+    public void reportClassLoaderChain() {
+        if (reporter == null) {
+            return;
+        }
+
         String[] classPathAndClassLoaderContexts = computeClassLoaderContextsNative();
         if (classPathAndClassLoaderContexts.length == 0) {
             return;
@@ -367,7 +372,7 @@ public class BaseDexClassLoader extends ClassLoader {
         /**
          * Reports the construction of a BaseDexClassLoader and provides opaque information about
          * the class loader chain. For example, if the childmost ClassLoader in the chain:
-         * {@quote BaseDexClassLoader { foo.dex } -> BaseDexClassLoader { base.apk } 
+         * {@quote BaseDexClassLoader { foo.dex } -> BaseDexClassLoader { base.apk }
          *    -> BootClassLoader } was just initialized then the load of {@code "foo.dex"} would be
          * reported with a classLoaderContext of {@code "PCL[];PCL[base.apk]"}.
          *
