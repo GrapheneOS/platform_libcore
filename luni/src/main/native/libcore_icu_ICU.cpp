@@ -20,7 +20,14 @@
 #include <memory>
 #include <vector>
 
-#include <androidicuinit/IcuRegistration.h>
+
+
+#ifdef __ANDROID__
+  #include <aicu/AIcu.h>
+#else
+  #include <androidicuinit/android_icu_reg.h>
+#endif
+
 #include <log/log.h>
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedStringChars.h>
@@ -31,11 +38,13 @@
 #include "IcuUtilities.h"
 #include "JniException.h"
 #include "ScopedIcuULoc.h"
+#include "unicode/char16ptr.h"
 #include "unicode/udatpg.h"
 #include "unicode/uloc.h"
 #include "unicode/ures.h"
 #include "unicode/ustring.h"
-#include "ureslocs.h"
+
+#define U_ICUDATA_CURR U_ICUDATA_NAME "-" "curr"
 
 class ScopedResourceBundle {
  public:
@@ -235,7 +244,11 @@ static JNINativeMethod gMethods[] = {
 
 // Init ICU, configuring it and loading the data files.
 void register_libcore_icu_ICU(JNIEnv* env) {
-  androidicuinit::IcuRegistration::Register();
+#ifdef __ANDROID__
+  AIcu_register();
+#else
+  android_icu_register();
+#endif
 
   jniRegisterNativeMethods(env, "libcore/icu/ICU", gMethods, NELEM(gMethods));
 }
@@ -244,6 +257,9 @@ void register_libcore_icu_ICU(JNIEnv* env) {
 void unregister_libcore_icu_ICU() {
   // Skip unregistering JNI methods explicitly, class unloading takes care of
   // it.
-
-  androidicuinit::IcuRegistration::Deregister();
+#ifdef __ANDROID__
+  AIcu_deregister();
+#else
+  android_icu_deregister();
+#endif
 }

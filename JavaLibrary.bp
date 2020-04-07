@@ -533,9 +533,11 @@ java_test {
         "xml/src/test/java/**/*.java",
     ],
     exclude_srcs: [
+        "harmony-tests/src/test/java/org/apache/harmony/tests/javax/net/ssl/*.java",
         "luni/src/test/java/libcore/java/util/zip/Zip64Test.java",
         "luni/src/test/java/libcore/java/util/zip/Zip64FileTest.java",
         "luni/src/test/java/libcore/javax/crypto/**/*.java",
+        "luni/src/test/java/libcore/javax/net/ssl/**/*.java",
         "luni/src/test/java/org/apache/harmony/crypto/**/*.java",
     ],
 
@@ -597,7 +599,9 @@ java_test {
         "//external/conscrypt/apex/tests",
     ],
     srcs: [
+        "harmony-tests/src/test/java/org/apache/harmony/tests/javax/net/ssl/*.java",
         "luni/src/test/java/libcore/javax/crypto/**/*.java",
+        "luni/src/test/java/libcore/javax/net/ssl/**/*.java",
         "luni/src/test/java/org/apache/harmony/crypto/**/*.java",
     ],
     exclude_srcs: [
