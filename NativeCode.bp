@@ -37,7 +37,7 @@ cc_defaults {
 
 cc_defaults {
     name: "core_native_default_libs",
-
+    header_libs: ["jni_headers"],
     shared_libs: [
         "libbase",
         "liblog",
@@ -63,6 +63,7 @@ cc_library_shared {
         "dalvik/src/main/native/org_apache_harmony_dalvik_NativeTestTarget.cpp",
     ],
     shared_libs: [
+        "libandroidicu",
         "libandroidio",
         "libbase",
         "libcrypto",
@@ -73,20 +74,6 @@ cc_library_shared {
     static_libs: [
         "libziparchive",
     ],
-    target: {
-        android: {
-            shared_libs: ["libandroidicu"],
-        },
-        host: {
-            shared_libs: [
-                "libicuuc",
-                "libicui18n",
-            ],
-            static_libs: [
-                "libandroidicuinit",
-            ],
-        },
-    },
 }
 
 cc_library_shared {

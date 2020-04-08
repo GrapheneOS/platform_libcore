@@ -20,13 +20,7 @@
 #include <memory>
 #include <vector>
 
-
-
-#ifdef __ANDROID__
-  #include <aicu/AIcu.h>
-#else
-  #include <androidicuinit/android_icu_reg.h>
-#endif
+#include <aicu/AIcu.h>
 
 #include <log/log.h>
 #include <nativehelper/JNIHelp.h>
@@ -244,11 +238,7 @@ static JNINativeMethod gMethods[] = {
 
 // Init ICU, configuring it and loading the data files.
 void register_libcore_icu_ICU(JNIEnv* env) {
-#ifdef __ANDROID__
   AIcu_register();
-#else
-  android_icu_register();
-#endif
 
   jniRegisterNativeMethods(env, "libcore/icu/ICU", gMethods, NELEM(gMethods));
 }
@@ -257,9 +247,5 @@ void register_libcore_icu_ICU(JNIEnv* env) {
 void unregister_libcore_icu_ICU() {
   // Skip unregistering JNI methods explicitly, class unloading takes care of
   // it.
-#ifdef __ANDROID__
   AIcu_deregister();
-#else
-  android_icu_deregister();
-#endif
 }

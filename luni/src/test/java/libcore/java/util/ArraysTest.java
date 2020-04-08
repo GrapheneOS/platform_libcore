@@ -19,6 +19,7 @@ package libcore.java.util;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -595,6 +596,7 @@ public class ArraysTest {
                 .boxed()
                 .collect(Collectors.toList());
 
+            assertEquals(size, destList.size());
             for (int i = 0; i < size; i++) {
                 assertEquals((int) destList.get(i), i);
             }
@@ -681,6 +683,7 @@ public class ArraysTest {
                 .boxed()
                 .collect(Collectors.toList());
 
+            assertEquals(size, destList.size());
             for (int i = 0; i < size; i++) {
                 assertEquals((long) destList.get(i), i);
             }
@@ -767,6 +770,7 @@ public class ArraysTest {
                 .boxed()
                 .collect(Collectors.toList());
 
+            assertEquals(size, destList.size());
             for (int i = 0; i < size; i++) {
                 assertEquals(destList.get(i), i, 0.001);
             }
@@ -831,6 +835,91 @@ public class ArraysTest {
         }
     }
 
+    @Test
+    public void streamObject() {
+      for (int size : TEST_ARRAY_SIZES) {
+        String[] sourceArray = stringTestArray(size);
+
+        // Stream, map, accumulate
+        int sum = Arrays.stream(sourceArray)
+            .mapToInt(i -> Integer.parseInt(i) * 2)
+            .sum();
+        assertEquals(size * (size - 1), sum);
+
+        // Stream, collect as array again
+        String[] destArray = Arrays.stream(sourceArray)
+            .toArray(String[]::new);
+        assertArrayEquals(sourceArray, destArray);
+        assertNotSame(sourceArray, destArray);
+
+        // Stream, collect as list
+        List<String> destList = Arrays.stream(sourceArray)
+            .collect(Collectors.toList());
+
+        assertEquals(size, destList.size());
+        for (int i = 0; i < size; i++) {
+          assertSame(destList.get(i), sourceArray[i]);
+        }
+      }
+    }
+
+    @Test
+    public void streamObjectStartEnd() {
+        final int size = 10;
+        String[] sourceArray = stringTestArray(size);
+        for (int start = 0; start < size - 1; start++) {
+            for (int end = start; end < size; end++) {
+                String[] destArray = Arrays.stream(sourceArray, start, end)
+                    .toArray(String[]::new);
+                int len = end - start;
+                assertEquals(len, destArray.length);
+                if (len > 0) {
+                    assertSame(sourceArray[start], destArray[0]);
+                    assertSame(sourceArray[end - 1], destArray[len - 1]);
+                }
+            }
+        }
+    }
+
+    @Test
+    public void streamObjectStartEnd_Exceptions() {
+        String[] sourceArray = stringTestArray(10);
+        try {
+            long unused = Arrays.stream(sourceArray, -1, 9)
+                .count();
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Expected
+        }
+        try {
+            long unused = Arrays.stream(sourceArray, 0, 11)
+                .count();
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Expected
+        }
+        try {
+            long unused = Arrays.stream(sourceArray, 11, 11)
+                .count();
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Expected
+        }
+        try {
+            long unused = Arrays.stream(sourceArray, 0, -1)
+                .count();
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Expected
+        }
+        try {
+            long unused = Arrays.stream(sourceArray, 4, 3)
+                .count();
+            fail();
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Expected
+        }
+    }
 
     private int[] intTestArray(int size) {
         int[] array = new int[size];
@@ -852,6 +941,14 @@ public class ArraysTest {
         double[] array = new double[size];
         for (int i = 0; i < size; i++) {
             array[i] = i;
+        }
+        return array;
+    }
+
+    private String[] stringTestArray(int size) {
+        String[] array = new String[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = String.valueOf(i);
         }
         return array;
     }
