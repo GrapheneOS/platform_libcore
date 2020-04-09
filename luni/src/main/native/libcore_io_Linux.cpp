@@ -1112,7 +1112,9 @@ static void Linux_close(JNIEnv* env, jobject, jobject javaFd) {
     jniSetFileDescriptorOfFD(env, javaFd, -1);
 
 #if defined(__BIONIC__)
-    jlong ownerId = jniGetOwnerIdFromFileDescriptor(env, javaFd);
+    static jmethodID getOwnerId = env->GetMethodID(JniConstants::GetFileDescriptorClass(env),
+                                                   "getOwnerId$", "()J");
+    jlong ownerId = env->CallLongMethod(javaFd, getOwnerId);
 
     // Close with bionic's fd ownership tracking (which returns 0 in the case of EINTR).
     throwIfMinusOne(env, "close", android_fdsan_close_with_tag(fd, ownerId));
