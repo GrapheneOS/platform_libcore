@@ -26,6 +26,7 @@
 package java.lang;
 
 import com.android.icu.util.Icu4cMetadata;
+import dalvik.annotation.optimization.CriticalNative;
 import dalvik.annotation.optimization.FastNative;
 import android.system.ErrnoException;
 import android.system.StructPasswd;
@@ -294,6 +295,7 @@ public final class System {
      *          the current time and midnight, January 1, 1970 UTC.
      * @see     java.util.Date
      */
+    @CriticalNative
     public static native long currentTimeMillis();
 
     /**
@@ -340,6 +342,7 @@ public final class System {
      *         high-resolution time source, in nanoseconds
      * @since 1.5
      */
+    @CriticalNative
     public static native long nanoTime();
 
     /**
