@@ -386,6 +386,7 @@ java_library {
     srcs: [
         ":openjdk_lambda_stub_files",
     ],
+    include_srcs: true,
 }
 
 // Creates a jar that exists to satisfy javac when compiling source code that
@@ -912,11 +913,12 @@ java_library {
     },
 }
 
-// Used when compiling higher-level code against core.current.stubs.
-java_system_modules {
-    name: "core-current-stubs-system-modules",
-    visibility: ["//visibility:public"],
-    libs: [
+// Distributed with the SDK for turning into system modules to compile apps
+// against.
+java_library {
+    name: "core-current-stubs-for-system-modules",
+    visibility: ["//development/sdk"],
+    static_libs: [
         "core.current.stubs",
         // This one is not on device but it's needed when javac compiles code
         // containing lambdas.
@@ -926,6 +928,24 @@ java_system_modules {
         // tools.
         // See http://b/123891440.
         "core-generated-annotation-stubs",
+    ],
+    sdk_version: "none",
+    system_modules: "none",
+    dist: {
+        dest: "core-for-system-modules.jar",
+        targets: [
+            "sdk",
+            "win_sdk",
+        ],
+    },
+}
+
+// Used when compiling higher-level code against core.current.stubs.
+java_system_modules {
+    name: "core-current-stubs-system-modules",
+    visibility: ["//visibility:public"],
+    libs: [
+        "core-current-stubs-for-system-modules",
     ],
 }
 
