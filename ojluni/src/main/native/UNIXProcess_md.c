@@ -424,9 +424,8 @@ isAsciiDigit(char c)
 #endif
 
 static int
-closeDescriptors(void)
+closeDescriptors(DIR* dp)
 {
-    DIR *dp;
     struct dirent64 *dirp;
     int from_fd = FAIL_FILENO + 1;
 
@@ -440,7 +439,10 @@ closeDescriptors(void)
     restartableClose(from_fd);          /* for possible use by opendir() */
     restartableClose(from_fd + 1);      /* another one for good luck */
 
-    if ((dp = opendir(FD_DIR)) == NULL)
+    #if !START_CHILD_USE_CLONE && !START_CHILD_USE_VFORK
+      dp = opendir(FD_DIR);
+    #endif
+    if (dp == NULL)
         return 0;
 
     /* We use readdir64 instead of readdir to work around Solaris bug
@@ -453,7 +455,9 @@ closeDescriptors(void)
             restartableClose(fd);
     }
 
+#if !START_CHILD_USE_CLONE && !START_CHILD_USE_VFORK
     closedir(dp);
+#endif
 
     return 1;
 }
@@ -710,6 +714,7 @@ typedef struct _ChildStuff
     const char **argv;
     const char **envv;
     const char *pdir;
+    DIR* fd_dir;
     jboolean redirectErrorStream;
 #if START_CHILD_USE_CLONE
     void *clone_stack;
@@ -765,7 +770,7 @@ childProcess(void *arg)
         goto WhyCantJohnnyExec;
 
     /* close everything */
-    if (closeDescriptors() == 0) { /* failed,  close the old way */
+    if (closeDescriptors(p->fd_dir) == 0) { /* failed,  close the old way */
         int max_fd = (int)sysconf(_SC_OPEN_MAX);
         int fd;
         for (fd = FAIL_FILENO + 1; fd < max_fd; fd++)
@@ -876,8 +881,24 @@ UNIXProcess_forkAndExec(JNIEnv *env,
     c->argv = NULL;
     c->envv = NULL;
     c->pdir = NULL;
+    c->fd_dir = NULL;
 #if START_CHILD_USE_CLONE
     c->clone_stack = NULL;
+#endif
+
+#if START_CHILD_USE_CLONE || START_CHILD_USE_VFORK
+    // If we vfork or CLONE_VM, we cannot use opendir in the forked process.
+    // It is against POSIX to do memory allocations in a vforked process, and
+    // messes with memory profilers on Android.
+    // Thus, we open the FD directory in the parent. The file descriptor
+    // numbers in the forked process will be the same as in the parent, so
+    // we can use that instead as well.
+    //
+    // In that case, we lend the DIR* to the forked process. The parent
+    // blocks until after exec in the child is done, so we always lend it
+    // for sufficient time. The parent is always responsible for closing
+    // the directory again.
+    c->fd_dir = opendir(FD_DIR);
 #endif
 
     /* Convert prog + argBlock into a char ** argv.
@@ -953,6 +974,7 @@ UNIXProcess_forkAndExec(JNIEnv *env,
 #if START_CHILD_USE_CLONE
     free(c->clone_stack);
 #endif
+    if (c->fd_dir) closedir(c->fd_dir);
 
     /* Always clean up the child's side of the pipes */
     closeSafely(in [0]);
