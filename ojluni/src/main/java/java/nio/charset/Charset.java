@@ -685,7 +685,6 @@ public abstract class Charset
      * @throws IllegalCharsetNameException
      *         If the canonical name or any of the aliases are illegal
      */
-    @libcore.api.IntraCoreApi
     protected Charset(String canonicalName, String[] aliases) {
         checkName(canonicalName);
         String[] as = (aliases == null) ? new String[0] : aliases;
