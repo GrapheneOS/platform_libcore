@@ -65,7 +65,7 @@ public class X500PrincipalTest extends TestCaseWithRules {
      * Confirm DRLCertFactory uses a non-hex format for T61String encoding: http://b/2102191
      */
     public void testGetName() throws Exception {
-        CertificateFactory certFactBC = CertificateFactory.getInstance("X.509", "BC");
+        CertificateFactory certFactBC = CertificateFactory.getInstance("X.509");
         CertificateFactory certFactOpenSSL = CertificateFactory.getInstance("X.509",
                 "AndroidOpenSSL");
 

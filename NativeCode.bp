@@ -212,15 +212,8 @@ cc_library_shared {
         "libicui18n",
         "libicuuc",
         "liblog",
+        "libnativehelper",
     ],
-    target: {
-        android: {
-            shared_libs: ["libnativehelper_compat_libc++"],
-        },
-        host: {
-            shared_libs: ["libnativehelper"],
-        },
-    },
 
     cflags: [
         // -DANDROID_LINK_SHARED_ICU4C to enable access to the full ICU4C.
