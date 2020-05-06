@@ -113,7 +113,7 @@ public class MacTest extends TestCaseWithRules {
     };
 
     /**
-     * Test that default PBEWITHHMACSHA implementation has the same results as the SunJCA provider.
+     * Test that BC has the same results as the SunJCA provider for
      */
     public void test_PBEWITHHMACSHA_Variants() throws Exception {
         byte[] plaintext = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
@@ -126,14 +126,14 @@ public class MacTest extends TestCaseWithRules {
         for (int shaVariantIndex = 0; shaVariantIndex < shaVariants.length; shaVariantIndex++) {
             int shaVariant = shaVariants[shaVariantIndex];
             SecretKeyFactory secretKeyFactory =
-                    SecretKeyFactory.getInstance("PBKDF2WITHHMACSHA" + shaVariant);
+                    SecretKeyFactory.getInstance("PBKDF2WITHHMACSHA" + shaVariant, "BC");
             PBEKeySpec pbeKeySpec = new PBEKeySpec(password,
                     salt,
                     iterationCount,
                     // Key depending on block size!
                     (shaVariant < 384) ? 64 : 128);
             SecretKey secretKey = secretKeyFactory.generateSecret(pbeKeySpec);
-            Mac mac = Mac.getInstance("PBEWITHHMACSHA" + shaVariant);
+            Mac mac = Mac.getInstance("PBEWITHHMACSHA" + shaVariant, "BC");
             mac.init(secretKey);
             byte[] bcResult = mac.doFinal(plaintext);
             assertEquals(
