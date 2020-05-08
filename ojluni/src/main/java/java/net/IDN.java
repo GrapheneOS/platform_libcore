@@ -26,6 +26,7 @@
 package java.net;
 
 import android.icu.text.IDNA;
+import java.text.ParseException;
 
 /**
  * Provides methods to convert internationalized domain names (IDNs) between
@@ -106,7 +107,9 @@ public final class IDN {
         // BEGIN Android-changed: Use ICU4J implementation.
         try {
             return IDNA.convertIDNToASCII(input, flag).toString();
-        } catch (android.icu.text.StringPrepParseException e) {
+        // Catch the parent class ParseException instead of StringPrepParseException to avoid
+        // a compile error from dex2oat. See b/153648261.
+        } catch (ParseException e) {
             // b/113787610: "." is a valid IDN but is rejected by ICU.
             // Usage is relatively uncommon, so only check for it if ICU throws.
             if (".".equals(input)) {
@@ -163,7 +166,9 @@ public final class IDN {
             // ICU only translates separators to ASCII for toASCII.
             // Java expects the translation for toUnicode too.
             return convertFullStop(IDNA.convertIDNToUnicode(input, flag)).toString();
-        } catch (android.icu.text.StringPrepParseException e) {
+        // Catch the parent class ParseException instead of StringPrepParseException to avoid
+        // a compile error from dex2oat. GIT STATSee b/153648261.
+        } catch (java.text.ParseException e) {
             // The RI documentation explicitly states that if the conversion was unsuccessful
             // the original string is returned.
             return input;

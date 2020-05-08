@@ -1,4 +1,10 @@
 {
   "name": "com.android.i18n",
-  "version": 1
+  "version": 1,
+  "provideNativeLibs": [
+    "libandroidicu.so",
+    "libicui18n.so",
+    "libicuuc.so",
+    "libicu_jni.so"
+  ]
 }

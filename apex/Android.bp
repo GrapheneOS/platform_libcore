@@ -31,6 +31,17 @@ apex_defaults {
     manifest: "manifest.json",
     prebuilts: ["apex_icu.dat"],
     key: "com.android.i18n.key",
+    native_shared_libs: [
+        "libandroidicu",
+        "libicui18n",
+        "libicuuc",
+        "libicu_jni",
+        // TODO(b/122876336): Remove libpac.so once it's migrated to Webview.
+        "libpac",
+    ],
+    java_libs: [
+        "core-icu4j",
+    ],
 }
 
 apex_key {
