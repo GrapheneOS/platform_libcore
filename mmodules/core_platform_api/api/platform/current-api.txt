@@ -586,20 +586,12 @@ package dalvik.system {
   }
 
   @Deprecated public final class DexFile {
-    ctor @Deprecated public DexFile(java.io.File) throws java.io.IOException;
-    ctor @Deprecated public DexFile(String) throws java.io.IOException;
-    method @Deprecated public void close() throws java.io.IOException;
-    method @Deprecated public java.util.Enumeration<java.lang.String> entries();
     method @Deprecated public static dalvik.system.DexFile.OptimizationInfo getDexFileOptimizationInfo(String, String) throws java.io.FileNotFoundException;
     method @Deprecated public static String[] getDexFileOutputPaths(String, String) throws java.io.FileNotFoundException;
     method @Deprecated public static int getDexOptNeeded(String, String, String, String, boolean, boolean) throws java.io.FileNotFoundException, java.io.IOException;
-    method @Deprecated public String getName();
     method @Deprecated public static String getSafeModeCompilerFilter(String);
-    method @Deprecated public static boolean isDexOptNeeded(String) throws java.io.FileNotFoundException, java.io.IOException;
     method @Deprecated public static boolean isProfileGuidedCompilerFilter(String);
     method @Deprecated public static boolean isValidCompilerFilter(String);
-    method @Deprecated public Class loadClass(String, ClassLoader);
-    method @Deprecated public static dalvik.system.DexFile loadDex(String, String, int) throws java.io.IOException;
     field @Deprecated public static final int DEX2OAT_FOR_FILTER = 3; // 0x3
     field @Deprecated public static final int NO_DEXOPT_NEEDED = 0; // 0x0
   }
