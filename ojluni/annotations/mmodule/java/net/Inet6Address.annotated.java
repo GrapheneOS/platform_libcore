@@ -28,7 +28,6 @@
 package java.net;
 
 
-@libcore.api.CorePlatformApi
 @SuppressWarnings({"unchecked", "deprecation", "all"})
 public final class Inet6Address extends java.net.InetAddress {
 
@@ -60,7 +59,6 @@ public boolean isMCOrgLocal() { throw new RuntimeException("Stub!"); }
 
 public byte[] getAddress() { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
 public int getScopeId() { throw new RuntimeException("Stub!"); }
 
 public java.net.NetworkInterface getScopedInterface() { throw new RuntimeException("Stub!"); }

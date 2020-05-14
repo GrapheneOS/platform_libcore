@@ -155,9 +155,6 @@ public class ProviderTest extends TestCaseWithRules {
                     }
                     remainingAlgorithms.removeAll(toRemove);
                 }
-                if (remainingAlgorithms != null && remainingAlgorithms.isEmpty()) {
-                    remainingExpected.remove(type);
-                }
 
                 // make sure class exists and can be initialized
                 try {
@@ -171,6 +168,14 @@ public class ProviderTest extends TestCaseWithRules {
                     }
                 }
             }
+
+            // last chance: some algorithms might only be provided by their alias
+            remainingExpected.entrySet()
+                .forEach(entry ->
+                    entry.getValue()
+                        .removeIf(algorithm ->
+                            provider.getService(entry.getKey(), algorithm) != null)
+            );
         }
 
         // assert that we don't have any extra in the implementation
@@ -190,10 +195,12 @@ public class ProviderTest extends TestCaseWithRules {
                 } catch (NoSuchAlgorithmException|NoSuchPaddingException e) {
                 }
             }
-            if (remainingExpected.get("Cipher").isEmpty()) {
-                remainingExpected.remove("Cipher");
-            }
         }
+
+        remainingExpected.entrySet()
+            .removeIf(entry ->
+                entry.getValue().isEmpty());
+
         // assert that we don't have any missing in the implementation
         assertEquals("Algorithms are present in StandardNames but not provided",
                 Collections.EMPTY_MAP, remainingExpected);
