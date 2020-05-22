@@ -367,7 +367,7 @@ public final class ZoneInfoDb implements AutoCloseable {
   }
 
   @libcore.api.CorePlatformApi
-  public ZoneInfo makeTimeZone(String id) throws IOException {
+  public ZoneInfo makeTimeZone(String id) {
     checkNotClosed();
     ZoneInfo zoneInfo = cache.get(id);
     // The object from the cache is cloned because TimeZone / ZoneInfo are mutable.
@@ -375,7 +375,7 @@ public final class ZoneInfoDb implements AutoCloseable {
   }
 
   @libcore.api.CorePlatformApi
-  public boolean hasTimeZone(String id) throws IOException {
+  public boolean hasTimeZone(String id) {
     checkNotClosed();
     return cache.get(id) != null;
   }

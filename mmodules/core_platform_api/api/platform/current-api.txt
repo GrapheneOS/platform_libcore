@@ -1174,9 +1174,9 @@ package libcore.timezone {
   public final class ZoneInfoDb implements java.lang.AutoCloseable {
     method public static libcore.timezone.ZoneInfoDb getInstance();
     method public String getVersion();
-    method public boolean hasTimeZone(String) throws java.io.IOException;
+    method public boolean hasTimeZone(String);
     method public static libcore.timezone.ZoneInfoDb loadTzData(String);
-    method public libcore.util.ZoneInfo makeTimeZone(String) throws java.io.IOException;
+    method public libcore.util.ZoneInfo makeTimeZone(String);
     method public void validate() throws java.io.IOException;
   }
 
