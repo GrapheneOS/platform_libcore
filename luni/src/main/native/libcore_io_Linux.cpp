@@ -350,6 +350,18 @@ private:
     std::vector<ScopedT*> mScopedBuffers;
 };
 
+static jobject createFileDescriptorIfOpen(JNIEnv* env, int fd) {
+    if (fd == -1) {
+        return NULL;
+    }
+    jobject jifd = jniCreateFileDescriptor(env, fd);
+    if (jifd == NULL) {
+        // OOME prevented allocation of j.i.FileDescriptor instance, close fd to avoid leak.
+        close(fd);
+    }
+    return jifd;
+}
+
 /**
  * Returns a jbyteArray containing the sockaddr_un.sun_path from ss. As per unix(7) sa_len should be
  * the length of ss as returned by getsockname(2), getpeername(2), or accept(2).
@@ -966,7 +978,7 @@ static jobject Linux_accept(JNIEnv* env, jobject, jobject javaFd, jobject javaSo
         close(clientFd);
         return NULL;
     }
-    return (clientFd != -1) ? jniCreateFileDescriptor(env, clientFd) : NULL;
+    return createFileDescriptorIfOpen(env, clientFd);
 }
 
 static jboolean Linux_access(JNIEnv* env, jobject, jstring javaPath, jint mode) {
@@ -1196,13 +1208,13 @@ static void Linux_connectSocketAddress(
 static jobject Linux_dup(JNIEnv* env, jobject, jobject javaOldFd) {
     int oldFd = jniGetFDFromFileDescriptor(env, javaOldFd);
     int newFd = throwIfMinusOne(env, "dup", TEMP_FAILURE_RETRY(dup(oldFd)));
-    return (newFd != -1) ? jniCreateFileDescriptor(env, newFd) : NULL;
+    return createFileDescriptorIfOpen(env, newFd);
 }
 
 static jobject Linux_dup2(JNIEnv* env, jobject, jobject javaOldFd, jint newFd) {
     int oldFd = jniGetFDFromFileDescriptor(env, javaOldFd);
     int fd = throwIfMinusOne(env, "dup2", TEMP_FAILURE_RETRY(dup2(oldFd, newFd)));
-    return (fd != -1) ? jniCreateFileDescriptor(env, fd) : NULL;
+    return createFileDescriptorIfOpen(env, fd);
 }
 
 static jobjectArray Linux_environ(JNIEnv* env, jobject) {
@@ -1848,7 +1860,7 @@ static jobject Linux_memfd_create(JNIEnv* env, jobject, jstring javaName, jint f
     }
 
     int fd = throwIfMinusOne(env, "memfd_create", memfd_create(name.c_str(), flags));
-    return fd != -1 ? jniCreateFileDescriptor(env, fd) : NULL;
+    return createFileDescriptorIfOpen(env, fd);
 #else
     UNUSED(env, javaName, flags);
     return NULL;
@@ -1917,7 +1929,7 @@ static jobject Linux_open(JNIEnv* env, jobject, jstring javaPath, jint flags, ji
         return NULL;
     }
     int fd = throwIfMinusOne(env, "open", TEMP_FAILURE_RETRY(open(path.c_str(), flags, mode)));
-    return fd != -1 ? jniCreateFileDescriptor(env, fd) : NULL;
+    return createFileDescriptorIfOpen(env, fd);
 }
 
 static jobjectArray Linux_pipe2(JNIEnv* env, jobject, jint flags __unused) {
@@ -1932,11 +1944,10 @@ static jobjectArray Linux_pipe2(JNIEnv* env, jobject, jint flags __unused) {
     }
     for (int i = 0; i < 2; ++i) {
         ScopedLocalRef<jobject> fd(env, jniCreateFileDescriptor(env, fds[i]));
-        if (fd.get() == NULL) {
-            return NULL;
-        }
         env->SetObjectArrayElement(result, i, fd.get());
-        if (env->ExceptionCheck()) {
+        if (fd.get() == NULL || env->ExceptionCheck()) {
+            close(fds[0]);
+            close(fds[1]);
             return NULL;
         }
     }
@@ -2389,7 +2400,7 @@ static jobject Linux_socket(JNIEnv* env, jobject, jint domain, jint type, jint p
         protocol = htons(protocol);  // Packet sockets specify the protocol in host byte order.
     }
     int fd = throwIfMinusOne(env, "socket", TEMP_FAILURE_RETRY(socket(domain, type, protocol)));
-    return fd != -1 ? jniCreateFileDescriptor(env, fd) : NULL;
+    return createFileDescriptorIfOpen(env, fd);
 }
 
 static void Linux_socketpair(JNIEnv* env, jobject, jint domain, jint type, jint protocol, jobject javaFd1, jobject javaFd2) {

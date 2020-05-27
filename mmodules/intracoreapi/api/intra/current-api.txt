@@ -58,7 +58,7 @@ package dalvik.system {
 package java.net {
 
   public class Socket implements java.io.Closeable {
-    method public java.io.FileDescriptor getFileDescriptor$();
+    method @libcore.api.IntraCoreApi public java.io.FileDescriptor getFileDescriptor$();
   }
 
 }
@@ -66,11 +66,11 @@ package java.net {
 package java.nio.charset {
 
   public abstract class CharsetDecoder {
-    ctor protected CharsetDecoder(java.nio.charset.Charset, float, float);
+    ctor @libcore.api.IntraCoreApi protected CharsetDecoder(java.nio.charset.Charset, float, float);
   }
 
   public abstract class CharsetEncoder {
-    ctor protected CharsetEncoder(java.nio.charset.Charset, float, float, byte[], boolean);
+    ctor @libcore.api.IntraCoreApi protected CharsetEncoder(java.nio.charset.Charset, float, float, byte[], boolean);
   }
 
 }
@@ -78,8 +78,8 @@ package java.nio.charset {
 package java.security.spec {
 
   public class ECParameterSpec implements java.security.spec.AlgorithmParameterSpec {
-    method public String getCurveName();
-    method public void setCurveName(String);
+    method @libcore.api.IntraCoreApi public String getCurveName();
+    method @libcore.api.IntraCoreApi public void setCurveName(String);
   }
 
 }
@@ -129,18 +129,18 @@ package libcore.util {
 
 package sun.security.util {
 
-  public interface DerEncoder {
-    method public void derEncode(java.io.OutputStream) throws java.io.IOException;
+  @libcore.api.IntraCoreApi public interface DerEncoder {
+    method @libcore.api.IntraCoreApi public void derEncode(java.io.OutputStream) throws java.io.IOException;
   }
 
 }
 
 package sun.security.x509 {
 
-  public class AlgorithmId implements sun.security.util.DerEncoder java.io.Serializable {
-    method public void derEncode(java.io.OutputStream) throws java.io.IOException;
-    method public static sun.security.x509.AlgorithmId get(String) throws java.security.NoSuchAlgorithmException;
-    method public String getName();
+  @libcore.api.IntraCoreApi public class AlgorithmId implements sun.security.util.DerEncoder java.io.Serializable {
+    method @libcore.api.IntraCoreApi public void derEncode(java.io.OutputStream) throws java.io.IOException;
+    method @libcore.api.IntraCoreApi public static sun.security.x509.AlgorithmId get(String) throws java.security.NoSuchAlgorithmException;
+    method @libcore.api.IntraCoreApi public String getName();
   }
 
 }

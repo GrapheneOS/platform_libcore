@@ -5700,7 +5700,7 @@ public class ScannerTest extends TestCase {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(baos));
         for (int i = 0; i < count; ++i) {
-            out.write(Integer.toString(123) + " ");
+            out.write("123 ");
         }
         out.close();
 
@@ -5709,7 +5709,16 @@ public class ScannerTest extends TestCase {
 
         Scanner s = new Scanner(new BufferedReader(new InputStreamReader(bais)));
         for (int i = 0; i < count; ++i) {
-            if (s.nextInt() != 123) {
+            final int value;
+            try {
+                value = s.nextInt();
+            } catch (RuntimeException e) {
+                String msg = String.format(Locale.US,
+                        "Failed to parse float on item %d/%d with locale %s: %s",
+                        (i+1), count, s.locale(), s);
+                throw new RuntimeException(msg, e);
+            }
+            if (value != 123) {
                 fail();
             }
         }
@@ -5717,7 +5726,16 @@ public class ScannerTest extends TestCase {
         bais.reset();
         s = new Scanner(new BufferedReader(new InputStreamReader(bais)));
         for (int i = 0; i < count; ++i) {
-            if (s.nextFloat() != 123.0) {
+            final float value;
+            try {
+                value = s.nextFloat();
+            } catch (RuntimeException e) {
+                String msg = String.format(Locale.US,
+                        "Failed to parse float on item %d/%d with locale %s: %s",
+                        (i+1), count, s.locale(), s);
+                throw new RuntimeException(msg, e);
+            }
+            if (value != 123.0) {
                 fail();
             }
         }
