@@ -34,12 +34,12 @@ extern "C" int tagSocket(JNIEnv* env, int fd) {
       return fd;
     }
 
-    ScopedLocalRef<jclass> socketTaggerClass(env, JniConstants::GetSocketTaggerClass(env));
-    jmethodID get = env->GetStaticMethodID(socketTaggerClass.get(),
+    jclass socketTaggerClass = JniConstants::GetSocketTaggerClass(env);
+    jmethodID get = env->GetStaticMethodID(socketTaggerClass,
                                            "get",
                                            "()Ldalvik/system/SocketTagger;");
-    jobject socketTagger = env->CallStaticObjectMethod(socketTaggerClass.get(), get);
-    jmethodID tag = env->GetMethodID(socketTaggerClass.get(), "tag", "(Ljava/io/FileDescriptor;)V");
+    jobject socketTagger = env->CallStaticObjectMethod(socketTaggerClass, get);
+    jmethodID tag = env->GetMethodID(socketTaggerClass, "tag", "(Ljava/io/FileDescriptor;)V");
 
     env->CallVoidMethod(socketTagger, tag, fileDescriptor);
     return fd;
