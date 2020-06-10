@@ -33,7 +33,7 @@ import java.util.Set;
  *
  * @hide
  */
-@CorePlatformApi
+@CorePlatformApi(status = CorePlatformApi.Status.STABLE)
 @IntraCoreApi
 public final class Compatibility {
 
@@ -53,7 +53,7 @@ public final class Compatibility {
      *
      * @param changeId The ID of the compatibility change taking effect.
      */
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @IntraCoreApi
     public static void reportChange(@ChangeId long changeId) {
         sCallbacks.reportChange(changeId);
@@ -73,7 +73,7 @@ public final class Compatibility {
      * @param changeId The ID of the compatibility change in question.
      * @return {@code true} if the change is enabled for the current app.
      */
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @IntraCoreApi
     public static boolean isChangeEnabled(@ChangeId long changeId) {
         return sCallbacks.isChangeEnabled(changeId);
@@ -81,12 +81,12 @@ public final class Compatibility {
 
     private volatile static Callbacks sCallbacks = new Callbacks();
 
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void setCallbacks(Callbacks callbacks) {
         sCallbacks = Objects.requireNonNull(callbacks);
     }
 
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void setOverrides(ChangeConfig overrides) {
         // Setting overrides twice in a row does not need to be supported because
         // this method is only for enabling/disabling changes for the duration of
@@ -99,7 +99,7 @@ public final class Compatibility {
         sCallbacks = new OverrideCallbacks(sCallbacks, overrides);
     }
 
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void clearOverrides() {
         if (!(sCallbacks instanceof OverrideCallbacks)) {
             throw new IllegalStateException("No overrides set");
@@ -114,17 +114,17 @@ public final class Compatibility {
      * This is provided as a class rather than an interface to allow new methods to be added without
      * breaking @CorePlatformApi binary compatibility.
      */
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static class Callbacks {
-        @CorePlatformApi
+        @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         protected Callbacks() {
         }
-        @CorePlatformApi
+        @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         protected void reportChange(long changeId) {
             System.logW(String.format(
                     "No Compatibility callbacks set! Reporting change %d", changeId));
         }
-        @CorePlatformApi
+        @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         protected boolean isChangeEnabled(long changeId) {
             System.logW(String.format(
                     "No Compatibility callbacks set! Querying change %d", changeId));
@@ -132,7 +132,7 @@ public final class Compatibility {
         }
     }
 
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @IntraCoreApi
     public static final class ChangeConfig {
         private final Set<Long> enabled;

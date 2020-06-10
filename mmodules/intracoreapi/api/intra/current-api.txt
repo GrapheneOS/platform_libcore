@@ -1,12 +1,12 @@
 // Signature format: 2.0
 package android.compat {
 
-  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public final class Compatibility {
-    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static boolean isChangeEnabled(long);
-    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static void reportChange(long);
+  @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public final class Compatibility {
+    method @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public static boolean isChangeEnabled(long);
+    method @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public static void reportChange(long);
   }
 
-  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final class Compatibility.ChangeConfig {
+  @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public static final class Compatibility.ChangeConfig {
     ctor public Compatibility.ChangeConfig(java.util.Set<java.lang.Long>, java.util.Set<java.lang.Long>);
     method public long[] forceDisabledChangesArray();
     method public java.util.Set<java.lang.Long> forceDisabledSet();

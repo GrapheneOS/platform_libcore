@@ -1,0 +1,30 @@
+// Signature format: 2.0
+package android.compat {
+
+  public final class Compatibility {
+    method public static void clearOverrides();
+    method public static boolean isChangeEnabled(long);
+    method public static void reportChange(long);
+    method public static void setCallbacks(android.compat.Compatibility.Callbacks);
+    method public static void setOverrides(android.compat.Compatibility.ChangeConfig);
+  }
+
+  public static class Compatibility.Callbacks {
+    ctor protected Compatibility.Callbacks();
+    method protected boolean isChangeEnabled(long);
+    method protected void reportChange(long);
+  }
+
+  public static final class Compatibility.ChangeConfig {
+    ctor public Compatibility.ChangeConfig(java.util.Set<java.lang.Long>, java.util.Set<java.lang.Long>);
+    method public long[] forceDisabledChangesArray();
+    method public java.util.Set<java.lang.Long> forceDisabledSet();
+    method public long[] forceEnabledChangesArray();
+    method public java.util.Set<java.lang.Long> forceEnabledSet();
+    method public boolean isEmpty();
+    method public boolean isForceDisabled(long);
+    method public boolean isForceEnabled(long);
+  }
+
+}
+

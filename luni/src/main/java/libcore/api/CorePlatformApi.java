@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2018 The Android Open Source Project
  *
@@ -42,4 +43,23 @@ import java.lang.annotation.Target;
 @Target({TYPE, FIELD, METHOD, CONSTRUCTOR, ANNOTATION_TYPE})
 @Retention(RetentionPolicy.SOURCE)
 public @interface CorePlatformApi {
+
+    /** Enumeration of the possible statuses of the API in the core/platform API surface. */
+    enum Status {
+
+        /**
+         * This API is considered stable, and so present in both the stable and legacy version of
+         * the API surface.
+        */
+        STABLE,
+
+        /**
+         * This API is not (yet) considered stable, and so only present in the legacy version of
+         * the API surface.
+         */
+        LEGACY_ONLY
+    }
+
+    /** The status of the API in the core/platform API surface. */
+    Status status() default libcore.api.CorePlatformApi.Status.LEGACY_ONLY;
 }
