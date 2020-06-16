@@ -45,21 +45,25 @@ import java.lang.annotation.Target;
 public @interface CorePlatformApi {
 
     /** Enumeration of the possible statuses of the API in the core/platform API surface. */
+    @IntraCoreApi
     enum Status {
 
         /**
          * This API is considered stable, and so present in both the stable and legacy version of
          * the API surface.
         */
+        @IntraCoreApi
         STABLE,
 
         /**
          * This API is not (yet) considered stable, and so only present in the legacy version of
          * the API surface.
          */
+        @IntraCoreApi
         LEGACY_ONLY
     }
 
     /** The status of the API in the core/platform API surface. */
+    @IntraCoreApi
     Status status() default libcore.api.CorePlatformApi.Status.LEGACY_ONLY;
 }

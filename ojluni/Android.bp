@@ -21,6 +21,6 @@ phony {
 
     // A phony module must have at least one dependency.
     required: [
-        "core-oj",
+        "art-notices-for-framework-stubs-jar",
     ],
 }

@@ -87,6 +87,12 @@ package java.security.spec {
 package libcore.api {
 
   @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) @java.lang.annotation.Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.METHOD, java.lang.annotation.ElementType.CONSTRUCTOR, java.lang.annotation.ElementType.ANNOTATION_TYPE}) @libcore.api.IntraCoreApi public @interface CorePlatformApi {
+    method @libcore.api.IntraCoreApi public abstract libcore.api.CorePlatformApi.Status status() default libcore.api.CorePlatformApi.Status.LEGACY_ONLY;
+  }
+
+  @libcore.api.IntraCoreApi public enum CorePlatformApi.Status {
+    enum_constant @libcore.api.IntraCoreApi public static final libcore.api.CorePlatformApi.Status LEGACY_ONLY;
+    enum_constant @libcore.api.IntraCoreApi public static final libcore.api.CorePlatformApi.Status STABLE;
   }
 
   @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) @java.lang.annotation.Target({java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.METHOD, java.lang.annotation.ElementType.CONSTRUCTOR, java.lang.annotation.ElementType.ANNOTATION_TYPE}) @libcore.api.IntraCoreApi public @interface IntraCoreApi {
