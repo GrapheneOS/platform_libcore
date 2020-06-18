@@ -606,7 +606,6 @@ package dalvik.system {
   }
 
   public final class RuntimeHooks {
-    method @Nullable public static dalvik.system.ThreadPrioritySetter getThreadPrioritySetter();
     method public static void setThreadPrioritySetter(@NonNull dalvik.system.ThreadPrioritySetter);
     method public static void setTimeZoneIdSupplier(java.util.function.Supplier<java.lang.String>);
     method public static void setUncaughtExceptionPreHandler(java.lang.Thread.UncaughtExceptionHandler);
@@ -1442,15 +1441,10 @@ package sun.security.jca {
 
 package sun.security.pkcs {
 
-  public class ContentInfo {
-    method public byte[] getContentBytes() throws java.io.IOException;
-  }
-
   public class PKCS7 {
     ctor public PKCS7(java.io.InputStream) throws java.io.IOException, sun.security.pkcs.ParsingException;
     ctor public PKCS7(byte[]) throws sun.security.pkcs.ParsingException;
     method public java.security.cert.X509Certificate[] getCertificates();
-    method public sun.security.pkcs.ContentInfo getContentInfo();
     method public sun.security.pkcs.SignerInfo[] getSignerInfos();
     method public sun.security.pkcs.SignerInfo verify(sun.security.pkcs.SignerInfo, java.io.InputStream) throws java.io.IOException, java.security.NoSuchAlgorithmException, java.security.SignatureException;
     method public sun.security.pkcs.SignerInfo[] verify(byte[]) throws java.security.NoSuchAlgorithmException, java.security.SignatureException;

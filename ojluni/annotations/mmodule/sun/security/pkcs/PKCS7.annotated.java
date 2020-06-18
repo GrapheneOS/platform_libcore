@@ -69,7 +69,6 @@ public java.math.BigInteger getVersion() { throw new RuntimeException("Stub!"); 
 
 public sun.security.x509.AlgorithmId[] getDigestAlgorithmIds() { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
 public sun.security.pkcs.ContentInfo getContentInfo() { throw new RuntimeException("Stub!"); }
 
 @libcore.api.CorePlatformApi

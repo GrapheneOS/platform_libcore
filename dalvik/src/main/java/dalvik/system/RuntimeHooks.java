@@ -104,7 +104,6 @@ public final class RuntimeHooks {
      * null if the setter has not yet been called.
      * @hide
      */
-    @libcore.api.CorePlatformApi
     public static @Nullable ThreadPrioritySetter getThreadPrioritySetter() {
         return threadPrioritySetter;
     }
