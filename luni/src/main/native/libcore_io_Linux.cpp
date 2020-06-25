@@ -59,7 +59,7 @@
 #include <android-base/macros.h>
 #include <android-base/strings.h>
 #include <log/log.h>
-#include <nativehelper/JNIHelp.h>
+#include <nativehelper/JNIPlatformHelp.h>
 #include <nativehelper/ScopedBytes.h>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedPrimitiveArray.h>

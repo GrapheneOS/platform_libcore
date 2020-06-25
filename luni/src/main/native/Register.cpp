@@ -19,7 +19,7 @@
 #include <stdlib.h>
 
 #include <log/log.h>
-#include <nativehelper/JNIHelp.h>
+#include <nativehelper/JNIPlatformHelp.h>
 #include <nativehelper/ScopedLocalFrame.h>
 
 #include "JniConstants.h"
