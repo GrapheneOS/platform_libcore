@@ -207,6 +207,7 @@ java_system_modules {
     // Visibility is deliberately restricted to a small set of build modules that
     // the core library team control.
     visibility: [
+        "//art/test:__subpackages__",
         "//external/apache-harmony:__subpackages__",
         "//external/apache-xml",
         "//external/okhttp",
