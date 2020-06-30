@@ -73,6 +73,7 @@ import java.lang.annotation.Target;
  * @hide
  */
 @libcore.api.CorePlatformApi
+@libcore.api.IntraCoreApi
 @Retention(RetentionPolicy.CLASS)  // Save memory, don't instantiate as an object at runtime.
 @Target(ElementType.METHOD)
 public @interface FastNative {}

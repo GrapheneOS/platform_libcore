@@ -22,6 +22,7 @@ import static libcore.timezone.XmlUtils.findNextStartTagOrEndTagNoRecurse;
 import static libcore.timezone.XmlUtils.findNextStartTagOrThrowNoRecurse;
 import static libcore.timezone.XmlUtils.normalizeCountryIso;
 
+import com.android.i18n.timezone.TimeZoneDataFiles;
 import libcore.timezone.TelephonyNetwork.MccMnc;
 import libcore.timezone.XmlUtils.ReaderSupplier;
 

@@ -479,6 +479,7 @@ public final class Os {
      * @hide
      */
     @libcore.api.CorePlatformApi
+    @libcore.api.IntraCoreApi
     public static String realpath(String path) throws ErrnoException { return Libcore.os.realpath(path); }
 
     /**

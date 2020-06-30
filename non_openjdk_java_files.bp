@@ -254,15 +254,10 @@ filegroup {
         "luni/src/main/java/libcore/timezone/TelephonyLookup.java",
         "luni/src/main/java/libcore/timezone/TelephonyNetwork.java",
         "luni/src/main/java/libcore/timezone/TelephonyNetworkFinder.java",
-        "luni/src/main/java/libcore/timezone/TimeZoneDataFiles.java",
         "luni/src/main/java/libcore/timezone/TimeZoneFinder.java",
-        "luni/src/main/java/libcore/timezone/TzDataSetVersion.java",
         "luni/src/main/java/libcore/timezone/XmlUtils.java",
-        "luni/src/main/java/libcore/timezone/ZoneInfoDb.java",
         "luni/src/main/java/libcore/util/ArrayUtils.java",
         "luni/src/main/java/libcore/util/BasicLruCache.java",
-        "luni/src/main/java/libcore/util/CoreLibraryDebug.java",
-        "luni/src/main/java/libcore/util/DebugInfo.java",
         "luni/src/main/java/libcore/util/EmptyArray.java",
         "luni/src/main/java/libcore/util/FP16.java",
         "luni/src/main/java/libcore/util/HexEncoding.java",
@@ -442,11 +437,9 @@ filegroup {
 // timezone-related source that is also used in host tests / tools and its
 // dependencies.
 filegroup {
-    name: "timezone_host_files",
+    name: "timezone_host_libcore_files",
     srcs: [
         "luni/src/main/java/libcore/api/CorePlatformApi.java",
         "luni/src/main/java/libcore/api/IntraCoreApi.java",
-        "luni/src/main/java/libcore/timezone/TimeZoneDataFiles.java",
-        "luni/src/main/java/libcore/timezone/TzDataSetVersion.java",
     ],
 }

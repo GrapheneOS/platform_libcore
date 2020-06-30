@@ -987,7 +987,10 @@ java_library_host {
         "//art/build/sdk",
         "//system/timezone/distro/core",
     ],
-    srcs: [":timezone_host_files"],
+    srcs: [
+        ":timezone_host_files",
+        ":timezone_host_libcore_files",
+    ],
 }
 
 // A special set of system modules for building the following library for use

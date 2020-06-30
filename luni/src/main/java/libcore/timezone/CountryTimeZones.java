@@ -18,6 +18,7 @@ package libcore.timezone;
 
 import android.icu.util.TimeZone;
 
+import com.android.i18n.timezone.ZoneInfoDb;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

@@ -25,6 +25,7 @@ import static libcore.timezone.XmlUtils.normalizeCountryIso;
 import static libcore.timezone.XmlUtils.parseBooleanAttribute;
 import static libcore.timezone.XmlUtils.parseLongAttribute;
 
+import com.android.i18n.timezone.TimeZoneDataFiles;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -47,9 +48,11 @@ import libcore.timezone.XmlUtils.ReaderSupplier;
  * @hide
  */
 @libcore.api.CorePlatformApi
+@libcore.api.IntraCoreApi
 public final class TimeZoneFinder {
 
     // VisibleForTesting
+    @libcore.api.IntraCoreApi
     public static final String TZLOOKUP_FILE_NAME = "tzlookup.xml";
 
     // Root element. e.g. <timezones ianaversion="2017b">
@@ -94,6 +97,7 @@ public final class TimeZoneFinder {
      * in-depth validation is performed on the file content, see {@link #validate()}.
      */
     @libcore.api.CorePlatformApi
+    @libcore.api.IntraCoreApi
     public static TimeZoneFinder getInstance() {
         synchronized(TimeZoneFinder.class) {
             if (instance == null) {
@@ -164,6 +168,7 @@ public final class TimeZoneFinder {
      * or there is a problem reading the file then {@code null} is returned.
      */
     @libcore.api.CorePlatformApi
+    @libcore.api.IntraCoreApi
     public String getIanaVersion() {
         IanaVersionExtractor ianaVersionExtractor = new IanaVersionExtractor();
         try {
@@ -478,7 +483,8 @@ public final class TimeZoneFinder {
                 List<TimeZoneMapping> timeZoneMappings, String debugInfo)
                 throws XmlPullParserException {
 
-            CountryTimeZones countryTimeZones = CountryTimeZones.createValidated(
+            CountryTimeZones countryTimeZones = CountryTimeZones
+                .createValidated(
                     countryIso, defaultTimeZoneId, defaultTimeZoneBoost, everUsesUtc,
                     timeZoneMappings, debugInfo);
             countryTimeZonesList.add(countryTimeZones);

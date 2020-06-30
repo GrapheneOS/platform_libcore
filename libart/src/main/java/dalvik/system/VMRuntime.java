@@ -39,6 +39,7 @@ import dalvik.annotation.optimization.FastNative;
  * @hide
  */
 @libcore.api.CorePlatformApi
+@libcore.api.IntraCoreApi
 public final class VMRuntime {
 
     /**
@@ -196,6 +197,7 @@ public final class VMRuntime {
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
+    @libcore.api.IntraCoreApi
     public static VMRuntime getRuntime() {
         return THE_ONE;
     }
@@ -453,6 +455,7 @@ public final class VMRuntime {
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
+    @libcore.api.IntraCoreApi
     @FastNative
     public native Object newNonMovableArray(Class<?> componentType, int length);
 
@@ -471,6 +474,7 @@ public final class VMRuntime {
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
+    @libcore.api.IntraCoreApi
     @FastNative
     public native long addressOf(Object array);
 

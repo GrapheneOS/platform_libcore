@@ -19,6 +19,14 @@ package android.compat {
 
 }
 
+package android.system {
+
+  public final class Os {
+    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static String realpath(String) throws android.system.ErrnoException;
+  }
+
+}
+
 package dalvik.annotation.compat {
 
   @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public class VersionCodes {
@@ -30,6 +38,9 @@ package dalvik.annotation.compat {
 }
 
 package dalvik.annotation.optimization {
+
+  @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) @java.lang.annotation.Target(java.lang.annotation.ElementType.METHOD) @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public @interface FastNative {
+  }
 
   @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME) @java.lang.annotation.Target({java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.METHOD}) @libcore.api.IntraCoreApi public @interface ReachabilitySensitive {
   }
@@ -51,6 +62,12 @@ package dalvik.system {
     method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static dalvik.system.CloseGuard get();
     method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public void open(String);
     method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public void warnIfOpen();
+  }
+
+  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public final class VMRuntime {
+    method @dalvik.annotation.optimization.FastNative @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public long addressOf(Object);
+    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static dalvik.system.VMRuntime getRuntime();
+    method @dalvik.annotation.optimization.FastNative @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public Object newNonMovableArray(Class<?>, int);
   }
 
 }
@@ -114,6 +131,16 @@ package libcore.net {
     ctor @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public NetworkSecurityPolicy();
     method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static libcore.net.NetworkSecurityPolicy getInstance();
     method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public abstract boolean isCertificateTransparencyVerificationRequired(String);
+  }
+
+}
+
+package libcore.timezone {
+
+  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public final class TimeZoneFinder {
+    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public String getIanaVersion();
+    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static libcore.timezone.TimeZoneFinder getInstance();
+    field @libcore.api.IntraCoreApi public static final String TZLOOKUP_FILE_NAME = "tzlookup.xml";
   }
 
 }

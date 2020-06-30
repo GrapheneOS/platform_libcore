@@ -1137,12 +1137,6 @@ package libcore.timezone {
     method public libcore.timezone.TelephonyNetwork findNetworkByMccMnc(String, String);
   }
 
-  public final class TimeZoneDataFiles {
-    method public static String getDataTimeZoneFile(String);
-    method public static String getDataTimeZoneRootDir();
-    method public static String getTimeZoneModuleTzVersionFile();
-  }
-
   public final class TimeZoneFinder {
     method public static libcore.timezone.TimeZoneFinder createInstance(String) throws java.io.IOException;
     method public libcore.timezone.CountryZonesFinder getCountryZonesFinder();
@@ -1152,58 +1146,12 @@ package libcore.timezone {
     method public void validate() throws java.io.IOException;
   }
 
-  public final class TzDataSetVersion {
-    ctor public TzDataSetVersion(int, int, String, int) throws libcore.timezone.TzDataSetVersion.TzDataSetException;
-    method public static int currentFormatMajorVersion();
-    method public static int currentFormatMinorVersion();
-    method public int getFormatMajorVersion();
-    method public int getFormatMinorVersion();
-    method public int getRevision();
-    method public String getRulesVersion();
-    method public static boolean isCompatibleWithThisDevice(libcore.timezone.TzDataSetVersion);
-    method public static libcore.timezone.TzDataSetVersion readFromFile(java.io.File) throws java.io.IOException, libcore.timezone.TzDataSetVersion.TzDataSetException;
-    method public static libcore.timezone.TzDataSetVersion readTimeZoneModuleVersion() throws java.io.IOException, libcore.timezone.TzDataSetVersion.TzDataSetException;
-    method public byte[] toBytes();
-    field public static final String DEFAULT_FILE_NAME = "tz_version";
-  }
-
-  public static class TzDataSetVersion.TzDataSetException extends java.lang.Exception {
-    ctor public TzDataSetVersion.TzDataSetException(String);
-    ctor public TzDataSetVersion.TzDataSetException(String, Throwable);
-  }
-
-  public final class ZoneInfoDb implements java.lang.AutoCloseable {
-    method public static libcore.timezone.ZoneInfoDb getInstance();
-    method public String getVersion();
-    method public boolean hasTimeZone(String);
-    method public static libcore.timezone.ZoneInfoDb loadTzData(String);
-    method public libcore.util.ZoneInfo makeTimeZone(String);
-    method public void validate() throws java.io.IOException;
-  }
-
 }
 
 package libcore.util {
 
   public final class ArrayUtils {
     method public static void throwsIfOutOfBounds(int, int, int);
-  }
-
-  public class CoreLibraryDebug {
-    method public static libcore.util.DebugInfo getDebugInfo();
-  }
-
-  public class DebugInfo {
-    ctor public DebugInfo();
-    method public libcore.util.DebugInfo addStringEntry(String, String);
-    method public libcore.util.DebugInfo addStringEntry(String, int);
-    method public java.util.List<libcore.util.DebugInfo.DebugEntry> getDebugEntries();
-  }
-
-  public static class DebugInfo.DebugEntry {
-    ctor public DebugInfo.DebugEntry(String, String);
-    method public String getKey();
-    method public String getStringValue();
   }
 
   public final class EmptyArray {
@@ -1287,35 +1235,6 @@ package libcore.util {
     method public static org.xml.sax.XMLReader newXMLReader();
     method public static org.xmlpull.v1.XmlPullParser newXmlPullParser();
     method public static org.xmlpull.v1.XmlSerializer newXmlSerializer();
-  }
-
-  public final class ZoneInfo extends java.util.TimeZone {
-  }
-
-  public static class ZoneInfo.WallTime {
-    ctor public ZoneInfo.WallTime();
-    method public int getGmtOffset();
-    method public int getHour();
-    method public int getIsDst();
-    method public int getMinute();
-    method public int getMonth();
-    method public int getMonthDay();
-    method public int getSecond();
-    method public int getWeekDay();
-    method public int getYear();
-    method public int getYearDay();
-    method public void localtime(int, libcore.util.ZoneInfo);
-    method public int mktime(libcore.util.ZoneInfo);
-    method public void setGmtOffset(int);
-    method public void setHour(int);
-    method public void setIsDst(int);
-    method public void setMinute(int);
-    method public void setMonth(int);
-    method public void setMonthDay(int);
-    method public void setSecond(int);
-    method public void setWeekDay(int);
-    method public void setYear(int);
-    method public void setYearDay(int);
   }
 
 }

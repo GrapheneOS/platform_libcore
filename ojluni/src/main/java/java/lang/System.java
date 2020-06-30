@@ -25,11 +25,11 @@
  */
 package java.lang;
 
+import com.android.i18n.timezone.TimeZoneDataFiles;
 import com.android.icu.util.Icu4cMetadata;
 import dalvik.annotation.optimization.CriticalNative;
 import dalvik.annotation.optimization.FastNative;
 import android.system.ErrnoException;
-import android.system.StructPasswd;
 import android.system.StructUtsname;
 import dalvik.system.VMRuntime;
 import java.io.*;
@@ -39,7 +39,6 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.PropertyPermission;
 import libcore.io.Libcore;
-import libcore.timezone.TimeZoneDataFiles;
 
 import sun.reflect.CallerSensitive;
 import sun.reflect.Reflection;
