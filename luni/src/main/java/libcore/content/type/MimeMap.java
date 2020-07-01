@@ -34,15 +34,15 @@ import libcore.util.Nullable;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
 public final class MimeMap {
 
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static Builder builder() {
         return new Builder();
     }
 
-    @CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public Builder buildUpon() {
         return new Builder(mimeToExt, extToMime);
     }
@@ -84,7 +84,7 @@ public final class MimeMap {
     /**
      * @return The system's current default {@link MimeMap}.
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static @NonNull MimeMap getDefault() {
         return Objects.requireNonNull(instanceSupplier.get());
     }
@@ -100,7 +100,7 @@ public final class MimeMap {
      * {@link #setDefaultSupplier(Supplier)} will return that same instance
      * without consulting {@code mimeMapSupplier} a second time.
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void setDefaultSupplier(@NonNull Supplier<@NonNull MimeMap> mimeMapSupplier) {
         instanceSupplier = new MemoizingSupplier<>(Objects.requireNonNull(mimeMapSupplier));
     }
@@ -112,7 +112,7 @@ public final class MimeMap {
      * @return Whether a MIME type has been registered for the given case insensitive file
      *         extension.
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final boolean hasExtension(@Nullable String extension) {
         return guessMimeTypeFromExtension(extension) != null;
     }
@@ -125,7 +125,7 @@ public final class MimeMap {
      * @return The lower-case MIME type registered for the given case insensitive file extension,
      *         or null if there is none.
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final @Nullable String guessMimeTypeFromExtension(@Nullable String extension) {
         if (extension == null) {
             return null;
@@ -139,7 +139,7 @@ public final class MimeMap {
      * @return Whether the given case insensitive MIME type is
      *         {@link #guessMimeTypeFromExtension(String) mapped} to a file extension.
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final boolean hasMimeType(@Nullable String mimeType) {
         return guessExtensionFromMimeType(mimeType) != null;
     }
@@ -152,7 +152,7 @@ public final class MimeMap {
      * @return The lower-case file extension (without the leading "." that has been registered for
      *         the given case insensitive MIME type, or null if there is none.
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final @Nullable String guessExtensionFromMimeType(@Nullable String mimeType) {
         if (mimeType == null) {
             return null;
@@ -168,7 +168,7 @@ public final class MimeMap {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public @NonNull Set<String> mimeTypes() {
         return Collections.unmodifiableSet(mimeToExt.keySet());
     }
@@ -180,7 +180,7 @@ public final class MimeMap {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public @NonNull Set<String> extensions() {
         return Collections.unmodifiableSet(extToMime.keySet());
     }
@@ -222,7 +222,7 @@ public final class MimeMap {
     /**
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static final class Builder {
         private final Map<String, String> mimeToExt;
         private final Map<String, String> extToMime;
@@ -324,7 +324,7 @@ public final class MimeMap {
          *                 been stripped off).
          * @return This builder.
          */
-        @CorePlatformApi
+        @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         public Builder put(@NonNull String mimeSpec, @NonNull List<@NonNull String> extensionSpecs)
         {
             Element mimeElement = Element.ofMimeSpec(mimeSpec); // validate mimeSpec unconditionally
@@ -350,7 +350,7 @@ public final class MimeMap {
             return put(mimeSpec, Collections.singletonList(extensionSpec));
         }
 
-        @CorePlatformApi
+        @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         public MimeMap build() {
             return new MimeMap(mimeToExt, extToMime);
         }
