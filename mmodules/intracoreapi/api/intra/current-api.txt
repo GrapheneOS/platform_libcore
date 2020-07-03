@@ -135,16 +135,6 @@ package libcore.net {
 
 }
 
-package libcore.timezone {
-
-  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public final class TimeZoneFinder {
-    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public String getIanaVersion();
-    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static libcore.timezone.TimeZoneFinder getInstance();
-    field @libcore.api.IntraCoreApi public static final String TZLOOKUP_FILE_NAME = "tzlookup.xml";
-  }
-
-}
-
 package libcore.util {
 
   @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public class NativeAllocationRegistry {

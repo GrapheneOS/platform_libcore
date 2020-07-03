@@ -575,14 +575,6 @@ package dalvik.system {
     method public default void report(String);
   }
 
-  public interface DalvikLogHandler {
-    method public void publish(java.util.logging.Logger, String, java.util.logging.Level, String);
-  }
-
-  public final class DalvikLogging {
-    method public static String loggerNameToTag(String);
-  }
-
   public final class DelegateLastClassLoader extends dalvik.system.PathClassLoader {
     ctor public DelegateLastClassLoader(String, String, ClassLoader, ClassLoader[]);
   }
@@ -631,7 +623,6 @@ package dalvik.system {
 
   public final class VMDebug {
     method public static void attachAgent(String, ClassLoader) throws java.io.IOException;
-    method public static boolean cacheRegisterMap(String);
     method public static long countInstancesOfClass(Class, boolean);
     method public static long[] countInstancesOfClasses(Class[], boolean);
     method public static void dumpHprofData(String) throws java.io.IOException;
@@ -651,12 +642,10 @@ package dalvik.system {
     method public static void resetAllocCount(int);
     method public static void setAllocTrackerStackDepth(int);
     method public static void startAllocCounting();
-    method public static void startEmulatorTracing();
     method public static void startMethodTracing(String, int, int, boolean, int);
     method public static void startMethodTracing(String, java.io.FileDescriptor, int, int, boolean, int, boolean);
     method public static void startMethodTracingDdms(int, int, boolean, int);
     method public static void stopAllocCounting();
-    method public static void stopEmulatorTracing();
     method public static void stopMethodTracing();
     method @dalvik.annotation.optimization.FastNative public static long threadCpuTimeNanos();
     field public static final int KIND_ALL_COUNTS = -1; // 0xffffffff
@@ -1082,68 +1071,6 @@ package libcore.net.event {
   public class NetworkEventDispatcher {
     method public static libcore.net.event.NetworkEventDispatcher getInstance();
     method public void onNetworkConfigurationChanged();
-  }
-
-}
-
-package libcore.timezone {
-
-  public final class CountryTimeZones {
-    method public String getCountryIso();
-    method public android.icu.util.TimeZone getDefaultTimeZone();
-    method public String getDefaultTimeZoneId();
-    method public java.util.List<libcore.timezone.CountryTimeZones.TimeZoneMapping> getEffectiveTimeZoneMappingsAt(long);
-    method public java.util.List<libcore.timezone.CountryTimeZones.TimeZoneMapping> getTimeZoneMappings();
-    method public boolean hasUtcZone(long);
-    method public boolean isDefaultTimeZoneBoosted();
-    method public libcore.timezone.CountryTimeZones.OffsetResult lookupByOffsetWithBias(long, android.icu.util.TimeZone, int, boolean);
-    method public libcore.timezone.CountryTimeZones.OffsetResult lookupByOffsetWithBias(long, android.icu.util.TimeZone, int);
-    method public boolean matchesCountryCode(String);
-  }
-
-  public static final class CountryTimeZones.OffsetResult {
-    method public android.icu.util.TimeZone getTimeZone();
-    method public boolean isOnlyMatch();
-  }
-
-  public static final class CountryTimeZones.TimeZoneMapping {
-    method public static libcore.timezone.CountryTimeZones.TimeZoneMapping createForTests(String, boolean, Long);
-    method public Long getNotUsedAfter();
-    method public android.icu.util.TimeZone getTimeZone();
-    method public String getTimeZoneId();
-    method public boolean isShownInPicker();
-  }
-
-  public final class CountryZonesFinder {
-    method public java.util.List<java.lang.String> lookupAllCountryIsoCodes();
-    method public libcore.timezone.CountryTimeZones lookupCountryTimeZones(String);
-    method public java.util.List<libcore.timezone.CountryTimeZones> lookupCountryTimeZonesForZoneId(String);
-  }
-
-  public final class TelephonyLookup {
-    method public static libcore.timezone.TelephonyLookup createInstance(String) throws java.io.IOException;
-    method public static libcore.timezone.TelephonyLookup getInstance();
-    method public libcore.timezone.TelephonyNetworkFinder getTelephonyNetworkFinder();
-    method public void validate() throws java.io.IOException;
-  }
-
-  public final class TelephonyNetwork {
-    method public String getCountryIsoCode();
-    method public String getMcc();
-    method public String getMnc();
-  }
-
-  public final class TelephonyNetworkFinder {
-    method public libcore.timezone.TelephonyNetwork findNetworkByMccMnc(String, String);
-  }
-
-  public final class TimeZoneFinder {
-    method public static libcore.timezone.TimeZoneFinder createInstance(String) throws java.io.IOException;
-    method public libcore.timezone.CountryZonesFinder getCountryZonesFinder();
-    method public String getIanaVersion();
-    method public static libcore.timezone.TimeZoneFinder getInstance();
-    method public libcore.timezone.CountryTimeZones lookupCountryTimeZones(String);
-    method public void validate() throws java.io.IOException;
   }
 
 }

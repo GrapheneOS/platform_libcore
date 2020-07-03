@@ -120,7 +120,6 @@ module java.base {
     exports libcore.net.event;
     exports libcore.net.http;
     exports libcore.reflect;
-    exports libcore.timezone;
     exports libcore.util;
     exports org.json;
 }

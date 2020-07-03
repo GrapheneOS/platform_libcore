@@ -261,18 +261,6 @@ public final class VMDebug {
     public static native void stopMethodTracing();
 
     /**
-     * Starts sending Dalvik method trace info to the emulator.
-     */
-    @libcore.api.CorePlatformApi
-    public static native void startEmulatorTracing();
-
-    /**
-     * Stops sending Dalvik method trace info to the emulator.
-     */
-    @libcore.api.CorePlatformApi
-    public static native void stopEmulatorTracing();
-
-    /**
      * Get an indication of thread CPU usage. The value returned indicates the
      * amount of time that the current thread has spent executing code or
      * waiting for certain types of I/O.
@@ -386,12 +374,6 @@ public final class VMDebug {
 
     private static native void dumpHprofData(String fileName, int fd)
             throws IOException;
-
-    /**
-     * Primes the register map cache.
-     */
-    @libcore.api.CorePlatformApi
-    public static native boolean cacheRegisterMap(String classAndMethodDesc);
 
     /**
      * Dumps the contents of the VM reference tables (e.g. JNI locals and
