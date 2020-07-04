@@ -211,10 +211,6 @@ package com.android.org.bouncycastle.asn1 {
     ctor public DERBitString(byte[]);
   }
 
-  @Deprecated public class DERInteger extends com.android.org.bouncycastle.asn1.ASN1Integer {
-    ctor @Deprecated public DERInteger(long);
-  }
-
   public class DERNull extends com.android.org.bouncycastle.asn1.ASN1Null {
     field public static final com.android.org.bouncycastle.asn1.DERNull INSTANCE;
   }
@@ -760,10 +756,6 @@ package java.lang {
 
   public final class Math {
     method public static long randomLongInternal();
-  }
-
-  public final class System {
-    method public static void logE(String, Throwable);
   }
 
   public class Thread implements java.lang.Runnable {
