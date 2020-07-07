@@ -1743,9 +1743,9 @@
   names: [
       "libcore.java.security.OldDHTest#testDHGen",
       "libcore.java.security.OldKeyPairGeneratorTestDH#testKeyPairGenerator",
-      "libcore.javax.crypto.spec.KeyPairGeneratorTestDH#testKeyPairGenerator",
-      "libcore.javax.crypto.spec.AlgorithmParametersTestDH#testAlgorithmParameters",
-      "libcore.javax.crypto.spec.AlgorithmParameterGeneratorTestDH#testAlgorithmParameterGenerator"
+      "com.android.org.conscrypt.java.security.KeyPairGeneratorTestDH#testKeyPairGenerator",
+      "com.android.org.conscrypt.java.security.AlgorithmParametersTestDH#testAlgorithmParameters",
+      "com.android.org.conscrypt.java.security.AlgorithmParameterGeneratorTestDH#testAlgorithmParameterGenerator"
   ]
 },
 {
