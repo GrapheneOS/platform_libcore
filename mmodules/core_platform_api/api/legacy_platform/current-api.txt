@@ -668,13 +668,10 @@ package dalvik.system {
     method public static String getCurrentInstructionSet();
     method public static String getInstructionSet(String);
     method public static dalvik.system.VMRuntime getRuntime();
-    method public float getTargetHeapUtilization();
     method public int getTargetSdkVersion();
-    method @dalvik.annotation.optimization.FastNative public static boolean hasBootImageSpaces();
     method @dalvik.annotation.optimization.FastNative public boolean is64Bit();
     method public static boolean is64BitAbi(String);
     method public static boolean is64BitInstructionSet(String);
-    method public static boolean isBootClassPathOnDisk(String);
     method @dalvik.annotation.optimization.FastNative public boolean isCheckJniEnabled();
     method @dalvik.annotation.optimization.FastNative public boolean isNativeDebuggable();
     method public static boolean isValidClassLoaderContext(String);
@@ -698,7 +695,6 @@ package dalvik.system {
     method public static void setNonSdkApiUsageConsumer(java.util.function.Consumer<java.lang.String>);
     method public static void setProcessDataDirectory(String);
     method public static void setProcessPackageName(String);
-    method public float setTargetHeapUtilization(float);
     method public void setTargetSdkVersion(int);
     method public void startJitCompilation();
     method public void updateProcessState(int);
