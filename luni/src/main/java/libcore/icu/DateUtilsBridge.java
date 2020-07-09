@@ -16,9 +16,9 @@
 
 package libcore.icu;
 
-import android.icu.impl.JavaTimeZone;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.icu.util.TimeZone;
 import android.icu.util.ULocale;
 
 /**
@@ -51,9 +51,9 @@ public final class DateUtilsBridge {
    * Callers must not modify the {@code tz} after calling this method.
    */
   public static android.icu.util.TimeZone icuTimeZone(java.util.TimeZone tz) {
-    JavaTimeZone javaTimeZone = new JavaTimeZone(tz, null);
-    javaTimeZone.freeze(); // Optimization - allows the timezone to be copied cheaply.
-    return javaTimeZone;
+    android.icu.util.TimeZone icuTimeZone = TimeZone.getTimeZone(tz.getID());
+    icuTimeZone.freeze(); // Optimization - allows the timezone to be copied cheaply.
+    return icuTimeZone;
   }
 
   public static Calendar createIcuCalendar(android.icu.util.TimeZone icuTimeZone, ULocale icuLocale,
