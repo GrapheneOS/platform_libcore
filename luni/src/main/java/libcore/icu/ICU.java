@@ -17,12 +17,17 @@
 package libcore.icu;
 
 import android.compat.annotation.UnsupportedAppUsage;
+import android.icu.text.CurrencyMetaInfo;
+import android.icu.text.CurrencyMetaInfo.CurrencyFilter;
+import android.icu.text.DateTimePatternGenerator;
 import android.icu.util.ULocale;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -276,15 +281,22 @@ public final class ICU {
     synchronized (CACHED_PATTERNS) {
       String pattern = CACHED_PATTERNS.get(key);
       if (pattern == null) {
-        pattern = getBestDateTimePatternNative(skeleton, languageTag);
+        pattern = getBestDateTimePattern0(skeleton, locale);
         CACHED_PATTERNS.put(key, pattern);
       }
       return pattern;
     }
   }
 
+  private static String getBestDateTimePattern0(String skeleton, Locale locale) {
+      DateTimePatternGenerator dtpg = DateTimePatternGenerator.getInstance(locale);
+      return dtpg.getBestPattern(skeleton);
+  }
+
   @UnsupportedAppUsage
-  private static native String getBestDateTimePatternNative(String skeleton, String languageTag);
+  private static String getBestDateTimePatternNative(String skeleton, String languageTag) {
+    return getBestDateTimePattern0(skeleton, Locale.forLanguageTag(languageTag));
+  }
 
   @UnsupportedAppUsage
   @libcore.api.CorePlatformApi
@@ -335,7 +347,18 @@ public final class ICU {
 
   private static native String[] getAvailableLocalesNative();
 
-  public static native String getCurrencyCode(String countryCode);
+    /**
+     * Query ICU for the currency being used in the country right now.
+     * @param countryCode ISO 3166 two-letter country code
+     * @return ISO 4217 3-letter currency code if found, otherwise null.
+     */
+  public static String getCurrencyCode(String countryCode) {
+      CurrencyFilter filter = CurrencyFilter.onRegion(countryCode)
+          .withDate(new Date());
+      List<String> currencies = CurrencyMetaInfo.getInstance().currencies(filter);
+      return currencies.isEmpty() ? null : currencies.get(0);
+  }
+
 
   public static native String getISO3Country(String languageTag);
 

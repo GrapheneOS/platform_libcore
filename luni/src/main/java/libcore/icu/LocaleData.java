@@ -16,9 +16,10 @@
 
 package libcore.icu;
 
+import android.compat.annotation.ChangeId;
+import android.compat.annotation.EnabledAfter;
 import android.compat.annotation.UnsupportedAppUsage;
-import android.icu.impl.ICUData;
-import android.icu.impl.ICUResourceBundle;
+import android.compat.Compatibility;
 import android.icu.text.DateFormatSymbols;
 import android.icu.text.DecimalFormat;
 import android.icu.text.DecimalFormatSymbols;
@@ -26,12 +27,13 @@ import android.icu.text.NumberFormat;
 import android.icu.text.NumberingSystem;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
-import android.icu.util.UResourceBundle;
+import android.icu.util.ULocale;
+
+import com.android.icu.text.DecimalFormatSymbolsBridge;
 
 import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.Locale;
-import java.util.MissingResourceException;
 import libcore.util.Objects;
 
 /**
@@ -44,6 +46,42 @@ import libcore.util.Objects;
  */
 @libcore.api.CorePlatformApi
 public final class LocaleData {
+
+    /**
+     * @see #USE_REAL_ROOT_LOCALE
+     */
+    private static final Locale LOCALE_EN_US_POSIX = new Locale("en", "US", "POSIX");
+
+
+    // In Android Q or before, when this class tries to load {@link Locale#ROOT} data, en_US_POSIX
+    // locale data is incorrectly loaded due to a bug b/159514442 (public bug b/159047832).
+    //
+    // This class used to pass "und" string as BCP47 language tag to our jni code, which then
+    // passes the string as as ICU Locale ID to ICU4C. ICU4C 63 or older version doesn't recognize
+    // "und" as a valid locale id, and fallback the default locale. The default locale is
+    // normally selected in the Locale picker in the Settings app by the user and set via
+    // frameworks. But this class statically cached the ROOT locale data before the
+    // default locale being set by framework, and without initialization, ICU4C uses en_US_POSIX
+    // as default locale. Thus, in Q or before, en_US_POSIX data is loaded.
+    //
+    // ICU version 64.1 resolved inconsistent behavior of
+    // "root", "und" and "" (empty) Locale ID which libcore previously relied on, and they are
+    // recognized correctly as {@link Locale#ROOT} since Android R. This ChangeId gated the change,
+    // and fallback to the old behavior by checking targetSdkVersion version.
+    //
+    // The below javadoc is shown in http://developer.android.com for consumption by app developers.
+    /**
+     * Since Android 11, formatter classes, e.g. java.text.SimpleDateFormat, no longer
+     * provide English data when Locale.ROOT format is requested. Please use
+     * Locale.ENGLISH to format in English.
+     *
+     * Note that Locale.ROOT is used as language/country neutral locale or fallback locale,
+     * and does not guarantee to represent English locale.
+     */
+    @ChangeId
+    @EnabledAfter(targetSdkVersion=29 /* Android Q */)
+    public static final long USE_REAL_ROOT_LOCALE = 159047832L;
+
     // A cache for the locale-specific data.
     private static final HashMap<String, LocaleData> localeDataCache = new HashMap<String, LocaleData>();
     static {
@@ -174,6 +212,21 @@ public final class LocaleData {
     }
 
     /**
+     * Normally, this utility function is used by secondary cache above {@link LocaleData},
+     * because the cache needs a correct key.
+     * @see #USE_REAL_ROOT_LOCALE
+     * @return a compatible locale for the bug b/159514442
+     */
+    public static Locale getCompatibleLocaleForBug159514442(Locale locale) {
+        if (Locale.ROOT.equals(locale) &&
+                // isChangeEnabled() always returns true in non-app process
+                !Compatibility.isChangeEnabled(USE_REAL_ROOT_LOCALE)) {
+            locale = LOCALE_EN_US_POSIX;
+        }
+        return locale;
+    }
+
+    /**
      * Returns a shared LocaleData for the given locale.
      */
     @UnsupportedAppUsage
@@ -182,6 +235,8 @@ public final class LocaleData {
         if (locale == null) {
             throw new NullPointerException("locale == null");
         }
+
+        locale = getCompatibleLocaleForBug159514442(locale);
 
         final String languageTag = locale.toLanguageTag();
         synchronized (localeDataCache) {
@@ -287,36 +342,18 @@ public final class LocaleData {
 
     // Libcore localizes pattern separator while ICU doesn't. http://b/112080617
     private static void initializePatternSeparator(LocaleData localeData, Locale locale) {
-        NumberingSystem ns = NumberingSystem.getInstance(locale);
+        ULocale uLocale = ULocale.forLocale(locale);
+        NumberingSystem ns = NumberingSystem.getInstance(uLocale);
         // A numbering system could be numeric or algorithmic. DecimalFormat can only use
         // a numeric and decimal-based (radix == 10) system. Fallback to a Latin, a known numeric
         // and decimal-based if the default numbering system isn't. All locales should have data
         // for Latin numbering system after locale data fallback. See Numbering system section
         // in Unicode Technical Standard #35 for more details.
-        String nsName = ns != null && ns.getRadix() == 10 && !ns.isAlgorithmic()
-            ? ns.getName() : "latn";
-        ICUResourceBundle rb = (ICUResourceBundle) UResourceBundle.getBundleInstance(
-            ICUData.ICU_BASE_NAME, locale);
-        String patternSeparator = null;
-        // The fallback of number format data isn't well-specified in the spec.
-        // But the separator can't be null / empty, and ICU uses Latin numbering system
-        // as fallback.
-        if (!"latn".equals(nsName)) {
-            try {
-                patternSeparator = rb.getStringWithFallback(
-                    "NumberElements/" + nsName + "/symbols/list");
-            } catch (MissingResourceException e) {
-                // Try Latin numbering system later
-            }
+        if (ns == null || ns.getRadix() != 10 || ns.isAlgorithmic()) {
+            ns = NumberingSystem.LATIN;
         }
-
-        if (patternSeparator == null) {
-            try {
-                patternSeparator = rb.getStringWithFallback("NumberElements/latn/symbols/list");
-            } catch (MissingResourceException e) {
-                // Fallback to the default separator ';'.
-            }
-        }
+        String patternSeparator =
+            DecimalFormatSymbolsBridge.getLocalizedPatternSeparator(uLocale, ns);
 
         if (patternSeparator == null || patternSeparator.isEmpty()) {
             patternSeparator = ";";
@@ -394,54 +431,24 @@ public final class LocaleData {
     }
 
     private void initializeDateTimePatterns(Locale locale) {
-        try {
-            ICUResourceBundle rb = (ICUResourceBundle) UResourceBundle.getBundleInstance(
-                ICUData.ICU_BASE_NAME, locale);
-            rb = rb.getWithFallback("calendar/gregorian/DateTimePatterns");
-            fullTimeFormat = getStringOrFirstArrayElement(rb, 0);
-            longTimeFormat = getStringOrFirstArrayElement(rb, 1);
-            mediumTimeFormat = getStringOrFirstArrayElement(rb, 2);
-            shortTimeFormat = getStringOrFirstArrayElement(rb, 3);
-            fullDateFormat = getStringOrFirstArrayElement(rb, 4);
-            longDateFormat = getStringOrFirstArrayElement(rb, 5);
-            mediumDateFormat = getStringOrFirstArrayElement(rb, 6);
-            shortDateFormat = getStringOrFirstArrayElement(rb, 7);
-        } catch (MissingResourceException e) {
-            // Preserve legacy behavior throwing AssertionError for missing resource.
-            throw new AssertionError(e);
-        }
-    }
+        ULocale uLocale = ULocale.forLocale(locale);
+        String calType = "gregorian";
 
-    private static String getStringOrFirstArrayElement(UResourceBundle rb, int index) {
-        try {
-            UResourceBundle currentBundle = rb.get(index);
-            int type = currentBundle.getType();
-            final String result;
-            switch(type) {
-                case UResourceBundle.STRING:
-                    result = currentBundle.getString();
-                    break;
-                case UResourceBundle.ARRAY:
-                    // In case there is an array, Android currently only cares about the
-                    // first string of that array, the rest of the array is used by ICU
-                    // for additional data ignored by Android.
-                    result = currentBundle.getString(0);
-                    break;
-                default:
-                  // Preserve legacy behavior of setting null
-                    result = null;
-                    System.logE(String.format(
-                        "Unsupported type when setting String field from ICU resource (type %d)",
-                        type)
-                    );
-            }
-            return result;
-        } catch (MissingResourceException e) {
-            // Preserve legacy behavior of avoiding throwing for missing resource.
-            System.logE(String.format(
-                "Error setting String field from ICU resource (index %d)", index), e
-            );
-            return null;
-        }
+        fullTimeFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+            android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.FULL);
+        longTimeFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+            android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.LONG);
+        mediumTimeFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+            android.icu.text.DateFormat.NONE, android.icu.text.DateFormat. MEDIUM);
+        shortTimeFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+            android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.SHORT);
+        fullDateFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+            android.icu.text.DateFormat.FULL, android.icu.text.DateFormat.NONE);
+        longDateFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+            android.icu.text.DateFormat.LONG, android.icu.text.DateFormat.NONE);
+        mediumDateFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+            android.icu.text.DateFormat.MEDIUM, android.icu.text.DateFormat.NONE);
+        shortDateFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+            android.icu.text.DateFormat.SHORT, android.icu.text.DateFormat.NONE);
     }
 }
