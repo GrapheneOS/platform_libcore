@@ -926,11 +926,6 @@ package libcore.icu {
     method public static String formatDateRange(long, long, int, String);
   }
 
-  public final class ICU {
-    method public static String getBestDateTimePattern(String, java.util.Locale);
-    method public static char[] getDateFormatOrder(String);
-  }
-
   public final class LocaleData {
     method public static libcore.icu.LocaleData get(java.util.Locale);
     method public String getDateFormat(int);
@@ -955,11 +950,6 @@ package libcore.icu {
     field public String[] tinyStandAloneWeekdayNames;
     field public String[] tinyWeekdayNames;
     field public char zeroDigit;
-  }
-
-  public final class RelativeDateTimeFormatter {
-    method public static String getRelativeDateTimeString(java.util.Locale, java.util.TimeZone, long, long, long, long, int);
-    method public static String getRelativeTimeSpanString(java.util.Locale, java.util.TimeZone, long, long, long, int);
   }
 
 }

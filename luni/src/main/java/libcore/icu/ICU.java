@@ -38,7 +38,6 @@ import libcore.util.BasicLruCache;
  * Makes ICU data accessible to Java.
  * @hide
  */
-@libcore.api.CorePlatformApi
 public final class ICU {
 
   @UnsupportedAppUsage
@@ -274,7 +273,6 @@ public final class ICU {
   }
 
   @UnsupportedAppUsage
-  @libcore.api.CorePlatformApi
   public static String getBestDateTimePattern(String skeleton, Locale locale) {
     String languageTag = locale.toLanguageTag();
     String key = skeleton + "\t" + languageTag;
@@ -299,7 +297,6 @@ public final class ICU {
   }
 
   @UnsupportedAppUsage
-  @libcore.api.CorePlatformApi
   public static char[] getDateFormatOrder(String pattern) {
     char[] result = new char[3];
     int resultIndex = 0;
