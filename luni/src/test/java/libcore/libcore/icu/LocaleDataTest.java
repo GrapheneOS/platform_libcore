@@ -32,7 +32,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import libcore.icu.LocaleData;
-import libcore.junit.util.compat.CoreCompatChangeRule;
+import libcore.junit.util.SwitchTargetSdkVersionRule;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,7 +47,7 @@ public class LocaleDataTest {
   }
 
   @Rule
-  public TestRule compatChangeRule = new CoreCompatChangeRule();
+  public TestRule switchTargetSdkVersionRule = SwitchTargetSdkVersionRule.getInstance();
 
   @Test
   public void testAll() throws Exception {
@@ -325,7 +325,7 @@ public class LocaleDataTest {
 
   // Test for b/159514442
   @Test
-  @CoreCompatChangeRule.EnableCompatChanges({LocaleData.USE_REAL_ROOT_LOCALE})
+  @SwitchTargetSdkVersionRule.TargetSdkVersion(30)
   public void test_rootLocale_useRealRootLocaleData() {
     assertRootDataEqualsToTargetLocaleData(Locale.ROOT);
 
@@ -337,7 +337,7 @@ public class LocaleDataTest {
 
   // Test for b/159514442
   @Test
-  @CoreCompatChangeRule.DisableCompatChanges({LocaleData.USE_REAL_ROOT_LOCALE})
+  @SwitchTargetSdkVersionRule.TargetSdkVersion(29)
   public void test_rootLocale_notUseRealRootLocaleData() {
     Locale LOCALE_EN_US_POSIX = new Locale("en", "US", "POSIX");
     assertRootDataEqualsToTargetLocaleData(LOCALE_EN_US_POSIX);

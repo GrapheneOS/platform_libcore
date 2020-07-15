@@ -5694,7 +5694,9 @@ public class ScannerTest extends TestCase {
     }
 
     // http://code.google.com/p/android/issues/detail?id=57050
-    public void testPerformance() throws Exception {
+    // Disable this test since it causes oom failures in follow on
+    // tests. See b/160171148 for details.
+    public void disableTestPerformance() throws Exception {
         int count = 100000;
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -5739,5 +5741,6 @@ public class ScannerTest extends TestCase {
                 fail();
             }
         }
+        System.gc();
     }
 }
