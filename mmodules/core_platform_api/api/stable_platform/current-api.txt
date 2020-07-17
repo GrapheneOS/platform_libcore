@@ -28,6 +28,18 @@ package android.compat {
 
 }
 
+package dalvik.system {
+
+  public final class VMDebug {
+    field public static final int TRACE_COUNT_ALLOCS = 1; // 0x1
+  }
+
+  public final class VMRuntime {
+    field public static final int SDK_VERSION_CUR_DEVELOPMENT = 10000; // 0x2710
+  }
+
+}
+
 package libcore.content.type {
 
   public final class MimeMap {

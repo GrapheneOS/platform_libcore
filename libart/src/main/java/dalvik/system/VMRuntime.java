@@ -38,7 +38,7 @@ import dalvik.annotation.optimization.FastNative;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.IntraCoreApi
 public final class VMRuntime {
 
@@ -167,7 +167,7 @@ public final class VMRuntime {
      * any released version in {@code android.os.Build.VERSION_CODES}.
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int SDK_VERSION_CUR_DEVELOPMENT = 10000;
 
     private static Consumer<String> nonSdkApiUsageConsumer = null;

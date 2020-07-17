@@ -64,7 +64,7 @@ package dalvik.system {
     method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public void warnIfOpen();
   }
 
-  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public final class VMRuntime {
+  @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public final class VMRuntime {
     method @dalvik.annotation.optimization.FastNative @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public long addressOf(Object);
     method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static dalvik.system.VMRuntime getRuntime();
     method @dalvik.annotation.optimization.FastNative @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public Object newNonMovableArray(Class<?>, int);

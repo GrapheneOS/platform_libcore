@@ -34,13 +34,13 @@ import dalvik.annotation.optimization.FastNative;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class VMDebug {
     /**
      * flag for startMethodTracing(), which adds the results from
      * startAllocCounting to the trace key file.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int TRACE_COUNT_ALLOCS = 1;
 
     /* constants for getAllocCount */
