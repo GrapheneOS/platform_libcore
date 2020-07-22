@@ -62,7 +62,6 @@ public class LocaleDataTest {
   public void test_en_US() throws Exception {
     LocaleData l = LocaleData.get(Locale.US);
     assertEquals("AM", l.amPm[0]);
-    assertEquals("a", l.narrowAm);
 
     assertEquals("BC", l.eras[0]);
 
@@ -242,8 +241,6 @@ public class LocaleDataTest {
     assertEquals(baseMsg + "longDateFormat", testData.longDateFormat, localeData.longDateFormat);
     assertEquals(baseMsg + "mediumDateFormat", testData.mediumDateFormat, localeData.mediumDateFormat);
     assertEquals(baseMsg + "shortDateFormat", testData.shortDateFormat, localeData.shortDateFormat);
-    assertEquals(baseMsg + "narrowAm", testData.narrowAm, localeData.narrowAm);
-    assertEquals(baseMsg + "narrowPm", testData.narrowPm, localeData.narrowPm);
 
     assertEquals(baseMsg + "zeroDigit", testData.zeroDigit, localeData.zeroDigit);
     assertEquals(baseMsg + "decimalSeparator", testData.decimalSeparator, localeData.decimalSeparator);

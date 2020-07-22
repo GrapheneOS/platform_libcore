@@ -922,21 +922,13 @@ package libcore.content.type {
 
 package libcore.icu {
 
-  public final class DateIntervalFormat {
-    method public static String formatDateRange(long, long, int, String);
-  }
-
   public final class LocaleData {
     method public static libcore.icu.LocaleData get(java.util.Locale);
-    method public String getDateFormat(int);
-    field public String[] amPm;
     field public Integer firstDayOfWeek;
     field public String[] longMonthNames;
     field public String[] longStandAloneMonthNames;
     field public String[] longStandAloneWeekdayNames;
     field public String[] longWeekdayNames;
-    field public String narrowAm;
-    field public String narrowPm;
     field public String[] shortMonthNames;
     field public String[] shortStandAloneMonthNames;
     field public String[] shortStandAloneWeekdayNames;

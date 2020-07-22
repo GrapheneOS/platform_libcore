@@ -17,6 +17,7 @@
 package dalvik.system;
 
 import android.icu.impl.CacheValue;
+import android.icu.text.DateFormatSymbols;
 import android.icu.text.DecimalFormatSymbols;
 import android.icu.util.ULocale;
 
@@ -54,10 +55,11 @@ public final class ZygoteHooks {
         // would be collected when the Zygote GC runs in gcAndFinalize().
         CacheValue.setStrength(CacheValue.Strength.STRONG);
 
-        // Explicitly exercise code to cache data apps are likely to need.
+        // Explicitly exercise code to cache data apps/framework are likely to need.
         ULocale[] localesToPin = { ULocale.ROOT, ULocale.US, ULocale.getDefault() };
         for (ULocale uLocale : localesToPin) {
             new DecimalFormatSymbols(uLocale);
+            new DateFormatSymbols(uLocale);
         }
 
         // Framework's LocalLog is used during app start-up. It indirectly uses the current ICU time

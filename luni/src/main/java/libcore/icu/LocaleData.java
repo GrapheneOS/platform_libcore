@@ -107,7 +107,6 @@ public final class LocaleData {
     public Integer minimalDaysInFirstWeek;
 
     // Used by DateFormatSymbols.
-    @libcore.api.CorePlatformApi
     public String[] amPm; // "AM", "PM".
     public String[] eras; // "BC", "AD".
 
@@ -157,12 +156,6 @@ public final class LocaleData {
     public String longDateFormat;
     public String mediumDateFormat;
     public String shortDateFormat;
-
-    // Used by TimePicker. Not currently used by UTS#35.
-    @libcore.api.CorePlatformApi
-    public String narrowAm; // "a".
-    @libcore.api.CorePlatformApi
-    public String narrowPm; // "p".
 
     // Used by DateFormat to implement 12- and 24-hour SHORT and MEDIUM.
     // They are also used directly by frameworks code.
@@ -269,7 +262,6 @@ public final class LocaleData {
         return Objects.toString(this);
     }
 
-    @libcore.api.CorePlatformApi
     public String getDateFormat(int style) {
         switch (style) {
         case DateFormat.SHORT:
@@ -395,10 +387,6 @@ public final class LocaleData {
             .getWeekdays(DateFormatSymbols.STANDALONE, DateFormatSymbols.ABBREVIATED);
         tinyStandAloneWeekdayNames = dfs
             .getWeekdays(DateFormatSymbols.STANDALONE, DateFormatSymbols.NARROW);
-
-        String[] ampmNarrowStrings = dfs.getAmpmNarrowStrings();
-        narrowAm = ampmNarrowStrings[0];
-        narrowPm = ampmNarrowStrings[1];
 
         amPm = dfs.getAmPmStrings();
         eras = dfs.getEras();
