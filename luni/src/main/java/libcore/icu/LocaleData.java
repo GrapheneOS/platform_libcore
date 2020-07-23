@@ -46,7 +46,6 @@ import libcore.util.Objects;
  * them a clone rather than the original.
  * @hide
  */
-@libcore.api.CorePlatformApi
 public final class LocaleData {
 
     /**
@@ -101,7 +100,6 @@ public final class LocaleData {
 
     // Used by Calendar.
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public Integer firstDayOfWeek;
     @UnsupportedAppUsage
     public Integer minimalDaysInFirstWeek;
@@ -110,34 +108,22 @@ public final class LocaleData {
     public String[] amPm; // "AM", "PM".
     public String[] eras; // "BC", "AD".
 
-    @libcore.api.CorePlatformApi
     public String[] longMonthNames; // "January", ...
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public String[] shortMonthNames; // "Jan", ...
-    @libcore.api.CorePlatformApi
     public String[] tinyMonthNames; // "J", ...
-    @libcore.api.CorePlatformApi
     public String[] longStandAloneMonthNames; // "January", ...
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public String[] shortStandAloneMonthNames; // "Jan", ...
-    @libcore.api.CorePlatformApi
     public String[] tinyStandAloneMonthNames; // "J", ...
 
-    @libcore.api.CorePlatformApi
     public String[] longWeekdayNames; // "Sunday", ...
-    @libcore.api.CorePlatformApi
     public String[] shortWeekdayNames; // "Sun", ...
-    @libcore.api.CorePlatformApi
     public String[] tinyWeekdayNames; // "S", ...
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public String[] longStandAloneWeekdayNames; // "Sunday", ...
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public String[] shortStandAloneWeekdayNames; // "Sun", ...
-    @libcore.api.CorePlatformApi
     public String[] tinyStandAloneWeekdayNames; // "S", ...
 
     // today and tomorrow is only kept for @UnsupportedAppUsage.
@@ -160,19 +146,14 @@ public final class LocaleData {
     // Used by DateFormat to implement 12- and 24-hour SHORT and MEDIUM.
     // They are also used directly by frameworks code.
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public String timeFormat_hm;
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public String timeFormat_Hm;
-    @libcore.api.CorePlatformApi
     public String timeFormat_hms;
-    @libcore.api.CorePlatformApi
     public String timeFormat_Hms;
 
     // Used by DecimalFormatSymbols.
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public char zeroDigit;
     public char decimalSeparator;
     public char groupingSeparator;
@@ -232,7 +213,6 @@ public final class LocaleData {
      * Returns a shared LocaleData for the given locale.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
     public static LocaleData get(Locale locale) {
         if (locale == null) {
             throw new NullPointerException("locale == null");

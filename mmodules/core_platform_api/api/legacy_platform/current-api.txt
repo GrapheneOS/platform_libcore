@@ -920,32 +920,6 @@ package libcore.content.type {
 
 }
 
-package libcore.icu {
-
-  public final class LocaleData {
-    method public static libcore.icu.LocaleData get(java.util.Locale);
-    field public Integer firstDayOfWeek;
-    field public String[] longMonthNames;
-    field public String[] longStandAloneMonthNames;
-    field public String[] longStandAloneWeekdayNames;
-    field public String[] longWeekdayNames;
-    field public String[] shortMonthNames;
-    field public String[] shortStandAloneMonthNames;
-    field public String[] shortStandAloneWeekdayNames;
-    field public String[] shortWeekdayNames;
-    field public String timeFormat_Hm;
-    field public String timeFormat_Hms;
-    field public String timeFormat_hm;
-    field public String timeFormat_hms;
-    field public String[] tinyMonthNames;
-    field public String[] tinyStandAloneMonthNames;
-    field public String[] tinyStandAloneWeekdayNames;
-    field public String[] tinyWeekdayNames;
-    field public char zeroDigit;
-  }
-
-}
-
 package libcore.internal {
 
   public final class StringPool {
