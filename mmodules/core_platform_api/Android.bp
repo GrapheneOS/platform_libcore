@@ -26,8 +26,7 @@
 // "legacy" version also includes those which have not been audited for stability
 // or which are deprecated (which have the default status of LEGACY_ONLY).
 //
-// TODO(b/157640067): Move users away from the legacy versions to the stable ones,
-// and then get rid of the legacy versions.
+// TODO(b/161973015): Remove the legacy/stable distinction once no longer useful.
 
 droidstubs {
     name: "legacy-art-module-platform-api-stubs-source",

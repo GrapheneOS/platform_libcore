@@ -143,14 +143,12 @@ public final class LocaleData {
     public String mediumDateFormat;
     public String shortDateFormat;
 
-    // Used by DateFormat to implement 12- and 24-hour SHORT and MEDIUM.
-    // They are also used directly by frameworks code.
+    // timeFormat_hm and timeFormat_Hm are only kept for @UnsupportedAppUsage.
+    // Their value is hard-coded, not localized.
     @UnsupportedAppUsage
     public String timeFormat_hm;
     @UnsupportedAppUsage
     public String timeFormat_Hm;
-    public String timeFormat_hms;
-    public String timeFormat_Hms;
 
     // Used by DecimalFormatSymbols.
     @UnsupportedAppUsage
@@ -172,9 +170,14 @@ public final class LocaleData {
     public String currencyPattern;
     public String percentPattern;
 
-    private LocaleData() {
+    private final Locale mLocale;
+
+    private LocaleData(Locale locale) {
+        mLocale = locale;
         today = "Today";
         tomorrow = "Tomorrow";
+        timeFormat_hm = "h:mm a";
+        timeFormat_Hm = "HH:mm";
     }
 
     @UnsupportedAppUsage
@@ -257,18 +260,22 @@ public final class LocaleData {
     }
 
     public String getTimeFormat(int style) {
+        // Do not cache ICU.getTimePattern() return value in the LocaleData instance
+        // because most users do not enable this setting, hurts performance in critical path,
+        // e.g. b/161846393, and ICU.getBestDateTimePattern will cache it in  ICU.CACHED_PATTERNS
+        // on demand.
         switch (style) {
         case DateFormat.SHORT:
             if (DateFormat.is24Hour == null) {
                 return shortTimeFormat;
             } else {
-                return DateFormat.is24Hour ? timeFormat_Hm : timeFormat_hm;
+                return ICU.getTimePattern(mLocale, DateFormat.is24Hour, false);
             }
         case DateFormat.MEDIUM:
             if (DateFormat.is24Hour == null) {
                 return mediumTimeFormat;
             } else {
-                return DateFormat.is24Hour ? timeFormat_Hms : timeFormat_hms;
+                return ICU.getTimePattern(mLocale, DateFormat.is24Hour, true);
             }
         case DateFormat.LONG:
             // CLDR doesn't really have anything we can use to obey the 12-/24-hour preference.
@@ -284,7 +291,7 @@ public final class LocaleData {
      * This method is made public for testing
      */
     public static LocaleData initLocaleData(Locale locale) {
-        LocaleData localeData = new LocaleData();
+        LocaleData localeData = new LocaleData(locale);
 
         localeData.initializeDateTimePatterns(locale);
         localeData.initializeDateFormatData(locale);
@@ -293,12 +300,6 @@ public final class LocaleData {
 
         // Libcore localizes pattern separator while ICU doesn't. http://b/112080617
         initializePatternSeparator(localeData, locale);
-
-        // Get the SHORT and MEDIUM 12- and 24-hour time format strings.
-        localeData.timeFormat_hm = ICU.getBestDateTimePattern("hm", locale);
-        localeData.timeFormat_Hm = ICU.getBestDateTimePattern("Hm", locale);
-        localeData.timeFormat_hms = ICU.getBestDateTimePattern("hms", locale);
-        localeData.timeFormat_Hms = ICU.getBestDateTimePattern("Hms", locale);
 
         // Fix up a couple of patterns.
         if (localeData.fullTimeFormat != null) {

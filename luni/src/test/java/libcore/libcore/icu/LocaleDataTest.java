@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 
 import android.icu.text.DateTimePatternGenerator;
 
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -50,11 +51,11 @@ public class LocaleDataTest {
   public TestRule switchTargetSdkVersionRule = SwitchTargetSdkVersionRule.getInstance();
 
   @Test
-  public void testAll() throws Exception {
+  public void testAll() {
     // Test that we can get the locale data for all known locales.
     for (Locale l : Locale.getAvailableLocales()) {
       LocaleData d = LocaleData.get(l);
-      System.err.format("%20s %10s %10s\n", l, d.timeFormat_hm, d.timeFormat_Hm);
+      System.err.format("%s %s %s\n", l, d.longDateFormat, d.longTimeFormat);
     }
   }
 
@@ -136,14 +137,23 @@ public class LocaleDataTest {
 
   // http://b/7924970
   @Test
-  public void testTimeFormat12And24() throws Exception {
-    LocaleData en_US = LocaleData.get(Locale.US);
-    assertEquals("h:mm a", en_US.timeFormat_hm);
-    assertEquals("HH:mm", en_US.timeFormat_Hm);
+  public void testTimeFormat12And24() {
+    Boolean originalSetting = DateFormat.is24Hour;
+    try {
+      LocaleData en_US = LocaleData.get(Locale.US);
+      DateFormat.is24Hour = false;
+      assertEquals("h:mm a", en_US.getTimeFormat(DateFormat.SHORT));
+      DateFormat.is24Hour = true;
+      assertEquals("HH:mm", en_US.getTimeFormat(DateFormat.SHORT));
 
-    LocaleData ja_JP = LocaleData.get(Locale.JAPAN);
-    assertEquals("aK:mm", ja_JP.timeFormat_hm);
-    assertEquals("H:mm", ja_JP.timeFormat_Hm);
+      LocaleData ja_JP = LocaleData.get(Locale.JAPAN);
+      DateFormat.is24Hour = false;
+      assertEquals("aK:mm", ja_JP.getTimeFormat(DateFormat.SHORT));
+      DateFormat.is24Hour = true;
+      assertEquals("H:mm", ja_JP.getTimeFormat(DateFormat.SHORT));
+    } finally {
+      DateFormat.is24Hour = originalSetting;
+    }
   }
 
   // http://b/26397197
@@ -394,11 +404,6 @@ public class LocaleDataTest {
     // to be the same, but caused the bug b/68318492 in old Android version.
     assertEquals(localeData.infinity, icuDecimalFormatSymbols.getInfinity());
     assertEquals(decimalFormatSymbols.getInfinity(), icuDecimalFormatSymbols.getInfinity());
-
-    assertEquals(localeData.timeFormat_Hm, dtpg.getBestPattern("Hm"));
-    assertEquals(localeData.timeFormat_hm, dtpg.getBestPattern("hm"));
-    assertEquals(localeData.timeFormat_Hms, dtpg.getBestPattern("Hms"));
-    assertEquals(localeData.timeFormat_hms, dtpg.getBestPattern("hms"));
 
     // Explicitly test Calendar and DateFormatSymbols here because they are known to
     // cache some part of LocaleData.

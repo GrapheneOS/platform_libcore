@@ -50,6 +50,20 @@ public final class ICU {
 
   private static String[] isoLanguages;
 
+  static {
+    // Fill CACHED_PATTERNS with the patterns from default locale and en-US initially.
+    // Likely, this is initialized in Zygote and the initial values in the cache can be shared
+    // among app. The cache was filled by LocaleData in the older Android platform, but moved to
+    // here, due to an performance issue http://b/161846393.
+    // It initializes 2 x 4 = 8 values in the CACHED_PATTERNS whose max size should be >= 8.
+    for (Locale locale : new Locale[] {Locale.US, Locale.getDefault()}) {
+      getTimePattern(locale, false, false);
+      getTimePattern(locale, false, true);
+      getTimePattern(locale, true, false);
+      getTimePattern(locale, true, true);
+    }
+  }
+
   private ICU() {
   }
 
@@ -270,6 +284,16 @@ public final class ICU {
       availableLocalesCache = localesFromStrings(getAvailableLocalesNative());
     }
     return availableLocalesCache.clone();
+  }
+
+  /* package */ static String getTimePattern(Locale locale, boolean is24Hour, boolean withSecond) {
+    final String skeleton;
+    if (withSecond) {
+      skeleton = is24Hour ? "Hms" : "hms";
+    } else {
+      skeleton = is24Hour ? "Hm" : "hm";
+    }
+    return getBestDateTimePattern(skeleton, locale);
   }
 
   @UnsupportedAppUsage
