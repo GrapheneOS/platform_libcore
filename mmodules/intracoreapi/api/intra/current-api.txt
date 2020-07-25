@@ -82,10 +82,6 @@ package java.net {
 
 package java.nio.charset {
 
-  public abstract class CharsetDecoder {
-    ctor @libcore.api.IntraCoreApi protected CharsetDecoder(java.nio.charset.Charset, float, float);
-  }
-
   public abstract class CharsetEncoder {
     ctor @libcore.api.IntraCoreApi protected CharsetEncoder(java.nio.charset.Charset, float, float, byte[], boolean);
   }
