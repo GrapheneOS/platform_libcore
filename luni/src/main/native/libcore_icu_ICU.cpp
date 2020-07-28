@@ -32,9 +32,7 @@
 #include "JniException.h"
 #include "ScopedIcuULoc.h"
 #include "unicode/char16ptr.h"
-#include "unicode/udatpg.h"
 #include "unicode/uloc.h"
-#include "unicode/ures.h"
 #include "unicode/ustring.h"
 
 #define U_ICUDATA_CURR U_ICUDATA_NAME "-" "curr"
