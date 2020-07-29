@@ -289,7 +289,7 @@ public class BaseDexClassLoader extends ClassLoader {
      * provide it, in order to make all those hopeful callers of
      * {@code myClass.getPackage().getName()} happy. Thus we construct
      * a {@code Package} object the first time it is being requested
-     * and fill most of the fields with dummy values. The {@code
+     * and fill most of the fields with fake values. The {@code
      * Package} object is then put into the {@code ClassLoader}'s
      * package cache, so we see the same one next time. We don't
      * create {@code Package} objects for {@code null} arguments or

@@ -43,9 +43,9 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class PKIXParametersTest {
-    private  static final DummyCertPathChecker CHECK_ONE = new DummyCertPathChecker("One");
-    private  static final DummyCertPathChecker CHECK_TWO = new DummyCertPathChecker("Two");
-    private  static final DummyCertPathChecker CHECK_THREE = new DummyCertPathChecker("Three");
+    private  static final FakeCertPathChecker CHECK_ONE = new FakeCertPathChecker("One");
+    private  static final FakeCertPathChecker CHECK_TWO = new FakeCertPathChecker("Two");
+    private  static final FakeCertPathChecker CHECK_THREE = new FakeCertPathChecker("Three");
     private static final List<PKIXCertPathChecker> CHECK_LIST
         = List.of(CHECK_ONE, CHECK_TWO, CHECK_THREE);
 
@@ -181,10 +181,10 @@ public class PKIXParametersTest {
         return parameters;
     }
 
-    private static class DummyCertPathChecker extends PKIXCertPathChecker {
+    private static class FakeCertPathChecker extends PKIXCertPathChecker {
         private final String tag;
 
-        DummyCertPathChecker(String tag) {
+        FakeCertPathChecker(String tag) {
             this.tag = tag;
         }
 
@@ -210,13 +210,13 @@ public class PKIXParametersTest {
 
         @Override
         public String toString() {
-            return "DummyCertPathChecker: " + tag;
+            return "FakeCertPathChecker: " + tag;
         }
 
         @Override
         public boolean equals(Object other) {
-            if (other instanceof DummyCertPathChecker) {
-                return tag.equals(((DummyCertPathChecker) other).tag);
+            if (other instanceof FakeCertPathChecker) {
+                return tag.equals(((FakeCertPathChecker) other).tag);
             }
             return false;
         }

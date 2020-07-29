@@ -1272,7 +1272,7 @@
   description: "Android's XPath fails 29 of 250 Jaxen XPath tests",
   bug: 3270761,
   names: [
-    "libcore.xml.JaxenXPathTestSuite$3#xml/defaultNamespace.xml / /dummy:a/dummy:b/dummy:c",
+    "libcore.xml.JaxenXPathTestSuite$3#xml/defaultNamespace.xml / /fake:a/fake:b/fake:c",
     "libcore.xml.JaxenXPathTestSuite$3#xml/evaluate.xml / //metatest[ evaluate(@select) = . ]",
     "libcore.xml.JaxenXPathTestSuite$3#xml/evaluate.xml / evaluate('//jumps/*')",
     "libcore.xml.JaxenXPathTestSuite$3#xml/evaluate.xml / evaluate('//jumps/*')/dog",

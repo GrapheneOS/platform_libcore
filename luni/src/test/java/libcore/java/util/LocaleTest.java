@@ -1037,28 +1037,28 @@ public class LocaleTest extends junit.framework.TestCase {
         List<LanguageRange> priorityList = languageRangesOf("de-DE", "de-*-DE");
         List<Locale> locales = localesOf("de-DE", "de-Latn-DE", "ja-JP");
 
-        Locale dummy = Locale.FRANCE;
+        Locale fake = Locale.FRANCE;
         // should not throw
-        Locale.filter(priorityList, locales).add(dummy);
-        Locale.filter(priorityList, locales, AUTOSELECT_FILTERING).add(dummy);
-        Locale.filter(priorityList, locales, EXTENDED_FILTERING).add(dummy);
-        Locale.filter(priorityList, locales, IGNORE_EXTENDED_RANGES).add(dummy);
-        Locale.filter(priorityList, locales, MAP_EXTENDED_RANGES).add(dummy);
-        Locale.filter(languageRangesOf("de-DE"), locales, REJECT_EXTENDED_RANGES).add(dummy);
+        Locale.filter(priorityList, locales).add(fake);
+        Locale.filter(priorityList, locales, AUTOSELECT_FILTERING).add(fake);
+        Locale.filter(priorityList, locales, EXTENDED_FILTERING).add(fake);
+        Locale.filter(priorityList, locales, IGNORE_EXTENDED_RANGES).add(fake);
+        Locale.filter(priorityList, locales, MAP_EXTENDED_RANGES).add(fake);
+        Locale.filter(languageRangesOf("de-DE"), locales, REJECT_EXTENDED_RANGES).add(fake);
     }
 
     public void test_filter_resultIsModifiable_tags() {
         List<LanguageRange> priorityList = languageRangesOf("de-DE", "de-*-DE");
         List<String> tags = tagsOf("de-DE", "de-Latn-DE", "ja-JP");
 
-        String dummy = "fr-FR";
+        String fake = "fr-FR";
         // should not throw
-        Locale.filterTags(priorityList, tags).add(dummy);
-        Locale.filterTags(priorityList, tags, AUTOSELECT_FILTERING).add(dummy);
-        Locale.filterTags(priorityList, tags, EXTENDED_FILTERING).add(dummy);
-        Locale.filterTags(priorityList, tags, IGNORE_EXTENDED_RANGES).add(dummy);
-        Locale.filterTags(priorityList, tags, MAP_EXTENDED_RANGES).add(dummy);
-        Locale.filterTags(languageRangesOf("de-DE"), tags, REJECT_EXTENDED_RANGES).add(dummy);
+        Locale.filterTags(priorityList, tags).add(fake);
+        Locale.filterTags(priorityList, tags, AUTOSELECT_FILTERING).add(fake);
+        Locale.filterTags(priorityList, tags, EXTENDED_FILTERING).add(fake);
+        Locale.filterTags(priorityList, tags, IGNORE_EXTENDED_RANGES).add(fake);
+        Locale.filterTags(priorityList, tags, MAP_EXTENDED_RANGES).add(fake);
+        Locale.filterTags(languageRangesOf("de-DE"), tags, REJECT_EXTENDED_RANGES).add(fake);
     }
 
     public void test_forLanguageTag() {

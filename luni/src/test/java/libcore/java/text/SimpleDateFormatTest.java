@@ -390,7 +390,7 @@ public class SimpleDateFormatTest extends junit.framework.TestCase {
     }
 
     public void testLocales() throws Exception {
-        // Just run through them all. Handy as a poor man's benchmark, and a sanity check.
+        // Just run through them all. Handy as a poor man's benchmark, and a confidence check.
         for (Locale l : Locale.getAvailableLocales()) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss zzzz", l);
             sdf.format(new Date(0));

@@ -77,7 +77,7 @@ public class MulticastSocketTest {
     @Before
     public void setUp() throws Exception {
         // The loopback interface isn't actually useful for sending/receiving multicast messages
-        // but it can be used as a dummy for tests where that does not matter.
+        // but it can be used as a fake for tests where that does not matter.
         loopbackInterface = NetworkInterface.getByInetAddress(InetAddress.getLoopbackAddress());
         assertNotNull(loopbackInterface);
         assertTrue(loopbackInterface.isLoopback());

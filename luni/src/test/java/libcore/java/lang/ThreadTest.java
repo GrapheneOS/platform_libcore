@@ -360,7 +360,7 @@ public final class ThreadTest extends TestCase {
         // - ThreadTestHelper.{debugInfo,noDebugInfo}
         StackTraceElement result = stes[3];
 
-        // Sanity check before we return
+        // Confidence check before we return
         assertEquals(result.getClassName(), className);
         assertEquals(result.getMethodName(), methodName);
         assertFalse(result.isNativeMethod());

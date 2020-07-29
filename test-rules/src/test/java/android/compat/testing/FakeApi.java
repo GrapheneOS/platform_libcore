@@ -19,21 +19,21 @@ package android.compat.testing;
 import android.compat.Compatibility;
 
 /**
- * This is a dummy API to test gating
+ * This is a fake API to test gating
  *
  * @hide
  */
-public class DummyApi {
+public class FakeApi {
 
     public static final long CHANGE_ID = 666013;
     public static final long CHANGE_ID_1 = 666014;
     public static final long CHANGE_ID_2 = 666015;
 
     /**
-     * Dummy method
+     * Fake method
      * @return "A" if change is enabled, "B" otherwise.
      */
-    public static String dummyFunc() {
+    public static String fakeFunc() {
         if (Compatibility.isChangeEnabled(CHANGE_ID)) {
             return "A";
         }
@@ -41,13 +41,13 @@ public class DummyApi {
     }
 
     /**
-     * Dummy combined method
+     * Fake combined method
      * @return "0" if {@link CHANGE_ID_1} is disabled and {@link CHANGE_ID_2} is disabled,
                "1" if {@link CHANGE_ID_1} is disabled and {@link CHANGE_ID_2} is enabled,
                "2" if {@link CHANGE_ID_1} is enabled and {@link CHANGE_ID_2} is disabled,
                "3" if {@link CHANGE_ID_1} is enabled and {@link CHANGE_ID_2} is enabled.
      */
-    public static String dummyCombinedFunc() {
+    public static String fakeCombinedFunc() {
         if (!Compatibility.isChangeEnabled(CHANGE_ID_1)
                 && !Compatibility.isChangeEnabled(CHANGE_ID_2)) {
             return "0";

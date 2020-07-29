@@ -165,7 +165,7 @@ java_system_modules {
     ],
 }
 
-// Ideally this should be a restricted whitelist but there are hundreds of modules that depend on
+// Ideally this should be a restricted allowlist but there are hundreds of modules that depend on
 // this.
 // TODO(http://b/134561230) - limit the number of dependents on this.
 core_platform_visibility = ["//visibility:public"]

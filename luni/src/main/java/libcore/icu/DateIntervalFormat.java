@@ -48,7 +48,7 @@ public final class DateIntervalFormat {
     return formatDateRange(icuLocale, icuTimeZone, startMs, endMs, flags);
   }
 
-  // This is our slightly more sensible internal API. (A truly sane replacement would take a
+  // This is our slightly more sensible internal API. (A better replacement would take a
   // skeleton instead of int flags.)
   public static String formatDateRange(ULocale icuLocale, android.icu.util.TimeZone icuTimeZone,
       long startMs, long endMs, int flags) {

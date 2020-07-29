@@ -389,7 +389,7 @@ public class ProviderTest extends TestCaseWithRules {
                 bcClasses.add(service.getClassName());
             }
         }
-        assertTrue(bcClasses.size() > 0);  // Sanity check
+        assertTrue(bcClasses.size() > 0);
 
         // 3. Determine which IDs in BC point to that set of classes
         Set<String> shouldBeOverriddenBcIds = new HashSet<>();
@@ -409,7 +409,7 @@ public class ProviderTest extends TestCaseWithRules {
                 shouldBeOverriddenBcIds.add(key);
             }
         }
-        assertTrue(shouldBeOverriddenBcIds.size() > 0);  // Sanity check
+        assertTrue(shouldBeOverriddenBcIds.size() > 0);
 
         // 4. Check each of those IDs to ensure that it's present in Conscrypt
         Set<String> nonOverriddenIds = new TreeSet<>();

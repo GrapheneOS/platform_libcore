@@ -174,13 +174,13 @@ public class NativeAllocationRegistryTest extends TestCase {
     public void testNullArguments() {
         final NativeAllocationRegistry registry
             = new NativeAllocationRegistry(classLoader, getNativeFinalizer(), 1024);
-        final long dummyNativePtr = 0x1;
+        final long fakeNativePtr = 0x1;
         final Object referent = new Object();
 
         // referent should not be null
         assertThrowsIllegalArgumentException(new Runnable() {
             public void run() {
-                registry.registerNativeAllocation(null, dummyNativePtr);
+                registry.registerNativeAllocation(null, fakeNativePtr);
             }
         });
 
