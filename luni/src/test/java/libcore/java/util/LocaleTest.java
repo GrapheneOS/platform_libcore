@@ -1507,8 +1507,10 @@ public class LocaleTest extends junit.framework.TestCase {
         assertEquals("en-US-POSIX", posix.toLanguageTag());
     }
 
-    public void test_forLanguageTag_grandFatheredLocale() {
-        // Regular grandfathered locale.
+    // Legacy locales in this test refer to "grandfathered" locales as defined in
+    // https://tools.ietf.org/html/bcp47#section-2.2.8
+    public void test_forLanguageTag_legacyLocale() {
+        // Regular legacy locale.
         Locale gaulish = Locale.forLanguageTag("cel-gaulish");
         assertEquals("xtg", gaulish.getLanguage());
         assertEquals("cel-gaulish", gaulish.getExtension(Locale.PRIVATE_USE_EXTENSION));
@@ -1516,7 +1518,7 @@ public class LocaleTest extends junit.framework.TestCase {
         assertEquals("", gaulish.getScript());
         assertEquals("", gaulish.getVariant());
 
-        // Irregular grandfathered locale.
+        // Irregular legacy locale.
         Locale enochian = Locale.forLanguageTag("i-enochian");
         assertEquals("", enochian.getLanguage());
         assertEquals("i-enochian", enochian.getExtension(Locale.PRIVATE_USE_EXTENSION));

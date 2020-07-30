@@ -120,7 +120,7 @@ public final class BlockGuard {
     }
 
     /**
-     * @deprecated no longer actively used, but kept intact for greylist.
+     * @deprecated no longer actively used, but kept intact for hidden API lists.
      */
     @Deprecated
     public static class BlockGuardPolicyException extends RuntimeException {
