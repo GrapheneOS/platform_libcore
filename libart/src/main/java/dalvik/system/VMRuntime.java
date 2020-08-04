@@ -66,13 +66,13 @@ public final class VMRuntime {
 
     /**
      * Remove meta-reflection workaround for hidden api usage for apps targeting R+. This allowed
-     * apps to obtain references to blacklisted fields and methods through an extra layer of
+     * apps to obtain references to blocklist fields and methods through an extra layer of
      * reflection.
      */
     @ChangeId
     @EnabledAfter(targetSdkVersion = VersionCodes.Q)
     private static final long
-        PREVENT_META_REFLECTION_BLACKLIST_ACCESS = 142365358; // This is a bug id.
+        PREVENT_META_REFLECTION_BLOCKLIST_ACCESS = 142365358; // This is a bug id.
 
     /**
      * Gating access to greylist-max-p APIs.
