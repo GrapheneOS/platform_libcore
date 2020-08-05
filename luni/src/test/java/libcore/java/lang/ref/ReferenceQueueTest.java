@@ -45,7 +45,7 @@ public final class ReferenceQueueTest extends TestCase {
         // The main need for slack is because tasks may not get scheduled right
         // away. This is independent of the sleep/wait time, so we're using
         // absolute rather than relative tolerances here.
-        assertTrue("Duration too short: " + actual + "ms", actual > expected - 100);
+        assertTrue("Duration too short: " + actual + "ms", actual > expected - 10);
         assertTrue("Duration too long: " + actual + "ms", actual < expected + 450);
     }
 
@@ -89,8 +89,8 @@ public final class ReferenceQueueTest extends TestCase {
     public void testRemoveWithDelayedResultAndNoTimeout() throws Exception {
         ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
         final long enqueueDelayMsec = 500L;
-        enqueueLater(referenceQueue, enqueueDelayMsec);
         final long startNanos = System.nanoTime();
+        enqueueLater(referenceQueue, enqueueDelayMsec);
         referenceQueue.remove();
         final long durationNanos = System.nanoTime() - startNanos;
         final long durationMillis = TimeUnit.NANOSECONDS.toMillis(durationNanos);
@@ -100,8 +100,8 @@ public final class ReferenceQueueTest extends TestCase {
     public void testRemoveWithDelayedResultAndTimeout() throws Exception {
         ReferenceQueue<Object> referenceQueue = new ReferenceQueue<Object>();
         final long enqueueDelayMsec = 500L;
-        enqueueLater(referenceQueue, enqueueDelayMsec);
         final long startNanos = System.nanoTime();
+        enqueueLater(referenceQueue, enqueueDelayMsec);
         referenceQueue.remove(1000);
         final long durationNanos = System.nanoTime() - startNanos;
         final long durationMillis = TimeUnit.NANOSECONDS.toMillis(durationNanos);
