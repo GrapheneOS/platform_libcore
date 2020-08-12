@@ -308,6 +308,9 @@ java_library {
                 "tz_version_host_tzdata_apex",
             ],
         },
+        darwin: {
+            enabled: false,
+        },
     },
 }
 
