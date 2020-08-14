@@ -30,7 +30,7 @@ filegroup {
         "java_lang_StringToReal.cpp",
         "java_lang_invoke_MethodHandle.cpp",
         "java_lang_invoke_VarHandle.cpp",
-        "java_math_NativeBN.cpp",
+        "libcore_math_NativeBN.cpp",
         "libcore_icu_ICU.cpp",
         "libcore_io_AsynchronousCloseMonitor.cpp",
         "libcore_io_Linux.cpp",
