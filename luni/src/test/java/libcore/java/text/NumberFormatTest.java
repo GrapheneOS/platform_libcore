@@ -260,18 +260,4 @@ public class NumberFormatTest extends junit.framework.TestCase {
         format.setCurrency(Currency.getInstance("USD"));
         assertEquals("$10", format.format(10d));
     }
-
-    // http://b/162744366
-    public void testMonetarySeparator() {
-        Locale locale = Locale.forLanguageTag("en-BE");
-        DecimalFormat df = (DecimalFormat) NumberFormat.getCurrencyInstance(locale);
-        DecimalFormatSymbols dfs = df.getDecimalFormatSymbols();
-        // Check the assumption on the en-BE locale data. If the data is changed, please fix the
-        // below assert statement.
-        assertEquals('.', dfs.getGroupingSeparator());
-        assertEquals(',', dfs.getDecimalSeparator());
-        assertEquals(',', dfs.getMonetaryDecimalSeparator());
-        // Assert that the separators in DecimalFormatSymbols are used.
-        assertEquals("€9.876,66",df.format(9876.66));
-    }
 }
