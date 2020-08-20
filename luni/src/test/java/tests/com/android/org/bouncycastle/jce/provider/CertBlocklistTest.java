@@ -18,7 +18,7 @@ package tests.com.android.org.bouncycastle.jce.provider;
 
 import junit.framework.TestCase;
 
-import com.android.org.bouncycastle.jce.provider.CertBlacklist;
+import com.android.org.bouncycastle.jce.provider.CertBlocklist;
 import com.android.org.bouncycastle.util.encoders.Base64;
 import com.android.org.bouncycastle.util.encoders.Hex;
 
@@ -35,7 +35,7 @@ import java.security.cert.X509Certificate;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CertBlacklistTest extends TestCase {
+public class CertBlocklistTest extends TestCase {
 
     private File tmpFile;
 
@@ -125,7 +125,7 @@ public class CertBlacklistTest extends TestCase {
                     "Y3ldKwvYBW3W3yNZdTHbPyNsPJdhqA55mDNsteE5YTp1PyySDb1MSVrbxDEruoH6ZE99Hob4Ih8A" +
                     "mn7MHZatGClECgjXWFZ2Gxa7OUCaQpcH8g==";
 
-    public CertBlacklistTest() throws IOException {
+    public CertBlocklistTest() throws IOException {
         tmpFile = File.createTempFile("test", "");
         DEFAULT_PUBKEYS = getDefaultPubkeys();
         DEFAULT_SERIALS = getDefaultSerials();
@@ -147,11 +147,11 @@ public class CertBlacklistTest extends TestCase {
         }
     }
 
-    private Set<String> getPubkeyBlacklist(String path) throws IOException {
-        // set our blacklist path
-        CertBlacklist bl = new CertBlacklist(path, "");
-        // call readPubkeyBlacklist
-        Set<byte[]> arr = bl.pubkeyBlacklist;
+    private Set<String> getPubkeyBlocklist(String path) throws IOException {
+        // set our blocklist path
+        CertBlocklist bl = new CertBlocklist(path, "");
+        // call readPubkeyBlocklist
+        Set<byte[]> arr = bl.pubkeyBlocklist;
         // convert the results to a hashset of strings
         Set<String> results = new HashSet<String>();
         for (byte[] value: arr) {
@@ -160,11 +160,11 @@ public class CertBlacklistTest extends TestCase {
         return results;
     }
 
-    private Set<String> getSerialBlacklist(String path) throws IOException {
-        // set our blacklist path
-        CertBlacklist bl = new CertBlacklist("", path);
-        // call readPubkeyBlacklist
-        Set<BigInteger> arr = bl.serialBlacklist;
+    private Set<String> getSerialBlocklist(String path) throws IOException {
+        // set our blocklist path
+        CertBlocklist bl = new CertBlocklist("", path);
+        // call readPubkeyBlocklist
+        Set<BigInteger> arr = bl.serialBlocklist;
         // convert the results to a hashset of strings
         Set<String> results = new HashSet<String>();
         for (BigInteger value: arr) {
@@ -181,28 +181,28 @@ public class CertBlacklistTest extends TestCase {
     }
 
     private Set<String> getDefaultPubkeys() throws IOException {
-        return getPubkeyBlacklist("");
+        return getPubkeyBlocklist("");
     }
 
     private Set<String> getDefaultSerials() throws IOException {
-        return getSerialBlacklist("");
+        return getSerialBlocklist("");
     }
 
-    private Set<String> getCurrentPubkeyBlacklist() throws IOException {
-        return getPubkeyBlacklist(tmpFile.getCanonicalPath());
+    private Set<String> getCurrentPubkeyBlocklist() throws IOException {
+        return getPubkeyBlocklist(tmpFile.getCanonicalPath());
     }
 
-    private Set<String> getCurrentSerialBlacklist() throws IOException {
-        return getSerialBlacklist(tmpFile.getCanonicalPath());
+    private Set<String> getCurrentSerialBlocklist() throws IOException {
+        return getSerialBlocklist(tmpFile.getCanonicalPath());
     }
 
-    private void blacklistToFile(String blacklist) throws IOException {
+    private void blocklistToFile(String blocklist) throws IOException {
         FileOutputStream out = new FileOutputStream(tmpFile);
-        out.write(blacklist.toString().getBytes());
+        out.write(blocklist.toString().getBytes());
         out.close();
     }
 
-    private void writeBlacklist(HashSet<String> values) throws IOException {
+    private void writeBlocklist(HashSet<String> values) throws IOException {
         StringBuilder result = new StringBuilder();
         // join the values into a string
         for (String value : values) {
@@ -211,7 +211,7 @@ public class CertBlacklistTest extends TestCase {
             }
             result.append(value);
         }
-        blacklistToFile(result.toString());
+        blocklistToFile(result.toString());
     }
 
     private static PublicKey createPublicKey(String cert) throws Exception {
@@ -229,203 +229,203 @@ public class CertBlacklistTest extends TestCase {
         return xCert.getSerialNumber();
     }
 
-    public void testPubkeyBlacklistLegit() throws Exception {
-        // build the blacklist
+    public void testPubkeyBlocklistLegit() throws Exception {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("6ccabd7db47e94a5759901b6a7dfd45d1c091ccc");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // add the default pubkeys into the bl
         bl.addAll(DEFAULT_PUBKEYS);
         // do the test
-        assertEquals(bl, getCurrentPubkeyBlacklist());
+        assertEquals(bl, getCurrentPubkeyBlocklist());
     }
 
-    public void testLegitPubkeyIsntBlacklisted() throws Exception {
+    public void testLegitPubkeyIsntBlocklisted() throws Exception {
         // build the public key
         PublicKey pk = createPublicKey(TEST_CERT);
-        // write that to the test blacklist
-        writeBlacklist(new HashSet<String>());
-        // set our blacklist path
-        CertBlacklist bl = new CertBlacklist(tmpFile.getCanonicalPath(), "");
-        // check to make sure it isn't blacklisted
-        assertEquals(bl.isPublicKeyBlackListed(pk), false);
+        // write that to the test blocklist
+        writeBlocklist(new HashSet<String>());
+        // set our blocklist path
+        CertBlocklist bl = new CertBlocklist(tmpFile.getCanonicalPath(), "");
+        // check to make sure it isn't blocklisted
+        assertEquals(bl.isPublicKeyBlockListed(pk), false);
     }
 
-    public void testPubkeyIsBlacklisted() throws Exception {
+    public void testPubkeyIsBlocklisted() throws Exception {
         // build the public key
         PublicKey pk = createPublicKey(TEST_CERT);
         // get its hash
         String hash = getHash(pk);
-        // write that to the test blacklist
-        HashSet<String> testBlackList = new HashSet<String>();
-        testBlackList.add(hash);
-        writeBlacklist(testBlackList);
-        // set our blacklist path
-        CertBlacklist bl = new CertBlacklist(tmpFile.getCanonicalPath(), "");
-        // check to make sure it isn't blacklited
-        assertTrue(bl.isPublicKeyBlackListed(pk));
+        // write that to the test blocklist
+        HashSet<String> testBlockList = new HashSet<String>();
+        testBlockList.add(hash);
+        writeBlocklist(testBlockList);
+        // set our blocklist path
+        CertBlocklist bl = new CertBlocklist(tmpFile.getCanonicalPath(), "");
+        // check to make sure it isn't blocklited
+        assertTrue(bl.isPublicKeyBlockListed(pk));
     }
 
-    public void testSerialBlacklistLegit() throws IOException {
-        // build the blacklist
+    public void testSerialBlocklistLegit() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("22e514121e61c643b1e9b06bd4b9f7d0");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // add the default serials into the bl
         bl.addAll(DEFAULT_SERIALS);
         // do the test
-        assertEquals(bl, getCurrentSerialBlacklist());
+        assertEquals(bl, getCurrentSerialBlocklist());
     }
 
-    public void testPubkeyBlacklistMultipleLegit() throws IOException {
-        // build the blacklist
+    public void testPubkeyBlocklistMultipleLegit() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("6ccabd7db47e94a5759901b6a7dfd45d1c091ccc");
         bl.add("6ccabd7db47e94a5759901b6a7dfd45d1c091ccd");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // add the default pubkeys into the bl
         bl.addAll(DEFAULT_PUBKEYS);
         // do the test
-        assertEquals(bl, getCurrentPubkeyBlacklist());
+        assertEquals(bl, getCurrentPubkeyBlocklist());
     }
 
-    public void testSerialBlacklistMultipleLegit() throws IOException {
-        // build the blacklist
+    public void testSerialBlocklistMultipleLegit() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("22e514121e61c643b1e9b06bd4b9f7d0");
         bl.add("22e514121e61c643b1e9b06bd4b9f7d1");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // add the default serials into the bl
         bl.addAll(DEFAULT_SERIALS);
         // do the test
-        assertEquals(bl, getCurrentSerialBlacklist());
+        assertEquals(bl, getCurrentSerialBlocklist());
     }
 
-    public void testPubkeyBlacklistMultipleBad() throws IOException {
-        // build the blacklist
+    public void testPubkeyBlocklistMultipleBad() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("6ccabd7db47e94a5759901b6a7dfd45d1c091ccc");
         bl.add("");
         bl.add("6ccabd7db47e94a5759901b6a7dfd45d1c091ccd");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // add the default pubkeys into the bl
         bl.addAll(DEFAULT_PUBKEYS);
         // remove the bad one
         bl.remove("");
         // do the test- results should be all but the bad one are handled
-        assertEquals(bl, getCurrentPubkeyBlacklist());
+        assertEquals(bl, getCurrentPubkeyBlocklist());
     }
 
-    public void testSerialBlacklistMultipleBad() throws IOException {
-        // build the blacklist
+    public void testSerialBlocklistMultipleBad() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("22e514121e61c643b1e9b06bd4b9f7d0");
         bl.add("");
         bl.add("22e514121e61c643b1e9b06bd4b9f7d1");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // add the default serials into the bl
         bl.addAll(DEFAULT_SERIALS);
         // remove the bad one
         bl.remove("");
         // do the test- results should be all but the bad one are handled
-        assertEquals(bl, getCurrentSerialBlacklist());
+        assertEquals(bl, getCurrentSerialBlocklist());
     }
 
-    public void testPubkeyBlacklistDoesntExist() throws IOException {
-        assertEquals(DEFAULT_PUBKEYS, getCurrentPubkeyBlacklist());
+    public void testPubkeyBlocklistDoesntExist() throws IOException {
+        assertEquals(DEFAULT_PUBKEYS, getCurrentPubkeyBlocklist());
     }
 
-    public void testSerialBlacklistDoesntExist() throws IOException {
-        assertEquals(DEFAULT_SERIALS, getCurrentSerialBlacklist());
+    public void testSerialBlocklistDoesntExist() throws IOException {
+        assertEquals(DEFAULT_SERIALS, getCurrentSerialBlocklist());
     }
 
-    public void testPubkeyBlacklistNotHexValues() throws IOException {
-        // build the blacklist
+    public void testPubkeyBlocklistNotHexValues() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // do the test
-        assertEquals(DEFAULT_PUBKEYS, getCurrentPubkeyBlacklist());
+        assertEquals(DEFAULT_PUBKEYS, getCurrentPubkeyBlocklist());
     }
 
-    public void testSerialBlacklistNotHexValues() throws IOException {
-        // build the blacklist
+    public void testSerialBlocklistNotHexValues() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // do the test
-        assertEquals(DEFAULT_SERIALS, getCurrentSerialBlacklist());
+        assertEquals(DEFAULT_SERIALS, getCurrentSerialBlocklist());
     }
 
-    public void testPubkeyBlacklistIncorrectLength() throws IOException {
-        // build the blacklist
+    public void testPubkeyBlocklistIncorrectLength() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("6ccabd7db47e94a5759901b6a7dfd45d1c091cc");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // do the test
-        assertEquals(DEFAULT_PUBKEYS, getCurrentPubkeyBlacklist());
+        assertEquals(DEFAULT_PUBKEYS, getCurrentPubkeyBlocklist());
     }
 
-    public void testSerialBlacklistZero() throws IOException {
-        // build the blacklist
+    public void testSerialBlocklistZero() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("0");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // add the default serials
         bl.addAll(DEFAULT_SERIALS);
         // do the test
-        assertEquals(bl, getCurrentSerialBlacklist());
+        assertEquals(bl, getCurrentSerialBlocklist());
     }
 
-    public void testSerialBlacklistNegative() throws IOException {
-        // build the blacklist
+    public void testSerialBlocklistNegative() throws IOException {
+        // build the blocklist
         HashSet<String> bl = new HashSet<String>();
         bl.add("-1");
-        // write the blacklist
-        writeBlacklist(bl);
+        // write the blocklist
+        writeBlocklist(bl);
         // add the default serials
         bl.addAll(DEFAULT_SERIALS);
         // do the test
-        assertEquals(bl, getCurrentSerialBlacklist());
+        assertEquals(bl, getCurrentSerialBlocklist());
     }
 
-    public void testTurkTrustIntermediate1PubkeyBlacklist() throws Exception {
+    public void testTurkTrustIntermediate1PubkeyBlocklist() throws Exception {
         // build the public key
         PublicKey pk = createPublicKey(TURKTRUST_1);
-        // write that to the test blacklist
-        writeBlacklist(new HashSet<String>());
-        // set our blacklist path
-        CertBlacklist bl = new CertBlacklist();
-        // check to make sure it isn't blacklisted
-        assertEquals(bl.isPublicKeyBlackListed(pk), true);
+        // write that to the test blocklist
+        writeBlocklist(new HashSet<String>());
+        // set our blocklist path
+        CertBlocklist bl = new CertBlocklist();
+        // check to make sure it isn't blocklisted
+        assertEquals(bl.isPublicKeyBlockListed(pk), true);
     }
 
-    public void testTurkTrustIntermediate2PubkeyBlacklist() throws Exception {
+    public void testTurkTrustIntermediate2PubkeyBlocklist() throws Exception {
         // build the public key
         PublicKey pk = createPublicKey(TURKTRUST_2);
-        // set our blacklist path
-        CertBlacklist bl = new CertBlacklist();
-        // check to make sure it isn't blacklisted
-        assertEquals(bl.isPublicKeyBlackListed(pk), true);
+        // set our blocklist path
+        CertBlocklist bl = new CertBlocklist();
+        // check to make sure it isn't blocklisted
+        assertEquals(bl.isPublicKeyBlockListed(pk), true);
     }
 
-    public void testANSSIIntermediatePubkeyBlacklist() throws Exception {
+    public void testANSSIIntermediatePubkeyBlocklist() throws Exception {
         // build the public key
         PublicKey pk = createPublicKey(ANSSI);
-        // set our blacklist path
-        CertBlacklist bl = new CertBlacklist();
-        // check to make sure it isn't blacklisted
-        assertEquals(bl.isPublicKeyBlackListed(pk), true);
+        // set our blocklist path
+        CertBlocklist bl = new CertBlocklist();
+        // check to make sure it isn't blocklisted
+        assertEquals(bl.isPublicKeyBlockListed(pk), true);
     }
 
     private static void printHash(String cert) throws Exception {
