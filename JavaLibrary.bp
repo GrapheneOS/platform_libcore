@@ -200,7 +200,8 @@ platform_compat_config {
 // It does not contain other parts of core library like conscrypt, bouncycastle,
 // etc. This system_modules definition is used to bootstrap compilation for
 // other parts of the core library like core-oj, core-libart, conscrypt,
-// bouncycastle, etc.
+// bouncycastle, etc. It is also used to compile Libcore tests, as well as ART
+// Java tests (run-tests).
 java_system_modules {
     name: "core-all-system-modules",
 
