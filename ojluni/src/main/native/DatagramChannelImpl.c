@@ -276,7 +276,7 @@ Java_sun_nio_ch_DatagramChannelImpl_send0(JNIEnv *env, jobject this,
     return n;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(DatagramChannelImpl, initIDs, "()V"),
   NATIVE_METHOD(DatagramChannelImpl, disconnect0, "(Ljava/io/FileDescriptor;Z)V"),
   NATIVE_METHOD(DatagramChannelImpl, receive0, "(Ljava/io/FileDescriptor;JIZ)I"),
