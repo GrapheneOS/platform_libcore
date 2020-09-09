@@ -110,7 +110,7 @@ ObjectStreamClass_hasStaticInitializer(JNIEnv *env, jclass this,
     return (clinitId != superClinitId);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(ObjectStreamClass, hasStaticInitializer, "(Ljava/lang/Class;Z)Z"),
 };
 
