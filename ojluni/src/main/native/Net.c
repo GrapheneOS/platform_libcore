@@ -868,7 +868,7 @@ handleSocketError(JNIEnv *env, jint errorValue) {
 }
 
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Net, isIPv6Available0, "()Z"),
   NATIVE_METHOD(Net, isExclusiveBindAvailable, "()I"),
   NATIVE_METHOD(Net, canIPv6SocketJoinIPv4Group0, "()Z"),
