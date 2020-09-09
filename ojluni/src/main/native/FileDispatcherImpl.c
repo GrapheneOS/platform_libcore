@@ -287,7 +287,7 @@ FileDispatcherImpl_closeIntFD(JNIEnv *env, jclass clazz, jint fd)
     closeFileDescriptor(env, fd);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(FileDispatcherImpl, closeIntFD, "(I)V"),
   NATIVE_METHOD(FileDispatcherImpl, preClose0, "(Ljava/io/FileDescriptor;)V"),
   NATIVE_METHOD(FileDispatcherImpl, close0, "(Ljava/io/FileDescriptor;)V"),
