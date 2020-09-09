@@ -145,7 +145,7 @@ FileInputStream_available0(JNIEnv *env, jobject this) {
     return 0;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(FileInputStream, skip0, "(J)J"),
   NATIVE_METHOD(FileInputStream, available0, "()I"),
 };

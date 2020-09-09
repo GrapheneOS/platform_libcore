@@ -23,7 +23,7 @@ static jobject Unsafe_allocateInstance(JNIEnv* env, jclass, jclass c) {
   return env->AllocObject(c);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Unsafe, allocateInstance, "(Ljava/lang/Class;)Ljava/lang/Object;"),
 };
 void register_sun_misc_Unsafe(JNIEnv* env) {

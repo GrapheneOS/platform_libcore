@@ -991,7 +991,7 @@ UNIXProcess_destroyProcess(JNIEnv *env, jobject junk, jint pid)
     kill(pid, SIGTERM);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(UNIXProcess, destroyProcess, "(I)V"),
   NATIVE_METHOD(UNIXProcess, forkAndExec, "([B[BI[BI[B[IZ)I"),
   NATIVE_METHOD(UNIXProcess, waitForProcessExit, "(I)I"),

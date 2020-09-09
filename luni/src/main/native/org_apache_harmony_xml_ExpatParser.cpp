@@ -1365,7 +1365,7 @@ static void ExpatParser_staticInitialize(JNIEnv* env, jobject classObject, jstri
     emptyString = reinterpret_cast<jstring>(env->NewGlobalRef(empty));
 }
 
-static JNINativeMethod parserMethods[] = {
+static const JNINativeMethod parserMethods[] = {
     NATIVE_METHOD(ExpatParser, appendString, "(JLjava/lang/String;Z)V"),
     NATIVE_METHOD(ExpatParser, appendBytes, "(J[BII)V"),
     NATIVE_METHOD(ExpatParser, appendChars, "(J[CII)V"),
@@ -1379,7 +1379,7 @@ static JNINativeMethod parserMethods[] = {
     NATIVE_METHOD(ExpatParser, staticInitialize, "(Ljava/lang/String;)V"),
 };
 
-static JNINativeMethod attributeMethods[] = {
+static const JNINativeMethod attributeMethods[] = {
     NATIVE_METHOD(ExpatAttributes, freeAttributes, "(J)V"),
     NATIVE_METHOD(ExpatAttributes, getIndexForQName, "(JLjava/lang/String;)I"),
     NATIVE_METHOD(ExpatAttributes, getIndex, "(JLjava/lang/String;Ljava/lang/String;)I"),
