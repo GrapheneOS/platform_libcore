@@ -91,7 +91,7 @@ ProcessEnvironment_environ(JNIEnv *env, jclass ign)
     return result;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(ProcessEnvironment, environ, "()[[B"),
 };
 
