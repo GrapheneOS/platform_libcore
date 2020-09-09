@@ -74,7 +74,7 @@ CRC32_updateByteBuffer(JNIEnv *env, jclass cls, jint crc,
     return crc;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(CRC32, update, "(II)I"),
   NATIVE_METHOD(CRC32, updateBytes, "(I[BII)I"),
   NATIVE_METHOD(CRC32, updateByteBuffer, "(IJII)I"),

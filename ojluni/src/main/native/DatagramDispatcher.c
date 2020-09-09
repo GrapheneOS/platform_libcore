@@ -139,7 +139,7 @@ Java_sun_nio_ch_DatagramDispatcher_writev0(JNIEnv *env, jclass clazz,
     return convertLongReturnVal(env, (jlong)result, JNI_FALSE);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(DatagramDispatcher, read0, "(Ljava/io/FileDescriptor;JI)I"),
   NATIVE_METHOD(DatagramDispatcher, readv0, "(Ljava/io/FileDescriptor;JI)J"),
   NATIVE_METHOD(DatagramDispatcher, write0, "(Ljava/io/FileDescriptor;JI)I"),

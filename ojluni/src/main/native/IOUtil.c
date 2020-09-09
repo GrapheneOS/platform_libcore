@@ -206,7 +206,7 @@ fdval(JNIEnv *env, jobject fdo)
     return (*env)->GetIntField(env, fdo, fd_fdID);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(IOUtil, iovMax, "()I"),
   NATIVE_METHOD(IOUtil, fdLimit, "()I"),
   NATIVE_METHOD(IOUtil, drain, "(I)Z"),
