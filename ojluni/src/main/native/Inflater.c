@@ -201,7 +201,7 @@ Inflater_end(JNIEnv *env, jclass cls, jlong addr)
     }
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Inflater, init, "(Z)J"),
   NATIVE_METHOD(Inflater, setDictionary, "(J[BII)V"),
   NATIVE_METHOD(Inflater, inflateBytes, "(J[BII)I"),
