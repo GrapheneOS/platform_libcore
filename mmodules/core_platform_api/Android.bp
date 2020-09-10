@@ -35,11 +35,6 @@ droidstubs {
     ],
     sdk_version: "none",
     system_modules: "none",
-    libs: [
-        // Needed to break the cycle in the platform api caused by
-        // b/141747409.
-        "i18n.module.intra.core.api.stubs",
-    ],
 
     installable: false,
     args: "--hide HiddenSuperclass " +
@@ -71,11 +66,6 @@ droidstubs {
     ],
     sdk_version: "none",
     system_modules: "none",
-    libs: [
-        // Needed to break the cycle in the platform api caused by
-        // b/141747409.
-        "i18n.module.intra.core.api.stubs",
-    ],
 
     installable: false,
     args: "--hide HiddenSuperclass " +
@@ -100,16 +90,6 @@ droidstubs {
     },
 }
 
-// A special set of system modules that is needed to break the cycle in the
-// platform api caused by b/141747409.
-java_system_modules {
-    name: "break-cycle-in-core-platform-system-modules",
-    libs: [
-        "art.module.intra.core.api.stubs",
-        "i18n.module.intra.core.api.stubs",
-    ],
-}
-
 // Libraries containing the core platform API stubs of the ART module.
 //
 // Core platform APIs are only intended for use of other parts of the platform, not the
@@ -122,7 +102,7 @@ java_library {
     hostdex: true,
 
     sdk_version: "none",
-    system_modules: "break-cycle-in-core-platform-system-modules",
+    system_modules: "none",
     patch_module: "java.base",
 }
 
@@ -134,7 +114,7 @@ java_library {
     hostdex: true,
 
     sdk_version: "none",
-    system_modules: "break-cycle-in-core-platform-system-modules",
+    system_modules: "none",
     patch_module: "java.base",
 }
 
