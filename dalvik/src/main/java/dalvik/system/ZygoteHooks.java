@@ -124,6 +124,8 @@ public final class ZygoteHooks {
     /**
      * Called by the zygote in the system server process after forking. This method is is called
      * before {@code postForkChild} for system server.
+     *
+     * @param runtimeFlags The flags listed in com.android.internal.os.Zygote passed to the runtime.
      */
     @libcore.api.CorePlatformApi
     public static void postForkSystemServer(int runtimeFlags) {
@@ -131,14 +133,18 @@ public final class ZygoteHooks {
     }
 
     /**
-     * Called by the zygote in the child process after every fork. The runtime
-     * flags from {@code runtimeFlags} are applied to the child process. The string
-     * {@code instructionSet} determines whether to use a native bridge.
+     * Called by the zygote in the child process after every fork.
+     *
+     * @param runtimeFlags The runtime flags to apply to the child process.
+     * @param isSystemServer Whether the child process is system server.
+     * @param isChildZygote Whether the child process is a child zygote.
+     * @param instructionSet The instruction set of the child, used to determine
+     *                       whether to use a native bridge.
      */
     @libcore.api.CorePlatformApi
-    public static void postForkChild(int runtimeFlags, boolean isSystemServer, boolean isZygote,
-            String instructionSet) {
-        nativePostForkChild(token, runtimeFlags, isSystemServer, isZygote, instructionSet);
+    public static void postForkChild(int runtimeFlags, boolean isSystemServer,
+            boolean isChildZygote, String instructionSet) {
+        nativePostForkChild(token, runtimeFlags, isSystemServer, isChildZygote, instructionSet);
 
         Math.setRandomSeedInternal(System.currentTimeMillis());
     }

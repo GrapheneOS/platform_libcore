@@ -63,6 +63,9 @@ public final class FileDescriptor {
     /** @hide */
     public static final long NO_OWNER = 0L;
 
+    // Android-added: lock for release$.
+    private final Object releaseLock = new Object();
+
     /**
      * Constructs an (invalid) FileDescriptor
      * object.
@@ -211,14 +214,21 @@ public final class FileDescriptor {
 
     /**
      * Returns a copy of this FileDescriptor, and sets this to an invalid state.
+     *
+     * The returned instance is not necessarily {@code valid()}, if the original FileDescriptor
+     * was invalid, or if another thread concurrently calls {@code release$()}.
+     *
      * @hide internal use only
      */
     public FileDescriptor release$() {
       FileDescriptor result = new FileDescriptor();
-      result.descriptor = this.descriptor;
-      result.ownerId = this.ownerId;
-      this.descriptor = -1;
-      this.ownerId = FileDescriptor.NO_OWNER;
+      synchronized (releaseLock) {
+          result.descriptor = this.descriptor;
+          result.ownerId = this.ownerId;
+          this.descriptor = -1;
+          this.ownerId = FileDescriptor.NO_OWNER;
+      }
+
       return result;
     }
     // END Android-added: Methods to enable ownership enforcement of Unix file descriptors.

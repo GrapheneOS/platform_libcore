@@ -113,7 +113,13 @@ public final class IoUtils {
         // The owner ID is not required to be unique but should be stable and attempt to avoid
         // collision with identifiers generated both here and in native code (which are simply the
         // address of the owning object). identityHashCode(Object) meets these requirements.
-        long tagValue = System.identityHashCode(owner);
+        //
+        // If identityHashCode returns a negative int, it'll be sign-extended, so we need to apply
+        // a mask. fdsan uses bits 48-56 to distinguish between a generic native pointer and a
+        // generic Java type, but since we're only inserting 32-bits of data, we might as well mask
+        // off the entire upper 32 bits.
+        long mask = (1L << 32) - 1;
+        long tagValue = System.identityHashCode(owner) & mask;
         return tagType << 56 | tagValue;
     }
 

@@ -242,11 +242,18 @@ public final class IoBridge {
      */
     @libcore.api.CorePlatformApi
     public static void closeAndSignalBlockedThreads(FileDescriptor fd) throws IOException {
-        if (fd == null || !fd.valid()) {
+        if (fd == null) {
             return;
         }
-        // fd is invalid after we call release.
+
+        // fd is invalid after we call release$.
+        // If multiple threads reach this point simultaneously, release$ is synchronized, so one
+        // of them will receive the old fd, and the rest will get an empty FileDescriptor.
         FileDescriptor oldFd = fd.release$();
+        if (!oldFd.valid()) {
+            return;
+        }
+
         AsynchronousCloseMonitor.signalBlockedThreads(oldFd);
         try {
             Libcore.os.close(oldFd);

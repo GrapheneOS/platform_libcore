@@ -46,16 +46,25 @@ public class AnnotatedStackTraceElement {
     private AnnotatedStackTraceElement() {
     }
 
+    /**
+     * Returns the StackTraceElement describing the Java stack frame.
+     */
     @libcore.api.CorePlatformApi
     public StackTraceElement getStackTraceElement() {
         return stackTraceElement;
     }
 
+    /**
+     * Returns the objects this stack frame is synchronized on.
+     */
     @libcore.api.CorePlatformApi
     public Object[] getHeldLocks() {
         return heldLocks;
     }
 
+    /**
+     * Returns the object this stack frame is waiting on for synchronization.
+     */
     @libcore.api.CorePlatformApi
     public Object getBlockedOn() {
         return blockedOn;
