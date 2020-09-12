@@ -28,94 +28,73 @@
 //
 // TODO(b/161973015): Remove the legacy/stable distinction once no longer useful.
 
-droidstubs {
-    name: "legacy-art-module-platform-api-stubs-source",
+java_defaults {
+    name: "art-module-platform-api-defaults",
     srcs: [
         ":art_module_api_files",
     ],
-    sdk_version: "none",
-    system_modules: "none",
-
-    installable: false,
-    args: "--hide HiddenSuperclass " +
-        "--hide-annotation libcore.api.Hide " +
-        "--show-single-annotation libcore.api.CorePlatformApi " +
-        "--skip-annotation-instance-methods=false ",
-    merge_inclusion_annotations_dirs: ["ojluni-annotated-mmodule-stubs"],
-
-    api_filename: "legacy-api.txt",
-    removed_api_filename: "legacy-removed.txt",
-    previous_api: "legacy-previous.txt",
-
-    check_api: {
-        current: {
-            api_file: "api/legacy_platform/current-api.txt",
-            removed_api_file: "api/legacy_platform/current-removed.txt",
-        },
-        last_released: {
-            api_file: "api/legacy_platform/last-api.txt",
-            removed_api_file: "api/legacy_platform/last-removed.txt",
-        },
-    },
-}
-
-droidstubs {
-    name: "stable-art-module-platform-api-stubs-source",
-    srcs: [
-        ":art_module_api_files",
+    api_only: true,
+    droiddoc_options: [
+        "--hide HiddenSuperclass",
+        "--hide-annotation libcore.api.Hide",
+        "--skip-annotation-instance-methods=false",
     ],
-    sdk_version: "none",
-    system_modules: "none",
-
-    installable: false,
-    args: "--hide HiddenSuperclass " +
-        "--hide-annotation libcore.api.Hide " +
-        "--show-single-annotation libcore.api.CorePlatformApi\\(status=libcore.api.CorePlatformApi.Status.STABLE\\) " +
-        "--skip-annotation-instance-methods=false ",
     merge_inclusion_annotations_dirs: ["ojluni-annotated-mmodule-stubs"],
-
-    api_filename: "stable-api.txt",
-    removed_api_filename: "stable-removed.txt",
-    previous_api: "stable-previous.txt",
-
-    check_api: {
-        current: {
-            api_file: "api/stable_platform/current-api.txt",
-            removed_api_file: "api/stable_platform/current-removed.txt",
-        },
-        last_released: {
-            api_file: "api/stable_platform/last-api.txt",
-            removed_api_file: "api/stable_platform/last-removed.txt",
-        },
-    },
-}
-
-// Libraries containing the core platform API stubs of the ART module.
-//
-// Core platform APIs are only intended for use of other parts of the platform, not the
-// core library modules.
-java_library {
-    name: "legacy.art.module.platform.api.stubs",
-    srcs: [
-        ":legacy-art-module-platform-api-stubs-source",
-    ],
-    hostdex: true,
 
     sdk_version: "none",
     system_modules: "none",
     patch_module: "java.base",
+
 }
 
-java_library {
-    name: "stable.art.module.platform.api.stubs",
+// Referenced implicitly from legacy.art.module.platform.api.
+filegroup {
+    name: "legacy.art.module.platform.api.api.public.latest",
     srcs: [
-        ":stable-art-module-platform-api-stubs-source",
+        "api/legacy_platform/last-api.txt",
     ],
-    hostdex: true,
+}
 
-    sdk_version: "none",
-    system_modules: "none",
-    patch_module: "java.base",
+// Referenced implicitly from legacy.art.module.platform.api.
+filegroup {
+    name: "legacy.art.module.platform.api-removed.api.public.latest",
+    srcs: [
+        "api/legacy_platform/last-removed.txt",
+    ],
+}
+
+java_sdk_library {
+    name: "legacy.art.module.platform.api",
+    defaults: ["art-module-platform-api-defaults"],
+    api_dir: "api/legacy_platform",
+    droiddoc_options: [
+        "--show-single-annotation libcore.api.CorePlatformApi",
+    ],
+}
+
+// Referenced implicitly from stable.art.module.platform.api.
+filegroup {
+    name: "stable.art.module.platform.api.api.public.latest",
+    srcs: [
+        "api/stable_platform/last-api.txt",
+    ],
+}
+
+// Referenced implicitly from stable.art.module.platform.api.
+filegroup {
+    name: "stable.art.module.platform.api-removed.api.public.latest",
+    srcs: [
+        "api/stable_platform/last-removed.txt",
+    ],
+}
+
+java_sdk_library {
+    name: "stable.art.module.platform.api",
+    defaults: ["art-module-platform-api-defaults"],
+    api_dir: "api/stable_platform",
+    droiddoc_options: [
+        "--show-single-annotation libcore.api.CorePlatformApi\\(status=libcore.api.CorePlatformApi.Status.STABLE\\)",
+    ],
 }
 
 // Used when compiling higher-level code against *.core.platform.api.stubs.
