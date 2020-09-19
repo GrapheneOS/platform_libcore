@@ -120,6 +120,112 @@ public class DecimalFormatTest extends junit.framework.TestCase {
                 en_IN, "-9,87,65,43,21,09,87,65,43,21,09,87,65,43,210");
     }
 
+    // Test for http://b/168304209
+    public void testFieldPosition() {
+        DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
+        DecimalFormat currencyDf = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.US);
+        DecimalFormat percentDf = (DecimalFormat) NumberFormat.getPercentInstance(Locale.US);
+        DecimalFormat milledf = (DecimalFormat) NumberFormat.getInstance(Locale.US);
+        milledf.applyPattern("#,##0\u2030;-#,##0\u2030");
+        DecimalFormat scientificDf = (DecimalFormat) NumberFormat.getNumberInstance(Locale.US);
+        scientificDf.applyPattern("0.###E0");
+
+        // Reference behaviors of different field positions when formatting a simple integer.
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.INTEGER, "123", 0, 3);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.FRACTION, "123", 3, 3);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.CURRENCY, "123", 0, 0);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.DECIMAL_SEPARATOR, "123", 0, 0);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.EXPONENT, "123", 0, 0);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.EXPONENT_SIGN, "123", 0, 0);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.EXPONENT_SYMBOL, "123", 0, 0);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.GROUPING_SEPARATOR, "123", 0, 0);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.PERCENT, "123", 0, 0);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.PERMILLE, "123", 0, 0);
+        assertFieldPosition4Types(df, 123, NumberFormat.Field.SIGN, "123", 0, 0);
+
+        assertFieldPosition4Types(currencyDf, 123, NumberFormat.Field.CURRENCY, "$123.00", 0, 1);
+        assertFieldPosition(df, 123.4, NumberFormat.Field.DECIMAL_SEPARATOR, "123.4", 3, 4);
+        assertFieldPosition4Types(scientificDf, 123, NumberFormat.Field.EXPONENT, "1.23E2", 5, 6);
+        assertFieldPosition(scientificDf, 0.123, NumberFormat.Field.EXPONENT_SIGN, "1.23E-1", 5, 6);
+        assertFieldPosition4Types(scientificDf, 123, NumberFormat.Field.EXPONENT_SYMBOL, "1.23E2",
+                4, 5);
+        assertFieldPosition4Types(df, 1234, NumberFormat.Field.GROUPING_SEPARATOR, "1,234", 1, 2);
+        assertFieldPosition4Types(percentDf, 12, NumberFormat.Field.PERCENT, "1,200%", 5, 6);
+        assertFieldPosition4Types(milledf, 12, NumberFormat.Field.PERMILLE, "12,000\u2030", 6, 7);
+        assertFieldPosition4Types(df, -123, NumberFormat.Field.SIGN, "-123", 0, 1);
+
+        BigInteger bigInteger = new BigInteger("999999999999999999999999"); // 24 of '9';
+        // Assert this large number is larger than the max possible long value.
+        assertEquals(1, bigInteger.compareTo(BigInteger.valueOf(Long.MAX_VALUE)));
+        String expectedStr = "999,999,999,999,999,999,999,999";
+        assertFieldPosition(df, bigInteger, NumberFormat.Field.INTEGER, expectedStr, 0,
+                expectedStr.length());
+        expectedStr = "$" + expectedStr + ".00";
+        assertFieldPosition(currencyDf, bigInteger, NumberFormat.Field.INTEGER, expectedStr, 1,
+                expectedStr.length() - 3);
+        assertFieldPosition(currencyDf, bigInteger, NumberFormat.Field.CURRENCY, expectedStr, 0, 1);
+
+        BigDecimal bigDecimal = BigDecimal.valueOf(123.45);
+        assertFieldPosition(df, bigDecimal, NumberFormat.Field.INTEGER, "123.45", 0, 3);
+        assertFieldPosition(currencyDf, bigDecimal, NumberFormat.Field.CURRENCY, "$123.45", 0, 1);
+    }
+
+    /**
+     * Run the test with {@param num} in 4 different types, i.e. long, double, BigInteger
+     * and BigDecimal to increase the test coverage, because the 4 types have 4 different code paths
+     * internally.
+     */
+    private void assertFieldPosition4Types(DecimalFormat df, long num, NumberFormat.Field field,
+            String expectedStr, int expectedBeginIndex, int expectedEndIndex) {
+        assertFieldPosition(df, num, field, expectedStr, expectedBeginIndex, expectedEndIndex);
+        assertFieldPosition(df, (double) num, field, expectedStr, expectedBeginIndex,
+                expectedEndIndex);
+        assertFieldPosition(df, BigInteger.valueOf(num), field, expectedStr, expectedBeginIndex,
+                expectedEndIndex);
+        assertFieldPosition(df, BigDecimal.valueOf(num), field, expectedStr, expectedBeginIndex,
+                expectedEndIndex);
+    }
+
+    private void assertFieldPosition(DecimalFormat df, long num, NumberFormat.Field field,
+            String expectedStr, int expectedBeginIndex, int expectedEndIndex) {
+        FieldPosition fp = new FieldPosition(field);
+        StringBuffer stringBuffer = new StringBuffer();
+        df.format(num, stringBuffer, fp);
+        assertEquals(expectedStr, stringBuffer.toString());
+        assertEquals(expectedBeginIndex, fp.getBeginIndex());
+        assertEquals(expectedEndIndex, fp.getEndIndex());
+    }
+
+    private void assertFieldPosition(DecimalFormat df, double num, NumberFormat.Field field,
+            String expectedStr, int expectedBeginIndex, int expectedEndIndex) {
+        FieldPosition fp = new FieldPosition(field);
+        StringBuffer stringBuffer = new StringBuffer();
+        df.format(num, stringBuffer, fp);
+        assertEquals(expectedStr, stringBuffer.toString());
+        assertEquals(expectedBeginIndex, fp.getBeginIndex());
+        assertEquals(expectedEndIndex, fp.getEndIndex());
+    }
+
+    private void assertFieldPosition(DecimalFormat df, BigInteger num, NumberFormat.Field field,
+            String expectedStr, int expectedBeginIndex, int expectedEndIndex) {
+        FieldPosition fp = new FieldPosition(field);
+        StringBuffer stringBuffer = new StringBuffer();
+        df.format(num, stringBuffer, fp);
+        assertEquals(expectedStr, stringBuffer.toString());
+        assertEquals(expectedBeginIndex, fp.getBeginIndex());
+        assertEquals(expectedEndIndex, fp.getEndIndex());
+    }
+
+    private void assertFieldPosition(DecimalFormat df, BigDecimal num, NumberFormat.Field field,
+            String expectedStr, int expectedBeginIndex, int expectedEndIndex) {
+        FieldPosition fp = new FieldPosition(field);
+        StringBuffer stringBuffer = new StringBuffer();
+        df.format(num, stringBuffer, fp);
+        assertEquals(expectedStr, stringBuffer.toString());
+        assertEquals(expectedBeginIndex, fp.getBeginIndex());
+        assertEquals(expectedEndIndex, fp.getEndIndex());
+    }
+
     public void testBigDecimalICUConsistency() {
         DecimalFormat df = (DecimalFormat) NumberFormat.getInstance();
         df.setMaximumFractionDigits(2);

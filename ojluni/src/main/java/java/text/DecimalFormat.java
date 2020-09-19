@@ -897,7 +897,7 @@ public class DecimalFormat extends NumberFormat {
         return format(number, result, fieldPosition.getFieldDelegate());
         */
         FieldPosition icuFieldPosition = getIcuFieldPosition(fieldPosition);
-        icuDecimalFormat.format(number, result, fieldPosition);
+        icuDecimalFormat.format(number, result, icuFieldPosition);
         fieldPosition.setBeginIndex(icuFieldPosition.getBeginIndex());
         fieldPosition.setEndIndex(icuFieldPosition.getEndIndex());
         return result;
@@ -966,7 +966,7 @@ public class DecimalFormat extends NumberFormat {
         return format(number, result, fieldPosition.getFieldDelegate(), false);
         */
         FieldPosition icuFieldPosition = getIcuFieldPosition(fieldPosition);
-        icuDecimalFormat.format(number, result, fieldPosition);
+        icuDecimalFormat.format(number, result, icuFieldPosition);
         fieldPosition.setBeginIndex(icuFieldPosition.getBeginIndex());
         fieldPosition.setEndIndex(icuFieldPosition.getEndIndex());
         return result;
