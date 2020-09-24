@@ -60,7 +60,6 @@
 #include <android-base/strings.h>
 #include <log/log.h>
 #include <nativehelper/JNIPlatformHelp.h>
-#include <nativehelper/ScopedBytes.h>
 #include <nativehelper/ScopedLocalRef.h>
 #include <nativehelper/ScopedPrimitiveArray.h>
 #include <nativehelper/ScopedUtfChars.h>
@@ -73,6 +72,7 @@
 #include "JniException.h"
 #include "NetworkUtilities.h"
 #include "Portability.h"
+#include "ScopedBytes.h"
 
 #ifndef __unused
 #define __unused __attribute__((__unused__))
