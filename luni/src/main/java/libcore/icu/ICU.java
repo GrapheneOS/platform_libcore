@@ -22,6 +22,8 @@ import android.icu.text.CurrencyMetaInfo.CurrencyFilter;
 import android.icu.text.DateTimePatternGenerator;
 import android.icu.util.ULocale;
 
+import com.android.icu.util.LocaleNative;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -420,7 +422,9 @@ public final class ICU {
   /**
    * Takes a BCP-47 language tag (Locale.toLanguageTag()). e.g. en-US, not en_US
    */
-  public static native void setDefaultLocale(String languageTag);
+  public static void setDefaultLocale(String languageTag) {
+    LocaleNative.setDefault(languageTag);
+  }
 
   /**
    * Returns a locale name, not a BCP-47 language tag. e.g. en_US not en-US.

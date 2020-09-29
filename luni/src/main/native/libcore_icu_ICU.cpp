@@ -20,8 +20,6 @@
 #include <memory>
 #include <vector>
 
-#include <aicu/AIcu.h>
-
 #include <log/log.h>
 #include <nativehelper/JNIHelp.h>
 #include <nativehelper/ScopedUtfChars.h>
@@ -82,17 +80,6 @@ static jobjectArray ICU_getAvailableLocalesNative(JNIEnv* env, jclass) {
     return toStringArray(env, uloc_countAvailable, uloc_getAvailable);
 }
 
-static void ICU_setDefaultLocale(JNIEnv* env, jclass, jstring javaLanguageTag) {
-  ScopedIcuULoc icuLocale(env, javaLanguageTag);
-  if (!icuLocale.valid()) {
-    return;
-  }
-
-  UErrorCode status = U_ZERO_ERROR;
-  uloc_setDefault(icuLocale.locale(), &status);
-  maybeThrowIcuException(env, "uloc_setDefault", status);
-}
-
 static jstring ICU_getDefaultLocale(JNIEnv* env, jclass) {
   return env->NewStringUTF(uloc_getDefault());
 }
@@ -105,24 +92,13 @@ static JNINativeMethod gMethods[] = {
     NATIVE_METHOD(ICU, getISOCountriesNative, "()[Ljava/lang/String;"),
     NATIVE_METHOD(ICU, getISOLanguagesNative, "()[Ljava/lang/String;"),
     NATIVE_METHOD(ICU, getScript, "(Ljava/lang/String;)Ljava/lang/String;"),
-    NATIVE_METHOD(ICU, setDefaultLocale, "(Ljava/lang/String;)V"),
 };
 
-//
-// Global initialization & Teardown for ICU Setup
-//   - Contains handlers for JNI_OnLoad and JNI_OnUnload
-//
-
-// Init ICU, configuring it and loading the data files.
 void register_libcore_icu_ICU(JNIEnv* env) {
-  AIcu_register();
-
   jniRegisterNativeMethods(env, "libcore/icu/ICU", gMethods, NELEM(gMethods));
 }
 
-// De-init ICU, unloading the data files. Do the opposite of the above function.
 void unregister_libcore_icu_ICU() {
   // Skip unregistering JNI methods explicitly, class unloading takes care of
   // it.
-  AIcu_deregister();
 }
