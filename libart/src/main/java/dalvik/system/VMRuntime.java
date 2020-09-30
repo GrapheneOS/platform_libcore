@@ -142,6 +142,9 @@ public final class VMRuntime {
      * Sets the hidden API usage logger {@link #hiddenApiUsageLogger}.
      * It should only be called if {@link #setHiddenApiAccessLogSamplingRate(int)}
      * is called with a value > 0
+     *
+     * @param hiddenApiUsageLogger an object implement {@code HiddenApiUsageLogger} that the runtime
+     *          will call for logging hidden API checks.
      */
     @libcore.api.CorePlatformApi
     public static void setHiddenApiUsageLogger(HiddenApiUsageLogger hiddenApiUsageLogger) {
@@ -305,6 +308,8 @@ public final class VMRuntime {
      * Sets the target SDK version. Should only be called before the
      * app starts to run, because it may change the VM's behavior in
      * dangerous ways. Defaults to {@link #SDK_VERSION_CUR_DEVELOPMENT}.
+     *
+     * @param targetSdkVersion the SDK version the app wants to run with.
      */
     @UnsupportedAppUsage(maxTargetSdk=0, publicAlternatives="Use the {@code targetSdkVersion}"
         +" attribute in the {@code uses-sdk} manifest tag instead.")
@@ -319,6 +324,8 @@ public final class VMRuntime {
      * Sets the disabled compat changes. Should only be called before the
      * app starts to run, because it may change the VM's behavior in
      * dangerous ways. Defaults to empty.
+     *
+     * @param disabledCompatChanges An array of ChangeIds that we want to disable.
      */
     @libcore.api.CorePlatformApi
     public synchronized void setDisabledCompatChanges(long[] disabledCompatChanges) {
@@ -450,6 +457,9 @@ public final class VMRuntime {
      * Returns an array allocated in an area of the Java heap where it will never be moved.
      * This is used to implement native allocations on the Java heap, such as DirectByteBuffers
      * and Bitmaps.
+     *
+     * @param componentType the component type of the returned array.
+     * @param length the length of the returned array.
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
@@ -461,6 +471,10 @@ public final class VMRuntime {
      * Returns an array of at least minLength, but potentially larger. The increased size comes from
      * avoiding any padding after the array. The amount of padding varies depending on the
      * componentType and the memory allocator implementation.
+     *
+     * @param componentType the component type of the returned array.
+     * @param minLength the minimum length of the returned array. The actual length could
+     *          be greater.
      */
     @libcore.api.CorePlatformApi
     @FastNative
@@ -469,6 +483,8 @@ public final class VMRuntime {
     /**
      * Returns the address of array[0]. This differs from using JNI in that JNI might lie and
      * give you the address of a copy of the array when in forcecopy mode.
+     *
+     * @param array the object we want the native address of.
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
@@ -512,6 +528,8 @@ public final class VMRuntime {
      * from excessively increasing. Memory allocated via system malloc() should not be included
      * in this count. The argument must be the same as that later passed to registerNativeFree(),
      * but may otherwise be approximate.
+     *
+     * @param bytes the number of bytes of the native object.
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
@@ -521,6 +539,8 @@ public final class VMRuntime {
      * Backward compatibility version of registerNativeAllocation. We used to pass an int instead
      * of a long. The RenderScript support library looks it up via reflection.
      * @deprecated Use long argument instead.
+     *
+     * @param bytes the number of bytes of the native object.
      */
     @UnsupportedAppUsage
     @Deprecated
@@ -531,6 +551,8 @@ public final class VMRuntime {
 
     /**
      * Registers a native free by reducing the number of native bytes accounted for.
+     *
+     * @param bytes the number of bytes of the freed object.
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
@@ -539,6 +561,8 @@ public final class VMRuntime {
     /**
      * Backward compatibility version of registerNativeFree.
      * @deprecated Use long argument instead.
+     *
+     * @param bytes the number of bytes of the freed object.
      */
     @UnsupportedAppUsage
     @Deprecated
@@ -606,8 +630,12 @@ public final class VMRuntime {
         }
     }
 
+    /**
+     * Request that a garbage collection gets started on a different thread.
+     */
     @libcore.api.CorePlatformApi
     public native void requestConcurrentGC();
+
     public native void concurrentGC();
     public native void requestHeapTrim();
     public native void trimHeap();
@@ -618,6 +646,8 @@ public final class VMRuntime {
     /**
      * Let the heap know of the new process state. This can change allocation and garbage collection
      * behavior regarding trimming and compaction.
+     *
+     * @param state The state of the process, as defined in art/runtime/process_state.h.
      */
     @libcore.api.CorePlatformApi
     public native void updateProcessState(int state);
@@ -650,6 +680,8 @@ public final class VMRuntime {
      * {@code armeabi-v7a} and {@code armeabi} might map to the instruction set {@code arm}.
      *
      * This influences the compilation of the applications classes.
+     *
+     * @param abi The ABI we want the instruction set from.
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
@@ -662,6 +694,11 @@ public final class VMRuntime {
         return instructionSet;
     }
 
+    /**
+     * Returns whether the given {@code instructionSet} is 64 bits.
+     *
+     * @param instructionSet a string representing an instruction set.
+     */
     @libcore.api.CorePlatformApi
     public static boolean is64BitInstructionSet(String instructionSet) {
         return "arm64".equals(instructionSet) ||
@@ -669,6 +706,11 @@ public final class VMRuntime {
                 "mips64".equals(instructionSet);
     }
 
+    /**
+     * Returns whether the given {@code abi} is 64 bits.
+     *
+     * @param abi a string representing an ABI.
+     */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public static boolean is64BitAbi(String abi) {
@@ -725,6 +767,9 @@ public final class VMRuntime {
 
     /**
      * Sets a callback that the runtime can call whenever a usage of a non SDK API is detected.
+     *
+     * @param consumer an object implementing the {@code java.util.function.Consumer} interface that
+     *      the runtime will call whenever a usage of a non SDK API is detected.
      */
     @libcore.api.CorePlatformApi
     public static void setNonSdkApiUsageConsumer(Consumer<String> consumer) {
@@ -733,20 +778,25 @@ public final class VMRuntime {
 
     /**
      * Sets whether or not the runtime should dedupe detection and warnings for hidden API usage.
-     * If deduping is enabled, only the first usage of each API will be detected. The default
-     * behaviour is to dedupe.
+     *
+     * @param dedupe if set, only the first usage of each API will be detected. The default
+     *      behaviour is to dedupe.
      */
     @libcore.api.CorePlatformApi
     public static native void setDedupeHiddenApiWarnings(boolean dedupe);
 
     /**
      * Sets the package name of the app running in this process.
+     *
+     * @param packageName the value being set
      */
     @libcore.api.CorePlatformApi
     public static native void setProcessPackageName(String packageName);
 
     /**
      * Sets the full path to data directory of the app running in this process.
+     *
+     * @param dataDir the value being set
      */
     @libcore.api.CorePlatformApi
     public static native void setProcessDataDirectory(String dataDir);
@@ -758,6 +808,8 @@ public final class VMRuntime {
      *
      * @return True if encodedClassLoaderContext is a non-null valid encoded class loader context.
      *   Throws NullPointerException if encodedClassLoaderContext is null.
+     *
+     * @param encodedClassLoaderContext the class loader context to analyze
      */
     @libcore.api.CorePlatformApi
     public static native boolean isValidClassLoaderContext(String encodedClassLoaderContext);

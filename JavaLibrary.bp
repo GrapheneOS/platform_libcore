@@ -782,7 +782,7 @@ java_library {
     system_modules: "none",
 }
 
-// A special set of system modules needed to build art.module.public.api.stubs
+// A special set of system modules needed to build art.module.public.api
 // that contain nullability annotations when targeting java language level 1.9
 // and above.
 java_system_modules {
@@ -811,12 +811,9 @@ rewrite_openjdk_doc_args = "--replace-documentation " +
     // replacement (with $1, $2 backreferences to the regex groups)
     "'$$1https://docs.oracle.com/javase/8/docs/$$2\">' "
 
-// Generates stubs for the parts of the public SDK API provided by the ART module.
-//
-// Only for use by art.module.public.api.stubs target below and the building of the
-// public API.
-droidstubs {
-    name: "art-module-public-api-stubs-source",
+// Define the public SDK API provided by the ART module.
+java_sdk_library {
+    name: "art.module.public.api",
     visibility: [
         "//frameworks/base",
     ],
@@ -824,10 +821,6 @@ droidstubs {
         ":core_oj_api_files",
         ":core_libart_api_files",
     ],
-    java_version: "1.9",
-    installable: false,
-    sdk_version: "none",
-    system_modules: "java-current-stubs-system-modules",
     libs: [
         // Provide access to I18N constants that are used to initialize
         // constants in the public API. i.e. to allow the value of the
@@ -835,23 +828,29 @@ droidstubs {
         // android.icu.text.CollationElementIterator.NULLORDER.
         "i18n.module.intra.core.api.stubs",
     ],
+    java_version: "1.9",
 
-    args: rewrite_openjdk_doc_args,
+    public: {
+        enabled: true,
+    },
 
-    create_doc_stubs: true,
+    api_only: true,
+    droiddoc_options: [
+        rewrite_openjdk_doc_args,
+    ],
 
     // Emit nullability annotations from the source to the stub files.
     annotations_enabled: true,
 
     merge_annotations_dirs: [
+        "metalava-manual",
         "ojluni-annotated-sdk-stubs",
     ],
-}
 
-// A stubs target containing the parts of the public SDK API provided by the ART module.
-java_library {
-    name: "art.module.public.api.stubs",
-    srcs: [":art-module-public-api-stubs-source"],
+    doctag_files: [
+        ":known-oj-tags",
+    ],
+
     errorprone: {
         javacflags: [
             "-Xep:MissingOverride:OFF",
