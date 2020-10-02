@@ -664,7 +664,6 @@ package dalvik.system {
     method public void clampGrowthLimit();
     method public void clearGrowthLimit();
     method public static boolean didPruneDalvikCache();
-    method public void disableJitCompilation();
     method public static String getCurrentInstructionSet();
     method public static String getInstructionSet(String);
     method public static dalvik.system.VMRuntime getRuntime();
@@ -696,7 +695,6 @@ package dalvik.system {
     method public static void setProcessDataDirectory(String);
     method public static void setProcessPackageName(String);
     method public void setTargetSdkVersion(int);
-    method public void startJitCompilation();
     method public void updateProcessState(int);
     method public String vmInstructionSet();
     method public String vmLibrary();

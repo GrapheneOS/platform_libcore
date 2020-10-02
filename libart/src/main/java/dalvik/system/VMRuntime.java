@@ -420,20 +420,6 @@ public final class VMRuntime {
     }
 
     /**
-     * Tells the VM to enable the JIT compiler. If the VM does not have a JIT
-     * implementation, calling this method should have no effect.
-     */
-    @libcore.api.CorePlatformApi
-    public native void startJitCompilation();
-
-    /**
-     * Tells the VM to disable the JIT compiler. If the VM does not have a JIT
-     * implementation, calling this method should have no effect.
-     */
-    @libcore.api.CorePlatformApi
-    public native void disableJitCompilation();
-
-    /**
      * Sets the list of exemptions from hidden API access enforcement.
      *
      * @param signaturePrefixes
