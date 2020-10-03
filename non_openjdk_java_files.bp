@@ -47,7 +47,6 @@ filegroup {
         "dalvik/src/main/java/dalvik/system/RuntimeHooks.java",
         "dalvik/src/main/java/dalvik/system/SocketTagger.java",
         "dalvik/src/main/java/dalvik/system/TemporaryDirectory.java",
-        "dalvik/src/main/java/dalvik/system/ThreadPrioritySetter.java",
         "dalvik/src/main/java/dalvik/system/VMDebug.java",
         "dalvik/src/main/java/dalvik/system/ZygoteHooks.java",
         "dalvik/src/main/java/org/apache/harmony/dalvik/NativeTestTarget.java",

@@ -596,7 +596,6 @@ package dalvik.system {
   }
 
   public final class RuntimeHooks {
-    method public static void setThreadPrioritySetter(@NonNull dalvik.system.ThreadPrioritySetter);
     method public static void setTimeZoneIdSupplier(java.util.function.Supplier<java.lang.String>);
     method public static void setUncaughtExceptionPreHandler(java.lang.Thread.UncaughtExceptionHandler);
   }
@@ -611,10 +610,6 @@ package dalvik.system {
     method public abstract void untag(java.io.FileDescriptor) throws java.net.SocketException;
     method public final void untag(java.net.Socket) throws java.net.SocketException;
     method public final void untag(java.net.DatagramSocket) throws java.net.SocketException;
-  }
-
-  @java.lang.FunctionalInterface public interface ThreadPrioritySetter {
-    method public void setPriority(int, int);
   }
 
   public final class VMDebug {

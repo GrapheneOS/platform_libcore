@@ -63,10 +63,10 @@ cc_library_shared {
         "dalvik/src/main/native/org_apache_harmony_dalvik_NativeTestTarget.cpp",
     ],
     shared_libs: [
-        "libandroidicu",
         "libandroidio",
         "libbase",
         "libcrypto",
+        "libicu",
         "libexpat",
         "libnativehelper",
         "libz",
@@ -130,6 +130,7 @@ cc_defaults {
     shared_libs: [
         "libandroidio",
         "libcrypto",
+        "libicu",
         "libnativehelper",
         "libz",
     ],
@@ -146,13 +147,7 @@ cc_defaults {
         },
         android: {
             shared_libs: [
-                "libandroidicu",
                 "libdl_android",
-            ],
-        },
-        host: {
-            shared_libs: [
-                "libicuuc",
             ],
         },
     },

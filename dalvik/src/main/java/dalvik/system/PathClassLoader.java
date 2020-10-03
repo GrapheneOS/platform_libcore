@@ -89,8 +89,7 @@ public class PathClassLoader extends BaseDexClassLoader {
      * used by this new class loader. The shared library loaders are always
      * checked before the {@code dexPath} when looking
      * up classes and resources.
-     */
-    /**
+     *
      * @hide
      */
     @libcore.api.CorePlatformApi
