@@ -77,14 +77,6 @@ public final class VMDebug {
     @libcore.api.CorePlatformApi
     public static final int KIND_GLOBAL_CLASS_INIT_TIME =
         KIND_CLASS_INIT_TIME;
-    public static final int KIND_GLOBAL_EXT_ALLOCATED_OBJECTS =
-        KIND_EXT_ALLOCATED_OBJECTS;
-    public static final int KIND_GLOBAL_EXT_ALLOCATED_BYTES =
-        KIND_EXT_ALLOCATED_BYTES;
-    public static final int KIND_GLOBAL_EXT_FREED_OBJECTS =
-        KIND_EXT_FREED_OBJECTS;
-    public static final int KIND_GLOBAL_EXT_FREED_BYTES =
-        KIND_EXT_FREED_BYTES;
 
     @libcore.api.CorePlatformApi
     public static final int KIND_THREAD_ALLOCATED_OBJECTS =
@@ -92,25 +84,9 @@ public final class VMDebug {
     @libcore.api.CorePlatformApi
     public static final int KIND_THREAD_ALLOCATED_BYTES =
         KIND_ALLOCATED_BYTES << 16;
-    public static final int KIND_THREAD_FREED_OBJECTS =
-        KIND_FREED_OBJECTS << 16;
-    public static final int KIND_THREAD_FREED_BYTES =
-        KIND_FREED_BYTES << 16;
     @libcore.api.CorePlatformApi
     public static final int KIND_THREAD_GC_INVOCATIONS =
         KIND_GC_INVOCATIONS << 16;
-    public static final int KIND_THREAD_CLASS_INIT_COUNT =
-        KIND_CLASS_INIT_COUNT << 16;
-    public static final int KIND_THREAD_CLASS_INIT_TIME =
-        KIND_CLASS_INIT_TIME << 16;
-    public static final int KIND_THREAD_EXT_ALLOCATED_OBJECTS =
-        KIND_EXT_ALLOCATED_OBJECTS << 16;
-    public static final int KIND_THREAD_EXT_ALLOCATED_BYTES =
-        KIND_EXT_ALLOCATED_BYTES << 16;
-    public static final int KIND_THREAD_EXT_FREED_OBJECTS =
-        KIND_EXT_FREED_OBJECTS << 16;
-    public static final int KIND_THREAD_EXT_FREED_BYTES =
-        KIND_EXT_FREED_BYTES << 16;
 
     @libcore.api.CorePlatformApi
     public static final int KIND_ALL_COUNTS = 0xffffffff;
@@ -156,17 +132,6 @@ public final class VMDebug {
     public static native String[] getVmFeatureList();
 
     /**
-     * Start method tracing with default name, size, and with <code>0</code>
-     * flags.
-     *
-     * @deprecated Not used, not needed.
-     */
-    @Deprecated
-    public static void startMethodTracing() {
-        throw new UnsupportedOperationException();
-    }
-
-    /**
      * Start method tracing, specifying a file name as well as a default
      * buffer size. See <a
      * href="{@docRoot}guide/developing/tools/traceview.html"> Running the
@@ -191,17 +156,6 @@ public final class VMDebug {
     @libcore.api.CorePlatformApi
     public static void startMethodTracing(String traceFileName, int bufferSize, int flags, boolean samplingEnabled, int intervalUs) {
         startMethodTracingFilename(traceFileName, checkBufferSize(bufferSize), flags, samplingEnabled, intervalUs);
-    }
-
-    /**
-     * Like startMethodTracing(String, int, int), but taking an already-opened
-     * FileDescriptor in which the trace is written.  The file name is also
-     * supplied simply for logging.  Makes a dup of the file descriptor.
-     */
-    public static void startMethodTracing(String traceFileName, FileDescriptor fd, int bufferSize,
-                                          int flags, boolean samplingEnabled, int intervalUs) {
-        startMethodTracing(traceFileName, fd, bufferSize, flags, samplingEnabled, intervalUs,
-                           false);
     }
 
     /**
@@ -277,15 +231,31 @@ public final class VMDebug {
     public static native long threadCpuTimeNanos();
 
     /**
-     * Count the number and aggregate size of memory allocations between
-     * two points.
+     * Starts counting the number and aggregate size of memory allocations.
      */
     @libcore.api.CorePlatformApi
     public static native void startAllocCounting();
+
+    /**
+     * Stops counting the number and aggregate size of memory allocations.
+     */
     @libcore.api.CorePlatformApi
     public static native void stopAllocCounting();
+
+    /**
+     * Returns information on the number of objects allocated by the runtime between a
+     * {@link #startAllocCounting() start} and {@link #stopAllocCounting() stop}.
+     *
+     * @param kind either KIND_GLOBAL_* or KIND_THREAD_*.
+     */
     @libcore.api.CorePlatformApi
     public static native int getAllocCount(int kind);
+
+    /**
+     * Resets counting the number and aggregate size of memory allocations for the given kinds.
+     *
+     * @param kinds a union of KIND_GLOBAL_* and KIND_THREAD_*.
+     */
     @libcore.api.CorePlatformApi
     public static native void resetAllocCount(int kinds);
 
@@ -310,13 +280,20 @@ public final class VMDebug {
     /**
      * Count the number of instructions executed between two points.
      */
-    public static native void startInstructionCounting();
-    public static native void stopInstructionCounting();
-    public static native void getInstructionCount(int[] counts);
-    public static native void resetInstructionCount();
+    @Deprecated
+    public static void startInstructionCounting() {}
+    @Deprecated
+    public static void stopInstructionCounting() {}
+    @Deprecated
+    public static void getInstructionCount(int[] counts) {}
+    @Deprecated
+    public static void resetInstructionCount() {}
 
     /**
      * Dumps a list of loaded class to the log file.
+     *
+     * @param flags a union of {@link android.os.Debug.SHOW_FULL_DETAIL},
+     *    {@link android.os.Debug.SHOW_CLASSLOADER}, and {@link android.os.Debug.SHOW_INITIALIZED}.
      */
     @libcore.api.CorePlatformApi
     @FastNative
@@ -384,33 +361,6 @@ public final class VMDebug {
     public static native void dumpReferenceTables();
 
     /**
-     * Crashes the VM.  Seriously.  Dumps the interpreter stack trace for
-     * the current thread and then aborts the VM so you can see the native
-     * stack trace.  Useful for figuring out how you got somewhere when
-     * lots of native code is involved.
-     */
-    public static native void crash();
-
-    /**
-     * Together with gdb, provide a handy way to stop the VM at user-tagged
-     * locations.
-     */
-    public static native void infopoint(int id);
-
-    /*
-     * Fake method, inserted into dmtrace output when the garbage collector
-     * runs.  Not actually called.
-     */
-    private static void startGC() {}
-
-    /*
-     * Fake method, inserted into dmtrace output during class preparation
-     * (loading and linking, but not verification or initialization).  Not
-     * actually called.
-     */
-    private static void startClassPrep() {}
-
-    /**
      * Counts the instances of a class.
      * It is the caller's responsibility to do GC if they don't want unreachable
      * objects to get counted.
@@ -457,27 +407,6 @@ public final class VMDebug {
      *         of the class <code>classes[i]</code>
      */
     public static native Object[][] getInstancesOfClasses(Class[] classes, boolean assignable);
-
-    /**
-     * Export the heap per-space stats for dumpsys meminfo.
-     *
-     * The content of the array is:
-     *
-     * <pre>
-     *   data[0] : the application heap space size
-     *   data[1] : the application heap space allocated bytes
-     *   data[2] : the application heap space free bytes
-     *   data[3] : the zygote heap space size
-     *   data[4] : the zygote heap space allocated size
-     *   data[5] : the zygote heap space free size
-     *   data[6] : the large object space size
-     *   data[7] : the large object space allocated bytes
-     *   data[8] : the large object space free bytes
-     * </pre>
-     *
-     * @param data the array into which the stats are written.
-     */
-    public static native void getHeapSpaceStats(long[] data);
 
     /* Map from the names of the runtime stats supported by getRuntimeStat() to their IDs */
     private static final HashMap<String, Integer> runtimeStatsMap = new HashMap<>();
@@ -533,15 +462,6 @@ public final class VMDebug {
 
     private static native String getRuntimeStatInternal(int statId);
     private static native String[] getRuntimeStatsInternal();
-
-    /**
-     * Attaches an agent to the VM.
-     *
-     * @param agent The path to the agent .so file plus optional agent arguments.
-     */
-    public static void attachAgent(String agent) throws IOException {
-        attachAgent(agent, null);
-    }
 
     /**
      * Attaches an agent to the VM.
