@@ -269,6 +269,7 @@ java_library {
     name: "core-libart",
     visibility: [
         "//art/build/apex",
+        "//art/build/sdk",
         "//external/robolectric-shadows",
         "//external/wycheproof",
         "//libcore/benchmarks",
@@ -497,6 +498,7 @@ java_library_static {
 java_test {
     name: "jsr166-tests",
     visibility: [
+        "//art/build/sdk",
         "//cts/tests/libcore/jsr166",
     ],
     srcs: ["jsr166-tests/src/test/java/**/*.java"],
@@ -527,6 +529,7 @@ genrule {
 java_test {
     name: "core-tests",
     visibility: [
+        "//art/build/sdk",
         "//cts/tests/libcore/luni",
     ],
     defaults: ["libcore_java_defaults"],
@@ -679,6 +682,7 @@ java_test {
 java_test {
     name: "core-ojtests-public",
     visibility: [
+        "//art/build/sdk",
         "//cts/tests/libcore/ojluni",
     ],
     defaults: ["libcore_java_defaults"],
@@ -815,6 +819,7 @@ rewrite_openjdk_doc_args = "--replace-documentation " +
 java_sdk_library {
     name: "art.module.public.api",
     visibility: [
+        "//art/build/sdk",
         "//frameworks/base",
     ],
     srcs: [

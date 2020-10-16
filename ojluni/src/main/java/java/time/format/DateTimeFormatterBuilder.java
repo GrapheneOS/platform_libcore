@@ -61,7 +61,6 @@
  */
 package java.time.format;
 
-import android.icu.impl.ZoneMeta;
 import android.icu.text.LocaleDisplayNames;
 import android.icu.text.TimeZoneFormat;
 import android.icu.text.TimeZoneNames;
@@ -3698,7 +3697,7 @@ public final class DateTimeFormatterBuilder {
                 names = new String[TYPES.length + 1];
                 // Zeroth index used for id, other indexes based on NameType constant + 1.
                 names[0] = id;
-                String canonicalId = ZoneMeta.getCanonicalCLDRID(id);
+                String canonicalId = ZoneName.getSystemCanonicalID(id);
                 timeZoneNames.getDisplayNames(canonicalId, TYPES, System.currentTimeMillis(),
                         /* dest */ names, /* destoffset */ 1);
                 if (names == null) {

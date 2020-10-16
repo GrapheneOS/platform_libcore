@@ -13,6 +13,7 @@
 // limitations under the License.
 
 expectations_visibility = [
+    "//art/build/sdk",
     "//cts/tests/libcore:__subpackages__",
 ]
 
