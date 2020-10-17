@@ -23,6 +23,9 @@ import android.icu.util.ULocale;
 
 import java.io.File;
 import java.io.FileDescriptor;
+import java.lang.reflect.Method;
+import java.lang.ClassNotFoundException;
+import java.lang.ReflectiveOperationException;
 
 /**
  * Provides hooks for the zygote to call back into the runtime to perform
@@ -33,6 +36,7 @@ import java.io.FileDescriptor;
 @libcore.api.CorePlatformApi
 public final class ZygoteHooks {
     private static long token;
+    private static Method enableMemoryMappedDataMethod;
 
     /** All methods are static, no need to instantiate. */
     private ZygoteHooks() {
@@ -67,6 +71,19 @@ public final class ZygoteHooks {
         // We're being explicit about the fully qualified name of the TimeZone class to avoid
         // confusion with java.util.TimeZome.getDefault().
         android.icu.util.TimeZone.getDefault();
+
+        // Look up JaCoCo on the boot classpath, if it exists. This will be used later for enabling
+        // memory-mapped Java coverage.
+        try {
+          Class<?> jacocoOfflineClass = Class.forName("org.jacoco.agent.rt.internal.Offline");
+          enableMemoryMappedDataMethod = jacocoOfflineClass.getMethod("enableMemoryMappedData");
+        } catch (ClassNotFoundException e) {
+          // JaCoCo was not on the boot classpath, so this is not a coverage build.
+        } catch (ReflectiveOperationException e) {
+          // Method was not found in the JaCoCo Offline class. The version of JaCoCo is not
+          // compatible with memory-mapped coverage.
+          throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -147,6 +164,15 @@ public final class ZygoteHooks {
         nativePostForkChild(token, runtimeFlags, isSystemServer, isChildZygote, instructionSet);
 
         Math.setRandomSeedInternal(System.currentTimeMillis());
+
+        // Enable memory-mapped coverage if JaCoCo is in the boot classpath.
+        if (enableMemoryMappedDataMethod != null) {
+          try {
+            enableMemoryMappedDataMethod.invoke(null);
+          } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+          }
+        }
     }
 
     /**
