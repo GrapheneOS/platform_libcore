@@ -2310,7 +2310,7 @@ public class BigInteger extends Number implements Comparable<BigInteger> {
         // if (val.mag.length < BURNIKEL_ZIEGLER_THRESHOLD ||
         //        mag.length - val.mag.length < BURNIKEL_ZIEGLER_OFFSET) {
         if (val.mag.length < BORINGSSL_DIV_THRESHOLD ||
-                mag.length < BORINGSSL_DIV_THRESHOLD) {
+                mag.length - val.mag.length < BORINGSSL_DIV_THRESHOLD) {
             return remainderKnuth(val);
         } else {
             return divideAndRemainder(val)[1];

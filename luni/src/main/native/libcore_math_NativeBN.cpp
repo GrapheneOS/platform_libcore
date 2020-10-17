@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-// TODO: Check that we handle context allocation failures correctly.
-
 #define LOG_TAG "NativeBN"
 
 #include <stdio.h>
@@ -142,36 +140,26 @@ static jintArray NativeBN_bn2litEndInts(JNIEnv* env, jclass, jlong a0) {
   return result;
 }
 
-static int NativeBN_sign(JNIEnv*, jclass, jlong a) {
-  if (BN_is_zero(toBigNum(a))) {
-      return 0;
-  } else if (BN_is_negative(toBigNum(a))) {
-    return -1;
-  }
-  return 1;
-}
-
-static void NativeBN_BN_set_negative(JNIEnv*, jclass, jlong b, int n) {
-  BN_set_negative(toBigNum(b), n);
-}
-
 static void NativeBN_BN_mul(JNIEnv* env, jclass, jlong r, jlong a, jlong b) {
   Unique_BN_CTX ctx(BN_CTX_new());
-  if (!BN_mul(toBigNum(r), toBigNum(a), toBigNum(b), ctx.get())) {
+  BN_CTX* ctxp = ctx.get();
+  if (!ctxp || !BN_mul(toBigNum(r), toBigNum(a), toBigNum(b), ctxp)) {
     throwException(env);
   }
 }
 
 static void NativeBN_BN_div(JNIEnv* env, jclass, jlong q, jlong rem, jlong num, jlong divisor) {
   Unique_BN_CTX ctx(BN_CTX_new());
-  if (!BN_div(toBigNum(q), toBigNum(rem), toBigNum(num), toBigNum(divisor), ctx.get())) {
+  BN_CTX* ctxp = ctx.get();
+  if (!ctxp || !BN_div(toBigNum(q), toBigNum(rem), toBigNum(num), toBigNum(divisor), ctxp)) {
     throwException(env);
   }
 }
 
 static void NativeBN_BN_mod_exp(JNIEnv* env, jclass, jlong r, jlong a, jlong p, jlong m) {
   Unique_BN_CTX ctx(BN_CTX_new());
-  if (!BN_mod_exp(toBigNum(r), toBigNum(a), toBigNum(p), toBigNum(m), ctx.get())) {
+  BN_CTX* ctxp = ctx.get();
+  if (!ctxp || !BN_mod_exp(toBigNum(r), toBigNum(a), toBigNum(p), toBigNum(m), ctxp)) {
     throwException(env);
   }
 }
@@ -182,10 +170,8 @@ static JNINativeMethod gMethods[] = {
    NATIVE_METHOD(NativeBN, BN_mod_exp, "(JJJJ)V"),
    NATIVE_METHOD(NativeBN, BN_mul, "(JJJ)V"),
    NATIVE_METHOD(NativeBN, BN_new, "()J"),
-   NATIVE_METHOD(NativeBN, BN_set_negative, "(JI)V"),
    NATIVE_METHOD(NativeBN, bn2litEndInts, "(J)[I"),
    NATIVE_METHOD(NativeBN, litEndInts2bn, "([IIZJ)V"),
-   NATIVE_METHOD(NativeBN, sign, "(J)I"),
 };
 void register_libcore_math_NativeBN(JNIEnv* env) {
     jniRegisterNativeMethods(env, "libcore/math/NativeBN", gMethods, NELEM(gMethods));

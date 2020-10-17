@@ -14,9 +14,6 @@
  * limitations under the License.
  */
 
-// TODO: Prune out the methods we no longer need after replacing the BigInteger
-// code.
-
 package libcore.math;
 
 /**
@@ -35,13 +32,6 @@ public final class NativeBN {
     // Generates a minimal length representation of |a| in a sequence of integers, least-significant
     // word at index 0.
     public static native int[] bn2litEndInts(long a);
-
-    public static native int sign(long a);
-    // Returns -1, 0, 1 AND NOT boolean.
-    // #define BN_is_negative(a) ((a)->neg != 0)
-
-    public static native void BN_set_negative(long b, int n);
-    // void BN_set_negative(BIGNUM *b, int n);
 
     public static native void BN_mul(long r, long a, long b);
     // int BN_mul(BIGNUM *r, const BIGNUM *a, const BIGNUM *b, BN_CTX *ctx);
