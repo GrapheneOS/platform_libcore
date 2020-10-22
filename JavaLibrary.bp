@@ -227,7 +227,7 @@ java_library {
         "//libcore/benchmarks",
     ],
     apex_available: [
-        "com.android.art.release",
+        "com.android.art",
         "com.android.art.debug",
     ],
     defaults: ["libcore_java_defaults"],
@@ -276,7 +276,7 @@ java_library {
         "//frameworks/layoutlib",
     ],
     apex_available: [
-        "com.android.art.release",
+        "com.android.art",
         "com.android.art.debug",
     ],
     defaults: ["libcore_java_defaults"],

@@ -106,7 +106,6 @@ module java.base {
     exports sun.util.resources;
     // non-oj
     exports android.system;
-    exports android.icu.impl;
     exports android.icu.math;
     exports android.icu.text;
     exports android.icu.util;

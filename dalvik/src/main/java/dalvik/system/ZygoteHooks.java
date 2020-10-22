@@ -16,11 +16,6 @@
 
 package dalvik.system;
 
-import android.icu.impl.CacheValue;
-import android.icu.text.DateFormatSymbols;
-import android.icu.text.DecimalFormatSymbols;
-import android.icu.util.ULocale;
-
 import java.io.File;
 import java.io.FileDescriptor;
 import java.lang.reflect.Method;
@@ -54,23 +49,7 @@ public final class ZygoteHooks {
      */
     @libcore.api.CorePlatformApi
     public static void onBeginPreload() {
-        // Pin ICU data in memory from this point that would normally be held by soft references.
-        // Without this, any references created immediately below or during class preloading
-        // would be collected when the Zygote GC runs in gcAndFinalize().
-        CacheValue.setStrength(CacheValue.Strength.STRONG);
-
-        // Explicitly exercise code to cache data apps/framework are likely to need.
-        ULocale[] localesToPin = { ULocale.ROOT, ULocale.US, ULocale.getDefault() };
-        for (ULocale uLocale : localesToPin) {
-            new DecimalFormatSymbols(uLocale);
-            new DateFormatSymbols(uLocale);
-        }
-
-        // Framework's LocalLog is used during app start-up. It indirectly uses the current ICU time
-        // zone. Pre-loading the current time zone in ICU improves app startup time. b/150605074
-        // We're being explicit about the fully qualified name of the TimeZone class to avoid
-        // confusion with java.util.TimeZome.getDefault().
-        android.icu.util.TimeZone.getDefault();
+        com.android.i18n.system.ZygoteHooks.onBeginPreload();
 
         // Look up JaCoCo on the boot classpath, if it exists. This will be used later for enabling
         // memory-mapped Java coverage.
@@ -91,8 +70,7 @@ public final class ZygoteHooks {
      */
     @libcore.api.CorePlatformApi
     public static void onEndPreload() {
-        // All cache references created by ICU from this point will be soft.
-        CacheValue.setStrength(CacheValue.Strength.SOFT);
+        com.android.i18n.system.ZygoteHooks.onEndPreload();
 
         // Clone standard descriptors as originals closed / rebound during zygote post fork.
         FileDescriptor.in.cloneForFork();
