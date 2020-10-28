@@ -44,6 +44,23 @@ public class ICUTest extends junit.framework.TestCase {
     assertNotNull(ICU.getAvailableLocales()[0]);
   }
 
+  public void test_getCurrencyCode() {
+    assertEquals("USD", ICU.getCurrencyCode("US"));
+    assertEquals("CAD", ICU.getCurrencyCode("CA"));
+    assertEquals("HKD", ICU.getCurrencyCode("HK")); // a region
+
+    // Test invalid country codes
+    assertNull(ICU.getCurrencyCode("A"));
+    assertNull(ICU.getCurrencyCode(null));
+    assertNull(ICU.getCurrencyCode(""));
+    assertNull(ICU.getCurrencyCode("AA"));  // 2-charcter invalid country code
+    assertNull(ICU.getCurrencyCode("USA")); // 3-character country code
+    assertNull(ICU.getCurrencyCode("ZZZ"));
+    assertNull(ICU.getCurrencyCode("EURO"));
+    assertNull(ICU.getCurrencyCode("PREEURO"));
+    assertNull(ICU.getCurrencyCode("en_EURO"));
+  }
+
   public void test_getBestDateTimePattern() throws Exception {
     assertEquals("d MMMM", ICU.getBestDateTimePattern("MMMMd", new Locale("ca", "ES")));
     assertEquals("d 'de' MMMM", ICU.getBestDateTimePattern("MMMMd", new Locale("es", "ES")));

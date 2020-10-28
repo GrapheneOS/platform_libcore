@@ -17,9 +17,9 @@
 package libcore.icu;
 
 import android.compat.annotation.UnsupportedAppUsage;
-import android.icu.text.CurrencyMetaInfo;
-import android.icu.text.CurrencyMetaInfo.CurrencyFilter;
 import android.icu.text.DateTimePatternGenerator;
+import android.icu.util.Currency;
+import android.icu.util.IllformedLocaleException;
 import android.icu.util.ULocale;
 
 import com.android.icu.util.LocaleNative;
@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -376,10 +375,21 @@ public final class ICU {
      * @return ISO 4217 3-letter currency code if found, otherwise null.
      */
   public static String getCurrencyCode(String countryCode) {
-      CurrencyFilter filter = CurrencyFilter.onRegion(countryCode)
-          .withDate(new Date());
-      List<String> currencies = CurrencyMetaInfo.getInstance().currencies(filter);
-      return currencies.isEmpty() ? null : currencies.get(0);
+      // Fail fast when country code is not valid.
+      if (countryCode == null || countryCode.length() == 0) {
+          return null;
+      }
+      final ULocale countryLocale;
+      try {
+          countryLocale = new ULocale.Builder().setRegion(countryCode).build();
+      } catch (IllformedLocaleException e) {
+          return null; // Return null on invalid country code.
+      }
+      String[] isoCodes = Currency.getAvailableCurrencyCodes(countryLocale, new Date());
+      if (isoCodes == null || isoCodes.length == 0) {
+        return null;
+      }
+      return isoCodes[0];
   }
 
 

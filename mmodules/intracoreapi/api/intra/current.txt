@@ -33,6 +33,7 @@ package dalvik.annotation.compat {
     field @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final int O = 26; // 0x1a
     field @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final int P = 28; // 0x1c
     field @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final int Q = 29; // 0x1d
+    field @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final int R = 30; // 0x1e
   }
 
 }

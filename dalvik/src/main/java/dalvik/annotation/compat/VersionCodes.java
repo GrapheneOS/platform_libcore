@@ -57,4 +57,11 @@ public class VersionCodes {
     @CorePlatformApi
     @IntraCoreApi
     public static final int Q = 29;
+
+    /**
+     * The version code for Android R (API version 30).
+     */
+    @CorePlatformApi
+    @IntraCoreApi
+    public static final int R = 30;
 }
