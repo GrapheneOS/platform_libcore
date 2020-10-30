@@ -56,11 +56,16 @@ public abstract class Reference<T> {
      * Used by the reference processor to determine whether or not the referent
      * can be immediately returned. Because the referent might get swept during
      * GC, the slow path, which passes through JNI, must be taken.
+     * This is only modified with mutators suspended, and hence does not need to
+     * be volatile.
      */
     private static boolean slowPathEnabled = false;
 
     // Treated specially by GC. ART's ClassLinker::LinkFields() knows this is the
     // alphabetically last non-static field.
+    // We assume that Reference.get() and Reference.clear() are intended to be
+    // callable concurrently, and thus referent accesses should be treated as
+    // volatile everywhere.
     volatile T referent;
 
     final ReferenceQueue<? super T> queue;
