@@ -481,6 +481,8 @@ java_library_static {
         "//libcore/benchmarks",
         "//packages/apps/KeyChain/tests",
         "//system/timezone/distro/core",
+        "//packages/modules/Connectivity/tests/cts/net",
+        "//packages/modules/Connectivity/tests/cts/net/api23Test",
     ],
     hostdex: true,
     srcs: ["support/src/test/java/**/*.java"],

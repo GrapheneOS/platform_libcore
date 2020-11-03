@@ -289,16 +289,16 @@ public class InetAddress implements java.io.Serializable {
             throw new RuntimeException("Stub!");
         }
 
-        @UnsupportedAppUsage
+        @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
         int address;
 
-        @UnsupportedAppUsage
+        @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
         int family;
 
         @UnsupportedAppUsage
         java.lang.String hostName;
 
-        @UnsupportedAppUsage
+        @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
         java.lang.String originalHostName;
     }
 }
