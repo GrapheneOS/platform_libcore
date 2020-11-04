@@ -254,7 +254,7 @@ public final class Duration
         throw new RuntimeException("Stub!");
     }
 
-    @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
+    @UnsupportedAppUsage(trackingBug = 172313849)
     private java.math.BigDecimal toSeconds() {
         throw new RuntimeException("Stub!");
     }

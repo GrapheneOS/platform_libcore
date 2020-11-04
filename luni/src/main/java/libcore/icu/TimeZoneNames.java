@@ -146,4 +146,16 @@ public final class TimeZoneNames {
         return cachedZoneStrings.get(locale);
     }
 
+    /**
+     * A utility method to get display names in various {@param namesTypes} from
+     * ICU4J's {@param timeZoneNames}.
+     */
+    public static void getDisplayNames(android.icu.text.TimeZoneNames timeZoneNames, String tzId,
+            android.icu.text.TimeZoneNames.NameType[] nameTypes, long date, String[] names,
+            int namesOffset) {
+        for (int i = 0; i < nameTypes.length; i++) {
+            android.icu.text.TimeZoneNames.NameType nameType = nameTypes[i];
+            names[namesOffset + i] = timeZoneNames.getDisplayName(tzId, nameType, date);
+        }
+    }
 }
