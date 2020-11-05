@@ -38,6 +38,13 @@ public class VersionCodes {
     }
 
     /**
+     * The version code for current development build, which has not yet turned into an official
+     * release.
+     */
+    @IntraCoreApi
+    public static final int CUR_DEVELOPMENT = 10000;
+
+    /**
      * The version code for Android Oreo (API version 26).
      */
     @CorePlatformApi
