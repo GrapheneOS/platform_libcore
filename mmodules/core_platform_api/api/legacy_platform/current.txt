@@ -495,17 +495,6 @@ package dalvik.annotation.codegen {
 
 }
 
-package dalvik.annotation.compat {
-
-  public class VersionCodes {
-    field public static final int O = 26; // 0x1a
-    field public static final int P = 28; // 0x1c
-    field public static final int Q = 29; // 0x1d
-    field public static final int R = 30; // 0x1e
-  }
-
-}
-
 package dalvik.annotation.optimization {
 
   @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) @java.lang.annotation.Target(java.lang.annotation.ElementType.METHOD) public @interface CriticalNative {

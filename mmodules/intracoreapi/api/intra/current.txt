@@ -29,12 +29,12 @@ package android.system {
 
 package dalvik.annotation.compat {
 
-  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public class VersionCodes {
+  @libcore.api.IntraCoreApi public class VersionCodes {
     field @libcore.api.IntraCoreApi public static final int CUR_DEVELOPMENT = 10000; // 0x2710
-    field @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final int O = 26; // 0x1a
-    field @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final int P = 28; // 0x1c
-    field @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final int Q = 29; // 0x1d
-    field @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static final int R = 30; // 0x1e
+    field @libcore.api.IntraCoreApi public static final int O = 26; // 0x1a
+    field @libcore.api.IntraCoreApi public static final int P = 28; // 0x1c
+    field @libcore.api.IntraCoreApi public static final int Q = 29; // 0x1d
+    field @libcore.api.IntraCoreApi public static final int R = 30; // 0x1e
   }
 
 }

@@ -15,7 +15,6 @@
  */
 package dalvik.annotation.compat;
 
-import libcore.api.CorePlatformApi;
 import libcore.api.IntraCoreApi;
 
 /**
@@ -30,7 +29,6 @@ import libcore.api.IntraCoreApi;
  *
  * {@hide}
  */
-@CorePlatformApi
 @IntraCoreApi
 public class VersionCodes {
 
@@ -47,28 +45,24 @@ public class VersionCodes {
     /**
      * The version code for Android Oreo (API version 26).
      */
-    @CorePlatformApi
     @IntraCoreApi
     public static final int O = 26;
 
     /**
      * The version code for Android Pie (API version 28).
      */
-    @CorePlatformApi
     @IntraCoreApi
     public static final int P = 28;
 
     /**
      * The version code for Android Q (API version 29).
      */
-    @CorePlatformApi
     @IntraCoreApi
     public static final int Q = 29;
 
     /**
      * The version code for Android R (API version 30).
      */
-    @CorePlatformApi
     @IntraCoreApi
     public static final int R = 30;
 }
