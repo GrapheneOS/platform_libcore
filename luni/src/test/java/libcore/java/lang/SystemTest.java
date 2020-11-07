@@ -247,6 +247,21 @@ public class SystemTest extends TestCase {
         assertNull(System.getProperty("p1"));
     }
 
+    /**
+     * Assert that the following ICU-related system properties exist
+     */
+    public void testSystemProperties_getProperties_icu() {
+        String icuVersion = System.getProperty("android.icu.library.version");
+        assertNotNull(icuVersion);
+        assertTrue(icuVersion.length() > 0);
+        String unicodeVersion = System.getProperty("android.icu.unicode.version");
+        assertNotNull(unicodeVersion);
+        assertTrue(unicodeVersion.length() > 0);
+        String cldrVersion = System.getProperty("android.icu.cldr.version");
+        assertNotNull(cldrVersion);
+        assertTrue(cldrVersion.length() > 0);
+    }
+
     public void testSystem_setSecurityManager_null_noException() {
         System.setSecurityManager(null);
     }

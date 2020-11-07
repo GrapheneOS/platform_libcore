@@ -513,6 +513,10 @@ package dalvik.system {
     method public StackTraceElement getStackTraceElement();
   }
 
+  public class AppSpecializationHooks {
+    method public static void handleCompatChangesBeforeBindingApplication();
+  }
+
   public class BaseDexClassLoader extends java.lang.ClassLoader {
     method public void addDexPath(String);
     method public void addNativePath(java.util.Collection<java.lang.String>);

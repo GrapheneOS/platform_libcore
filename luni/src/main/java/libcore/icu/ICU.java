@@ -51,11 +51,23 @@ public final class ICU {
 
   private static String[] isoLanguages;
 
+  /**
+   * Avoid initialization with many dependencies here, because when this is called,
+   * lower-level classes, e.g. java.lang.System, are not initialized and java.lang.System
+   * relies on getIcuVersion().
+   */
   static {
+
+  }
+
+  private ICU() {
+  }
+
+  public static void initializeCacheInZygote() {
     // Fill CACHED_PATTERNS with the patterns from default locale and en-US initially.
-    // Likely, this is initialized in Zygote and the initial values in the cache can be shared
-    // among app. The cache was filled by LocaleData in the older Android platform, but moved to
-    // here, due to an performance issue http://b/161846393.
+    // This should be called in Zygote pre-fork process and the initial values in the cache
+    // can be shared among app. The cache was filled by LocaleData in the older Android platform,
+    // but moved here, due to an performance issue http://b/161846393.
     // It initializes 2 x 4 = 8 values in the CACHED_PATTERNS whose max size should be >= 8.
     for (Locale locale : new Locale[] {Locale.US, Locale.getDefault()}) {
       getTimePattern(locale, false, false);
@@ -63,9 +75,6 @@ public final class ICU {
       getTimePattern(locale, true, false);
       getTimePattern(locale, true, true);
     }
-  }
-
-  private ICU() {
   }
 
   /**
@@ -362,6 +371,22 @@ public final class ICU {
     }
     return result;
   }
+
+  /**
+   * Returns the version of the CLDR data in use, such as "22.1.1".
+   *
+   */
+  public static native String getCldrVersion();
+
+  /**
+   * Returns the icu4c version in use, such as "50.1.1".
+   */
+  public static native String getIcuVersion();
+
+  /**
+   * Returns the Unicode version our ICU supports, such as "6.2".
+   */
+  public static native String getUnicodeVersion();
 
   // --- Errors.
 

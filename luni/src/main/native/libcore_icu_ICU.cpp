@@ -30,8 +30,11 @@
 #include "JniException.h"
 #include "ScopedIcuULoc.h"
 #include "unicode/char16ptr.h"
+#include "unicode/uchar.h"
 #include "unicode/uloc.h"
+#include "unicode/ulocdata.h"
 #include "unicode/ustring.h"
+#include "unicode/uversion.h"
 
 #define U_ICUDATA_CURR U_ICUDATA_NAME "-" "curr"
 
@@ -84,14 +87,42 @@ static jstring ICU_getDefaultLocale(JNIEnv* env, jclass) {
   return env->NewStringUTF(uloc_getDefault());
 }
 
+static jstring versionString(JNIEnv* env, const UVersionInfo& version) {
+    char versionString[U_MAX_VERSION_STRING_LENGTH];
+    u_versionToString(const_cast<UVersionInfo&>(version), &versionString[0]);
+    return env->NewStringUTF(versionString);
+}
+
+static jstring ICU_getCldrVersion(JNIEnv* env, jclass) {
+  UErrorCode status = U_ZERO_ERROR;
+  UVersionInfo cldrVersion;
+  ulocdata_getCLDRVersion(cldrVersion, &status);
+  return versionString(env, cldrVersion);
+}
+
+static jstring ICU_getIcuVersion(JNIEnv* env, jclass) {
+    UVersionInfo icuVersion;
+    u_getVersion(icuVersion);
+    return versionString(env, icuVersion);
+}
+
+static jstring ICU_getUnicodeVersion(JNIEnv* env, jclass) {
+    UVersionInfo unicodeVersion;
+    u_getUnicodeVersion(unicodeVersion);
+    return versionString(env, unicodeVersion);
+}
+
 static JNINativeMethod gMethods[] = {
     NATIVE_METHOD(ICU, getAvailableLocalesNative, "()[Ljava/lang/String;"),
+    NATIVE_METHOD(ICU, getCldrVersion, "()Ljava/lang/String;"),
     NATIVE_METHOD(ICU, getDefaultLocale, "()Ljava/lang/String;"),
+    NATIVE_METHOD(ICU, getIcuVersion, "()Ljava/lang/String;"),
     NATIVE_METHOD(ICU, getISO3Country, "(Ljava/lang/String;)Ljava/lang/String;"),
     NATIVE_METHOD(ICU, getISO3Language, "(Ljava/lang/String;)Ljava/lang/String;"),
     NATIVE_METHOD(ICU, getISOCountriesNative, "()[Ljava/lang/String;"),
     NATIVE_METHOD(ICU, getISOLanguagesNative, "()[Ljava/lang/String;"),
     NATIVE_METHOD(ICU, getScript, "(Ljava/lang/String;)Ljava/lang/String;"),
+    NATIVE_METHOD(ICU, getUnicodeVersion, "()Ljava/lang/String;"),
 };
 
 void register_libcore_icu_ICU(JNIEnv* env) {

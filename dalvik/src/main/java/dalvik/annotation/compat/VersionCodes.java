@@ -65,4 +65,10 @@ public class VersionCodes {
      */
     @IntraCoreApi
     public static final int R = 30;
+
+    /**
+     * The version code for Android S (API version TBD).
+     */
+    @IntraCoreApi
+    public static final int S = CUR_DEVELOPMENT;
 }

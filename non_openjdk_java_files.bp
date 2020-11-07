@@ -32,6 +32,7 @@ filegroup {
         "dalvik/src/main/java/dalvik/bytecode/OpcodeInfo.java",
         "dalvik/src/main/java/dalvik/bytecode/Opcodes.java",
         "dalvik/src/main/java/dalvik/system/AllocationLimitError.java",
+        "dalvik/src/main/java/dalvik/system/AppSpecializationHooks.java",
         "dalvik/src/main/java/dalvik/system/BaseDexClassLoader.java",
         "dalvik/src/main/java/dalvik/system/BlockGuard.java",
         "dalvik/src/main/java/dalvik/system/CloseGuard.java",

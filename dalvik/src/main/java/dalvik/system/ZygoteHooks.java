@@ -16,6 +16,8 @@
 
 package dalvik.system;
 
+import libcore.icu.ICU;
+
 import java.io.File;
 import java.io.FileDescriptor;
 import java.lang.reflect.Method;
@@ -51,6 +53,8 @@ public final class ZygoteHooks {
     @libcore.api.CorePlatformApi
     public static void onBeginPreload() {
         com.android.i18n.system.ZygoteHooks.onBeginPreload();
+
+        ICU.initializeCacheInZygote();
 
         // Look up JaCoCo on the boot classpath, if it exists. This will be used later for enabling
         // memory-mapped Java coverage.
