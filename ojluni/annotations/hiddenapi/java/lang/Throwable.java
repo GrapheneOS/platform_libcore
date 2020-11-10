@@ -105,7 +105,7 @@ public class Throwable implements java.io.Serializable {
         throw new RuntimeException("Stub!");
     }
 
-    @UnsupportedAppUsage(trackingBug = 172412309)
+    @UnsupportedAppUsage(maxTargetSdk = 30, trackingBug = 170729553)
     private static native java.lang.Object nativeFillInStackTrace();
 
     public java.lang.StackTraceElement[] getStackTrace() {
