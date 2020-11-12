@@ -17,7 +17,7 @@
 package dalvik.system;
 
 import android.compat.annotation.ChangeId;
-import android.compat.annotation.EnabledAfter;
+import android.compat.annotation.EnabledSince;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import dalvik.annotation.compat.VersionCodes;
@@ -70,7 +70,7 @@ public final class VMRuntime {
      * reflection.
      */
     @ChangeId
-    @EnabledAfter(targetSdkVersion = VersionCodes.Q)
+    @EnabledSince(targetSdkVersion = VersionCodes.R)
     private static final long
         PREVENT_META_REFLECTION_BLOCKLIST_ACCESS = 142365358; // This is a bug id.
 
@@ -78,14 +78,14 @@ public final class VMRuntime {
      * Gating access to greylist-max-p APIs.
      */
     @ChangeId
-    @EnabledAfter(targetSdkVersion = VersionCodes.P)
+    @EnabledSince(targetSdkVersion = VersionCodes.Q)
     private static final long HIDE_MAXTARGETSDK_P_HIDDEN_APIS = 149997251; // This is a bug id.
 
     /**
      * Gating access to greylist-max-q APIs.
      */
     @ChangeId
-    @EnabledAfter(targetSdkVersion = VersionCodes.Q)
+    @EnabledSince(targetSdkVersion = VersionCodes.R)
     private static final long HIDE_MAXTARGETSDK_Q_HIDDEN_APIS = 149994052; // This is a bug id.
 
     /**
