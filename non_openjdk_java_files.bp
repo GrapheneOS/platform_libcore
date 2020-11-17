@@ -411,13 +411,3 @@ filegroup {
         ":non_openjdk_javadoc_files",
     ],
 }
-
-// timezone-related source that is also used in host tests / tools and its
-// dependencies.
-filegroup {
-    name: "timezone_host_libcore_files",
-    srcs: [
-        "luni/src/main/java/libcore/api/CorePlatformApi.java",
-        "luni/src/main/java/libcore/api/IntraCoreApi.java",
-    ],
-}

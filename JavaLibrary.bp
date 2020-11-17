@@ -991,21 +991,6 @@ droidstubs {
     check_nullability_warnings: "nullability_warnings.txt",
 }
 
-// A host library containing time zone related classes. Used for
-// host-side tools and tests that have to deal with Android
-// time zone data.
-java_library_host {
-    name: "timezone-host",
-    visibility: [
-        "//art/build/sdk",
-        "//system/timezone/distro/core",
-    ],
-    srcs: [
-        ":timezone_host_files",
-        ":timezone_host_libcore_files",
-    ],
-}
-
 // A special set of system modules for building the following library for use
 // in the art-module-public-api-system-modules.
 java_system_modules {
@@ -1037,6 +1022,8 @@ java_library {
 java_library {
     name: "art.module.api.annotations",
     visibility: [
+        "//art/build/sdk",
+        "//external/icu/android_icu4j",
         "//frameworks/base",
     ],
     host_supported: true,
