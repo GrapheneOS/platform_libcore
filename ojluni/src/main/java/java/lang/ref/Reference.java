@@ -42,6 +42,7 @@ import dalvik.annotation.optimization.FastNative;
 public abstract class Reference<T> {
     // BEGIN Android-changed: Reimplemented to accommodate a different GC and compiler.
     // ClassLinker knows about the fields of this class.
+    // Backported refersTo() from OpenJDK 16.
 
     /**
      * Forces JNI path.
@@ -111,6 +112,23 @@ public abstract class Reference<T> {
 
     @FastNative
     private final native T getReferent();
+
+    /**
+     * Tests if the referent of this reference object is {@code obj}.
+     * Using a {@code null} {@code obj} returns {@code true} if the
+     * reference object has been cleared.
+     *
+     * @param  obj the object to compare with this reference object's referent
+     * @return {@code true} if {@code obj} is the referent of this reference object
+     * @hide
+     */
+    public final boolean refersTo(T obj) {
+        return refersTo0(obj);
+    }
+
+    /* Implementation of refersTo(). */
+    @FastNative
+    private final native boolean refersTo0(Object o);
 
     /**
      * Clears this reference object.  Invoking this method will not cause this
