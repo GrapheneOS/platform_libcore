@@ -866,6 +866,9 @@ java_sdk_library {
     patch_module: "java.base",
     sdk_version: "none",
     system_modules: "java-current-stubs-system-modules",
+
+    // Don't copy any output files to the dist.
+    no_dist: true,
 }
 
 // Used when compiling higher-level code against art.module.public.api.stubs.

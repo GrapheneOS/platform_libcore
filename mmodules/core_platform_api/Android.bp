@@ -45,6 +45,8 @@ java_defaults {
     system_modules: "none",
     patch_module: "java.base",
 
+    // Don't copy any output files to the dist.
+    no_dist: true,
 }
 
 // Referenced implicitly from legacy.art.module.platform.api.
