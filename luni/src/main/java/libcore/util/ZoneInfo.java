@@ -36,7 +36,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 /**
- *  Our concrete TimeZone implementation, backed by a {@link ZoneInfoData}.
+ *  Our concrete TimeZone implementation, backed by a {@link ZoneInfoData}. This class is not
+ *  thread-safe.
  *
  * This class exists in this package and has certain fields / a defined serialization footprint for
  * app compatibility reasons. The knowledge of the underlying file format has been split out into
@@ -71,8 +72,9 @@ public final class ZoneInfo extends TimeZone {
         ZoneInfoData.ZONEINFO_SERIALIZED_FIELDS;
 
     /**
-     * Don't use it because the value is supposed used by mDelegate internally and this field
-     * is kept only for app compatibility indicated by @UnsupportedAppUsage.
+     * This field is kept only for app compatibility indicated by @UnsupportedAppUsage. Do not
+     * modify the content of this array as it is a reference to an internal data structure used by
+     * mDelegate.
      */
     @UnsupportedAppUsage
     private final long[] mTransitions;
@@ -85,7 +87,7 @@ public final class ZoneInfo extends TimeZone {
 
     public ZoneInfo(ZoneInfoData delegate) {
         mDelegate = delegate;
-        mTransitions = delegate.getTransitionsForAppCompat();
+        mTransitions = delegate.getTransitions();
         setID(delegate.getID());
     }
 
@@ -99,7 +101,7 @@ public final class ZoneInfo extends TimeZone {
         try {
             Field mTransitionsField = ZoneInfo.class.getDeclaredField("mTransitions");
             mTransitionsField.setAccessible(true);
-            mTransitionsField.set(this, mDelegate.getTransitionsForAppCompat());
+            mTransitionsField.set(this, mDelegate.getTransitions());
         } catch (ReflectiveOperationException e) {
             // mTransitions should always exists because it's a member field in this class.
         }
@@ -147,7 +149,7 @@ public final class ZoneInfo extends TimeZone {
 
     @Override
     public boolean inDaylightTime(Date time) {
-        return mDelegate.inDaylightTime(time);
+        return mDelegate.isInDaylightTime(time.getTime());
     }
 
     @Override
@@ -157,7 +159,7 @@ public final class ZoneInfo extends TimeZone {
 
     @Override
     public void setRawOffset(int off) {
-        mDelegate.setRawOffset(off);
+        mDelegate = mDelegate.createCopyWithRawOffset(off);
     }
 
     @Override
@@ -204,7 +206,7 @@ public final class ZoneInfo extends TimeZone {
 
     @Override
     public Object clone() {
-        return new ZoneInfo(new ZoneInfoData(mDelegate));
+        return new ZoneInfo(mDelegate.createCopy());
     }
 
     public int getOffsetsByUtcTime(long utcTimeInMillis, int[] offsets) {
