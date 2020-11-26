@@ -18,6 +18,7 @@ package dalvik.system;
 
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledSince;
+import android.compat.annotation.Disabled;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import dalvik.annotation.compat.VersionCodes;
@@ -87,6 +88,15 @@ public final class VMRuntime {
     @ChangeId
     @EnabledSince(targetSdkVersion = VersionCodes.R)
     private static final long HIDE_MAXTARGETSDK_Q_HIDDEN_APIS = 149994052; // This is a bug id.
+
+    /**
+     * Allow apps accessing @TestApi APIs.
+     *
+     * <p>This will always be disabled by default and should only be used by platform test code.
+     */
+    @ChangeId
+    @Disabled
+    private static final long ALLOW_TEST_API_ACCESS = 166236554; // This is a bug id.
 
     /**
      * Interface for logging hidden API usage events.
