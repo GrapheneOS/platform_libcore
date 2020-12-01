@@ -22,6 +22,8 @@ import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.nio.ByteBuffer;
 import java.time.Instant;
+import java.util.TimeZone;
+
 import libcore.timezone.testing.ZoneInfoTestHelper;
 import libcore.util.ZoneInfo;
 
@@ -70,18 +72,29 @@ public class ZoneInfoTest extends TestCase {
         zoneInfoCreated.getDSTSavings(), zoneInfoRead.getDSTSavings());
   }
 
+  /**
+   * Test consistency among DST-related APIs supported by ZoneInfo.
+   *
+   * This test may use TimeZone APIs only, the implementation comes from ZoneInfo.
+   */
+  public void testUseDaylightTime_consistency() {
+    for (String tzId : TimeZone.getAvailableIDs()) {
+      TimeZone tz = TimeZone.getTimeZone(tzId);
+      assertEquals("TimeZone API does not report consistently in this zone:" + tzId,
+              tz.useDaylightTime(), tz.getDSTSavings() != 0);
+    }
+  }
+
   private static Instant timeFromSeconds(long timeInSeconds) {
     return Instant.ofEpochSecond(timeInSeconds);
   }
 
   private ZoneInfo createZoneInfo(String name, long[][] transitions, int[][] types,
           Instant currentTime) throws Exception {
-
     ZoneInfoTestHelper.ZicDataBuilder builder =
             new ZoneInfoTestHelper.ZicDataBuilder()
                     .setTransitionsAndTypes(transitions, types);
-    ZoneInfoData data = ZoneInfoData.createZoneInfo(name, currentTime.toEpochMilli(),
-        ByteBuffer.wrap(builder.build()));
-    return new ZoneInfo(data);
+    ZoneInfoData data = ZoneInfoData.createZoneInfo(name, ByteBuffer.wrap(builder.build()));
+    return ZoneInfo.createZoneInfo(data, currentTime.toEpochMilli());
   }
 }

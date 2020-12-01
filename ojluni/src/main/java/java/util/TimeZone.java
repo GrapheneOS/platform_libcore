@@ -578,7 +578,7 @@ abstract public class TimeZone implements Serializable, Cloneable {
         // In the database?
 
         ZoneInfoData zoneInfoData = ZoneInfoDb.getInstance().makeZoneInfoData(id);
-        TimeZone zone = zoneInfoData == null ? null : new ZoneInfo(zoneInfoData);
+        TimeZone zone = zoneInfoData == null ? null : ZoneInfo.createZoneInfo(zoneInfoData);
 
         // Custom time zone?
         if (zone == null && id.length() > 3 && id.startsWith("GMT")) {
