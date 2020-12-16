@@ -83,7 +83,6 @@ public java.lang.reflect.Type getGenericSuperclass() { throw new RuntimeExceptio
 
 public java.lang.Package getPackage() { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
 public java.lang.String getPackageName$() { throw new RuntimeException("Stub!"); }
 
 public java.lang.Class<?>[] getInterfaces() { throw new RuntimeException("Stub!"); }

@@ -373,6 +373,96 @@ public final class ICU {
   }
 
   /**
+   * {@link java.time.format.DateTimeFormatter} does not handle some date symbols, e.g. 'B' / 'b',
+   * and thus we use a heuristic algorithm to remove the symbol. See http://b/174804526.
+   * See {@link #transformIcuDateTimePattern(String)} for documentation about the implementation.
+   */
+  public static String transformIcuDateTimePattern_forJavaTime(String pattern) {
+    return transformIcuDateTimePattern(pattern);
+  }
+
+  /**
+   * Rewrite the date/time pattern coming ICU to be consumed by libcore classes.
+   * It's an ideal place to rewrite the pattern entirely when multiple symbols not digested
+   * by libcore need to be removed/processed. Rewriting in single place could be more efficient
+   * in a small or constant number of scans instead of scanning for every symbol.
+   *
+   * {@link LocaleData#initLocaleData(Locale)} also rewrites time format, but only a subset of
+   * patterns. In the future, that should migrate to this function in order to handle the symbols
+   * in one place, but now separate because java.text and java.time handles different sets of
+   * symbols.
+   */
+  private static String transformIcuDateTimePattern(String pattern) {
+    if (pattern == null) {
+      return null;
+    }
+
+    // For details about the different symbols, see
+    // http://cldr.unicode.org/translation/date-time-1/date-time-patterns#TOC-Day-period-patterns
+    // The symbols B means "Day periods with locale-specific ranges".
+    // English example: 2:00 at night, 10:00 in the morning, 12:00 in the afternoon.
+    boolean contains_B = pattern.indexOf('B') != -1;
+    // AM, PM, noon and midnight. English example: 10:00 AM, 12:00 noon, 7:00 PM
+    boolean contains_b = pattern.indexOf('b') != -1;
+
+    // Simply remove the symbol 'B' and 'b' if 24-hour 'H' exists because the 24-hour format
+    // provides enough information and the day periods are optional. See http://b/174804526.
+    // Don't handle symbol 'B'/'b' with 12-hour 'h' because it's much more complicated because
+    // we likely need to replace 'B'/'b' with 'a' inserted into a new right position or use other
+    // ways.
+    boolean remove_B_and_b = (contains_B || contains_b) && (pattern.indexOf('H') != -1);
+
+    if (remove_B_and_b) {
+      pattern = rewriteIcuDateTimePattern(pattern);
+    }
+    return pattern;
+  }
+
+  /**
+   * Rewrite pattern with heuristics. It's known to
+   *   - Remove 'b' and 'B' from simple patterns, e.g. "B H:mm" and "dd-MM-yy B HH:mm:ss" only.
+   *   - (Append the new heuristics)
+   */
+  private static String rewriteIcuDateTimePattern(String pattern) {
+    // The below implementation can likely be replaced by a regular expression via
+    // String.replaceAll(). However, it's known that libcore's regex implementation is more
+    // memory-intensive, and the below implementation is likely cheaper, but it's not yet measured.
+    StringBuilder sb = new StringBuilder(pattern.length());
+    char prev = ' '; // the initial value is not used.
+    for (int i = 0; i < pattern.length(); i++) {
+      char curr = pattern.charAt(i);
+      switch(curr) {
+        case 'B':
+        case 'b':
+          // Ignore 'B' and 'b'
+          break;
+        case ' ': // Ascii whitespace
+          // caveat: Ideally it's a case for all Unicode whitespaces by UCharacter.isUWhiteSpace(c)
+          // but checking ascii whitespace only is enough for the CLDR data when this is written.
+          if (i != 0 && (prev == 'B' || prev == 'b')) {
+            // Ignore the whitespace behind the symbol 'B'/'b' because it's likely a whitespace to
+            // separate the day period with the next text.
+          } else {
+            sb.append(curr);
+          }
+          break;
+        default:
+          sb.append(curr);
+          break;
+      }
+      prev = curr;
+    }
+
+    // Remove the trailing whitespace which is likely following the symbol 'B'/'b' in the original
+    // pattern, e.g. "hh:mm B" (12:00 in the afternoon).
+    int lastIndex = sb.length() - 1;
+    if (lastIndex >= 0 && sb.charAt(lastIndex) == ' ') {
+      sb.deleteCharAt(lastIndex);
+    }
+    return sb.toString();
+  }
+
+  /**
    * Returns the version of the CLDR data in use, such as "22.1.1".
    *
    */

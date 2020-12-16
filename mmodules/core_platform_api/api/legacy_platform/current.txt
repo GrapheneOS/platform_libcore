@@ -734,7 +734,6 @@ package java.lang {
   public final class Class<T> implements java.lang.reflect.AnnotatedElement java.lang.reflect.GenericDeclaration java.io.Serializable java.lang.reflect.Type {
     method @dalvik.annotation.optimization.FastNative public java.lang.reflect.Field[] getDeclaredFieldsUnchecked(boolean);
     method @dalvik.annotation.optimization.FastNative public java.lang.reflect.Method[] getDeclaredMethodsUnchecked(boolean);
-    method public String getPackageName$();
   }
 
   public final class Math {

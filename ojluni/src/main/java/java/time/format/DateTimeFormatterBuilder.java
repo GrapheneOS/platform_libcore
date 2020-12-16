@@ -77,6 +77,8 @@ import static java.time.temporal.ChronoField.OFFSET_SECONDS;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 
+import libcore.icu.ICU;
+
 import java.lang.ref.SoftReference;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -209,7 +211,7 @@ public final class DateTimeFormatterBuilder {
             throw new IllegalArgumentException("Either dateStyle or timeStyle must be non-null");
         }
 
-        // Android-changed: get format string from ICU.
+        // BEGIN Android-changed: get format string from ICU.
         // LocaleResources lr = LocaleProviderAdapter.getResourceBundleBased()
         //         .getLocaleResources(locale);
         // String pattern = lr.getJavaTimeDateTimePattern(
@@ -217,6 +219,11 @@ public final class DateTimeFormatterBuilder {
         String pattern = Calendar.getDateTimeFormatString(
                 ULocale.forLocale(locale), chrono.getCalendarType(),
                 convertStyle(dateStyle), convertStyle(timeStyle));
+        // Transform the pattern coming from ICU because DateTimeFormatter does not handle some date
+        // symbols, e.g. 'B' / 'b', and thus we use a heuristic algorithm to remove the symbol.
+        // See http://b/174804526.
+        pattern = ICU.transformIcuDateTimePattern_forJavaTime(pattern);
+        // END Android-changed: get format string from ICU.
         return pattern;
     }
 

@@ -46,6 +46,12 @@ public final class PackageTest extends TestCaseWithRules {
         assertEquals(getClass().getPackage(), libcoreJavaLang);
     }
 
+    public void testGetPackageName() {
+        Package libcoreJavaLang = Package.getPackage("libcore.java.lang");
+        assertEquals("libcore.java.lang", getClass().getPackageName());
+        assertEquals(getClass().getPackageName(), libcoreJavaLang.getName());
+    }
+
     // http://b/28057303
     @TargetSdkVersion(24)
     public void test_toString_targetSdkVersion_24() throws Exception {
