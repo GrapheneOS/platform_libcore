@@ -1096,32 +1096,6 @@ package libcore.util {
 
 }
 
-package org.apache.harmony.dalvik {
-
-  public final class NativeTestTarget {
-    ctor public NativeTestTarget();
-    method public static void emptyInlineMethod();
-    method public static void emptyInternalStaticMethod();
-    method public void emptyJniMethod0();
-    method @dalvik.annotation.optimization.FastNative public void emptyJniMethod0_Fast();
-    method public void emptyJniMethod6(int, int, int, int, int, int);
-    method public void emptyJniMethod6L(String, String[], int[][], Object, Object[], Object[][][][]);
-    method @dalvik.annotation.optimization.FastNative public void emptyJniMethod6L_Fast(String, String[], int[][], Object, Object[], Object[][][][]);
-    method @dalvik.annotation.optimization.FastNative public void emptyJniMethod6_Fast(int, int, int, int, int, int);
-    method public static void emptyJniStaticMethod0();
-    method @dalvik.annotation.optimization.CriticalNative public static void emptyJniStaticMethod0_Critical();
-    method @dalvik.annotation.optimization.FastNative public static void emptyJniStaticMethod0_Fast();
-    method public static void emptyJniStaticMethod6(int, int, int, int, int, int);
-    method public static void emptyJniStaticMethod6L(String, String[], int[][], Object, Object[], Object[][][][]);
-    method @dalvik.annotation.optimization.FastNative public static void emptyJniStaticMethod6L_Fast(String, String[], int[][], Object, Object[], Object[][][][]);
-    method @dalvik.annotation.optimization.CriticalNative public static void emptyJniStaticMethod6_Critical(int, int, int, int, int, int);
-    method @dalvik.annotation.optimization.FastNative public static void emptyJniStaticMethod6_Fast(int, int, int, int, int, int);
-    method public static void emptyJniStaticSynchronizedMethod0();
-    method public void emptyJniSynchronizedMethod0();
-  }
-
-}
-
 package org.apache.harmony.dalvik.ddmc {
 
   public class Chunk {

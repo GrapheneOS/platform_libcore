@@ -50,7 +50,6 @@ filegroup {
         "dalvik/src/main/java/dalvik/system/TemporaryDirectory.java",
         "dalvik/src/main/java/dalvik/system/VMDebug.java",
         "dalvik/src/main/java/dalvik/system/ZygoteHooks.java",
-        "dalvik/src/main/java/org/apache/harmony/dalvik/NativeTestTarget.java",
         "dalvik/src/main/java/org/apache/harmony/dalvik/ddmc/Chunk.java",
         "dalvik/src/main/java/org/apache/harmony/dalvik/ddmc/ChunkHandler.java",
         "dalvik/src/main/java/org/apache/harmony/dalvik/ddmc/DdmServer.java",

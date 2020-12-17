@@ -60,7 +60,6 @@ cc_library_shared {
     ],
     srcs: [
         ":luni_native_srcs",
-        "dalvik/src/main/native/org_apache_harmony_dalvik_NativeTestTarget.cpp",
     ],
     shared_libs: [
         "libandroidio",
