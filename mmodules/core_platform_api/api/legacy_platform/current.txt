@@ -841,10 +841,6 @@ package java.util {
     method public java.util.Map.Entry<K,V> eldest();
   }
 
-  public final class Locale implements java.lang.Cloneable java.io.Serializable {
-    method public static String adjustLanguageCode(String);
-  }
-
 }
 
 package java.util.concurrent {
@@ -1006,10 +1002,6 @@ package libcore.net.event {
 }
 
 package libcore.util {
-
-  public final class ArrayUtils {
-    method public static void throwsIfOutOfBounds(int, int, int);
-  }
 
   public final class EmptyArray {
     field public static final boolean[] BOOLEAN;
@@ -1225,14 +1217,6 @@ package sun.security.x509 {
   public class AlgorithmId implements java.io.Serializable {
     ctor public AlgorithmId(sun.security.util.ObjectIdentifier);
     method public String getName();
-  }
-
-}
-
-package sun.util.locale {
-
-  public class LanguageTag {
-    method public static boolean isLanguage(String);
   }
 
 }

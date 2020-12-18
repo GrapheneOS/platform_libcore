@@ -36,6 +36,11 @@ public class HexEncoding {
 
     /**
      * Encodes the provided byte as a two-digit hexadecimal String value.
+     *
+     * @param  b byte to encode
+     * @param  upperCase {@code true} to use uppercase letters, {@code false}
+     *         for lowercase
+     * @return the encoded string
      */
     @libcore.api.CorePlatformApi
     public static String encodeToString(byte b, boolean upperCase) {
@@ -48,6 +53,9 @@ public class HexEncoding {
 
     /**
      * Encodes the provided data as a sequence of hexadecimal characters.
+     *
+     * @param  data byte array to encode
+     * @return the encoded data, using uppercase letters
      */
     @libcore.api.CorePlatformApi
     public static char[] encode(byte[] data) {
@@ -56,6 +64,11 @@ public class HexEncoding {
 
     /**
      * Encodes the provided data as a sequence of hexadecimal characters.
+     *
+     * @param  data byte array to encode
+     * @param  upperCase {@code true} to use uppercase letters, {@code false}
+     *         for lowercase
+     * @return the encoded data
      */
     @libcore.api.CorePlatformApi
     public static char[] encode(byte[] data, boolean upperCase) {
@@ -64,6 +77,11 @@ public class HexEncoding {
 
     /**
      * Encodes the provided data as a sequence of hexadecimal characters.
+     *
+     * @param  data byte array containing the data to encode
+     * @param  offset offset of the data to encode in the {@code data} array
+     * @param  len length of the data to encode in the {@code data} array
+     * @return the encoded data, using uppercase letters
      */
     @libcore.api.CorePlatformApi
     public static char[] encode(byte[] data, int offset, int len) {
@@ -88,6 +106,9 @@ public class HexEncoding {
 
     /**
      * Encodes the provided data as a sequence of hexadecimal characters.
+     *
+     * @param  data byte array to encode
+     * @return the encoded data, using uppercase letters
      */
     @libcore.api.CorePlatformApi
     public static String encodeToString(byte[] data) {
@@ -96,6 +117,11 @@ public class HexEncoding {
 
     /**
      * Encodes the provided data as a sequence of hexadecimal characters.
+     *
+     * @param  data byte array to encode.
+     * @param  upperCase {@code true} to use uppercase letters, {@code false}
+     *         for lowercase
+     * @return the encoded data
      */
     @libcore.api.CorePlatformApi
     public static String encodeToString(byte[] data, boolean upperCase) {
@@ -103,10 +129,13 @@ public class HexEncoding {
     }
 
     /**
-     * Decodes the provided hexadecimal string into a byte array.  Odd-length inputs
-     * are not allowed.
+     * Decodes the provided hexadecimal sequence. Odd-length inputs are not
+     * allowed.
      *
-     * Throws an {@code IllegalArgumentException} if the input is malformed.
+     * @param  encoded string of hexadecimal characters to decode. Letters
+     *         can be either uppercase or lowercase.
+     * @return the decoded data
+     * @throws IllegalArgumentException if the input is malformed
      */
     @libcore.api.CorePlatformApi
     public static byte[] decode(String encoded) throws IllegalArgumentException {
@@ -114,11 +143,15 @@ public class HexEncoding {
     }
 
     /**
-     * Decodes the provided hexadecimal string into a byte array. If {@code allowSingleChar}
-     * is {@code true} odd-length inputs are allowed and the first character is interpreted
-     * as the lower bits of the first result byte.
+     * Decodes the provided hexadecimal sequence.
      *
-     * Throws an {@code IllegalArgumentException} if the input is malformed.
+     * @param  encoded string of hexadecimal characters to decode. Letters
+     *         can be either uppercase or lowercase.
+     * @param  allowSingleChar If {@code true} odd-length inputs are allowed and
+     *         the first character is interpreted as the lower bits of the first
+     *         result byte. If {@code false} odd-length inputs are not allowed.
+     * @return the decoded data
+     * @throws IllegalArgumentException if the input is malformed
      */
     @libcore.api.CorePlatformApi
     public static byte[] decode(String encoded, boolean allowSingleChar)
@@ -127,10 +160,13 @@ public class HexEncoding {
     }
 
     /**
-     * Decodes the provided hexadecimal string into a byte array.  Odd-length inputs
-     * are not allowed.
+     * Decodes the provided hexadecimal sequence. Odd-length inputs are not
+     * allowed.
      *
-     * Throws an {@code IllegalArgumentException} if the input is malformed.
+     * @param  encoded char array of hexadecimal characters to decode. Letters
+     *         can be either uppercase or lowercase.
+     * @return the decoded data
+     * @throws IllegalArgumentException if the input is malformed
      */
     @libcore.api.CorePlatformApi
     public static byte[] decode(char[] encoded) throws IllegalArgumentException {
@@ -138,11 +174,15 @@ public class HexEncoding {
     }
 
     /**
-     * Decodes the provided hexadecimal string into a byte array. If {@code allowSingleChar}
-     * is {@code true} odd-length inputs are allowed and the first character is interpreted
-     * as the lower bits of the first result byte.
+     * Decodes the provided hexadecimal sequence.
      *
-     * Throws an {@code IllegalArgumentException} if the input is malformed.
+     * @param  encoded char array of hexadecimal characters to decode. Letters
+     *         can be either uppercase or lowercase.
+     * @param  allowSingleChar If {@code true} odd-length inputs are allowed and
+     *         the first character is interpreted as the lower bits of the first
+     *         result byte. If {@code false} odd-length inputs are not allowed.
+     * @return the decoded data
+     * @throws IllegalArgumentException if the input is malformed
      */
     @libcore.api.CorePlatformApi
     public static byte[] decode(char[] encoded, boolean allowSingleChar)
