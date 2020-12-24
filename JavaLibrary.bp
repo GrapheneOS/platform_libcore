@@ -844,6 +844,7 @@ java_sdk_library {
     api_only: true,
     droiddoc_options: [
         rewrite_openjdk_doc_args,
+        "--force-convert-to-warning-nullability-annotations +*:-android.*:+android.icu.*:-dalvik.* ",
     ],
 
     // Emit nullability annotations from the source to the stub files.
@@ -869,6 +870,9 @@ java_sdk_library {
 
     // Don't copy any output files to the dist.
     no_dist: true,
+
+    // TODO(b/173606718): Remove this once API files are in place.
+    unsafe_ignore_missing_latest_api: true,
 }
 
 // Used when compiling higher-level code against art.module.public.api.stubs.
