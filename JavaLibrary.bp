@@ -824,6 +824,7 @@ java_sdk_library {
     visibility: [
         "//art/build/sdk",
         "//frameworks/base",
+        "//frameworks/base/api",
     ],
     srcs: [
         ":core_oj_api_files",
@@ -868,12 +869,12 @@ java_sdk_library {
     patch_module: "java.base",
     sdk_version: "none",
     system_modules: "java-current-stubs-system-modules",
-
-    // Don't copy any output files to the dist.
-    no_dist: true,
-
-    // TODO(b/173606718): Remove this once API files are in place.
-    unsafe_ignore_missing_latest_api: true,
+    // The base name for the artifacts that are automatically published to the
+    // dist and which end up in one of the sub-directories of prebuilts/sdk.
+    // As long as this matches the name of the artifacts in prebuilts/sdk then
+    // the API will be checked for compatibility against the latest released
+    // version of the API.
+    dist_stem: "art",
 }
 
 // Used when compiling higher-level code against art.module.public.api.stubs.
