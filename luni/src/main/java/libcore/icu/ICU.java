@@ -22,6 +22,7 @@ import android.icu.util.Currency;
 import android.icu.util.IllformedLocaleException;
 import android.icu.util.ULocale;
 
+import com.android.icu.util.ExtendedCalendar;
 import com.android.icu.util.LocaleNative;
 
 import java.util.Collections;
@@ -555,4 +556,14 @@ public final class ICU {
    * Returns a locale name, not a BCP-47 language tag. e.g. en_US not en-US.
    */
   public static native String getDefaultLocale();
+
+
+  /**
+   * @param calendarType LDML-defined legacy calendar type. See keyTypeData.txt in ICU.
+   */
+  public static ExtendedCalendar getExtendedCalendar(Locale locale, String calendarType) {
+      ULocale uLocale = ULocale.forLocale(locale)
+              .setKeywordValue("calendar", calendarType);
+      return ExtendedCalendar.getInstance(uLocale);
+  }
 }

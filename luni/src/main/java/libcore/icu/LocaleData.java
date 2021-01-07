@@ -29,7 +29,8 @@ import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.icu.util.ULocale;
 
-import com.android.icu.text.DecimalFormatSymbolsBridge;
+import com.android.icu.text.ExtendedDecimalFormatSymbols;
+import com.android.icu.util.ExtendedCalendar;
 
 import dalvik.system.VMRuntime;
 
@@ -334,8 +335,8 @@ public final class LocaleData {
         if (ns == null || ns.getRadix() != 10 || ns.isAlgorithmic()) {
             ns = NumberingSystem.LATIN;
         }
-        String patternSeparator =
-            DecimalFormatSymbolsBridge.getLocalizedPatternSeparator(uLocale, ns);
+        String patternSeparator = ExtendedDecimalFormatSymbols.getInstance(uLocale, ns)
+                .getLocalizedPatternSeparator();
 
         if (patternSeparator == null || patternSeparator.isEmpty()) {
             patternSeparator = ";";
@@ -409,24 +410,24 @@ public final class LocaleData {
     }
 
     private void initializeDateTimePatterns(Locale locale) {
-        ULocale uLocale = ULocale.forLocale(locale);
-        String calType = "gregorian";
+        // libcore's java.text supports Gregorian calendar only.
+        ExtendedCalendar extendedCalendar = ICU.getExtendedCalendar(locale, "gregorian");
 
-        fullTimeFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+        fullTimeFormat = extendedCalendar.getDateTimePattern(
             android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.FULL);
-        longTimeFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+        longTimeFormat = extendedCalendar.getDateTimePattern(
             android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.LONG);
-        mediumTimeFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+        mediumTimeFormat = extendedCalendar.getDateTimePattern(
             android.icu.text.DateFormat.NONE, android.icu.text.DateFormat. MEDIUM);
-        shortTimeFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+        shortTimeFormat = extendedCalendar.getDateTimePattern(
             android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.SHORT);
-        fullDateFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+        fullDateFormat = extendedCalendar.getDateTimePattern(
             android.icu.text.DateFormat.FULL, android.icu.text.DateFormat.NONE);
-        longDateFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+        longDateFormat = extendedCalendar.getDateTimePattern(
             android.icu.text.DateFormat.LONG, android.icu.text.DateFormat.NONE);
-        mediumDateFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+        mediumDateFormat = extendedCalendar.getDateTimePattern(
             android.icu.text.DateFormat.MEDIUM, android.icu.text.DateFormat.NONE);
-        shortDateFormat = Calendar.getDateTimeFormatString(uLocale, calType,
+        shortDateFormat = extendedCalendar.getDateTimePattern(
             android.icu.text.DateFormat.SHORT, android.icu.text.DateFormat.NONE);
     }
 }

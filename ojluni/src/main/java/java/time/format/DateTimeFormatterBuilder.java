@@ -77,6 +77,8 @@ import static java.time.temporal.ChronoField.OFFSET_SECONDS;
 import static java.time.temporal.ChronoField.SECOND_OF_MINUTE;
 import static java.time.temporal.ChronoField.YEAR;
 
+import com.android.icu.util.ExtendedCalendar;
+
 import libcore.icu.ICU;
 
 import java.lang.ref.SoftReference;
@@ -216,9 +218,10 @@ public final class DateTimeFormatterBuilder {
         //         .getLocaleResources(locale);
         // String pattern = lr.getJavaTimeDateTimePattern(
         //         convertStyle(timeStyle), convertStyle(dateStyle), chrono.getCalendarType());
-        String pattern = Calendar.getDateTimeFormatString(
-                ULocale.forLocale(locale), chrono.getCalendarType(),
-                convertStyle(dateStyle), convertStyle(timeStyle));
+        ExtendedCalendar extendedCalendar = ICU.getExtendedCalendar(locale,
+                chrono.getCalendarType());
+        String pattern = extendedCalendar.getDateTimePattern(convertStyle(dateStyle),
+                convertStyle(timeStyle));
         // Transform the pattern coming from ICU because DateTimeFormatter does not handle some date
         // symbols, e.g. 'B' / 'b', and thus we use a heuristic algorithm to remove the symbol.
         // See http://b/174804526.

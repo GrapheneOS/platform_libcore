@@ -54,6 +54,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import libcore.icu.LocaleData;
 import android.icu.math.MathContext;
 
+import com.android.icu.text.CompatibleDecimalFormatFactory;
+
 /**
  * <code>DecimalFormat</code> is a concrete subclass of
  * <code>NumberFormat</code> that formats decimal numbers. It has a variety of
@@ -486,10 +488,9 @@ public class DecimalFormat extends NumberFormat {
      * {@link #icuDecimalFormat} in the process. This should only be called from constructors.
      */
     private void initPattern(String pattern) {
-        this.icuDecimalFormat =  new android.icu.text.DecimalFormat(pattern,
-                symbols.getIcuDecimalFormatSymbols());
         // Android-changed: Compatibility mode for j.t.DecimalFormat. http://b/112355520
-        icuDecimalFormat.setParseJavaCompatible(true);
+        this.icuDecimalFormat = CompatibleDecimalFormatFactory.create(pattern,
+                symbols.getIcuDecimalFormatSymbols());
         updateFieldsFromIcu();
     }
 
