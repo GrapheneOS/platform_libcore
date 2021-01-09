@@ -2266,10 +2266,11 @@ package java.lang {
   }
 
   public final class Byte extends java.lang.Number implements java.lang.Comparable<java.lang.Byte> {
-    ctor public Byte(byte);
-    ctor public Byte(@NonNull String) throws java.lang.NumberFormatException;
+    ctor @Deprecated public Byte(byte);
+    ctor @Deprecated public Byte(@NonNull String) throws java.lang.NumberFormatException;
     method public static int compare(byte, byte);
     method public int compareTo(@NonNull Byte);
+    method public static int compareUnsigned(byte, byte);
     method @NonNull public static Byte decode(@NonNull String) throws java.lang.NumberFormatException;
     method public double doubleValue();
     method public float floatValue();
@@ -2934,7 +2935,9 @@ package java.lang {
     method public static void enable();
   }
 
-  @java.lang.annotation.Documented @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME) @java.lang.annotation.Target({java.lang.annotation.ElementType.CONSTRUCTOR, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.LOCAL_VARIABLE, java.lang.annotation.ElementType.METHOD, java.lang.annotation.ElementType.PACKAGE, java.lang.annotation.ElementType.PARAMETER, java.lang.annotation.ElementType.TYPE}) public @interface Deprecated {
+  @Deprecated @java.lang.annotation.Documented @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME) @java.lang.annotation.Target({java.lang.annotation.ElementType.CONSTRUCTOR, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.LOCAL_VARIABLE, java.lang.annotation.ElementType.METHOD, java.lang.annotation.ElementType.PACKAGE, java.lang.annotation.ElementType.PARAMETER, java.lang.annotation.ElementType.TYPE}) public @interface Deprecated {
+    method @Deprecated public abstract boolean forRemoval() default false;
+    method @Deprecated public abstract String since() default "";
   }
 
   public final class Double extends java.lang.Number implements java.lang.Comparable<java.lang.Double> {
@@ -3586,10 +3589,11 @@ package java.lang {
   }
 
   public final class Short extends java.lang.Number implements java.lang.Comparable<java.lang.Short> {
-    ctor public Short(short);
-    ctor public Short(String) throws java.lang.NumberFormatException;
+    ctor @Deprecated public Short(short);
+    ctor @Deprecated public Short(String) throws java.lang.NumberFormatException;
     method public static int compare(short, short);
     method public int compareTo(Short);
+    method public static int compareUnsigned(short, short);
     method public static Short decode(String) throws java.lang.NumberFormatException;
     method public double doubleValue();
     method public float floatValue();

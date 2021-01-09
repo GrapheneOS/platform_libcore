@@ -71,6 +71,8 @@ import static java.text.DateFormatSymbols.*;
 
 // Android-changed: Added supported API level, removed unnecessary <br>
 // Android-changed: Clarified info about X symbol time zone parsing
+// Android-changed: Changed MMMMM to MMMM in month format example (ICU behavior).
+// http://b/147860740
 /**
  * <code>SimpleDateFormat</code> is a concrete class for formatting and
  * parsing dates in a locale-sensitive manner. It allows for formatting
@@ -422,7 +424,7 @@ import static java.text.DateFormatSymbols.*;
  *         <td><code>"K:mm a, z"</code>
  *         <td><code>0:08 PM, PDT</code>
  *     <tr style="background-color: rgb(238, 238, 255);">
- *         <td><code>"yyyyy.MMMMM.dd GGG hh:mm aaa"</code>
+ *         <td><code>"yyyyy.MMMM.dd GGG hh:mm aaa"</code>
  *         <td><code>02001.July.04 AD 12:08 PM</code>
  *     <tr>
  *         <td><code>"EEE, d MMM yyyy HH:mm:ss Z"</code>
