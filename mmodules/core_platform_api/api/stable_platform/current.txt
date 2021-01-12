@@ -35,6 +35,8 @@ package dalvik.system {
   }
 
   public final class VMRuntime {
+    method public static dalvik.system.VMRuntime getRuntime();
+    method public boolean is64Bit();
     field public static final int SDK_VERSION_CUR_DEVELOPMENT = 10000; // 0x2710
   }
 
