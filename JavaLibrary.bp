@@ -223,8 +223,10 @@ java_library {
     name: "core-oj",
     visibility: [
         "//art/build/apex",
+        "//art/build/sdk",
         "//external/wycheproof",
         "//libcore/benchmarks",
+        "//packages/modules/ArtPrebuilt",
     ],
     apex_available: [
         "com.android.art",
@@ -274,6 +276,7 @@ java_library {
         "//external/wycheproof",
         "//libcore/benchmarks",
         "//frameworks/layoutlib",
+        "//packages/modules/ArtPrebuilt",
     ],
     apex_available: [
         "com.android.art",

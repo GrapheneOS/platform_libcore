@@ -49,6 +49,7 @@ public final class ICU {
   private static Locale[] availableLocalesCache;
 
   private static String[] isoCountries;
+  private static Set<String> isoCountriesSet;
 
   private static String[] isoLanguages;
 
@@ -92,11 +93,32 @@ public final class ICU {
    * Returns an array of two-letter ISO 3166 country codes, either from ICU or our cache.
    */
   public static String[] getISOCountries() {
+    return getISOCountriesInternal().clone();
+  }
+
+  /**
+   * Returns true if the string is a 2-letter ISO 3166 country code.
+   */
+  public static boolean isIsoCountry(String country) {
+    if (isoCountriesSet == null) {
+      String[] isoCountries = getISOCountriesInternal();
+      Set<String> newSet = new HashSet<>(isoCountries.length);
+      for (String isoCountry : isoCountries) {
+        newSet.add(isoCountry);
+      }
+      isoCountriesSet = newSet;
+    }
+    return country != null && isoCountriesSet.contains(country);
+  }
+
+  private static String[] getISOCountriesInternal() {
     if (isoCountries == null) {
       isoCountries = getISOCountriesNative();
     }
-    return isoCountries.clone();
+    return isoCountries;
   }
+
+
 
   private static final int IDX_LANGUAGE = 0;
   private static final int IDX_SCRIPT = 1;
