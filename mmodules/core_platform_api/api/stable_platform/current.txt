@@ -64,6 +64,17 @@ package libcore.content.type {
 
 }
 
+package libcore.io {
+
+  public final class Streams {
+    method public static int copy(java.io.InputStream, java.io.OutputStream) throws java.io.IOException;
+    method public static byte[] readFully(java.io.InputStream) throws java.io.IOException;
+    method public static String readFully(java.io.Reader) throws java.io.IOException;
+    method public static byte[] readFullyNoClose(java.io.InputStream) throws java.io.IOException;
+  }
+
+}
+
 package libcore.util {
 
   public class HexEncoding {
