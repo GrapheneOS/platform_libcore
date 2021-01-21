@@ -3274,8 +3274,10 @@ package java.lang {
     method public static double expm1(double);
     method public static double floor(double);
     method public static int floorDiv(int, int);
+    method public static long floorDiv(long, int);
     method public static long floorDiv(long, long);
     method public static int floorMod(int, int);
+    method public static int floorMod(long, int);
     method public static long floorMod(long, long);
     method public static int getExponent(float);
     method public static int getExponent(double);
@@ -3294,7 +3296,10 @@ package java.lang {
     method public static float min(float, float);
     method public static double min(double, double);
     method public static int multiplyExact(int, int);
+    method public static long multiplyExact(long, int);
     method public static long multiplyExact(long, long);
+    method public static long multiplyFull(int, int);
+    method public static long multiplyHigh(long, long);
     method public static int negateExact(int);
     method public static long negateExact(long);
     method public static double nextAfter(double, double);
@@ -3652,8 +3657,10 @@ package java.lang {
     method public static double expm1(double);
     method public static double floor(double);
     method public static int floorDiv(int, int);
+    method public static long floorDiv(long, int);
     method public static long floorDiv(long, long);
     method public static int floorMod(int, int);
+    method public static int floorMod(long, int);
     method public static long floorMod(long, long);
     method public static int getExponent(float);
     method public static int getExponent(double);
@@ -3670,7 +3677,10 @@ package java.lang {
     method public static float min(float, float);
     method public static double min(double, double);
     method public static int multiplyExact(int, int);
+    method public static long multiplyExact(long, int);
     method public static long multiplyExact(long, long);
+    method public static long multiplyFull(int, int);
+    method public static long multiplyHigh(long, long);
     method public static double nextAfter(double, double);
     method public static float nextAfter(float, double);
     method public static double nextDown(double);
@@ -10809,6 +10819,7 @@ package java.time {
     method public static java.time.LocalTime of(int, int);
     method public static java.time.LocalTime of(int, int, int);
     method public static java.time.LocalTime of(int, int, int, int);
+    method public static java.time.LocalTime ofInstant(java.time.Instant, java.time.ZoneId);
     method public static java.time.LocalTime ofNanoOfDay(long);
     method public static java.time.LocalTime ofSecondOfDay(long);
     method public static java.time.LocalTime parse(CharSequence);
@@ -10819,6 +10830,7 @@ package java.time {
     method public java.time.LocalTime plusMinutes(long);
     method public java.time.LocalTime plusNanos(long);
     method public java.time.LocalTime plusSeconds(long);
+    method public long toEpochSecond(java.time.LocalDate, java.time.ZoneOffset);
     method public long toNanoOfDay();
     method public int toSecondOfDay();
     method public java.time.LocalTime truncatedTo(java.time.temporal.TemporalUnit);
@@ -13633,6 +13645,7 @@ package java.util {
   }
 
   public interface Set<E> extends java.util.Collection<E> {
+    method public static <E> java.util.Set<E> copyOf(java.util.Collection<? extends E>);
     method @NonNull public static <E> java.util.Set<E> of();
     method @NonNull public static <E> java.util.Set<E> of(@NonNull E);
     method @NonNull public static <E> java.util.Set<E> of(@NonNull E, @NonNull E);

@@ -700,4 +700,30 @@ public interface Set<E> extends Collection<E> {
                 return new ImmutableCollections.SetN<>(elements);
         }
     }
+
+    /**
+     * Returns an <a href="#unmodifiable">unmodifiable Set</a> containing the elements
+     * of the given Collection. The given Collection must not be null, and it must not
+     * contain any null elements. If the given Collection contains duplicate elements,
+     * an arbitrary element of the duplicates is preserved. If the given Collection is
+     * subsequently modified, the returned Set will not reflect such modifications.
+     *
+     * @implNote
+     * If the given Collection is an <a href="#unmodifiable">unmodifiable Set</a>,
+     * calling copyOf will generally not create a copy.
+     *
+     * @param <E> the {@code Set}'s element type
+     * @param coll a {@code Collection} from which elements are drawn, must be non-null
+     * @return a {@code Set} containing the elements of the given {@code Collection}
+     * @throws NullPointerException if coll is null, or if it contains any nulls
+     * @since 10
+     */
+    @SuppressWarnings("unchecked")
+    static <E> Set<E> copyOf(Collection<? extends E> coll) {
+        if (coll instanceof ImmutableCollections.AbstractImmutableSet) {
+            return (Set<E>)coll;
+        } else {
+            return (Set<E>)Set.of(new HashSet<>(coll).toArray());
+        }
+    }
 }
