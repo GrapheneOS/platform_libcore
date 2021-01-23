@@ -560,6 +560,7 @@ public final class OsConstants {
     public static final int SOCK_SEQPACKET = placeholder();
     public static final int SOCK_STREAM = placeholder();
     public static final int SOL_SOCKET = placeholder();
+    public static final int SOL_UDP = placeholder();
     public static final int SO_BINDTODEVICE = placeholder();
     public static final int SO_BROADCAST = placeholder();
     public static final int SO_DEBUG = placeholder();
@@ -632,6 +633,8 @@ public final class OsConstants {
     public static final int S_IXUSR = placeholder();
     public static final int TCP_NODELAY = placeholder();
     public static final int TCP_USER_TIMEOUT = placeholder();
+    public static final int UDP_GRO = placeholder();
+    public static final int UDP_SEGMENT = placeholder();
     /** @hide */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi

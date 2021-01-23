@@ -52,6 +52,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
@@ -1041,6 +1043,50 @@ public class OsTest extends TestCase {
             // a subsequent failure on the same run.
             assertTrue("deletedTarget = " + deletedTarget + ", deletedLink =" + deletedLink,
                     deletedTarget && deletedLink);
+        }
+    }
+
+    private double getKernelVersion() {
+        // Example:
+        // 4.9.29-g958411d --> 4.9
+        String release = Os.uname().release;
+        Matcher m = Pattern.compile("^(\\d+)\\.(\\d+)").matcher(release);
+        assertTrue("No pattern in release string: " + release, m.find());
+        double version = Double.parseDouble(m.group(1) + "." + m.group(2));
+        return version;
+    }
+
+    public void test_socket_udpGro_setAndGet() throws Exception {
+        // UDP GRO not required to be enabled on kernels prior to 5.4
+        double kernelVersion = getKernelVersion();
+        if (kernelVersion < 5.4) return;
+
+        final FileDescriptor fd = Os.socket(AF_INET6, SOCK_DGRAM, 0);
+        try {
+            assertEquals(0, Os.getsockoptInt(fd, IPPROTO_UDP, UDP_GRO));
+
+            final int setValue = 1;
+            Os.setsockoptInt(fd, IPPROTO_UDP, UDP_GRO, setValue);
+            assertEquals(setValue, Os.getsockoptInt(fd, IPPROTO_UDP, UDP_GRO));
+        } finally {
+            Os.close(fd);
+        }
+    }
+
+    public void test_socket_udpGso_setAndGet() throws Exception {
+        // UDP GSO not required to be enabled on kernels prior to 4.19.
+        double kernelVersion = getKernelVersion();
+        if (kernelVersion < 4.19) return;
+
+        final FileDescriptor fd = Os.socket(AF_INET, SOCK_DGRAM, 0);
+        try {
+            assertEquals(0, Os.getsockoptInt(fd, IPPROTO_UDP, UDP_SEGMENT));
+
+            final int setValue = 1452;
+            Os.setsockoptInt(fd, IPPROTO_UDP, UDP_SEGMENT, setValue);
+            assertEquals(setValue, Os.getsockoptInt(fd, IPPROTO_UDP, UDP_SEGMENT));
+        } finally {
+            Os.close(fd);
         }
     }
 

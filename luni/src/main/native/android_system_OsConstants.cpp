@@ -522,6 +522,9 @@ static void OsConstants_initConstants(JNIEnv* env, jclass c) {
     initConstant(env, c, "SOCK_SEQPACKET", SOCK_SEQPACKET);
     initConstant(env, c, "SOCK_STREAM", SOCK_STREAM);
     initConstant(env, c, "SOL_SOCKET", SOL_SOCKET);
+#if defined(SOL_UDP)
+    initConstant(env, c, "SOL_UDP", SOL_UDP);
+#endif
 #if defined(SO_BINDTODEVICE)
     initConstant(env, c, "SO_BINDTODEVICE", SO_BINDTODEVICE);
 #endif
@@ -598,6 +601,12 @@ static void OsConstants_initConstants(JNIEnv* env, jclass c) {
     initConstant(env, c, "UDP_ENCAP", UDP_ENCAP);
     initConstant(env, c, "UDP_ENCAP_ESPINUDP_NON_IKE", UDP_ENCAP_ESPINUDP_NON_IKE);
     initConstant(env, c, "UDP_ENCAP_ESPINUDP", UDP_ENCAP_ESPINUDP);
+#if defined(UDP_GRO)
+    initConstant(env, c, "UDP_GRO", UDP_GRO);
+#endif
+#if defined(UDP_SEGMENT)
+    initConstant(env, c, "UDP_SEGMENT", UDP_SEGMENT);
+#endif
     // UNIX_PATH_MAX is mentioned in some versions of unix(7), but not actually declared.
     initConstant(env, c, "UNIX_PATH_MAX", sizeof(sockaddr_un::sun_path));
     initConstant(env, c, "WCONTINUED", WCONTINUED);
