@@ -250,6 +250,7 @@ package android.system {
     field public static final int ENOLINK;
     field public static final int ENOMEM;
     field public static final int ENOMSG;
+    field public static final int ENONET;
     field public static final int ENOPROTOOPT;
     field public static final int ENOSPC;
     field public static final int ENOSR;
@@ -477,6 +478,7 @@ package android.system {
     field public static final int SOCK_SEQPACKET;
     field public static final int SOCK_STREAM;
     field public static final int SOL_SOCKET;
+    field public static final int SOL_UDP;
     field public static final int SO_BINDTODEVICE;
     field public static final int SO_BROADCAST;
     field public static final int SO_DEBUG;
@@ -532,6 +534,8 @@ package android.system {
     field public static final int S_IXUSR;
     field public static final int TCP_NODELAY;
     field public static final int TCP_USER_TIMEOUT;
+    field public static final int UDP_GRO;
+    field public static final int UDP_SEGMENT;
     field public static final int WCONTINUED;
     field public static final int WEXITED;
     field public static final int WNOHANG;
@@ -3274,8 +3278,10 @@ package java.lang {
     method public static double expm1(double);
     method public static double floor(double);
     method public static int floorDiv(int, int);
+    method public static long floorDiv(long, int);
     method public static long floorDiv(long, long);
     method public static int floorMod(int, int);
+    method public static int floorMod(long, int);
     method public static long floorMod(long, long);
     method public static int getExponent(float);
     method public static int getExponent(double);
@@ -3294,7 +3300,10 @@ package java.lang {
     method public static float min(float, float);
     method public static double min(double, double);
     method public static int multiplyExact(int, int);
+    method public static long multiplyExact(long, int);
     method public static long multiplyExact(long, long);
+    method public static long multiplyFull(int, int);
+    method public static long multiplyHigh(long, long);
     method public static int negateExact(int);
     method public static long negateExact(long);
     method public static double nextAfter(double, double);
@@ -3652,8 +3661,10 @@ package java.lang {
     method public static double expm1(double);
     method public static double floor(double);
     method public static int floorDiv(int, int);
+    method public static long floorDiv(long, int);
     method public static long floorDiv(long, long);
     method public static int floorMod(int, int);
+    method public static int floorMod(long, int);
     method public static long floorMod(long, long);
     method public static int getExponent(float);
     method public static int getExponent(double);
@@ -3670,7 +3681,10 @@ package java.lang {
     method public static float min(float, float);
     method public static double min(double, double);
     method public static int multiplyExact(int, int);
+    method public static long multiplyExact(long, int);
     method public static long multiplyExact(long, long);
+    method public static long multiplyFull(int, int);
+    method public static long multiplyHigh(long, long);
     method public static double nextAfter(double, double);
     method public static float nextAfter(float, double);
     method public static double nextDown(double);
@@ -10578,6 +10592,7 @@ package java.time {
     method public static java.time.Duration between(java.time.temporal.Temporal, java.time.temporal.Temporal);
     method public int compareTo(java.time.Duration);
     method public java.time.Duration dividedBy(long);
+    method public long dividedBy(java.time.Duration);
     method public static java.time.Duration from(java.time.temporal.TemporalAmount);
     method public long get(java.time.temporal.TemporalUnit);
     method public int getNano();
@@ -10614,10 +10629,18 @@ package java.time {
     method public java.time.Duration plusSeconds(long);
     method public java.time.temporal.Temporal subtractFrom(java.time.temporal.Temporal);
     method public long toDays();
+    method public long toDaysPart();
     method public long toHours();
+    method public int toHoursPart();
     method public long toMillis();
+    method public int toMillisPart();
     method public long toMinutes();
+    method public int toMinutesPart();
     method public long toNanos();
+    method public int toNanosPart();
+    method public long toSeconds();
+    method public int toSecondsPart();
+    method public java.time.Duration truncatedTo(java.time.temporal.TemporalUnit);
     method public java.time.Duration withNanos(int);
     method public java.time.Duration withSeconds(long);
     field public static final java.time.Duration ZERO;
@@ -10809,6 +10832,7 @@ package java.time {
     method public static java.time.LocalTime of(int, int);
     method public static java.time.LocalTime of(int, int, int);
     method public static java.time.LocalTime of(int, int, int, int);
+    method public static java.time.LocalTime ofInstant(java.time.Instant, java.time.ZoneId);
     method public static java.time.LocalTime ofNanoOfDay(long);
     method public static java.time.LocalTime ofSecondOfDay(long);
     method public static java.time.LocalTime parse(CharSequence);
@@ -10819,6 +10843,7 @@ package java.time {
     method public java.time.LocalTime plusMinutes(long);
     method public java.time.LocalTime plusNanos(long);
     method public java.time.LocalTime plusSeconds(long);
+    method public long toEpochSecond(java.time.LocalDate, java.time.ZoneOffset);
     method public long toNanoOfDay();
     method public int toSecondOfDay();
     method public java.time.LocalTime truncatedTo(java.time.temporal.TemporalUnit);
@@ -13211,6 +13236,7 @@ package java.util {
     method @Nullable public default V computeIfPresent(K, @NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
     method public boolean containsKey(@Nullable Object);
     method public boolean containsValue(@Nullable Object);
+    method public static <K, V> java.util.Map<K,V> copyOf(java.util.Map<? extends K,? extends V>);
     method @NonNull public static <K, V> java.util.Map.Entry<K,V> entry(@NonNull K, @NonNull V);
     method @NonNull public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
     method public boolean equals(@Nullable Object);
@@ -13633,6 +13659,7 @@ package java.util {
   }
 
   public interface Set<E> extends java.util.Collection<E> {
+    method public static <E> java.util.Set<E> copyOf(java.util.Collection<? extends E>);
     method @NonNull public static <E> java.util.Set<E> of();
     method @NonNull public static <E> java.util.Set<E> of(@NonNull E);
     method @NonNull public static <E> java.util.Set<E> of(@NonNull E, @NonNull E);

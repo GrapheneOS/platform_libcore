@@ -42,6 +42,8 @@ package java.util;
 import android.icu.text.TimeZoneNames;
 import com.android.i18n.timezone.ZoneInfoData;
 import com.android.i18n.timezone.ZoneInfoDb;
+import com.android.icu.util.ExtendedTimeZone;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.ZoneId;
@@ -745,7 +747,7 @@ abstract public class TimeZone implements Serializable, Cloneable {
         }
         defaultTimeZone = timeZone != null ? (TimeZone) timeZone.clone() : null;
         // Android-changed: notify ICU4J of changed default TimeZone.
-        android.icu.util.TimeZone.setICUDefault(null);
+        ExtendedTimeZone.clearDefaultTimeZone();
     }
 
     /**

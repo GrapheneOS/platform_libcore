@@ -427,10 +427,13 @@ public class SignerInfo implements DerEncoder {
             }
 
             X509Certificate cert = getCertificate(block);
-            PublicKey key = cert.getPublicKey();
+            // Android-changed: Null pointer fix from later upstream revision
+            // PublicKey key = cert.getPublicKey();
             if (cert == null) {
                 return null;
             }
+            // Android-changed: Null pointer fix from later upstream revision
+            PublicKey key = cert.getPublicKey();
 
             // check if the public key is restricted
             if (!JAR_DISABLED_CHECK.permits(SIG_PRIMITIVE_SET, key)) {

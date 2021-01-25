@@ -35,6 +35,8 @@ package dalvik.system {
   }
 
   public final class VMRuntime {
+    method public static dalvik.system.VMRuntime getRuntime();
+    method public boolean is64Bit();
     field public static final int SDK_VERSION_CUR_DEVELOPMENT = 10000; // 0x2710
   }
 
@@ -58,6 +60,34 @@ package libcore.content.type {
   public static final class MimeMap.Builder {
     method public libcore.content.type.MimeMap build();
     method public libcore.content.type.MimeMap.Builder put(@NonNull String, @NonNull java.util.List<java.lang.String>);
+  }
+
+}
+
+package libcore.io {
+
+  public final class Streams {
+    method public static int copy(java.io.InputStream, java.io.OutputStream) throws java.io.IOException;
+    method public static byte[] readFully(java.io.InputStream) throws java.io.IOException;
+    method public static String readFully(java.io.Reader) throws java.io.IOException;
+    method public static byte[] readFullyNoClose(java.io.InputStream) throws java.io.IOException;
+  }
+
+}
+
+package libcore.util {
+
+  public class HexEncoding {
+    method public static byte[] decode(String) throws java.lang.IllegalArgumentException;
+    method public static byte[] decode(String, boolean) throws java.lang.IllegalArgumentException;
+    method public static byte[] decode(char[]) throws java.lang.IllegalArgumentException;
+    method public static byte[] decode(char[], boolean) throws java.lang.IllegalArgumentException;
+    method public static char[] encode(byte[]);
+    method public static char[] encode(byte[], boolean);
+    method public static char[] encode(byte[], int, int);
+    method public static String encodeToString(byte, boolean);
+    method public static String encodeToString(byte[]);
+    method public static String encodeToString(byte[], boolean);
   }
 
 }

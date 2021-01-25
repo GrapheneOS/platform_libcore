@@ -29,7 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import libcore.util.ArrayUtils;
 
 /** @hide */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class Streams {
     private static AtomicReference<byte[]> skipBuffer = new AtomicReference<byte[]>();
 
@@ -98,10 +98,14 @@ public final class Streams {
     }
 
     /**
-     * Returns a byte[] containing the remainder of 'in', closing it when done.
+     * Returns a byte[] containing the remainder of {@code in} stream and
+     * closes it. Also see {@link #readFullyNoClose(InputStream)}.
+     *
+     * @return remaining bytes in {@code in} stream.
+     * @throws IOException thrown by {@link InputStream#read(byte[])}.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static byte[] readFully(InputStream in) throws IOException {
         try {
             return readFullyNoClose(in);
@@ -111,9 +115,13 @@ public final class Streams {
     }
 
     /**
-     * Returns a byte[] containing the remainder of 'in'.
+     * Returns a byte[] containing the remainder of {@code in} stream, without
+     * closing it.
+     *
+     * @return remaining bytes in {@code in} stream.
+     * @throws IOException thrown by {@link InputStream#read(byte[])}.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static byte[] readFullyNoClose(InputStream in) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];
@@ -125,9 +133,13 @@ public final class Streams {
     }
 
     /**
-     * Returns the remainder of 'reader' as a string, closing it when done.
+     * Reads the remainder of {@code reader} as a string, closing it when done.
+     *
+     * @param reader {@link Reader} instance.
+     * @return remainder of {@code reader} as {@link String}.
+     * @throws IOException thrown by {@link Reader#read(java.nio.CharBuffer)}.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static String readFully(Reader reader) throws IOException {
         try {
             StringWriter writer = new StringWriter();
@@ -189,11 +201,15 @@ public final class Streams {
     }
 
     /**
-     * Copies all of the bytes from {@code in} to {@code out}. Neither stream is closed.
-     * Returns the total number of bytes transferred.
+     * Copies all of the bytes from {@code in} to {@code out}. Neither stream is
+     * closed.
+     *
+     * @return the total number of bytes transferred.
+     * @throws IOException reading from {@link InputStream} or writing to
+     * {@link OutputStream}.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int copy(InputStream in, OutputStream out) throws IOException {
         int total = 0;
         byte[] buffer = new byte[8192];

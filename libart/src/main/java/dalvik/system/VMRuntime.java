@@ -22,15 +22,16 @@ import android.compat.annotation.Disabled;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import dalvik.annotation.compat.VersionCodes;
+import dalvik.annotation.optimization.CriticalNative;
+import dalvik.annotation.optimization.FastNative;
+
+import libcore.api.CorePlatformApi;
 
 import java.lang.ref.FinalizerReference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-
-import dalvik.annotation.optimization.CriticalNative;
-import dalvik.annotation.optimization.FastNative;
 
 /**
  * Provides an interface to VM-global, Dalvik-specific features.
@@ -203,13 +204,11 @@ public final class VMRuntime {
     }
 
     /**
-     * Returns the object that represents the VM instance's Dalvik-specific
-     * runtime environment.
-     *
+     * Returns the object that represents the current runtime.
      * @return the runtime object
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public static VMRuntime getRuntime() {
         return THE_ONE;
@@ -254,7 +253,7 @@ public final class VMRuntime {
      * Returns whether the VM is running in 64-bit mode.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @FastNative
     public native boolean is64Bit();
 
