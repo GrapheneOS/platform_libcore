@@ -250,6 +250,7 @@ package android.system {
     field public static final int ENOLINK;
     field public static final int ENOMEM;
     field public static final int ENOMSG;
+    field public static final int ENONET;
     field public static final int ENOPROTOOPT;
     field public static final int ENOSPC;
     field public static final int ENOSR;

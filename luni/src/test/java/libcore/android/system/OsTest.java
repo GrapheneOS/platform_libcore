@@ -1046,37 +1046,37 @@ public class OsTest extends TestCase {
         }
     }
 
-    private double getKernelVersion() {
+    private int[] getKernelVersion() throws Exception {
         // Example:
         // 4.9.29-g958411d --> 4.9
         String release = Os.uname().release;
         Matcher m = Pattern.compile("^(\\d+)\\.(\\d+)").matcher(release);
         assertTrue("No pattern in release string: " + release, m.find());
-        double version = Double.parseDouble(m.group(1) + "." + m.group(2));
-        return version;
+        return new int[]{ Integer.parseInt(m.group(1)), Integer.parseInt(m.group(2)) };
+    }
+
+    private boolean kernelIsAtLeast(int major, int minor) throws Exception {
+        int[] version = getKernelVersion();
+        return version[0] > major || (version[0] == major && version[1] >= minor);
     }
 
     public void test_socket_udpGro_setAndGet() throws Exception {
         // UDP GRO not required to be enabled on kernels prior to 5.4
-        double kernelVersion = getKernelVersion();
-        if (kernelVersion < 5.4) return;
+        if (!kernelIsAtLeast(5, 4)) return;
 
         final FileDescriptor fd = Os.socket(AF_INET6, SOCK_DGRAM, 0);
         try {
-            assertEquals(0, Os.getsockoptInt(fd, IPPROTO_UDP, UDP_GRO));
-
             final int setValue = 1;
             Os.setsockoptInt(fd, IPPROTO_UDP, UDP_GRO, setValue);
-            assertEquals(setValue, Os.getsockoptInt(fd, IPPROTO_UDP, UDP_GRO));
+            // getsockopt(IPPROTO_UDP, UDP_GRO) is not implemented.
         } finally {
             Os.close(fd);
         }
     }
 
-    public void test_socket_udpGso_setAndGet() throws Exception {
+    public void test_socket_udpGso_set() throws Exception {
         // UDP GSO not required to be enabled on kernels prior to 4.19.
-        double kernelVersion = getKernelVersion();
-        if (kernelVersion < 4.19) return;
+        if (!kernelIsAtLeast(4, 19)) return;
 
         final FileDescriptor fd = Os.socket(AF_INET, SOCK_DGRAM, 0);
         try {

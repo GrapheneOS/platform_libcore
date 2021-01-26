@@ -64,7 +64,6 @@ package android.system {
     method public static int CAP_TO_INDEX(int);
     method public static int CAP_TO_MASK(int);
     field public static final int ARPHRD_LOOPBACK;
-    field public static final int ENONET;
     field public static final int EUSERS;
     field public static final int MAP_POPULATE;
     field public static final int O_DIRECT;
