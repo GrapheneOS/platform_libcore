@@ -405,6 +405,17 @@ public final class ICU {
   }
 
   /**
+   * {@link java.text.SimpleDateFormat} does not handle some date symbols, e.g. 'B' / 'b',
+   * and simply ignore the symbol in formatting. Instead, we should avoid exposing the symbol
+   * entirely in all public APIs, e.g. {@link java.text.SimpleDateFormat#toPattern()},
+   * and thus we use a heuristic algorithm to remove the symbol. See http://b/174804526.
+   * See {@link #transformIcuDateTimePattern(String)} for documentation about the implementation.
+   */
+  public static String transformIcuDateTimePattern_forJavaText(String pattern) {
+    return transformIcuDateTimePattern(pattern);
+  }
+
+  /**
    * Rewrite the date/time pattern coming ICU to be consumed by libcore classes.
    * It's an ideal place to rewrite the pattern entirely when multiple symbols not digested
    * by libcore need to be removed/processed. Rewriting in single place could be more efficient

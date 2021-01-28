@@ -413,21 +413,27 @@ public final class LocaleData {
         // libcore's java.text supports Gregorian calendar only.
         ExtendedCalendar extendedCalendar = ICU.getExtendedCalendar(locale, "gregorian");
 
-        fullTimeFormat = extendedCalendar.getDateTimePattern(
+        fullTimeFormat = getDateTimeFormatString(extendedCalendar,
             android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.FULL);
-        longTimeFormat = extendedCalendar.getDateTimePattern(
+        longTimeFormat = getDateTimeFormatString(extendedCalendar,
             android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.LONG);
-        mediumTimeFormat = extendedCalendar.getDateTimePattern(
+        mediumTimeFormat = getDateTimeFormatString(extendedCalendar,
             android.icu.text.DateFormat.NONE, android.icu.text.DateFormat. MEDIUM);
-        shortTimeFormat = extendedCalendar.getDateTimePattern(
+        shortTimeFormat = getDateTimeFormatString(extendedCalendar,
             android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.SHORT);
-        fullDateFormat = extendedCalendar.getDateTimePattern(
+        fullDateFormat = getDateTimeFormatString(extendedCalendar,
             android.icu.text.DateFormat.FULL, android.icu.text.DateFormat.NONE);
-        longDateFormat = extendedCalendar.getDateTimePattern(
+        longDateFormat = getDateTimeFormatString(extendedCalendar,
             android.icu.text.DateFormat.LONG, android.icu.text.DateFormat.NONE);
-        mediumDateFormat = extendedCalendar.getDateTimePattern(
+        mediumDateFormat = getDateTimeFormatString(extendedCalendar,
             android.icu.text.DateFormat.MEDIUM, android.icu.text.DateFormat.NONE);
-        shortDateFormat = extendedCalendar.getDateTimePattern(
+        shortDateFormat = getDateTimeFormatString(extendedCalendar,
             android.icu.text.DateFormat.SHORT, android.icu.text.DateFormat.NONE);
+    }
+
+    private static String getDateTimeFormatString(ExtendedCalendar extendedCalendar,
+            int dateStyle, int timeStyle) {
+        return ICU.transformIcuDateTimePattern_forJavaText(
+                extendedCalendar.getDateTimePattern(dateStyle, timeStyle));
     }
 }
