@@ -158,18 +158,45 @@ public class FP16 {
     @libcore.api.CorePlatformApi
     public static final short POSITIVE_ZERO = (short) 0x0000;
 
+    /**
+     * The offset to shift by to obtain the sign bit.
+     */
     @libcore.api.CorePlatformApi
     public static final int SIGN_SHIFT                = 15;
+
+    /**
+     * The offset to shift by to obtain the exponent bits.
+     */
     @libcore.api.CorePlatformApi
     public static final int EXPONENT_SHIFT            = 10;
+
+    /**
+     * The bitmask to AND a number with to obtain the sign bit.
+     */
     @libcore.api.CorePlatformApi
     public static final int SIGN_MASK                 = 0x8000;
+
+    /**
+     * The bitmask to AND a number shifted by {@link #EXPONENT_SHIFT} right, to obtain exponent bits.
+     */
     @libcore.api.CorePlatformApi
     public static final int SHIFTED_EXPONENT_MASK     = 0x1f;
+
+    /**
+     * The bitmask to AND a number with to obtain significand bits.
+     */
     @libcore.api.CorePlatformApi
     public static final int SIGNIFICAND_MASK          = 0x3ff;
+
+    /**
+     * The bitmask to AND with to obtain exponent and significand bits.
+     */
     @libcore.api.CorePlatformApi
     public static final int EXPONENT_SIGNIFICAND_MASK = 0x7fff;
+
+    /**
+     * The offset of the exponent from the actual value.
+     */
     @libcore.api.CorePlatformApi
     public static final int EXPONENT_BIAS             = 15;
 
