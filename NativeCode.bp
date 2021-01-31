@@ -206,13 +206,6 @@ cc_library_shared {
         "libnativehelper",
     ],
 
-    cflags: [
-        // -DANDROID_LINK_SHARED_ICU4C to enable access to the full ICU4C.
-        // See external/icu/android_icu4c/include/uconfig_local.h
-        // for more information.
-        "-DANDROID_LINK_SHARED_ICU4C",
-    ],
-
     strip: {
         keep_symbols: true,
     },
