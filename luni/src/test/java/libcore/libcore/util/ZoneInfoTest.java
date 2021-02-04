@@ -20,11 +20,9 @@ import junit.framework.TestCase;
 
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.util.TimeZone;
 
-import libcore.timezone.testing.ZoneInfoTestHelper;
 import libcore.util.ZoneInfo;
 
 /**
@@ -51,19 +49,12 @@ public class ZoneInfoTest extends TestCase {
       zoneInfoRead = (ZoneInfo) object;
     }
 
-    long[][] transitions = {
-        { -5000, 0 },
-        { -2000, 1 },
-        { -500, 0 },
-        { 0, 2 },
-    };
-    int[][] types = {
-        { 3600, 0 },
-        { 1800, 1 },
-        { 5400, 0 }
-    };
-    ZoneInfo zoneInfoCreated = createZoneInfo(
-            "test", transitions, types, timeFromSeconds(-1));
+    long[] transitions = { -5000, -2000, -500, 0 };
+    byte[] types =       { 0,     1,     0,    2 }; // align each entry with transitions
+    int[] offsets =    { 3600,  1800, 5400  };
+    boolean[] isDsts = { false, true, false }; // align each entry with offsets
+    ZoneInfo zoneInfoCreated = createZoneInfo("TimeZone for 'test'", transitions, types, offsets,
+            isDsts, timeFromSeconds(-1));
 
     assertEquals("Read ZoneInfo does not match created one", zoneInfoCreated, zoneInfoRead);
     assertEquals("useDaylightTime() mismatch",
@@ -89,12 +80,9 @@ public class ZoneInfoTest extends TestCase {
     return Instant.ofEpochSecond(timeInSeconds);
   }
 
-  private ZoneInfo createZoneInfo(String name, long[][] transitions, int[][] types,
-          Instant currentTime) throws Exception {
-    ZoneInfoTestHelper.ZicDataBuilder builder =
-            new ZoneInfoTestHelper.ZicDataBuilder()
-                    .setTransitionsAndTypes(transitions, types);
-    ZoneInfoData data = ZoneInfoData.createZoneInfo(name, ByteBuffer.wrap(builder.build()));
+  private ZoneInfo createZoneInfo(String id, long[] transitions, byte[] types, int[] offsets,
+          boolean[] isDsts, Instant currentTime) {
+    ZoneInfoData data = ZoneInfoData.createInstance(id, transitions, types, offsets, isDsts);
     return ZoneInfo.createZoneInfo(data, currentTime.toEpochMilli());
   }
 }
