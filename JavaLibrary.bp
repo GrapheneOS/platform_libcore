@@ -595,7 +595,6 @@ java_test {
         "nist-pkix-tests",
         "slf4j-jdk14",
         "sqlite-jdbc",
-        "tzdata-testing",
         "truth-prebuilt-jar",
     ],
 
