@@ -48,15 +48,6 @@ public class LocaleDataTest {
   public TestRule switchTargetSdkVersionRule = SwitchTargetSdkVersionRule.getInstance();
 
   @Test
-  public void testAll() {
-    // Test that we can get the locale data for all known locales.
-    for (Locale l : Locale.getAvailableLocales()) {
-      LocaleData d = LocaleData.get(l);
-      System.err.format("%s %s %s\n", l, d.longDateFormat, d.longTimeFormat);
-    }
-  }
-
-  @Test
   public void test_en_US() throws Exception {
     LocaleData l = LocaleData.get(Locale.US);
     assertEquals("AM", l.amPm[0]);

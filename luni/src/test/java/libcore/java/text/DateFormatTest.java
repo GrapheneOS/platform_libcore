@@ -22,8 +22,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class DateFormatTest extends TestCase {
 
@@ -57,76 +55,5 @@ public class DateFormatTest extends TestCase {
         SimpleDateFormat sdf = new SimpleDateFormat(expectedPattern, locale);
         String expectedDateString = sdf.format(current);
         assertEquals(expectedDateString, actualDateString);
-    }
-
-    // 1 January 2022 00:00:00 GMT+00:00
-    private static final Date TEST_DATE = new Date(1640995200000L);
-
-    /**
-     * Test {@link DateFormat#format(Date)} does not crash on available locales.
-     */
-    public void test_format_allLocales() {
-        for (Locale locale : Locale.getAvailableLocales()) {
-            for (int formatStyle = DateFormat.FULL; formatStyle <= DateFormat.SHORT;
-                    formatStyle++) {
-                try {
-                    DateFormat.getDateInstance(formatStyle, locale)
-                            .format(TEST_DATE);
-                    DateFormat.getTimeInstance(formatStyle, locale)
-                            .format(TEST_DATE);
-                    DateFormat.getDateTimeInstance(formatStyle, formatStyle, locale)
-                            .format(TEST_DATE);
-                } catch (RuntimeException cause) {
-                    throw new RuntimeException("locale:" + locale +
-                            " formatStyle:" + formatStyle, cause);
-                }
-            }
-        }
-    }
-
-    /**
-     * Test {@link SimpleDateFormat#toPattern()} contains only supported symbols.
-     */
-    public void test_toPattern_allLocales() {
-        for (Locale locale : Locale.getAvailableLocales()) {
-            for (int formatStyle = DateFormat.FULL; formatStyle <= DateFormat.SHORT;
-                    formatStyle++) {
-                try {
-                    assertSupportedSymbols(DateFormat.getDateInstance(formatStyle, locale), locale);
-                    assertSupportedSymbols(DateFormat.getTimeInstance(formatStyle, locale), locale);
-                    assertSupportedSymbols(DateFormat.getDateTimeInstance(
-                            formatStyle, formatStyle, locale), locale);
-                } catch (RuntimeException cause) {
-                    throw new RuntimeException("locale:" + locale +
-                            " formatStyle:" + formatStyle, cause);
-                }
-            }
-        }
-    }
-
-    private static final Set<Character> SUPPORTED_SYMBOLS = "GyYMLwWDdFEuaHkKhmsSzZXLc".chars()
-            .mapToObj(c -> (char)c)
-            .collect(Collectors.toSet());
-
-    private static void assertSupportedSymbols(DateFormat dateFormat, Locale locale) {
-        SimpleDateFormat simpleDateFormat = (SimpleDateFormat) dateFormat;
-        String pattern = simpleDateFormat.toPattern();
-        // The string in the quotation is not interpreted.
-        boolean inQuotation = false;
-        for (int i = 0; i < pattern.length(); i++) {
-            char curr = pattern.charAt(i);
-            if (curr == '\'') {
-                inQuotation = !inQuotation;
-                continue;
-            }
-            if (inQuotation) {
-                continue;
-            }
-
-            if ((curr >= 'a' && curr <= 'z') || (curr >= 'A' && curr <= 'Z')) { // ASCII alphabets
-                assertTrue("Locale:" + locale + " Pattern:" + pattern + " has unsupported symbol "
-                                + curr, SUPPORTED_SYMBOLS.contains(curr));
-            }
-        }
     }
 }

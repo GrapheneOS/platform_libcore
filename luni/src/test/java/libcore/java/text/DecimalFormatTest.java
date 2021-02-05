@@ -408,34 +408,6 @@ public class DecimalFormatTest extends junit.framework.TestCase {
         assertEquals(expected, numberFormat.format(2.01));
     }
 
-    /**
-     * Test no extra spacing between currency symbol and the numeric amount
-     */
-    public void testCurrencySymbolSpacing() {
-        Currency currency = Currency.getInstance(Locale.US);
-        for (Locale locale : Locale.getAvailableLocales()) {
-            DecimalFormatSymbols dfs = new DecimalFormatSymbols(locale);
-            String formattedZero = new DecimalFormat("0", dfs).format(0);
-
-            assertCurrencyFormat("USD" + formattedZero, "\u00a4\u00a40", dfs, currency, locale);
-            assertCurrencyFormat(formattedZero + "USD", "0\u00a4\u00a4", dfs, currency, locale);
-            assertCurrencyFormat(currency.getSymbol(locale) + formattedZero, "\u00a40", dfs,
-                    currency, locale);
-            assertCurrencyFormat(formattedZero + currency.getSymbol(locale), "0\u00a4", dfs,
-                    currency, locale);
-        }
-    }
-
-    private static void assertCurrencyFormat(String expected, String pattern,
-            DecimalFormatSymbols dfs,
-            Currency currency, Locale locale) {
-        DecimalFormat df = new DecimalFormat(pattern, dfs);
-        df.setCurrency(currency);
-        df.setMaximumFractionDigits(0);
-        assertEquals("Not formatted as expected with pattern " + pattern + " in locale " + locale,
-                expected, df.format(0));
-    }
-
     // http://b/27855939
     public void testBug27855939() {
         DecimalFormat df = new DecimalFormat("00");
