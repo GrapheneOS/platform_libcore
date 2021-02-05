@@ -195,17 +195,6 @@ public class CurrencyTest extends junit.framework.TestCase {
         }
     }
 
-    public void test_currencyCodeIcuConsistency() {
-        Locale[] locales = Locale.getAvailableLocales();
-        for (Locale l : locales) {
-            Currency javaCurrency = getCurrency(l);
-            if (javaCurrency == null) continue;
-            assertEquals("Currency code is not consistent:" + l,
-                android.icu.util.Currency.getInstance(l).getCurrencyCode(),
-                javaCurrency.getCurrencyCode());
-        }
-    }
-
     public void test_localeExtension() {
         // Language=en, Country=US, Currency=Euro
         Locale locale = Locale.forLanguageTag("en-US-u-cu-eur");
