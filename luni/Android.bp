@@ -1,4 +1,5 @@
-// Copyright (C) 2017 The Android Open Source Project
+//
+// Copyright (C) 2021 The Android Open Source Project
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -13,17 +14,18 @@
 // limitations under the License.
 
 package {
-    // http://go/android-license-faq
-    // A large-scale-change added 'default_applicable_licenses' to import
-    // the below license kinds from "libcore_license":
-    //   SPDX-license-identifier-Apache-2.0
-    default_applicable_licenses: ["libcore_license"],
+    default_applicable_licenses: ["libcore_luni_license"],
 }
 
-android_test_helper_app {
-    name: "LibcoreHeapDumper",
-    sdk_version: "current",
-    resource_dirs: ["res"],
-    srcs: ["src/**/*.java"],
-    test_suites: ["general-tests"],
+// Added automatically by a large-scale-change
+// http://go/android-license-faq
+license {
+    name: "libcore_luni_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+    ],
+    license_text: [
+        "license.html",
+    ],
 }

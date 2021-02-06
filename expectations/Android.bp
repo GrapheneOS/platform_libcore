@@ -12,6 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+package {
+    // http://go/android-license-faq
+    // A large-scale-change added 'default_applicable_licenses' to import
+    // the below license kinds from "libcore_license":
+    //   SPDX-license-identifier-Apache-2.0
+    //   SPDX-license-identifier-GPL
+    //   SPDX-license-identifier-GPL-2.0
+    //   SPDX-license-identifier-LGPL
+    //   SPDX-license-identifier-MIT
+    //   SPDX-license-identifier-W3C
+    default_applicable_licenses: ["libcore_license"],
+}
+
 expectations_visibility = [
     "//art/build/sdk",
     "//cts/tests/libcore:__subpackages__",

@@ -28,6 +28,19 @@
 //
 // TODO(b/161973015): Remove the legacy/stable distinction once no longer useful.
 
+package {
+    // http://go/android-license-faq
+    // A large-scale-change added 'default_applicable_licenses' to import
+    // the below license kinds from "libcore_license":
+    //   SPDX-license-identifier-Apache-2.0
+    //   SPDX-license-identifier-GPL
+    //   SPDX-license-identifier-GPL-2.0
+    //   SPDX-license-identifier-LGPL
+    //   SPDX-license-identifier-MIT
+    //   SPDX-license-identifier-W3C
+    default_applicable_licenses: ["libcore_license"],
+}
+
 java_defaults {
     name: "art-module-platform-api-defaults",
     srcs: [

@@ -16,6 +16,7 @@
 
 package libcore.highmemorytest.java.text;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -57,12 +58,10 @@ public class DateFormatTest {
         for (int formatStyle = DateFormat.FULL; formatStyle <= DateFormat.SHORT;
                 formatStyle++) {
             try {
-                DateFormat.getDateInstance(formatStyle, locale)
-                        .format(TEST_DATE);
-                DateFormat.getTimeInstance(formatStyle, locale)
-                        .format(TEST_DATE);
-                DateFormat.getDateTimeInstance(formatStyle, formatStyle, locale)
-                        .format(TEST_DATE);
+                assertNonEmpty(DateFormat.getDateInstance(formatStyle, locale).format(TEST_DATE));
+                assertNonEmpty(DateFormat.getTimeInstance(formatStyle, locale).format(TEST_DATE));
+                assertNonEmpty(DateFormat.getDateTimeInstance(formatStyle, formatStyle, locale)
+                        .format(TEST_DATE));
             } catch (RuntimeException cause) {
                 throw new RuntimeException("locale:" + locale +
                         " formatStyle:" + formatStyle, cause);
@@ -113,5 +112,10 @@ public class DateFormatTest {
                                 + curr, SUPPORTED_SYMBOLS.contains(curr));
             }
         }
+    }
+
+    private static void assertNonEmpty(String s) {
+        assertNotNull(s);
+        assertTrue(s.length() > 0);
     }
 }
