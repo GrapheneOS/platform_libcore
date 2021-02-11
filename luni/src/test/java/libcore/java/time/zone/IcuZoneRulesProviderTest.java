@@ -68,6 +68,7 @@ public class IcuZoneRulesProviderTest {
         // An arbitrary set of instants at which to test the offsets in both implementations.
         Instant[] instants = new Instant[] {
                 LocalDateTime.of(1900, Month.DECEMBER, 24, 12, 0).toInstant(ZoneOffset.UTC),
+                LocalDateTime.of(1940, Month.JULY, 1, 0, 0).toInstant(ZoneOffset.UTC),
                 LocalDateTime.of(1970, Month.JANUARY, 1, 2, 3).toInstant(ZoneOffset.UTC),
                 LocalDateTime.of(1980, Month.FEBRUARY, 4, 5, 6).toInstant(ZoneOffset.UTC),
                 LocalDateTime.of(1990, Month.MARCH, 7, 8, 9).toInstant(ZoneOffset.UTC),
