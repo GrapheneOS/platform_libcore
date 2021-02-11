@@ -35,6 +35,8 @@ public class NetworkEventDispatcher {
 
   /**
    * Returns the shared {@link NetworkEventDispatcher} instance.
+   *
+   * @return singleton instance of {@link NetworkEventDispatcher}
    */
   @UnsupportedAppUsage
   @libcore.api.CorePlatformApi

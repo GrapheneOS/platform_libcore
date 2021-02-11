@@ -36,17 +36,30 @@ public abstract class NetworkSecurityPolicy {
 
     private static volatile NetworkSecurityPolicy instance = new DefaultNetworkSecurityPolicy();
 
+    /**
+     * Constructs a default {@code NetworkSecurityPolicy}.
+     *
+     * @see {@link #DefaultNetworkSecurityPolicy}
+     */
     @libcore.api.CorePlatformApi
     @libcore.api.IntraCoreApi
     public NetworkSecurityPolicy() {
     }
 
+    /**
+     * Gets current singleton {@code NetworkSecurityPolicy} instance.
+     * @return the current {@code NetworkSecurityPolicy}
+     */
     @libcore.api.CorePlatformApi
     @libcore.api.IntraCoreApi
     public static NetworkSecurityPolicy getInstance() {
         return instance;
     }
 
+    /**
+     * Sets current singleton instance
+     * @param policy new {@code NetworlSecurityPolicy} instance
+     */
     @libcore.api.CorePlatformApi
     public static void setInstance(NetworkSecurityPolicy policy) {
         if (policy == null) {
@@ -93,11 +106,20 @@ public abstract class NetworkSecurityPolicy {
      * the server and verified by the client in TLS connections to {@code hostname}.
      *
      * <p>See RFC6962 section 3.3 for more details.
+     *
+     * @param hostname hostname to check whether certificate transparency verification
+     *                 is required
+     * @return {@code true} if certificate transparency verification is required and
+     *         {@code false} otherwise
      */
     @libcore.api.CorePlatformApi
     @libcore.api.IntraCoreApi
     public abstract boolean isCertificateTransparencyVerificationRequired(String hostname);
 
+    /**
+     * Default network security policy that allows cleartext traffic and does not require
+     * certificate transparency verification.
+     */
     public static final class DefaultNetworkSecurityPolicy extends NetworkSecurityPolicy {
         @Override
         public boolean isCleartextTrafficPermitted() {
