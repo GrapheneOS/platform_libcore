@@ -18,6 +18,10 @@ package android.system;
 
 import android.compat.annotation.UnsupportedAppUsage;
 
+import libcore.io.Libcore;
+import libcore.util.NonNull;
+import libcore.util.Nullable;
+
 import java.io.FileDescriptor;
 import java.io.InterruptedIOException;
 import java.net.InetAddress;
@@ -25,9 +29,6 @@ import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
-import libcore.io.Libcore;
-import libcore.util.NonNull;
-import libcore.util.Nullable;
 
 /**
  * Access to low-level system functionality. Most of these are system calls. Most users will want
@@ -314,11 +315,10 @@ public final class Os {
     /** @hide */
     public static InetAddress ioctlInetAddress(FileDescriptor fd, int cmd, String interfaceName) throws ErrnoException { return Libcore.os.ioctlInetAddress(fd, cmd, interfaceName); }
 
-
     /** @hide */
     @libcore.api.CorePlatformApi
-    public static int ioctlInt(FileDescriptor fd, int cmd, Int32Ref arg) throws ErrnoException {
-        return Libcore.os.ioctlInt(fd, cmd, arg);
+    public static int ioctlInt(FileDescriptor fd, int cmd) throws ErrnoException {
+        return Libcore.os.ioctlInt(fd, cmd);
     }
 
     /**
