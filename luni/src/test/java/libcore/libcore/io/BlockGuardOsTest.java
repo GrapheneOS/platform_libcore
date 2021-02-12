@@ -269,7 +269,7 @@ public class BlockGuardOsTest {
                 "inet_pton(int,java.lang.String)",
                 "ioctlFlags(java.io.FileDescriptor,java.lang.String)",
                 "ioctlInetAddress(java.io.FileDescriptor,int,java.lang.String)",
-                "ioctlInt(java.io.FileDescriptor,int,android.system.Int32Ref)",
+                "ioctlInt(java.io.FileDescriptor,int)",
                 "ioctlMTU(java.io.FileDescriptor,java.lang.String)",
                 "isatty(java.io.FileDescriptor)",
                 "kill(int,int)",

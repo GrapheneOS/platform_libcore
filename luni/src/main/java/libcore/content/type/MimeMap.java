@@ -37,11 +37,26 @@ import libcore.util.Nullable;
 @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
 public final class MimeMap {
 
+    /**
+     * Creates a MIME type map builder.
+     *
+     * @return builder
+     *
+     * @see {@link MimeMap.Builder}
+     */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static Builder builder() {
         return new Builder();
     }
 
+    /**
+     * Creates a MIME type map builder with values based on {@code this} instance.
+     * This builder will contain all previously added MIMEs and extensions.
+     *
+     * @return builder
+     *
+     * @see {@link MimeMap.Builder}
+     */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public Builder buildUpon() {
         return new Builder(mimeToExt, extToMime);
@@ -82,6 +97,8 @@ public final class MimeMap {
     }
 
     /**
+     * Gets system's current default {@link MimeMap}
+     *
      * @return The system's current default {@link MimeMap}.
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
@@ -135,6 +152,8 @@ public final class MimeMap {
     }
 
     /**
+     * Returns whether given case insensetive MIME type is mapped to a file extension.
+     *
      * @param mimeType A MIME type (i.e. {@code "text/plain")
      * @return Whether the given case insensitive MIME type is
      *         {@link #guessMimeTypeFromExtension(String) mapped} to a file extension.
@@ -166,6 +185,8 @@ public final class MimeMap {
      * {@link #hasMimeType(String) maps to some extension}. Note that the
      * reverse mapping might not exist.
      *
+     * @return unmodifiable {@link Set} of MIME types mapped to some extension
+     *
      * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
@@ -177,6 +198,9 @@ public final class MimeMap {
      * Returns the set of extensions that this {@link MimeMap}
      * {@link #hasExtension(String) maps to some MIME type}. Note that the
      * reverse mapping might not exist.
+     *
+     * @return unmodifiable {@link Set} of extensions that this {@link MimeMap}
+     *         maps to some MIME type
      *
      * @hide
      */
@@ -220,6 +244,10 @@ public final class MimeMap {
     }
 
     /**
+     * A builder for mapping of MIME types to extensions and back.
+     * Use {@link #put(String, List)} and {@link #put(String, String)} to add
+     * mapping entries and build final {@link MimeMap} with {@link #build()}.
+     *
      * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
@@ -350,6 +378,11 @@ public final class MimeMap {
             return put(mimeSpec, Collections.singletonList(extensionSpec));
         }
 
+        /**
+         * Builds {@link MimeMap} containing all added MIME mappings.
+         *
+         * @return {@link MimeMap} containing previously added MIME mapping entries
+         */
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         public MimeMap build() {
             return new MimeMap(mimeToExt, extToMime);

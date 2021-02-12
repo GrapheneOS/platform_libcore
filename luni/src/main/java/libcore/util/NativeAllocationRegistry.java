@@ -311,10 +311,14 @@ public class NativeAllocationRegistry {
     }
 
     /**
-     * Calls <code>freeFunction</code>(<code>nativePtr</code>).
+     * Calls {@code freeFunction}({@code nativePtr}).
      * Provided as a convenience in the case where you wish to manually free a
-     * native allocation using a <code>freeFunction</code> without using a
+     * native allocation using a {@code freeFunction} without using a
      * NativeAllocationRegistry.
+     *
+     * @param freeFunction address of a native function used to free this
+     *                     kind of native allocation
+     * @param nativePtr    pointer to pass to freeing function
      */
     @libcore.api.CorePlatformApi
     public static native void applyFreeFunction(long freeFunction, long nativePtr);

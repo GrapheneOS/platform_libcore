@@ -1752,16 +1752,12 @@ static jobject Linux_ioctlInetAddress(JNIEnv* env, jobject, jobject javaFd, jint
     return sockaddrToInetAddress(env, reinterpret_cast<sockaddr_storage&>(req.ifr_addr), NULL);
 }
 
-static jint Linux_ioctlInt(JNIEnv* env, jobject, jobject javaFd, jint cmd, jobject javaArg) {
-    // This is complicated because ioctls may return their result by updating their argument
-    // or via their return value, so we need to support both.
+static jint Linux_ioctlInt(JNIEnv* env, jobject, jobject javaFd, jint cmd) {
+    // Result is being stored in arg, thus simply returning it
     int fd = jniGetFDFromFileDescriptor(env, javaFd);
-    jint arg = env->GetIntField(javaArg, int32RefValueFid);
-    int rc = throwIfMinusOne(env, "ioctl", TEMP_FAILURE_RETRY(ioctl(fd, cmd, &arg)));
-    if (!env->ExceptionCheck()) {
-        env->SetIntField(javaArg, int32RefValueFid, arg);
-    }
-    return rc;
+    jint arg = 0;
+    throwIfMinusOne(env, "ioctl", TEMP_FAILURE_RETRY(ioctl(fd, cmd, &arg)));
+    return arg;
 }
 
 static jint Linux_ioctlMTU(JNIEnv* env, jobject, jobject javaFd, jstring javaInterfaceName) {
@@ -2642,7 +2638,7 @@ static JNINativeMethod gMethods[] = {
     NATIVE_METHOD(Linux, inet_pton, "(ILjava/lang/String;)Ljava/net/InetAddress;"),
     NATIVE_METHOD(Linux, ioctlFlags, "(Ljava/io/FileDescriptor;Ljava/lang/String;)I"),
     NATIVE_METHOD(Linux, ioctlInetAddress, "(Ljava/io/FileDescriptor;ILjava/lang/String;)Ljava/net/InetAddress;"),
-    NATIVE_METHOD(Linux, ioctlInt, "(Ljava/io/FileDescriptor;ILandroid/system/Int32Ref;)I"),
+    NATIVE_METHOD(Linux, ioctlInt, "(Ljava/io/FileDescriptor;I)I"),
     NATIVE_METHOD(Linux, ioctlMTU, "(Ljava/io/FileDescriptor;Ljava/lang/String;)I"),
     NATIVE_METHOD(Linux, isatty, "(Ljava/io/FileDescriptor;)Z"),
     NATIVE_METHOD(Linux, kill, "(II)V"),
