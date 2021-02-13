@@ -71,6 +71,8 @@ public final class RuntimeHooks {
      * handlers to run, this handler should never terminate this process. Any
      * throwables thrown by the handler will be ignored by
      * {@link Thread#dispatchUncaughtException(Throwable)}.
+     *
+     * @param uncaughtExceptionHandler handler for uncaught exceptions
      */
     @libcore.api.CorePlatformApi
     public static void setUncaughtExceptionPreHandler(
