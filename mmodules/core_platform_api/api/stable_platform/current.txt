@@ -77,6 +77,47 @@ package libcore.io {
 
 package libcore.util {
 
+  public class FP16 {
+    method public static short ceil(short);
+    method public static int compare(short, short);
+    method public static boolean equals(short, short);
+    method public static short floor(short);
+    method public static boolean greater(short, short);
+    method public static boolean greaterEquals(short, short);
+    method public static boolean isInfinite(short);
+    method public static boolean isNaN(short);
+    method public static boolean isNormalized(short);
+    method public static boolean less(short, short);
+    method public static boolean lessEquals(short, short);
+    method public static short max(short, short);
+    method public static short min(short, short);
+    method public static short rint(short);
+    method public static float toFloat(short);
+    method public static short toHalf(float);
+    method public static String toHexString(short);
+    method public static short trunc(short);
+    field public static final short EPSILON = 5120; // 0x1400
+    field public static final int EXPONENT_BIAS = 15; // 0xf
+    field public static final int EXPONENT_SHIFT = 10; // 0xa
+    field public static final int EXPONENT_SIGNIFICAND_MASK = 32767; // 0x7fff
+    field public static final short LOWEST_VALUE = -1025; // 0xfffffbff
+    field public static final int MAX_EXPONENT = 15; // 0xf
+    field public static final short MAX_VALUE = 31743; // 0x7bff
+    field public static final int MIN_EXPONENT = -14; // 0xfffffff2
+    field public static final short MIN_NORMAL = 1024; // 0x400
+    field public static final short MIN_VALUE = 1; // 0x1
+    field public static final short NEGATIVE_INFINITY = -1024; // 0xfffffc00
+    field public static final short NEGATIVE_ZERO = -32768; // 0xffff8000
+    field public static final short NaN = 32256; // 0x7e00
+    field public static final short POSITIVE_INFINITY = 31744; // 0x7c00
+    field public static final short POSITIVE_ZERO = 0; // 0x0
+    field public static final int SHIFTED_EXPONENT_MASK = 31; // 0x1f
+    field public static final int SIGNIFICAND_MASK = 1023; // 0x3ff
+    field public static final int SIGN_MASK = 32768; // 0x8000
+    field public static final int SIGN_SHIFT = 15; // 0xf
+    field public static final int SIZE = 16; // 0x10
+  }
+
   public class HexEncoding {
     method public static byte[] decode(String) throws java.lang.IllegalArgumentException;
     method public static byte[] decode(String, boolean) throws java.lang.IllegalArgumentException;
