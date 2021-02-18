@@ -262,6 +262,9 @@ java_library {
 
     notice: "ojluni/NOTICE",
 
+    hiddenapi_additional_annotations: [
+        "core-oj-hiddenapi-annotations",
+    ],
 }
 
 // Contains parts of core library not associated with OpenJDK. Contains not
@@ -322,13 +325,6 @@ java_library {
 // Provided solely to contribute information about which hidden parts of the
 // core-oj API are used by apps.
 //
-// The build system determines that this library provides hiddenapi information
-// for the core-oj bootjar because its name is of the form <x>-hiddenapi, where
-// <x> is the name of a boot jar. That triggers the generation of a flags.csv
-// file which encapsulates information extracted from the UnsupportedAppUsage
-// annotations in the dex. The information from that file is then encoded into
-// the core-oj file.
-//
 // Usually, e.g. for core-libart, the UnsupportedAppUsage annotations are
 // added to the source that is compiled directly into the bootjar and the build
 // system extracts the information about UnsupportedAppUsage directly from
@@ -340,7 +336,7 @@ java_library {
 // difficult to pull down changes from upstream.
 //
 java_library {
-    name: "core-oj-hiddenapi",
+    name: "core-oj-hiddenapi-annotations",
     // Do not allow this to be accessed from outside this directory.
     visibility: ["//visibility:private"],
     defaults: ["libcore_java_defaults"],
