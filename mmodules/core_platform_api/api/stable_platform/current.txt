@@ -66,6 +66,13 @@ package libcore.content.type {
 
 package libcore.io {
 
+  public final class IoUtils {
+    method public static void close(java.io.FileDescriptor) throws java.io.IOException;
+    method public static void closeQuietly(AutoCloseable);
+    method public static void closeQuietly(java.io.FileDescriptor);
+    method public static void closeQuietly(java.net.Socket);
+  }
+
   public final class Streams {
     method public static int copy(java.io.InputStream, java.io.OutputStream) throws java.io.IOException;
     method public static byte[] readFully(java.io.InputStream) throws java.io.IOException;
