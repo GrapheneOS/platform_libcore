@@ -57,7 +57,7 @@ import static java.lang.annotation.ElementType.*;
  *
  * @apiNote
  * It is strongly recommended that the reason for deprecating a program element
- * be explained in the documentation, using the {@code @deprecated}
+ * be explained in the documentation, using the {@code &#64;deprecated}
  * javadoc tag. The documentation should also suggest and link to a
  * recommended replacement API, if applicable. A replacement API often
  * has subtly different semantics, so such issues should be discussed as
@@ -71,7 +71,7 @@ import static java.lang.annotation.ElementType.*;
  * style, the {@code since} element should be placed first.
  *
  * <p>The {@code @Deprecated} annotation should always be present if
- * the {@code @deprecated} javadoc tag is present, and vice-versa.
+ * the {@code &#64;deprecated} javadoc tag is present, and vice-versa.
  *
  * @author  Neal Gafter
  * @since 1.5
