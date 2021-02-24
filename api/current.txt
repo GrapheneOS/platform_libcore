@@ -2939,9 +2939,9 @@ package java.lang {
     method public static void enable();
   }
 
-  @Deprecated @java.lang.annotation.Documented @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME) @java.lang.annotation.Target({java.lang.annotation.ElementType.CONSTRUCTOR, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.LOCAL_VARIABLE, java.lang.annotation.ElementType.METHOD, java.lang.annotation.ElementType.PACKAGE, java.lang.annotation.ElementType.PARAMETER, java.lang.annotation.ElementType.TYPE}) public @interface Deprecated {
-    method @Deprecated public abstract boolean forRemoval() default false;
-    method @Deprecated public abstract String since() default "";
+  @java.lang.annotation.Documented @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.RUNTIME) @java.lang.annotation.Target({java.lang.annotation.ElementType.CONSTRUCTOR, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.LOCAL_VARIABLE, java.lang.annotation.ElementType.METHOD, java.lang.annotation.ElementType.PACKAGE, java.lang.annotation.ElementType.PARAMETER, java.lang.annotation.ElementType.TYPE}) public @interface Deprecated {
+    method public abstract boolean forRemoval() default false;
+    method public abstract String since() default "";
   }
 
   public final class Double extends java.lang.Number implements java.lang.Comparable<java.lang.Double> {
@@ -14139,9 +14139,19 @@ package java.util.concurrent {
     method public <U> java.util.concurrent.CompletableFuture<U> applyToEitherAsync(java.util.concurrent.CompletionStage<? extends T>, java.util.function.Function<? super T,U>, java.util.concurrent.Executor);
     method public boolean cancel(boolean);
     method public boolean complete(T);
+    method public java.util.concurrent.CompletableFuture<T> completeAsync(java.util.function.Supplier<? extends T>, java.util.concurrent.Executor);
+    method public java.util.concurrent.CompletableFuture<T> completeAsync(java.util.function.Supplier<? extends T>);
     method public boolean completeExceptionally(Throwable);
+    method public java.util.concurrent.CompletableFuture<T> completeOnTimeout(T, long, java.util.concurrent.TimeUnit);
     method public static <U> java.util.concurrent.CompletableFuture<U> completedFuture(U);
+    method public static <U> java.util.concurrent.CompletionStage<U> completedStage(U);
+    method public java.util.concurrent.CompletableFuture<T> copy();
+    method public java.util.concurrent.Executor defaultExecutor();
+    method public static java.util.concurrent.Executor delayedExecutor(long, java.util.concurrent.TimeUnit, java.util.concurrent.Executor);
+    method public static java.util.concurrent.Executor delayedExecutor(long, java.util.concurrent.TimeUnit);
     method public java.util.concurrent.CompletableFuture<T> exceptionally(java.util.function.Function<java.lang.Throwable,? extends T>);
+    method public static <U> java.util.concurrent.CompletableFuture<U> failedFuture(Throwable);
+    method public static <U> java.util.concurrent.CompletionStage<U> failedStage(Throwable);
     method public T get() throws java.util.concurrent.ExecutionException, java.lang.InterruptedException;
     method public T get(long, java.util.concurrent.TimeUnit) throws java.util.concurrent.ExecutionException, java.lang.InterruptedException, java.util.concurrent.TimeoutException;
     method public T getNow(T);
@@ -14153,8 +14163,11 @@ package java.util.concurrent {
     method public boolean isCompletedExceptionally();
     method public boolean isDone();
     method public T join();
+    method public java.util.concurrent.CompletionStage<T> minimalCompletionStage();
+    method public <U> java.util.concurrent.CompletableFuture<U> newIncompleteFuture();
     method public void obtrudeException(Throwable);
     method public void obtrudeValue(T);
+    method public java.util.concurrent.CompletableFuture<T> orTimeout(long, java.util.concurrent.TimeUnit);
     method public java.util.concurrent.CompletableFuture<java.lang.Void> runAfterBoth(java.util.concurrent.CompletionStage<?>, Runnable);
     method public java.util.concurrent.CompletableFuture<java.lang.Void> runAfterBothAsync(java.util.concurrent.CompletionStage<?>, Runnable);
     method public java.util.concurrent.CompletableFuture<java.lang.Void> runAfterBothAsync(java.util.concurrent.CompletionStage<?>, Runnable, java.util.concurrent.Executor);
