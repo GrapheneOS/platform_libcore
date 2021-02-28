@@ -148,15 +148,38 @@ public abstract class Reference<T> {
 
     /* -- Queue operations -- */
 
+    // Android-changed: deprecate since 9.
+    // @Deprecated(since="16")
     /**
-     * Tells whether or not this reference object has been enqueued, either by
-     * the program or by the garbage collector.  If this reference object was
-     * not registered with a queue when it was created, then this method will
-     * always return <code>false</code>.
+     * Tests if this reference object is in its associated queue, if any.
+     * This method returns {@code true} only if all of the following conditions
+     * are met:
+     * <ul>
+     * <li>this reference object was registered with a queue when it was created; and
+     * <li>the garbage collector has added this reference object to the queue
+     *     or {@link #enqueue()} is called; and
+     * <li>this reference object is not yet removed from the queue.
+     * </ul>
+     * Otherwise, this method returns {@code false}.
+     * This method may return {@code false} if this reference object has been cleared
+     * but not enqueued due to the race condition.
      *
-     * @return   <code>true</code> if and only if this reference object has
-     *           been enqueued
+     * @deprecated
+     * This method was never implemented to test if a reference object has
+     * been cleared and enqueued as it was previously specified since 1.2.
+     * This method could be misused due to the inherent race condition
+     * or without an associated {@code ReferenceQueue}.
+     * An application relying on this method to release critical resources
+     * could cause serious performance issue.
+     * An application should use {@link ReferenceQueue} to reliably determine
+     * what reference objects that have been enqueued or
+     * {@code refersTo(null)} to determine if this reference
+     * object has been cleared.
+     *
+     * @return   {@code true} if and only if this reference object is
+     *           in its associated queue (if any).
      */
+    @Deprecated(since="9")
     public boolean isEnqueued() {
         // Contrary to what the documentation says, this method returns false
         // after this reference object has been removed from its queue
