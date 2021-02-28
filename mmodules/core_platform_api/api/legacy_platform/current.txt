@@ -366,6 +366,7 @@ package dalvik.system {
 
   public final class ZygoteHooks {
     method public static void gcAndFinalize();
+    method public static boolean indefiniteThreadSuspensionOK();
     method public static void onBeginPreload();
     method public static void onEndPreload();
     method public static void postForkChild(int, boolean, boolean, String);

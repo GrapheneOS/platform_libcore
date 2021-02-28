@@ -171,6 +171,20 @@ public final class ZygoteHooks {
         Daemons.startPostZygoteFork();
     }
 
+    /**
+     * Is it safe to keep all ART daemon threads stopped indefinitely in the zygote?
+     * The answer may change from false to true dynamically, but not in the other
+     * direction.
+     */
+    @libcore.api.CorePlatformApi
+    public static boolean indefiniteThreadSuspensionOK() {
+        // TODO: Make this return true if we're done with JIT compilation.
+        //
+        // We only care about JIT compilation that affects other processes.
+        // The zygote itself doesn't run appreciable amounts of Java code when
+        // running single-threaded.
+        return !nativeZygoteJitEnabled();
+    }
 
     // Hook for SystemServer specific early initialization post-forking.
     private static native void nativePostForkSystemServer(int runtimeFlags);
@@ -182,6 +196,8 @@ public final class ZygoteHooks {
     private static native void nativePostForkChild(long token, int runtimeFlags,
                                                    boolean isSystemServer, boolean isZygote,
                                                    String instructionSet);
+
+    private static native boolean nativeZygoteJitEnabled();
 
     /**
      * We must not fork until we're single-threaded again. Wait until /proc shows we're

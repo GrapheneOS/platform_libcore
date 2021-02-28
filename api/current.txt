@@ -4375,7 +4375,7 @@ package java.lang.ref {
     method public void clear();
     method public boolean enqueue();
     method public T get();
-    method public boolean isEnqueued();
+    method @Deprecated public boolean isEnqueued();
     method public static void reachabilityFence(Object);
   }
 
