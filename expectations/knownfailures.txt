@@ -1791,5 +1791,37 @@
   result: EXEC_FAILED,
   bug: 62408076,
   name: "libcore.java.lang.reflect.annotations.AnnotatedElementParameterTest#testImplicitConstructorParameters_singleAnnotation"
+},
+{
+  description: "Android has different implementation in classes, e.g. SecurityManager.",
+  result: EXEC_FAILED,
+  bug: 181171596,
+  names: [
+    "test.java.util.concurrent.tck.AbstractExecutorServiceTest#testSubmitFailedPrivilegedExceptionAction",
+    "test.java.util.concurrent.tck.AbstractExecutorServiceTest#testSubmitPrivilegedAction",
+    "test.java.util.concurrent.tck.AbstractExecutorServiceTest#testSubmitPrivilegedExceptionAction",
+    "test.java.util.concurrent.tck.CompletableFutureTest#testMinimalCompletionStage_toCompletableFuture_exceptionalCompletion",
+    "test.java.util.concurrent.tck.CompletableFutureTest#testMinimalCompletionStage_toCompletableFuture_join",
+    "test.java.util.concurrent.tck.CompletableFutureTest#testMinimalCompletionStage_toCompletableFuture_mutable",
+    "test.java.util.concurrent.tck.CompletableFutureTest#testMinimalCompletionStage_toCompletableFuture_normalCompletion",
+    "test.java.util.concurrent.tck.CompletableFutureTest#testMinimalCompletionStage_toCompletableFuture_oneWayPropagation",
+    "test.java.util.concurrent.tck.CompletableFutureTest#testToCompletableFutureGarbageRetention",
+    "test.java.util.concurrent.tck.ExecutorsTest#testCreatePrivilegedCallableUsingCCLWithNoPrivs",
+    "test.java.util.concurrent.tck.ExecutorsTest#testPrivilegedCallableUsingCCLWithPrivs",
+    "test.java.util.concurrent.tck.ExecutorsTest#testPrivilegedCallableWithNoPrivs",
+    "test.java.util.concurrent.tck.ExecutorsTest#testPrivilegedCallableWithPrivs",
+    "test.java.util.concurrent.tck.ExecutorsTest#testPrivilegedThreadFactory",
+    "test.java.util.concurrent.tck.ForkJoinPoolTest#testSubmitFailedPrivilegedExceptionAction",
+    "test.java.util.concurrent.tck.ForkJoinPoolTest#testSubmitPrivilegedAction",
+    "test.java.util.concurrent.tck.ForkJoinPoolTest#testSubmitPrivilegedExceptionAction",
+    "test.java.util.concurrent.tck.PriorityQueueTest#testOfferNonComparable",
+    "test.java.util.concurrent.tck.StampedLockTest#testDeeplyNestedReadLocks",
+    "test.java.util.concurrent.tck.StampedLockTest#testReadLock_lockUnlock",
+    "test.java.util.concurrent.tck.StampedLockTest#testTryConvertToOptimisticRead",
+    "test.java.util.concurrent.tck.StampedLockTest#testTryConvertToReadLock",
+    "test.java.util.concurrent.tck.StampedLockTest#testTryConvertToWriteLock",
+    "test.java.util.concurrent.tck.ThreadPoolExecutorTest#testPoolSizeInvariants",
+    "test.java.util.concurrent.tck.ThreadTest#testGetAndSetDefaultUncaughtExceptionHandler"
+ ]
 }
 ]
