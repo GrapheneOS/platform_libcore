@@ -40,9 +40,12 @@ public abstract class SocketTagger {
     }
 
     /**
-     * Notified when {@code socketDescriptor} is either assigned to the current
+     * Notified when {@code socketDescriptor} is assigned to the current
      * thread. The socket is either newly connected or reused from a connection
      * pool. Implementations of this method should be thread-safe.
+     *
+     * @param socketDescriptor to be assigned to the current thread
+     * @throws SocketException when {@link SocketException} occurs
      */
     @libcore.api.CorePlatformApi
     public abstract void tag(FileDescriptor socketDescriptor) throws SocketException;
@@ -54,10 +57,21 @@ public abstract class SocketTagger {
      *
      * <p><strong>Note:</strong> this method will not be invoked when the socket
      * is closed.
+     *
+     * @param socketDescriptor to be released from the current thread to a connection pool
+     * @throws SocketException when {@link SocketException} occurs
      */
     @libcore.api.CorePlatformApi
     public abstract void untag(FileDescriptor socketDescriptor) throws SocketException;
 
+    /**
+     * Notified when {@code socket} is assigned to the current
+     * thread. The socket is either newly connected or reused from a connection
+     * pool. Implementations of this method should be thread-safe.
+     *
+     * @param socket to be assigned to the current thread
+     * @throws SocketException when {@link SocketException} occurs
+     */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public final void tag(Socket socket) throws SocketException {
@@ -66,6 +80,18 @@ public abstract class SocketTagger {
         }
     }
 
+    /**
+     * Notified when {@code socket} is released from the current
+     * thread to a connection pool. Implementations of this method should be
+     * thread-safe.
+     *
+     * <p><strong>Note:</strong> this method will not be invoked when the socket
+     * is closed.
+     *
+     * @param socket           to be released from the current thread
+     *                         to a connection pool
+     * @throws SocketException when {@link SocketException} occurs
+     */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi
     public final void untag(Socket socket) throws SocketException {
@@ -74,6 +100,14 @@ public abstract class SocketTagger {
         }
     }
 
+    /**
+     * Notified when {@code socket} is assigned to the current thread.
+     * The socket is either newly connected or reused from a connection
+     * pool. Implementations of this method should be thread-safe.
+     *
+     * @param socket           to be assigned to the current thread
+     * @throws SocketException when {@link SocketException} occurs
+     */
     @libcore.api.CorePlatformApi
     public final void tag(DatagramSocket socket) throws SocketException {
         if (!socket.isClosed()) {
@@ -81,6 +115,18 @@ public abstract class SocketTagger {
         }
     }
 
+    /**
+     * Notified when {@code socket} is released from the current
+     * thread to a connection pool. Implementations of this method should be
+     * thread-safe.
+     *
+     * <p><strong>Note:</strong> this method will not be invoked when the socket
+     * is closed.
+     *
+     * @param socket           to be released from the current thread
+     *                         to a connection pool
+     * @throws SocketException when {@link SocketException} occurs
+     */
     @libcore.api.CorePlatformApi
     public final void untag(DatagramSocket socket) throws SocketException {
         if (!socket.isClosed()) {
@@ -90,6 +136,8 @@ public abstract class SocketTagger {
 
     /**
      * Sets this process' socket tagger to {@code tagger}.
+     *
+     * @param tagger socket tagger to be assigned to this process
      */
     @libcore.api.CorePlatformApi
     public static synchronized void set(SocketTagger tagger) {
@@ -101,6 +149,8 @@ public abstract class SocketTagger {
 
     /**
      * Returns this process socket tagger.
+     *
+     * @return {@link SocketTagger} assigned to this process
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi

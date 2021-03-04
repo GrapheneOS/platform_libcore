@@ -4158,6 +4158,7 @@ package java.lang.annotation {
     enum_constant public static final java.lang.annotation.ElementType FIELD;
     enum_constant public static final java.lang.annotation.ElementType LOCAL_VARIABLE;
     enum_constant public static final java.lang.annotation.ElementType METHOD;
+    enum_constant public static final java.lang.annotation.ElementType MODULE;
     enum_constant public static final java.lang.annotation.ElementType PACKAGE;
     enum_constant public static final java.lang.annotation.ElementType PARAMETER;
     enum_constant public static final java.lang.annotation.ElementType TYPE;
@@ -13065,6 +13066,7 @@ package java.util {
   public interface List<E> extends java.util.Collection<E> {
     method public void add(int, E);
     method public boolean addAll(int, @NonNull java.util.Collection<? extends E>);
+    method @NonNull public static <E> java.util.List<E> copyOf(@NonNull java.util.Collection<? extends E>);
     method public E get(int);
     method public int indexOf(@Nullable Object);
     method public int lastIndexOf(@Nullable Object);
