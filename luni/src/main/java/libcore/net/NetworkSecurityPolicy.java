@@ -30,7 +30,7 @@ import android.compat.annotation.UnsupportedAppUsage;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.IntraCoreApi
 public abstract class NetworkSecurityPolicy {
 
@@ -39,18 +39,19 @@ public abstract class NetworkSecurityPolicy {
     /**
      * Constructs a default {@code NetworkSecurityPolicy}.
      *
-     * @see {@link #DefaultNetworkSecurityPolicy}
+     * @see {@link #DefaultNetworkSecurityPolicy}.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public NetworkSecurityPolicy() {
     }
 
     /**
      * Gets current singleton {@code NetworkSecurityPolicy} instance.
-     * @return the current {@code NetworkSecurityPolicy}
+     *
+     * @return the current {@code NetworkSecurityPolicy}.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public static NetworkSecurityPolicy getInstance() {
         return instance;
@@ -58,9 +59,10 @@ public abstract class NetworkSecurityPolicy {
 
     /**
      * Sets current singleton instance
-     * @param policy new {@code NetworlSecurityPolicy} instance
+     *
+     * @param policy new {@code NetworlSecurityPolicy} instance.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setInstance(NetworkSecurityPolicy policy) {
         if (policy == null) {
             throw new NullPointerException("policy == null");
@@ -86,9 +88,11 @@ public abstract class NetworkSecurityPolicy {
      * can be made to honor this flag. Platform-provided network stacks (e.g. HTTP and FTP) honor
      * this flag from day one, and well-established third-party network stacks will eventually
      * honor it.
+     *
+     * @return {@code true} if cleartext traffic is permitted and {@code false} otherwise.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract boolean isCleartextTrafficPermitted();
 
     /**
@@ -97,8 +101,11 @@ public abstract class NetworkSecurityPolicy {
      * process.
      *
      * <p>See {@link #isCleartextTrafficPermitted} for more details.
+     *
+     * @param hostname hostname to check if cleartext traffic is permitted for
+     * @return {@code true} if cleartext traffic is permitted and {@code false} otherwise
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract boolean isCleartextTrafficPermitted(String hostname);
 
     /**
@@ -112,7 +119,7 @@ public abstract class NetworkSecurityPolicy {
      * @return {@code true} if certificate transparency verification is required and
      *         {@code false} otherwise
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public abstract boolean isCertificateTransparencyVerificationRequired(String hostname);
 

@@ -126,10 +126,10 @@ package libcore.io {
 
 package libcore.net {
 
-  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public abstract class NetworkSecurityPolicy {
-    ctor @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public NetworkSecurityPolicy();
-    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static libcore.net.NetworkSecurityPolicy getInstance();
-    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public abstract boolean isCertificateTransparencyVerificationRequired(String);
+  @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public abstract class NetworkSecurityPolicy {
+    ctor @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public NetworkSecurityPolicy();
+    method @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public static libcore.net.NetworkSecurityPolicy getInstance();
+    method @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public abstract boolean isCertificateTransparencyVerificationRequired(String);
   }
 
 }

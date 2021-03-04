@@ -31,6 +31,43 @@ package android.compat {
 package dalvik.system {
 
   public final class VMDebug {
+    method public static void attachAgent(String, ClassLoader) throws java.io.IOException;
+    method public static long countInstancesOfClass(Class, boolean);
+    method public static long[] countInstancesOfClasses(Class[], boolean);
+    method public static void dumpHprofData(String) throws java.io.IOException;
+    method public static void dumpHprofData(String, java.io.FileDescriptor) throws java.io.IOException;
+    method public static void dumpHprofDataDdms();
+    method public static void dumpReferenceTables();
+    method public static int getAllocCount(int);
+    method public static int getLoadedClassCount();
+    method public static int getMethodTracingMode();
+    method public static String getRuntimeStat(String);
+    method public static java.util.Map<java.lang.String,java.lang.String> getRuntimeStats();
+    method public static String[] getVmFeatureList();
+    method public static boolean isDebuggerConnected();
+    method public static boolean isDebuggingEnabled();
+    method public static long lastDebuggerActivity();
+    method public static void printLoadedClasses(int);
+    method public static void resetAllocCount(int);
+    method public static void setAllocTrackerStackDepth(int);
+    method public static void startAllocCounting();
+    method public static void startMethodTracing(String, int, int, boolean, int);
+    method public static void startMethodTracing(String, java.io.FileDescriptor, int, int, boolean, int, boolean);
+    method public static void startMethodTracingDdms(int, int, boolean, int);
+    method public static void stopAllocCounting();
+    method public static void stopMethodTracing();
+    method public static long threadCpuTimeNanos();
+    field public static final int KIND_ALL_COUNTS = -1; // 0xffffffff
+    field public static final int KIND_GLOBAL_ALLOCATED_BYTES = 2; // 0x2
+    field public static final int KIND_GLOBAL_ALLOCATED_OBJECTS = 1; // 0x1
+    field public static final int KIND_GLOBAL_CLASS_INIT_COUNT = 32; // 0x20
+    field public static final int KIND_GLOBAL_CLASS_INIT_TIME = 64; // 0x40
+    field public static final int KIND_GLOBAL_FREED_BYTES = 8; // 0x8
+    field public static final int KIND_GLOBAL_FREED_OBJECTS = 4; // 0x4
+    field public static final int KIND_GLOBAL_GC_INVOCATIONS = 16; // 0x10
+    field public static final int KIND_THREAD_ALLOCATED_BYTES = 131072; // 0x20000
+    field public static final int KIND_THREAD_ALLOCATED_OBJECTS = 65536; // 0x10000
+    field public static final int KIND_THREAD_GC_INVOCATIONS = 1048576; // 0x100000
     field public static final int TRACE_COUNT_ALLOCS = 1; // 0x1
   }
 
@@ -78,6 +115,33 @@ package libcore.io {
     method public static byte[] readFully(java.io.InputStream) throws java.io.IOException;
     method public static String readFully(java.io.Reader) throws java.io.IOException;
     method public static byte[] readFullyNoClose(java.io.InputStream) throws java.io.IOException;
+  }
+
+}
+
+package libcore.net {
+
+  public class InetAddressUtils {
+    method public static boolean isNumericAddress(String);
+    method public static java.net.InetAddress parseNumericAddress(String);
+  }
+
+  public abstract class NetworkSecurityPolicy {
+    ctor public NetworkSecurityPolicy();
+    method public static libcore.net.NetworkSecurityPolicy getInstance();
+    method public abstract boolean isCertificateTransparencyVerificationRequired(String);
+    method public abstract boolean isCleartextTrafficPermitted();
+    method public abstract boolean isCleartextTrafficPermitted(String);
+    method public static void setInstance(libcore.net.NetworkSecurityPolicy);
+  }
+
+}
+
+package libcore.net.event {
+
+  public class NetworkEventDispatcher {
+    method public static libcore.net.event.NetworkEventDispatcher getInstance();
+    method public void onNetworkConfigurationChanged();
   }
 
 }

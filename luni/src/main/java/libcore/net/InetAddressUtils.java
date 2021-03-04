@@ -30,7 +30,7 @@ import static android.system.OsConstants.AI_NUMERICHOST;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class InetAddressUtils {
 
     private static final int NETID_UNSET = 0;
@@ -51,7 +51,7 @@ public class InetAddressUtils {
      * @param address the address to parse.
      * @return true if the supplied address is numeric, false otherwise.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean isNumericAddress(String address) {
         return parseNumericAddressNoThrow(address) != null;
     }
@@ -69,7 +69,7 @@ public class InetAddressUtils {
      * @return an {@link InetAddress} instance corresponding to the address.
      * @throws IllegalArgumentException if {@code address} is not a numeric address.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static InetAddress parseNumericAddress(String address) {
         InetAddress result = parseNumericAddressNoThrow(address);
         if (result == null) {
