@@ -315,8 +315,20 @@ public final class Os {
     /** @hide */
     public static InetAddress ioctlInetAddress(FileDescriptor fd, int cmd, String interfaceName) throws ErrnoException { return Libcore.os.ioctlInetAddress(fd, cmd, interfaceName); }
 
-    /** @hide */
-    @libcore.api.CorePlatformApi
+    /**
+     * See <a href="https://man7.org/linux/man-pages/man2/ioctl.2.html">ioctl(3)</a>.
+     * System call manipulates the underlying device parameters of special files. In particular,
+     * many operating characteristics of character special files.
+     *
+     * @param fd    an open file descriptor
+     * @param cmd   encoded in it whether the argument is an "in" parameter or "out" parameter
+     * @return      returns a nonnegative value on success
+     * @throws ErrnoException A checked exception thrown when {@link Os} methods fail.
+     *                        {@see android.system.ErrnoException}
+     *
+     * @hide
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int ioctlInt(FileDescriptor fd, int cmd) throws ErrnoException {
         return Libcore.os.ioctlInt(fd, cmd);
     }

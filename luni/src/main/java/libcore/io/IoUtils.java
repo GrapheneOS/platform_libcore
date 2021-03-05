@@ -218,10 +218,14 @@ public final class IoUtils {
     }
 
     /**
-     * Sets 'fd' to be blocking or non-blocking, according to the state of 'blocking'.
+     * Sets file descriptor to be blocking or non-blocking.
+     *
+     * @param fd is {@link FileDescriptor} instance
+     * @param blocking is a boolean that defines whether fd should be blocking or non-blocking
+     * @throws IOException if system API call fails
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setBlocking(FileDescriptor fd, boolean blocking) throws IOException {
         try {
             int flags = Libcore.os.fcntlVoid(fd, F_GETFL);
