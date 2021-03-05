@@ -28,6 +28,18 @@ package android.compat {
 
 }
 
+package android.system {
+
+  public final class Os {
+    method public static int ioctlInt(java.io.FileDescriptor, int) throws android.system.ErrnoException;
+  }
+
+  public final class OsConstants {
+    field public static final int TIOCOUTQ;
+  }
+
+}
+
 package dalvik.system {
 
   public final class VMDebug {
@@ -108,6 +120,7 @@ package libcore.io {
     method public static void closeQuietly(AutoCloseable);
     method public static void closeQuietly(java.io.FileDescriptor);
     method public static void closeQuietly(java.net.Socket);
+    method public static void setBlocking(java.io.FileDescriptor, boolean) throws java.io.IOException;
   }
 
   public final class Streams {

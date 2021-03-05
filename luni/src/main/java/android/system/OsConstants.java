@@ -632,9 +632,12 @@ public final class OsConstants {
     public static final int TCP_USER_TIMEOUT = placeholder();
     public static final int UDP_GRO = placeholder();
     public static final int UDP_SEGMENT = placeholder();
-    /** @hide */
+    /**
+     * Get the number of bytes in the output buffer.
+     * @hide
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int TIOCOUTQ = placeholder();
     /** @hide */
     @UnsupportedAppUsage
