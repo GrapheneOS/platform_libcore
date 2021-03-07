@@ -1,4 +1,0 @@
-WARNING: method java.util.Map.copyOf(java.util.Map<? extends K,? extends V>), parameter map, MISSING
-WARNING: method java.util.Map.copyOf(java.util.Map<? extends K,? extends V>), return value, MISSING
-WARNING: method java.util.Set.copyOf(java.util.Collection<? extends E>), parameter coll, MISSING
-WARNING: method java.util.Set.copyOf(java.util.Collection<? extends E>), return value, MISSING

@@ -13238,7 +13238,7 @@ package java.util {
     method @Nullable public default V computeIfPresent(K, @NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
     method public boolean containsKey(@Nullable Object);
     method public boolean containsValue(@Nullable Object);
-    method public static <K, V> java.util.Map<K,V> copyOf(java.util.Map<? extends K,? extends V>);
+    method @NonNull public static <K, V> java.util.Map<K,V> copyOf(@NonNull java.util.Map<? extends K,? extends V>);
     method @NonNull public static <K, V> java.util.Map.Entry<K,V> entry(@NonNull K, @NonNull V);
     method @NonNull public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
     method public boolean equals(@Nullable Object);
@@ -13661,7 +13661,7 @@ package java.util {
   }
 
   public interface Set<E> extends java.util.Collection<E> {
-    method public static <E> java.util.Set<E> copyOf(java.util.Collection<? extends E>);
+    method @NonNull public static <E> java.util.Set<E> copyOf(@NonNull java.util.Collection<? extends E>);
     method @NonNull public static <E> java.util.Set<E> of();
     method @NonNull public static <E> java.util.Set<E> of(@NonNull E);
     method @NonNull public static <E> java.util.Set<E> of(@NonNull E, @NonNull E);
