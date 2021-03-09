@@ -146,6 +146,7 @@ java_defaults {
             "-Xep:ConstantOverflow:WARN", // Known constant overflow in SplittableRandom
         ],
     },
+    min_sdk_version: "31",
 }
 
 //
