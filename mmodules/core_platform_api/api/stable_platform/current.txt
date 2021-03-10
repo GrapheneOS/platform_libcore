@@ -42,6 +42,18 @@ package android.system {
 
 package dalvik.system {
 
+  public abstract class SocketTagger {
+    ctor public SocketTagger();
+    method public static dalvik.system.SocketTagger get();
+    method public static void set(dalvik.system.SocketTagger);
+    method public abstract void tag(java.io.FileDescriptor) throws java.net.SocketException;
+    method public final void tag(java.net.Socket) throws java.net.SocketException;
+    method public final void tag(java.net.DatagramSocket) throws java.net.SocketException;
+    method public abstract void untag(java.io.FileDescriptor) throws java.net.SocketException;
+    method public final void untag(java.net.Socket) throws java.net.SocketException;
+    method public final void untag(java.net.DatagramSocket) throws java.net.SocketException;
+  }
+
   public final class VMDebug {
     method public static void attachAgent(String, ClassLoader) throws java.io.IOException;
     method public static long countInstancesOfClass(Class, boolean);
@@ -84,9 +96,53 @@ package dalvik.system {
   }
 
   public final class VMRuntime {
+    method public long addressOf(Object);
+    method public static void bootCompleted();
+    method public void clampGrowthLimit();
+    method public void clearGrowthLimit();
+    method public static String getCurrentInstructionSet();
+    method public static String getInstructionSet(String);
     method public static dalvik.system.VMRuntime getRuntime();
+    method public int getTargetSdkVersion();
     method public boolean is64Bit();
+    method public static boolean is64BitAbi(String);
+    method public static boolean is64BitInstructionSet(String);
+    method public boolean isCheckJniEnabled();
+    method public boolean isNativeDebuggable();
+    method public static boolean isValidClassLoaderContext(String);
+    method public Object newNonMovableArray(Class<?>, int);
+    method public Object newUnpaddedArray(Class<?>, int);
+    method public void notifyStartupCompleted();
+    method public void preloadDexCaches();
+    method public static void registerAppInfo(String, String[]);
+    method public void registerNativeAllocation(long);
+    method @Deprecated public void registerNativeAllocation(int);
+    method public void registerNativeFree(long);
+    method @Deprecated public void registerNativeFree(int);
+    method public static void registerSensitiveThread();
+    method public void requestConcurrentGC();
+    method public static void resetJitCounters();
+    method public static void setDedupeHiddenApiWarnings(boolean);
+    method public void setDisabledCompatChanges(long[]);
+    method public void setHiddenApiAccessLogSamplingRate(int);
+    method public void setHiddenApiExemptions(String[]);
+    method public static void setHiddenApiUsageLogger(dalvik.system.VMRuntime.HiddenApiUsageLogger);
+    method public static void setNonSdkApiUsageConsumer(java.util.function.Consumer<java.lang.String>);
+    method public static void setProcessDataDirectory(String);
+    method public static void setProcessPackageName(String);
+    method public void setTargetSdkVersion(int);
+    method public void updateProcessState(int);
+    method public String vmInstructionSet();
+    method public String vmLibrary();
     field public static final int SDK_VERSION_CUR_DEVELOPMENT = 10000; // 0x2710
+  }
+
+  public static interface VMRuntime.HiddenApiUsageLogger {
+    method public void hiddenApiUsed(int, String, String, int, boolean);
+    field public static final int ACCESS_METHOD_JNI = 2; // 0x2
+    field public static final int ACCESS_METHOD_LINKING = 3; // 0x3
+    field public static final int ACCESS_METHOD_NONE = 0; // 0x0
+    field public static final int ACCESS_METHOD_REFLECTION = 1; // 0x1
   }
 
 }
@@ -213,6 +269,43 @@ package libcore.util {
     method public static String encodeToString(byte, boolean);
     method public static String encodeToString(byte[]);
     method public static String encodeToString(byte[], boolean);
+  }
+
+}
+
+package sun.security.pkcs {
+
+  public class PKCS7 {
+    ctor public PKCS7(java.io.InputStream) throws java.io.IOException, sun.security.pkcs.ParsingException;
+    ctor public PKCS7(byte[]) throws sun.security.pkcs.ParsingException;
+    method public java.security.cert.X509Certificate[] getCertificates();
+    method public sun.security.pkcs.SignerInfo[] getSignerInfos();
+    method public sun.security.pkcs.SignerInfo verify(sun.security.pkcs.SignerInfo, java.io.InputStream) throws java.io.IOException, java.security.NoSuchAlgorithmException, java.security.SignatureException;
+    method public sun.security.pkcs.SignerInfo[] verify(byte[]) throws java.security.NoSuchAlgorithmException, java.security.SignatureException;
+  }
+
+  public class ParsingException extends java.io.IOException {
+  }
+
+  public class SignerInfo {
+    ctor public SignerInfo();
+    method public java.util.ArrayList<java.security.cert.X509Certificate> getCertificateChain(sun.security.pkcs.PKCS7) throws java.io.IOException;
+  }
+
+}
+
+package sun.security.util {
+
+  public final class ObjectIdentifier implements java.io.Serializable {
+    ctor public ObjectIdentifier(String) throws java.io.IOException;
+  }
+
+}
+
+package sun.security.x509 {
+
+  public class AlgorithmId implements java.io.Serializable {
+    method public String getName();
   }
 
 }

@@ -86,10 +86,6 @@ cc_library_shared {
     apex_available: [
         "com.android.art",
         "com.android.art.debug",
-        // TODO(b/147813447) remove this. This is currently due to the 'runtime_libs'
-        // dependency from libjavacrypto in the conscrypt APEX.
-        "com.android.conscrypt",
-        "test_com.android.conscrypt",
     ],
     defaults: [
         "core_native_default_flags",
