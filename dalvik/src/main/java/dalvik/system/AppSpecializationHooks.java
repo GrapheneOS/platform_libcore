@@ -34,6 +34,8 @@ public class AppSpecializationHooks {
      *
      * This is a good place to change system properties / clear cache due to an app compat change
      * before an app starts.
+     *
+     * @hide
      */
     @CorePlatformApi
     public static void handleCompatChangesBeforeBindingApplication() {

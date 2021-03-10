@@ -171,6 +171,22 @@ public class NativeAllocationRegistryTest extends TestCase {
         Runtime.getRuntime().gc();
     }
 
+    public void testApplyFreeFunction() {
+        if (isNativeBridgedABI()) {
+            // See the explanation in testNativeAllocation.
+            System.logI("Skipping test for native bridged ABI");
+            return;
+        }
+        long size = 1234;
+        long nativePtr = doNativeAllocation(size);
+        long numBytesAllocatedBeforeFree = getNumNativeBytesAllocated();
+
+        // Applying the free function should cause the native finalizer to run.
+        NativeAllocationRegistry.applyFreeFunction(getNativeFinalizer(), nativePtr);
+        long numBytesAllocatedAfterFree = getNumNativeBytesAllocated();
+        assertEquals(numBytesAllocatedBeforeFree - size, numBytesAllocatedAfterFree);
+    }
+
     public void testNullArguments() {
         final NativeAllocationRegistry registry
             = new NativeAllocationRegistry(classLoader, getNativeFinalizer(), 1024);
