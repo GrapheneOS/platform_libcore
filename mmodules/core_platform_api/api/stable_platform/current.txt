@@ -273,6 +273,38 @@ package libcore.util {
 
 }
 
+package sun.misc {
+
+  public final class Unsafe {
+    method public int arrayBaseOffset(Class);
+    method public int arrayIndexScale(Class);
+    method public void copyMemory(long, long, long);
+    method public boolean getBoolean(Object, long);
+    method public byte getByte(Object, long);
+    method public byte getByte(long);
+    method public double getDouble(long);
+    method public float getFloat(long);
+    method public int getInt(Object, long);
+    method public int getInt(long);
+    method public long getLong(Object, long);
+    method public long getLong(long);
+    method public Object getObject(Object, long);
+    method public static sun.misc.Unsafe getUnsafe();
+    method public long objectFieldOffset(java.lang.reflect.Field);
+    method public void putBoolean(Object, long, boolean);
+    method public void putByte(Object, long, byte);
+    method public void putByte(long, byte);
+    method public void putDouble(long, double);
+    method public void putFloat(long, float);
+    method public void putInt(Object, long, int);
+    method public void putInt(long, int);
+    method public void putLong(Object, long, long);
+    method public void putLong(long, long);
+    method public void putObject(Object, long, Object);
+  }
+
+}
+
 package sun.security.pkcs {
 
   public class PKCS7 {

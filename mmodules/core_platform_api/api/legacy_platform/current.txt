@@ -815,7 +815,9 @@ package sun.misc {
     method @dalvik.annotation.optimization.FastNative public byte getByte(Object, long);
     method @dalvik.annotation.optimization.FastNative public byte getByte(long);
     method @dalvik.annotation.optimization.FastNative public double getDouble(Object, long);
+    method @dalvik.annotation.optimization.FastNative public double getDouble(long);
     method @dalvik.annotation.optimization.FastNative public float getFloat(Object, long);
+    method @dalvik.annotation.optimization.FastNative public float getFloat(long);
     method @dalvik.annotation.optimization.FastNative public int getInt(Object, long);
     method @dalvik.annotation.optimization.FastNative public int getInt(long);
     method @dalvik.annotation.optimization.FastNative public long getLong(Object, long);
@@ -827,7 +829,9 @@ package sun.misc {
     method @dalvik.annotation.optimization.FastNative public void putByte(Object, long, byte);
     method @dalvik.annotation.optimization.FastNative public void putByte(long, byte);
     method @dalvik.annotation.optimization.FastNative public void putDouble(Object, long, double);
+    method @dalvik.annotation.optimization.FastNative public void putDouble(long, double);
     method @dalvik.annotation.optimization.FastNative public void putFloat(Object, long, float);
+    method @dalvik.annotation.optimization.FastNative public void putFloat(long, float);
     method @dalvik.annotation.optimization.FastNative public void putInt(Object, long, int);
     method @dalvik.annotation.optimization.FastNative public void putInt(long, int);
     method @dalvik.annotation.optimization.FastNative public void putLong(Object, long, long);

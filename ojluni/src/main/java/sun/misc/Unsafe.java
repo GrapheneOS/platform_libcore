@@ -39,6 +39,8 @@ import java.lang.reflect.Modifier;
  * @author John R. Rose
  * @see #getUnsafe
  */
+// Android-added: stable CorePlatformAPI
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class Unsafe {
     /** Traditional dalvik name. */
     private static final Unsafe THE_ONE = new Unsafe();
@@ -55,6 +57,8 @@ public final class Unsafe {
      * Gets the unique instance of this class. This is only allowed in
      * very limited situations.
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Unsafe getUnsafe() {
         Class<?> caller = Reflection.getCallerClass();
         /*
@@ -73,10 +77,12 @@ public final class Unsafe {
      * Gets the raw byte offset from the start of an object's memory to
      * the memory used to store the indicated instance field.
      *
-     * @param field non-null; the field in question, which must be an
+     * @param field non-{@code null}; the field in question, which must be an
      * instance field
      * @return the offset to the field
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public long objectFieldOffset(Field field) {
         if (Modifier.isStatic(field.getModifiers())) {
             throw new IllegalArgumentException("valid for instance fields only");
@@ -88,9 +94,11 @@ public final class Unsafe {
      * Gets the offset from the start of an array object's memory to
      * the memory used to store its initial (zeroeth) element.
      *
-     * @param clazz non-null; class in question; must be an array class
+     * @param clazz non-{@code null}; class in question; must be an array class
      * @return the offset to the initial element
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public int arrayBaseOffset(Class clazz) {
         Class<?> component = clazz.getComponentType();
         if (component == null) {
@@ -102,9 +110,11 @@ public final class Unsafe {
     /**
      * Gets the size of each element of the given array class.
      *
-     * @param clazz non-null; class in question; must be an array class
+     * @param clazz non-{@code null}; class in question; must be an array class
      * @return &gt; 0; the size of each element of the array
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public int arrayIndexScale(Class clazz) {
       Class<?> component = clazz.getComponentType();
       if (component == null) {
@@ -122,7 +132,7 @@ public final class Unsafe {
      * Performs a compare-and-set operation on an {@code int}
      * field within the given object.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @param expectedValue expected value of the field
      * @param newValue new value to store in the field if the contents are
@@ -138,7 +148,7 @@ public final class Unsafe {
      * Performs a compare-and-set operation on a {@code long}
      * field within the given object.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @param expectedValue expected value of the field
      * @param newValue new value to store in the field if the contents are
@@ -154,7 +164,7 @@ public final class Unsafe {
      * Performs a compare-and-set operation on an {@code obj}
      * field (that is, a reference field) within the given object.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @param expectedValue expected value of the field
      * @param newValue new value to store in the field if the contents are
@@ -170,7 +180,7 @@ public final class Unsafe {
      * Gets an {@code int} field from the given object,
      * using {@code volatile} semantics.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
@@ -181,7 +191,7 @@ public final class Unsafe {
      * Stores an {@code int} field into the given object,
      * using {@code volatile} semantics.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
@@ -192,7 +202,7 @@ public final class Unsafe {
      * Gets a {@code long} field from the given object,
      * using {@code volatile} semantics.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
@@ -203,7 +213,7 @@ public final class Unsafe {
      * Stores a {@code long} field into the given object,
      * using {@code volatile} semantics.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
@@ -214,7 +224,7 @@ public final class Unsafe {
      * Gets an {@code obj} field from the given object,
      * using {@code volatile} semantics.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
@@ -225,7 +235,7 @@ public final class Unsafe {
      * Stores an {@code obj} field into the given object,
      * using {@code volatile} semantics.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
@@ -236,25 +246,33 @@ public final class Unsafe {
     /**
      * Gets an {@code int} field from the given object.
      *
-     * @param obj non-null; object containing int field
+     * @param obj non-{@code null}; object containing int field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native int getInt(Object obj, long offset);
 
     /**
      * Stores an {@code int} field into the given object.
      *
-     * @param obj non-null; object containing int field
+     * @param obj non-{@code null}; object containing int field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putInt(Object obj, long offset, int newValue);
 
     /**
      * Lazy set an int field.
+     *
+     * @param obj non-{@code null}; object containing the field
+     * @param offset offset to the field within {@code obj}
+     * @param newValue the value to store
      */
     @FastNative
     public native void putOrderedInt(Object obj, long offset, int newValue);
@@ -262,25 +280,33 @@ public final class Unsafe {
     /**
      * Gets a {@code long} field from the given object.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native long getLong(Object obj, long offset);
 
     /**
      * Stores a {@code long} field into the given object.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putLong(Object obj, long offset, long newValue);
 
     /**
      * Lazy set a long field.
+     *
+     * @param obj non-{@code null}; object containing the field
+     * @param offset offset to the field within {@code obj}
+     * @param newValue the value to store
      */
     @FastNative
     public native void putOrderedLong(Object obj, long offset, long newValue);
@@ -288,25 +314,33 @@ public final class Unsafe {
     /**
      * Gets an {@code obj} field from the given object.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native Object getObject(Object obj, long offset);
 
     /**
      * Stores an {@code obj} field into the given object.
      *
-     * @param obj non-null; object containing the field
+     * @param obj non-{@code null}; object containing the field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putObject(Object obj, long offset, Object newValue);
 
     /**
      * Lazy set an object field.
+     *
+     * @param obj non-{@code null}; object containing the field
+     * @param offset offset to the field within {@code obj}
+     * @param newValue the value to store
      */
     @FastNative
     public native void putOrderedObject(Object obj, long offset,
@@ -315,47 +349,55 @@ public final class Unsafe {
     /**
      * Gets a {@code boolean} field from the given object.
      *
-     * @param obj non-null; object containing boolean field
+     * @param obj non-{@code null}; object containing boolean field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native boolean getBoolean(Object obj, long offset);
 
     /**
      * Stores a {@code boolean} field into the given object.
      *
-     * @param obj non-null; object containing boolean field
+     * @param obj non-{@code null}; object containing boolean field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putBoolean(Object obj, long offset, boolean newValue);
 
     /**
      * Gets a {@code byte} field from the given object.
      *
-     * @param obj non-null; object containing byte field
+     * @param obj non-{@code null}; object containing byte field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native byte getByte(Object obj, long offset);
 
     /**
      * Stores a {@code byte} field into the given object.
      *
-     * @param obj non-null; object containing byte field
+     * @param obj non-{@code null}; object containing byte field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putByte(Object obj, long offset, byte newValue);
 
     /**
      * Gets a {@code char} field from the given object.
      *
-     * @param obj non-null; object containing char field
+     * @param obj non-{@code null}; object containing char field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
@@ -365,7 +407,7 @@ public final class Unsafe {
     /**
      * Stores a {@code char} field into the given object.
      *
-     * @param obj non-null; object containing char field
+     * @param obj non-{@code null}; object containing char field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
@@ -375,7 +417,7 @@ public final class Unsafe {
     /**
      * Gets a {@code short} field from the given object.
      *
-     * @param obj non-null; object containing short field
+     * @param obj non-{@code null}; object containing short field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
@@ -385,7 +427,7 @@ public final class Unsafe {
     /**
      * Stores a {@code short} field into the given object.
      *
-     * @param obj non-null; object containing short field
+     * @param obj non-{@code null}; object containing short field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
@@ -395,7 +437,7 @@ public final class Unsafe {
     /**
      * Gets a {@code float} field from the given object.
      *
-     * @param obj non-null; object containing float field
+     * @param obj non-{@code null}; object containing float field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
@@ -405,7 +447,7 @@ public final class Unsafe {
     /**
      * Stores a {@code float} field into the given object.
      *
-     * @param obj non-null; object containing float field
+     * @param obj non-{@code null}; object containing float field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
@@ -415,7 +457,7 @@ public final class Unsafe {
     /**
      * Gets a {@code double} field from the given object.
      *
-     * @param obj non-null; object containing double field
+     * @param obj non-{@code null}; object containing double field
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
@@ -425,7 +467,7 @@ public final class Unsafe {
     /**
      * Stores a {@code double} field into the given object.
      *
-     * @param obj non-null; object containing double field
+     * @param obj non-{@code null}; object containing double field
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
@@ -455,7 +497,7 @@ public final class Unsafe {
      * <p>See {@link java.util.concurrent.locks.LockSupport} for more
      * in-depth information of the behavior of this method.</p>
      *
-     * @param obj non-null; the object to unpark
+     * @param obj non-{@code null}; the object to unpark
      */
     @FastNative
     public native void unpark(Object obj);
@@ -515,6 +557,8 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code byte} value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native byte getByte(long address);
 
@@ -524,6 +568,8 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putByte(long address, byte x);
 
@@ -569,6 +615,8 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code int} value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native int getInt(long address);
 
@@ -578,6 +626,8 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putInt(long address, int x);
 
@@ -588,6 +638,8 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code long} value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native long getLong(long address);
 
@@ -597,6 +649,8 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putLong(long address, long x);
 
@@ -606,6 +660,8 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code long} value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native float getFloat(long address);
 
@@ -615,6 +671,8 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putFloat(long address, float x);
 
@@ -624,6 +682,8 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code double} value
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native double getDouble(long address);
 
@@ -633,6 +693,8 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putDouble(long address, double x);
 
@@ -668,6 +730,8 @@ public final class Unsafe {
      * @param dstAddr address of the destination memory to copy to
      * @param bytes number of bytes to copy
      */
+    // Android-added: stable CorePlatformAPI
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void copyMemory(long srcAddr, long dstAddr, long bytes);
 
