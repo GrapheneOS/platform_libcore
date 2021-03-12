@@ -31,7 +31,7 @@ import java.lang.ReflectiveOperationException;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class ZygoteHooks {
     private static long token;
     private static Method enableMemoryMappedDataMethod;
@@ -44,13 +44,13 @@ public final class ZygoteHooks {
      * Called by the zygote when starting up. It marks the point when any thread
      * start should be an error, as only internal daemon threads are allowed there.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static native void startZygoteNoThreadCreation();
 
     /**
      * Called when the zygote begins preloading classes and data.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void onBeginPreload() {
         com.android.i18n.system.ZygoteHooks.onBeginPreload();
 
@@ -73,7 +73,7 @@ public final class ZygoteHooks {
     /**
      * Called when the zygote has completed preloading classes and data.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void onEndPreload() {
         com.android.i18n.system.ZygoteHooks.onEndPreload();
 
@@ -88,7 +88,7 @@ public final class ZygoteHooks {
      * softly- and final-reachable objects, along with any other garbage.
      * This is only useful just before a fork().
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void gcAndFinalize() {
         final VMRuntime runtime = VMRuntime.getRuntime();
 
@@ -104,7 +104,7 @@ public final class ZygoteHooks {
      * Called by the zygote when startup is finished. It marks the point when it is
      * conceivable that threads would be started again, e.g., restarting daemons.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static native void stopZygoteNoThreadCreation();
 
     /**
@@ -114,7 +114,7 @@ public final class ZygoteHooks {
      * process. {@code postForkCommon} is called after {@code postForkChild} in
      * the child process.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void preFork() {
         Daemons.stop();
         token = nativePreFork();
@@ -127,7 +127,7 @@ public final class ZygoteHooks {
      *
      * @param runtimeFlags The flags listed in com.android.internal.os.Zygote passed to the runtime.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkSystemServer(int runtimeFlags) {
         nativePostForkSystemServer(runtimeFlags);
     }
@@ -141,7 +141,7 @@ public final class ZygoteHooks {
      * @param instructionSet The instruction set of the child, used to determine
      *                       whether to use a native bridge.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkChild(int runtimeFlags, boolean isSystemServer,
             boolean isChildZygote, String instructionSet) {
         nativePostForkChild(token, runtimeFlags, isSystemServer, isChildZygote, instructionSet);
@@ -164,7 +164,7 @@ public final class ZygoteHooks {
      * every fork. In the child process, this method is called after
      * {@code postForkChild}.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkCommon() {
         // Notify the runtime before creating new threads.
         nativePostZygoteFork();
@@ -176,7 +176,7 @@ public final class ZygoteHooks {
      * The answer may change from false to true dynamically, but not in the other
      * direction.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean indefiniteThreadSuspensionOK() {
         // TODO: Make this return true if we're done with JIT compilation.
         //

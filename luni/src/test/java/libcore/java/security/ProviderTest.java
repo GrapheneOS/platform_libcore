@@ -36,6 +36,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1068,6 +1069,21 @@ public class ProviderTest extends TestCaseWithRules {
         p.put("class1.algorithm1", "impl1");
         assertEquals("impl1", p.getOrDefault("class1.algorithm1", "default"));
         assertEquals("default", p.getOrDefault("thisIsNotInTheProvider", "default"));
+    }
+
+    public void test_elements() {
+        Provider p = new MockProvider("MockProvider");
+        p.put("class1.algorithm1", "impl1");
+        Enumeration<Object> elements = p.elements();
+        boolean isImpl1Found = false;
+        while (elements.hasMoreElements()) {
+            if ("impl1".equals(elements.nextElement())) {
+                isImpl1Found = true;
+                break;
+            }
+        }
+
+        assertTrue("impl1 is not found.", isImpl1Found);
     }
 
     private static class Pair<A, B> {

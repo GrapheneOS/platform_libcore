@@ -136,7 +136,7 @@ public final class ZoneInfo extends TimeZone {
      */
     // VisibleForTesting
     public static ZoneInfo createZoneInfo(ZoneInfoData delegate, long timeInMillis) {
-        Integer latestDstSavings = delegate.getLatestDstSavings(timeInMillis);
+        Integer latestDstSavings = delegate.getLatestDstSavingsMillis(timeInMillis);
         boolean useDst = latestDstSavings != null;
         int dstSavings = latestDstSavings == null ? 0 : latestDstSavings;
         return new ZoneInfo(delegate, dstSavings, useDst);

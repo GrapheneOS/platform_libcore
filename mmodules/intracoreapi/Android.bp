@@ -41,6 +41,14 @@ filegroup {
     ],
 }
 
+// Referenced implicitly from art.module.intra.core.api.
+filegroup {
+    name: "art.module.intra.core.api-incompatibilities.api.public.latest",
+    srcs: [
+        "api/intra/last-incompatibilities.txt",
+    ],
+}
+
 // A library containing the intra-core API stubs of the ART module.
 //
 // Intra-core APIs are only intended for the use of other core library modules.
