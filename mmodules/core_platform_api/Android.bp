@@ -78,6 +78,14 @@ filegroup {
     ],
 }
 
+// Referenced implicitly from legacy.art.module.platform.api.
+filegroup {
+    name: "legacy.art.module.platform.api-incompatibilities.api.public.latest",
+    srcs: [
+        "api/legacy_platform/last-incompatibilities.txt",
+    ],
+}
+
 java_sdk_library {
     name: "legacy.art.module.platform.api",
     defaults: ["art-module-platform-api-defaults"],
@@ -100,6 +108,14 @@ filegroup {
     name: "stable.art.module.platform.api-removed.api.public.latest",
     srcs: [
         "api/stable_platform/last-removed.txt",
+    ],
+}
+
+// Referenced implicitly from stable.art.module.platform.api.
+filegroup {
+    name: "stable.art.module.platform.api-incompatibilities.api.public.latest",
+    srcs: [
+        "api/stable_platform/last-incompatibilities.txt",
     ],
 }
 

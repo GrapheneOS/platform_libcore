@@ -42,6 +42,12 @@ package android.system {
 
 package dalvik.system {
 
+  public class AnnotatedStackTraceElement {
+    method public Object getBlockedOn();
+    method public Object[] getHeldLocks();
+    method public StackTraceElement getStackTraceElement();
+  }
+
   public abstract class SocketTagger {
     ctor public SocketTagger();
     method public static dalvik.system.SocketTagger get();
@@ -143,6 +149,36 @@ package dalvik.system {
     field public static final int ACCESS_METHOD_LINKING = 3; // 0x3
     field public static final int ACCESS_METHOD_NONE = 0; // 0x0
     field public static final int ACCESS_METHOD_REFLECTION = 1; // 0x1
+  }
+
+  public final class ZygoteHooks {
+    method public static void gcAndFinalize();
+    method public static boolean indefiniteThreadSuspensionOK();
+    method public static void onBeginPreload();
+    method public static void onEndPreload();
+    method public static void postForkChild(int, boolean, boolean, String);
+    method public static void postForkCommon();
+    method public static void postForkSystemServer(int);
+    method public static void preFork();
+    method public static void startZygoteNoThreadCreation();
+    method public static void stopZygoteNoThreadCreation();
+  }
+
+}
+
+package java.util.concurrent {
+
+  public class CompletableFuture<T> implements java.util.concurrent.CompletionStage<T> java.util.concurrent.Future<T> {
+    method public java.util.concurrent.CompletableFuture<T> completeOnTimeout(T, long, java.util.concurrent.TimeUnit);
+    method public static <U> java.util.concurrent.CompletableFuture<U> failedFuture(Throwable);
+  }
+
+}
+
+package java.util.zip {
+
+  public class ZipEntry implements java.lang.Cloneable {
+    method public long getDataOffset();
   }
 
 }

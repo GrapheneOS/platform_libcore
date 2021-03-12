@@ -23,7 +23,7 @@ package dalvik.system;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class AnnotatedStackTraceElement {
     /**
      * The traditional StackTraceElement describing the Java stack frame.
@@ -36,7 +36,7 @@ public class AnnotatedStackTraceElement {
     private Object[] heldLocks;
 
     /**
-     * If this frame denotes the top of stack, <code>blockedOn<code> will hold
+     * If this frame denotes the top of stack, {@code blockedOn} will hold
      * the object this thread is waiting to lock, or waiting on, if any. May be
      * null.
      */
@@ -47,25 +47,34 @@ public class AnnotatedStackTraceElement {
     }
 
     /**
-     * Returns the StackTraceElement describing the Java stack frame.
+     * Returns the {@link StackTraceElement} describing the Java stack frame.
+     *
+     * @return {@link StackTraceElement} describing the Java stack frame.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public StackTraceElement getStackTraceElement() {
         return stackTraceElement;
     }
 
     /**
      * Returns the objects this stack frame is synchronized on.
+     * May be {@code null}.
+     *
+     * @return array of objects current frame is syncronized on.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public Object[] getHeldLocks() {
         return heldLocks;
     }
 
     /**
      * Returns the object this stack frame is waiting on for synchronization.
+     * May be {@code null}.
+     *
+     * @return object this thread is waiting to lock, or waiting on, if any,
+     *         or {@code null}, if none.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public Object getBlockedOn() {
         return blockedOn;
     }

@@ -100,11 +100,6 @@
   name: "org.apache.harmony.security.tests.java.security.SignatureTest#testUpdatebyteArrayintint2"
 },
 {
-  description: "Android doesn't allow null parent.",
-  result: EXEC_FAILED,
-  name: "tests.java.security.SecureClassLoaderTest#testSecureClassLoaderClassLoader"
-},
-{
   description: "not supported",
   result: EXEC_FAILED,
   names: [
