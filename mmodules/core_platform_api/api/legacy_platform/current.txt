@@ -781,12 +781,6 @@ package org.apache.harmony.dalvik.ddmc {
 
   public class DdmVmInternal {
     method public static void enableRecentAllocations(boolean);
-    method @dalvik.annotation.optimization.FastNative public static boolean getRecentAllocationStatus();
-    method @dalvik.annotation.optimization.FastNative public static byte[] getRecentAllocations();
-    method public static StackTraceElement[] getStackTraceById(int);
-    method public static byte[] getThreadStats();
-    method @dalvik.annotation.optimization.FastNative public static boolean heapInfoNotify(int);
-    method public static boolean heapSegmentNotify(int, int, boolean);
     method public static void threadNotify(boolean);
   }
 
