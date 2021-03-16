@@ -1650,6 +1650,7 @@ class InetAddress implements java.io.Serializable {
      * cache, nor any caching DNS servers between you and the canonical server.
      * @hide
      */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void clearDnsCache() {
         impl.clearAddressCache();
     }
@@ -1664,8 +1665,9 @@ class InetAddress implements java.io.Serializable {
      * @param netId the network to use for host resolution.
      * @return the {@code InetAddress} instance representing the host.
      * @throws UnknownHostException if the address lookup fails.
-     * @hide internal use only
+     * @hide
      */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static InetAddress getByNameOnNet(String host, int netId) throws UnknownHostException {
         return impl.lookupAllHostAddr(host, netId)[0];
     }
@@ -1678,8 +1680,9 @@ class InetAddress implements java.io.Serializable {
      * @param netId the network to use for host resolution.
      * @return the array of addresses associated with the specified host.
      * @throws UnknownHostException if the address lookup fails.
-     * @hide internal use only
+     * @hide
      */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static InetAddress[] getAllByNameOnNet(String host, int netId) throws UnknownHostException {
         return impl.lookupAllHostAddr(host, netId).clone();
     }

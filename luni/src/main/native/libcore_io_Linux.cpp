@@ -257,12 +257,7 @@ static void throwException(JNIEnv* env, jclass exceptionClass, jmethodID ctor3, 
 
 static void throwErrnoException(JNIEnv* env, const char* functionName) {
     int error = errno;
-    jclass errnoExceptionClass = JniConstants::GetErrnoExceptionClass(env);
-    static jmethodID ctor3 = env->GetMethodID(errnoExceptionClass,
-            "<init>", "(Ljava/lang/String;ILjava/lang/Throwable;)V");
-    static jmethodID ctor2 = env->GetMethodID(errnoExceptionClass,
-            "<init>", "(Ljava/lang/String;I)V");
-    throwException(env, errnoExceptionClass, ctor3, ctor2, functionName, error);
+    jniThrowErrnoException(env, functionName, error);
 }
 
 static void throwGaiException(JNIEnv* env, const char* functionName, int error) {

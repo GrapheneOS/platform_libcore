@@ -166,6 +166,16 @@ package dalvik.system {
 
 }
 
+package java.net {
+
+  public class InetAddress implements java.io.Serializable {
+    method public static void clearDnsCache();
+    method public static java.net.InetAddress[] getAllByNameOnNet(String, int) throws java.net.UnknownHostException;
+    method public static java.net.InetAddress getByNameOnNet(String, int) throws java.net.UnknownHostException;
+  }
+
+}
+
 package java.util.concurrent {
 
   public class CompletableFuture<T> implements java.util.concurrent.CompletionStage<T> java.util.concurrent.Future<T> {
