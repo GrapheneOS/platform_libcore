@@ -261,6 +261,21 @@ package libcore.net.event {
 
 }
 
+package libcore.net.http {
+
+  public interface Dns {
+    method public java.util.List<java.net.InetAddress> lookup(String) throws java.net.UnknownHostException;
+  }
+
+  public class HttpURLConnectionFactory {
+    method public static libcore.net.http.HttpURLConnectionFactory createInstance();
+    method public java.net.URLConnection openConnection(java.net.URL, javax.net.SocketFactory, java.net.Proxy) throws java.io.IOException;
+    method public void setDns(libcore.net.http.Dns);
+    method public void setNewConnectionPool(int, long, java.util.concurrent.TimeUnit);
+  }
+
+}
+
 package libcore.util {
 
   public class FP16 {

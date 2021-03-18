@@ -170,6 +170,10 @@ java_library {
         ":openjdk_lambda_stub_files",
         ":openjdk_generated_annotation_stub_files",
         ":app-compat-annotations-source",
+
+        // Use the okhttp source too to allow libcore code to reference it
+        // directly.
+        ":okhttp_impl_files",
     ],
 
     sdk_version: "none",
@@ -187,6 +191,9 @@ java_library {
     plugins: [
         "compat-changeid-annotation-processor",
         "unsupportedappusage-annotation-processor",
+    ],
+    libs: [
+        "conscrypt.module.intra.core.api",
     ],
 }
 

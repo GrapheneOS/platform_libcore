@@ -233,6 +233,8 @@ filegroup {
         "luni/src/main/java/libcore/net/InetAddressUtils.java",
         "luni/src/main/java/libcore/net/NetworkSecurityPolicy.java",
         "luni/src/main/java/libcore/net/event/NetworkEventDispatcher.java",
+        "luni/src/main/java/libcore/net/http/Dns.java",
+        "luni/src/main/java/libcore/net/http/HttpURLConnectionFactory.java",
         "luni/src/main/java/libcore/util/ArrayUtils.java",
         "luni/src/main/java/libcore/util/BasicLruCache.java",
         "luni/src/main/java/libcore/util/EmptyArray.java",
