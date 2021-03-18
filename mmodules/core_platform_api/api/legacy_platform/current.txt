@@ -664,6 +664,20 @@ package libcore.net.event {
 
 }
 
+package libcore.net.http {
+
+  public interface Dns extends com.android.okhttp.internalandroidapi.Dns {
+  }
+
+  public class HttpURLConnectionFactory {
+    method public static libcore.net.http.HttpURLConnectionFactory createInstance();
+    method public java.net.URLConnection openConnection(java.net.URL, javax.net.SocketFactory, java.net.Proxy) throws java.io.IOException;
+    method public void setDns(libcore.net.http.Dns);
+    method public void setNewConnectionPool(int, long, java.util.concurrent.TimeUnit);
+  }
+
+}
+
 package libcore.util {
 
   public final class EmptyArray {

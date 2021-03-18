@@ -175,6 +175,9 @@ public final class ZygoteHooks {
      * Is it safe to keep all ART daemon threads stopped indefinitely in the zygote?
      * The answer may change from false to true dynamically, but not in the other
      * direction.
+     *
+     * @return {@code true} if it's safe to keep all ART daemon threads stopped
+     *         indefinitely in the zygote; and {@code false} otherwise
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean indefiniteThreadSuspensionOK() {
