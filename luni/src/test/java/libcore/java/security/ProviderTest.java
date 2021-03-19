@@ -223,13 +223,13 @@ public class ProviderTest extends TestCaseWithRules {
         assertProviderProperties(providers[2], "CertPathProvider",
             "sun.security.provider.CertPathProvider");
         assertProviderProperties(providers[3], "AndroidKeyStoreBCWorkaround",
-            "android.security.keystore.AndroidKeyStoreBCWorkaroundProvider");
+            "android.security.keystore2.AndroidKeyStoreBCWorkaroundProvider");
         assertProviderProperties(providers[4], "BC",
             "com.android.org.bouncycastle.jce.provider.BouncyCastleProvider");
         assertProviderProperties(providers[5], "HarmonyJSSE",
             "com.android.org.conscrypt.JSSEProvider");
         assertProviderProperties(providers[6], "AndroidKeyStore",
-            "android.security.keystore.AndroidKeyStoreProvider");
+            "android.security.keystore2.AndroidKeyStoreProvider");
     }
 
     private void assertProviderProperties(Provider p, String name, String className) {
