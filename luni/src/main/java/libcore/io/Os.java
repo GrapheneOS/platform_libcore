@@ -26,6 +26,7 @@ import android.system.StructCapUserHeader;
 import android.system.StructGroupReq;
 import android.system.StructIfaddrs;
 import android.system.StructLinger;
+import android.system.StructMsghdr;
 import android.system.StructPasswd;
 import android.system.StructPollfd;
 import android.system.StructRlimit;
@@ -153,10 +154,12 @@ public interface Os {
     public int readv(FileDescriptor fd, Object[] buffers, int[] offsets, int[] byteCounts) throws ErrnoException, InterruptedIOException;
     public int recvfrom(FileDescriptor fd, ByteBuffer buffer, int flags, InetSocketAddress srcAddress) throws ErrnoException, SocketException;
     public int recvfrom(FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount, int flags, InetSocketAddress srcAddress) throws ErrnoException, SocketException;
+    public int recvmsg(FileDescriptor fd, StructMsghdr msg, int flags) throws ErrnoException, SocketException;
     @UnsupportedAppUsage
     public void remove(String path) throws ErrnoException;
     public void removexattr(String path, String name) throws ErrnoException;
     public void rename(String oldPath, String newPath) throws ErrnoException;
+    public int sendmsg(FileDescriptor fd, StructMsghdr msg, int flags) throws ErrnoException, SocketException;
     public int sendto(FileDescriptor fd, ByteBuffer buffer, int flags, InetAddress inetAddress, int port) throws ErrnoException, SocketException;
     public int sendto(FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount, int flags, InetAddress inetAddress, int port) throws ErrnoException, SocketException;
     public int sendto(FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount, int flags, SocketAddress address) throws ErrnoException, SocketException;

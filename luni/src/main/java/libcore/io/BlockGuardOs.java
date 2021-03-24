@@ -23,6 +23,7 @@ import android.system.Int64Ref;
 import android.system.OsConstants;
 import android.system.StructAddrinfo;
 import android.system.StructLinger;
+import android.system.StructMsghdr;
 import android.system.StructPollfd;
 import android.system.StructStat;
 import android.system.StructStatVfs;
@@ -353,6 +354,11 @@ public class BlockGuardOs extends ForwardingOs {
         return super.recvfrom(fd, bytes, byteOffset, byteCount, flags, srcAddress);
     }
 
+    @Override public int recvmsg(FileDescriptor fd, StructMsghdr msg, int flags) throws ErrnoException, SocketException {
+        BlockGuard.getThreadPolicy().onNetwork();
+        return super.recvmsg(fd, msg, flags);
+    }
+
     @UnsupportedAppUsage
     @Override public void remove(String path) throws ErrnoException {
         BlockGuard.getThreadPolicy().onWriteToDisk();
@@ -371,6 +377,11 @@ public class BlockGuardOs extends ForwardingOs {
     @Override public long sendfile(FileDescriptor outFd, FileDescriptor inFd, Int64Ref offset, long byteCount) throws ErrnoException {
         BlockGuard.getThreadPolicy().onWriteToDisk();
         return super.sendfile(outFd, inFd, offset, byteCount);
+    }
+
+    @Override public int sendmsg(FileDescriptor fd, StructMsghdr msg, int flags) throws ErrnoException, SocketException {
+        BlockGuard.getThreadPolicy().onNetwork();
+        return super.sendmsg(fd, msg, flags);
     }
 
     @Override public int sendto(FileDescriptor fd, ByteBuffer buffer, int flags, InetAddress inetAddress, int port) throws ErrnoException, SocketException {

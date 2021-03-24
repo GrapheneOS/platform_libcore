@@ -51,6 +51,10 @@ public:
         }
     }
 
+    jobject getObject() {
+        return mObject;
+    }
+
 private:
     JNIEnv* const mEnv;
     const jobject mObject;
