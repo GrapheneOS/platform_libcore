@@ -200,6 +200,10 @@ java_library {
 platform_compat_config {
     name: "libcore-platform-compat-config",
     src: ":core-all",
+    visibility: [
+        "//art/build/apex",
+        "//art/build/sdk",
+    ],
 }
 
 // A system modules definition for use by core library targets only. It only

@@ -85,10 +85,12 @@ package android.system {
     method public static int readv(java.io.FileDescriptor, Object[], int[], int[]) throws android.system.ErrnoException, java.io.InterruptedIOException;
     method public static int recvfrom(java.io.FileDescriptor, java.nio.ByteBuffer, int, java.net.InetSocketAddress) throws android.system.ErrnoException, java.net.SocketException;
     method public static int recvfrom(java.io.FileDescriptor, byte[], int, int, int, java.net.InetSocketAddress) throws android.system.ErrnoException, java.net.SocketException;
+    method public static int recvmsg(@NonNull java.io.FileDescriptor, @NonNull android.system.StructMsghdr, int) throws android.system.ErrnoException, java.net.SocketException;
     method public static void remove(String) throws android.system.ErrnoException;
     method public static void removexattr(String, String) throws android.system.ErrnoException;
     method public static void rename(String, String) throws android.system.ErrnoException;
     method public static long sendfile(java.io.FileDescriptor, java.io.FileDescriptor, android.system.Int64Ref, long) throws android.system.ErrnoException;
+    method public static int sendmsg(@NonNull java.io.FileDescriptor, @NonNull android.system.StructMsghdr, int) throws android.system.ErrnoException, java.net.SocketException;
     method public static int sendto(java.io.FileDescriptor, java.nio.ByteBuffer, int, java.net.InetAddress, int) throws android.system.ErrnoException, java.net.SocketException;
     method public static int sendto(java.io.FileDescriptor, byte[], int, int, int, java.net.InetAddress, int) throws android.system.ErrnoException, java.net.SocketException;
     method public static int sendto(@NonNull java.io.FileDescriptor, @NonNull byte[], int, int, int, @Nullable java.net.SocketAddress) throws android.system.ErrnoException, java.net.SocketException;
@@ -634,6 +636,22 @@ package android.system {
     field public static final int _SC_XOPEN_UNIX;
     field public static final int _SC_XOPEN_VERSION;
     field public static final int _SC_XOPEN_XCU_VERSION;
+  }
+
+  public final class StructCmsghdr {
+    ctor public StructCmsghdr(int, int, short);
+    ctor public StructCmsghdr(int, int, @NonNull byte[]);
+    field @NonNull public final byte[] cmsg_data;
+    field public final int cmsg_level;
+    field public final int cmsg_type;
+  }
+
+  public final class StructMsghdr {
+    ctor public StructMsghdr(@Nullable java.net.SocketAddress, @NonNull java.nio.ByteBuffer[], @Nullable android.system.StructCmsghdr[], int);
+    field @Nullable public android.system.StructCmsghdr[] msg_control;
+    field public int msg_flags;
+    field @NonNull public final java.nio.ByteBuffer[] msg_iov;
+    field @Nullable public java.net.SocketAddress msg_name;
   }
 
   public final class StructPollfd {
