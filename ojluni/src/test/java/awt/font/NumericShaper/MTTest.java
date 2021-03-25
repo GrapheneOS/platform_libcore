@@ -82,7 +82,9 @@ public class MTTest {
         th8.start();
 
         try {
-            for (int i = 0; runrun && i < 180; i++) {
+            // Android-changed: Shorten the test from 180s to 15s. http://b/183290003
+            // for (int i = 0; runrun && i < 180; i++) {
+            for (int i = 0; runrun && i < 15; i++) {
                 Thread.sleep(1000); // 1 seconds
             }
             runrun = false;
