@@ -792,6 +792,9 @@ public class OsTest {
 
     @Test
     public void test_sendmsg_af_inet_4K() throws Exception {
+        // UDP GRO not required to be enabled on kernels prior to 5.4
+        assumeTrue(kernelIsAtLeast(5, 4));
+
         InetSocketAddress loopbackAddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"),
                 10234);
         StructCmsghdr[] cmsg = new StructCmsghdr[1];
@@ -815,6 +818,9 @@ public class OsTest {
 
     @Test
     public void test_sendmsg_af_inet6_4K() throws Exception {
+        // UDP GRO not required to be enabled on kernels prior to 5.4
+        assumeTrue(kernelIsAtLeast(5, 4));
+
         InetSocketAddress loopbackAddr = new InetSocketAddress(InetAddress.getByName("::1"), 10234);
         StructCmsghdr[] cmsg = new StructCmsghdr[1];
         cmsg[0] = new StructCmsghdr(SOL_UDP, UDP_SEGMENT, (short) 1400);
@@ -837,6 +843,9 @@ public class OsTest {
 
     @Test
     public void test_sendmsg_af_inet6_4K_directBuffer() throws Exception {
+        // UDP GRO not required to be enabled on kernels prior to 5.4
+        assumeTrue(kernelIsAtLeast(5, 4));
+
         InetSocketAddress loopbackAddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"),
                                                                10234);
         StructCmsghdr[] cmsg = new StructCmsghdr[1];
@@ -860,6 +869,9 @@ public class OsTest {
 
     @Test
     public void test_sendmsg_af_inet_16K_recvparts() throws Exception {
+        // UDP GRO not required to be enabled on kernels prior to 5.4
+        assumeTrue(kernelIsAtLeast(5, 4));
+
         InetSocketAddress loopbackAddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"),
                                                                10234);
         StructCmsghdr[] cmsg = new StructCmsghdr[1];
@@ -886,6 +898,9 @@ public class OsTest {
 
     @Test
     public void test_sendmsg_af_inet_16K_reciveall() throws Exception {
+        // UDP GRO not required to be enabled on kernels prior to 5.4
+        assumeTrue(kernelIsAtLeast(5, 4));
+
         InetSocketAddress loopbackAddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"),
                                                                10234);
         StructCmsghdr[] cmsg = new StructCmsghdr[1];
@@ -905,7 +920,10 @@ public class OsTest {
     }
 
     @Test
-    public void test_sendmsg_af_inet_16K_reciveall_without_recv_msgname() throws Exception {
+    public void test_sendmsg_af_inet_16K_receiveall_without_recv_msgname() throws Exception {
+        // UDP GRO not required to be enabled on kernels prior to 5.4
+        assumeTrue(kernelIsAtLeast(5, 4));
+
         InetSocketAddress loopbackAddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"),
                                                                10234);
         StructCmsghdr[] cmsg = new StructCmsghdr[1];
@@ -927,6 +945,9 @@ public class OsTest {
 
     @Test
     public void test_sendmsg_af_inet_16K_without_send_msgcontrl() throws Exception {
+        // UDP GRO not required to be enabled on kernels prior to 5.4
+        assumeTrue(kernelIsAtLeast(5, 4));
+
         InetSocketAddress loopbackAddr = new InetSocketAddress(InetAddress.getByName("127.0.0.1"),
                                                                10234);
 
