@@ -145,6 +145,7 @@ package android.system {
     field public static final int AF_PACKET;
     field public static final int AF_UNIX;
     field public static final int AF_UNSPEC;
+    field public static final int AF_VSOCK;
     field public static final int AI_ADDRCONFIG;
     field public static final int AI_ALL;
     field public static final int AI_CANONNAME;
@@ -538,6 +539,10 @@ package android.system {
     field public static final int TCP_USER_TIMEOUT;
     field public static final int UDP_GRO;
     field public static final int UDP_SEGMENT;
+    field public static final int VMADDR_CID_ANY;
+    field public static final int VMADDR_CID_HOST;
+    field public static final int VMADDR_CID_LOCAL;
+    field public static final int VMADDR_PORT_ANY;
     field public static final int WCONTINUED;
     field public static final int WEXITED;
     field public static final int WNOHANG;

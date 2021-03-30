@@ -104,6 +104,12 @@ package android.system {
     method public static android.system.UnixSocketAddress createFileSystem(String);
   }
 
+  public final class VmSocketAddress extends java.net.SocketAddress {
+    ctor public VmSocketAddress(int, int);
+    method public int getSvmCid();
+    method public int getSvmPort();
+  }
+
 }
 
 package com.android.okhttp.internalandroidapi {

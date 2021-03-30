@@ -29,6 +29,7 @@ import android.system.StructStat;
 import android.system.StructTimeval;
 import android.system.StructUcred;
 import android.system.UnixSocketAddress;
+import android.system.VmSocketAddress;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -74,6 +75,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNoException;
 import static org.junit.Assume.assumeTrue;
 
 @RunWith(JUnit4.class)
@@ -690,6 +692,88 @@ public class OsTest {
         }
 
         Os.close(fd);
+    }
+
+    @Test
+    public void test_VmSocketAddress() {
+        try {
+            final VmSocketAddress addr = new VmSocketAddress(111, 222);
+            assertEquals(111, addr.getSvmPort());
+            assertEquals(222, addr.getSvmCid());
+        } catch (UnsupportedOperationException ignore) {
+            assumeNoException(ignore);  // the platform does not support virtio-vsock
+        }
+    }
+
+    private static Thread createVmSocketEchoServer(final FileDescriptor serverFd) {
+        return new Thread(new Runnable() {
+            public void run() {
+                final VmSocketAddress peer =
+                    new VmSocketAddress(VMADDR_PORT_ANY, VMADDR_CID_ANY);
+
+                try {
+                    final FileDescriptor clientFd = Os.accept(serverFd, peer);
+                    try {
+                        final byte[] requestBuf = new byte[256];
+                        final int len = Os.read(clientFd, requestBuf, 0, requestBuf.length);
+                        final String request =
+                            new String(requestBuf, 0, len, StandardCharsets.UTF_8);
+                        final byte[] responseBuf =
+                            request.toUpperCase(Locale.ROOT).getBytes(StandardCharsets.UTF_8);
+                        Os.write(clientFd, responseBuf, 0, responseBuf.length);
+                    } finally {
+                        Os.close(clientFd);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
+
+    @Test
+    public void test_VmSocket() throws Exception {
+        try {
+            final VmSocketAddress serverAddr = new VmSocketAddress(12345, VMADDR_CID_LOCAL);
+
+            final FileDescriptor serverFd = Os.socket(AF_VSOCK, SOCK_STREAM, 0);
+
+            try {
+                Os.bind(serverFd, serverAddr);
+                Os.listen(serverFd, 3);
+
+                final Thread server = createVmSocketEchoServer(serverFd);
+                server.start();
+
+                final FileDescriptor clientFd = Os.socket(AF_VSOCK, SOCK_STREAM, 0);
+                try {
+                    Os.connect(clientFd, serverAddr);
+
+                    final String request = "hello, world!";
+                    final byte[] requestBuf = request.getBytes(StandardCharsets.UTF_8);
+
+                    assertEquals(requestBuf.length,
+                                 Os.write(clientFd, requestBuf, 0, requestBuf.length));
+
+                    final byte[] responseBuf = new byte[requestBuf.length];
+                    assertEquals(responseBuf.length,
+                                 Os.read(clientFd, responseBuf, 0, responseBuf.length));
+
+                    final String response = new String(responseBuf, StandardCharsets.UTF_8);
+
+                    assertEquals(request.toUpperCase(Locale.ROOT), response);
+                } finally {
+                    Os.close(clientFd);
+                }
+            } finally {
+                Os.close(serverFd);
+            }
+        } catch (UnsupportedOperationException ignore) {
+            assumeNoException(ignore);  // the platform does not support virtio-vsock
+        } catch (ErrnoException e) {
+            assumeTrue(e.errno != EACCES);  // the platform does not allow the test to run
+            throw e;
+        }
     }
 
     private static byte[] getIPv6AddressBytesAtOffset(byte[] packet, int offsetIndex) {

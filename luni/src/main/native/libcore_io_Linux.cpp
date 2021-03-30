@@ -615,6 +615,30 @@ static bool fillInetSocketAddress(JNIEnv* env, jobject javaInetSocketAddress,
     return true;
 }
 
+#if __has_include(<linux/vm_sockets.h>)
+static bool fillVmSocketAddress(JNIEnv* env, jobject javaVmSocketAddress,
+        const sockaddr_storage& ss) {
+    static jfieldID portFid = env->GetFieldID(
+            JniConstants::GetVmSocketAddressClass(env), "svmPort", "I");
+    static jfieldID cidFid = env->GetFieldID(
+            JniConstants::GetVmSocketAddressClass(env), "svmCid", "I");
+
+    if (javaVmSocketAddress == NULL) {
+        return true;
+    }
+
+    if (ss.ss_family != AF_VSOCK) {
+        return false;
+    }
+
+    const sockaddr_vm& svm = reinterpret_cast<const sockaddr_vm&>(ss);
+    env->SetIntField(javaVmSocketAddress, portFid, svm.svm_port);
+    env->SetIntField(javaVmSocketAddress, cidFid, svm.svm_cid);
+
+    return true;
+}
+#endif
+
 static bool fillSocketAddress(JNIEnv* env, jobject javaSocketAddress, const sockaddr_storage& ss,
         const socklen_t& sa_len) {
     if (javaSocketAddress == NULL) {
@@ -625,6 +649,10 @@ static bool fillSocketAddress(JNIEnv* env, jobject javaSocketAddress, const sock
         return fillInetSocketAddress(env, javaSocketAddress, ss);
     } else if (env->IsInstanceOf(javaSocketAddress, JniConstants::GetUnixSocketAddressClass(env))) {
         return fillUnixSocketAddress(env, javaSocketAddress, ss, sa_len);
+#if __has_include(<linux/vm_sockets.h>)
+    } else if (env->IsInstanceOf(javaSocketAddress, JniConstants::GetVmSocketAddressClass(env))) {
+        return fillVmSocketAddress(env, javaSocketAddress, ss);
+#endif
     }
     jniThrowException(env, "java/lang/UnsupportedOperationException",
             "unsupported SocketAddress subclass");
@@ -730,6 +758,24 @@ static bool javaPacketSocketAddressToSockaddr(
     return true;
 }
 
+#if __has_include(<linux/vm_sockets.h>)
+static bool javaVmSocketAddressToSockaddr(
+        JNIEnv* env, jobject javaSocketAddress, sockaddr_storage& ss, socklen_t& sa_len) {
+    static jfieldID portFid = env->GetFieldID(
+            JniConstants::GetVmSocketAddressClass(env), "svmPort", "I");
+    static jfieldID cidFid = env->GetFieldID(
+            JniConstants::GetVmSocketAddressClass(env), "svmCid", "I");
+
+    sockaddr_vm& svm = reinterpret_cast<sockaddr_vm&>(ss);
+    svm.svm_family = AF_VSOCK;
+    svm.svm_port = env->GetIntField(javaSocketAddress, portFid);
+    svm.svm_cid = env->GetIntField(javaSocketAddress, cidFid);
+
+    sa_len = sizeof(svm);
+    return true;
+}
+#endif
+
 static bool javaSocketAddressToSockaddr(
         JNIEnv* env, jobject javaSocketAddress, sockaddr_storage& ss, socklen_t& sa_len) {
     if (javaSocketAddress == NULL) {
@@ -745,6 +791,11 @@ static bool javaSocketAddressToSockaddr(
         return javaPacketSocketAddressToSockaddr(env, javaSocketAddress, ss, sa_len);
     } else if (env->IsInstanceOf(javaSocketAddress, JniConstants::GetUnixSocketAddressClass(env))) {
         return javaUnixSocketAddressToSockaddr(env, javaSocketAddress, ss, sa_len);
+#if __has_include(<linux/vm_sockets.h>)
+    } else if (env->IsInstanceOf(javaSocketAddress,
+                                 JniConstants::GetVmSocketAddressClass(env))) {
+        return javaVmSocketAddressToSockaddr(env, javaSocketAddress, ss, sa_len);
+#endif
     }
     jniThrowException(env, "java/lang/UnsupportedOperationException",
             "unsupported SocketAddress subclass");
