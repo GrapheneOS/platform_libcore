@@ -61,6 +61,7 @@ jclass localeDataClass;
 jclass longClass;
 jclass netlinkSocketAddressClass;
 jclass packetSocketAddressClass;
+jclass vmSocketAddressClass;
 jclass primitiveByteArrayClass;
 jclass stringClass;
 jclass structAddrinfoClass;
@@ -110,6 +111,7 @@ void EnsureJniConstantsInitialized(JNIEnv* env) {
     longClass = findClass(env, "java/lang/Long");
     netlinkSocketAddressClass = findClass(env, "android/system/NetlinkSocketAddress");
     packetSocketAddressClass = findClass(env, "android/system/PacketSocketAddress");
+    vmSocketAddressClass = findClass(env, "android/system/VmSocketAddress");
     primitiveByteArrayClass = findClass(env, "[B");
     stringClass = findClass(env, "java/lang/String");
     structAddrinfoClass = findClass(env, "android/system/StructAddrinfo");
@@ -234,6 +236,11 @@ jclass JniConstants::GetNetlinkSocketAddressClass(JNIEnv* env) {
 jclass JniConstants::GetPacketSocketAddressClass(JNIEnv* env) {
     EnsureJniConstantsInitialized(env);
     return packetSocketAddressClass;
+}
+
+jclass JniConstants::GetVmSocketAddressClass(JNIEnv* env) {
+    EnsureJniConstantsInitialized(env);
+    return vmSocketAddressClass;
 }
 
 jclass JniConstants::GetPrimitiveByteArrayClass(JNIEnv* env) {

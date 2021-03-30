@@ -69,6 +69,7 @@ static void OsConstants_initConstants(JNIEnv* env, jclass c) {
     initConstant(env, c, "AF_PACKET", AF_PACKET);
     initConstant(env, c, "AF_NETLINK", AF_NETLINK);
     initConstant(env, c, "AF_UNIX", AF_UNIX);
+    initConstant(env, c, "AF_VSOCK", AF_VSOCK);
     initConstant(env, c, "AF_UNSPEC", AF_UNSPEC);
     initConstant(env, c, "AI_ADDRCONFIG", AI_ADDRCONFIG);
     initConstant(env, c, "AI_ALL", AI_ALL);
@@ -80,6 +81,10 @@ static void OsConstants_initConstants(JNIEnv* env, jclass c) {
     initConstant(env, c, "AI_PASSIVE", AI_PASSIVE);
     initConstant(env, c, "AI_V4MAPPED", AI_V4MAPPED);
     initConstant(env, c, "ARPHRD_ETHER", ARPHRD_ETHER);
+    initConstant(env, c, "VMADDR_PORT_ANY", VMADDR_PORT_ANY);
+    initConstant(env, c, "VMADDR_CID_ANY", VMADDR_CID_ANY);
+    initConstant(env, c, "VMADDR_CID_LOCAL", VMADDR_CID_LOCAL);
+    initConstant(env, c, "VMADDR_CID_HOST", VMADDR_CID_HOST);
     initConstant(env, c, "ARPHRD_LOOPBACK", ARPHRD_LOOPBACK);
 #if defined(CAP_LAST_CAP)
     initConstant(env, c, "CAP_AUDIT_CONTROL", CAP_AUDIT_CONTROL);

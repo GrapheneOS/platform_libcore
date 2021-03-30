@@ -38,6 +38,12 @@ package android.system {
     field public static final int TIOCOUTQ;
   }
 
+  public final class VmSocketAddress extends java.net.SocketAddress {
+    ctor public VmSocketAddress(int, int);
+    method public int getSvmCid();
+    method public int getSvmPort();
+  }
+
 }
 
 package dalvik.system {

@@ -46,6 +46,7 @@ struct JniConstants {
     static jclass GetLongClass(JNIEnv* env);
     static jclass GetNetlinkSocketAddressClass(JNIEnv* env);
     static jclass GetPacketSocketAddressClass(JNIEnv* env);
+    static jclass GetVmSocketAddressClass(JNIEnv* env);
     static jclass GetPrimitiveByteArrayClass(JNIEnv* env);
     static jclass GetStringClass(JNIEnv* env);
     static jclass GetStructAddrinfoClass(JNIEnv* env);

@@ -155,6 +155,7 @@ filegroup {
         "luni/src/main/java/android/system/StructUcred.java",
         "luni/src/main/java/android/system/StructUtsname.java",
         "luni/src/main/java/android/system/UnixSocketAddress.java",
+        "luni/src/main/java/android/system/VmSocketAddress.java",
         "luni/src/main/java/java/lang/FindBugsSuppressWarnings.java",
         "luni/src/main/java/java/lang/ref/FinalizerReference.java",
         "luni/src/main/java/java/net/DefaultFileNameMap.java",
