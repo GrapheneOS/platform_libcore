@@ -771,7 +771,8 @@ public class OsTest {
         } catch (UnsupportedOperationException ignore) {
             assumeNoException(ignore);  // the platform does not support virtio-vsock
         } catch (ErrnoException e) {
-            assumeTrue(e.errno != EACCES);  // the platform does not allow the test to run
+            // the platform does not support vsock
+            assumeTrue(e.errno != EAFNOSUPPORT && e.errno != EACCES);
             throw e;
         }
     }
