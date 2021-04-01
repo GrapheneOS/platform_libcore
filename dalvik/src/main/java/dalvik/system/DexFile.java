@@ -397,15 +397,11 @@ public final class DexFile {
      * DexPathList to have been initialized for its classes to be resolvable by ART.
      * DexPathList will open the dex files first, finalize `dexElements` and then call this.
      */
-    /*package*/ void verifyInBackground(ClassLoader classLoader, String classLoaderContext) {
-        verifyInBackgroundNative(mCookie, classLoader, classLoaderContext);
+    /*package*/ void verifyInBackground(ClassLoader classLoader) {
+        verifyInBackgroundNative(mCookie, classLoader);
     }
 
-    private static native void verifyInBackgroundNative(Object mCookie, ClassLoader classLoader,
-            String classLoaderContext);
-
-    /*package*/ static native String getClassLoaderContext(ClassLoader classLoader,
-            DexPathList.Element[] elements);
+    private static native void verifyInBackgroundNative(Object mCookie, ClassLoader classLoader);
 
     /*
      * Returns true if the dex file is backed by a valid oat file.

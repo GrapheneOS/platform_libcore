@@ -118,8 +118,7 @@ public class PKCS7 {
      * @throws ParsingException on parsing errors.
      * @throws IOException on other errors.
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+
     public PKCS7(InputStream in) throws ParsingException, IOException {
         DataInputStream dis = new DataInputStream(in);
         byte[] data = new byte[dis.available()];
@@ -146,8 +145,7 @@ public class PKCS7 {
      * @param bytes the encoded bytes.
      * @exception ParsingException on parsing errors.
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+
     public PKCS7(byte[] bytes) throws ParsingException {
         try {
             DerInputStream derin = new DerInputStream(bytes);
@@ -620,8 +618,7 @@ public class PKCS7 {
      * @exception NoSuchAlgorithmException on unrecognized algorithms.
      * @exception SignatureException on signature handling errors.
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+
     public SignerInfo verify(SignerInfo info, InputStream dataInputStream)
     throws NoSuchAlgorithmException, SignatureException, IOException {
         return info.verify(this, dataInputStream);
@@ -636,8 +633,7 @@ public class PKCS7 {
      * @exception NoSuchAlgorithmException on unrecognized algorithms.
      * @exception SignatureException on signature handling errors.
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+
     public SignerInfo[] verify(byte[] bytes)
     throws NoSuchAlgorithmException, SignatureException {
 
@@ -699,8 +695,7 @@ public class PKCS7 {
      * @return a clone of the array of X.509 certificates or null if
      *         none are specified for the content type.
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+
     public X509Certificate[] getCertificates() {
         if (certificates != null)
             return certificates.clone();
@@ -725,8 +720,7 @@ public class PKCS7 {
      * @return the array of Signer Infos or null if none are specified
      *         for the content type.
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+
     public SignerInfo[] getSignerInfos() {
         return signerInfos;
     }

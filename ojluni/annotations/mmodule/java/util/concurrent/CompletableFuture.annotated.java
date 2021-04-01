@@ -175,7 +175,7 @@ public java.util.concurrent.CompletableFuture<T> completeAsync(java.util.functio
 
 public java.util.concurrent.CompletableFuture<T> orTimeout(long timeout, java.util.concurrent.TimeUnit unit) { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public java.util.concurrent.CompletableFuture<T> completeOnTimeout(T value, long timeout, java.util.concurrent.TimeUnit unit) { throw new RuntimeException("Stub!"); }
 
 public static java.util.concurrent.Executor delayedExecutor(long delay, java.util.concurrent.TimeUnit unit, java.util.concurrent.Executor executor) { throw new RuntimeException("Stub!"); }
@@ -184,7 +184,7 @@ public static java.util.concurrent.Executor delayedExecutor(long delay, java.uti
 
 public static <U> java.util.concurrent.CompletionStage<U> completedStage(U value) { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public static <U> java.util.concurrent.CompletableFuture<U> failedFuture(java.lang.Throwable ex) { throw new RuntimeException("Stub!"); }
 
 public static <U> java.util.concurrent.CompletionStage<U> failedStage(java.lang.Throwable ex) { throw new RuntimeException("Stub!"); }

@@ -30,12 +30,12 @@ package sun.security.pkcs;
 import sun.security.util.DerEncoder;
 import java.io.IOException;
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.Hide
 @SuppressWarnings({"unchecked", "deprecation", "all"})
 public class SignerInfo implements sun.security.util.DerEncoder {
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public SignerInfo() { throw new RuntimeException("Stub!"); }
 
 public SignerInfo(sun.security.x509.X500Name issuerName, java.math.BigInteger serial, sun.security.x509.AlgorithmId digestAlgorithmId, sun.security.x509.AlgorithmId digestEncryptionAlgorithmId, byte[] encryptedDigest) { throw new RuntimeException("Stub!"); }
@@ -52,7 +52,7 @@ public void derEncode(java.io.OutputStream out) throws java.io.IOException { thr
 
 public java.security.cert.X509Certificate getCertificate(sun.security.pkcs.PKCS7 block) throws java.io.IOException { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public java.util.ArrayList<java.security.cert.X509Certificate> getCertificateChain(sun.security.pkcs.PKCS7 block) throws java.io.IOException { throw new RuntimeException("Stub!"); }
 
 public java.math.BigInteger getVersion() { throw new RuntimeException("Stub!"); }

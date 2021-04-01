@@ -187,6 +187,11 @@ public final class DexPathList {
         } else {
             dexElementsSuppressedExceptions = null;
         }
+        for (Element element : dexElements) {
+            if (element.dexFile != null && !element.dexFile.isBackedByOatFile()) {
+                element.dexFile.verifyInBackground(definingContext);
+            }
+        }
     }
 
     @Override public String toString() {
@@ -262,22 +267,16 @@ public final class DexPathList {
         try {
             Element[] null_elements = null;
             DexFile dex = new DexFile(dexFiles, definingContext, null_elements);
-            // Capture class loader context from *before* `dexElements` is set (see comment below).
-            String classLoaderContext = dex.isBackedByOatFile()
-                    ? null : DexFile.getClassLoaderContext(definingContext, null_elements);
             dexElements = new Element[] { new Element(dex) };
             // Spawn background thread to verify all classes and cache verification results.
             // Must be called *after* `dexElements` has been initialized for ART to find
             // its classes (the field is hardcoded in ART and dex files iterated over in
-            // the order of the array), but with class loader context from *before*
-            // `dexElements` was set because that is what it will be compared against next
-            // time the same bytecode is loaded.
+            // the order of the array).
             // We only spawn the background thread if the bytecode is not backed by an oat
             // file, i.e. this is the first time this bytecode is being loaded and/or
-            // verification results have not been cached yet. Skip spawning the thread on
-            // all subsequent loads of the same bytecode in the same class loader context.
-            if (classLoaderContext != null) {
-                dex.verifyInBackground(definingContext, classLoaderContext);
+            // verification results have not been cached yet.
+            if (!dex.isBackedByOatFile()) {
+                dex.verifyInBackground(definingContext);
             }
         } catch (IOException suppressed) {
             System.logE("Unable to load dex files", suppressed);
