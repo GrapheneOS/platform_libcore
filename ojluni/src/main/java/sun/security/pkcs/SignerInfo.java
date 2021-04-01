@@ -69,8 +69,6 @@ import sun.security.x509.KeyUsageExtension;
  *
  * @author Benjamin Renaud
  */
-// Android-added: stable CorePlatformAPI
-@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class SignerInfo implements DerEncoder {
 
     // Digest and Signature restrictions
@@ -99,8 +97,6 @@ public class SignerInfo implements DerEncoder {
     PKCS9Attributes unauthenticatedAttributes;
 
     // Android-added: No-arg constructor to use in @libcore.api.CorePlatformApi
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public SignerInfo() {}
 
     public SignerInfo(X500Name  issuerName,
@@ -275,8 +271,6 @@ public class SignerInfo implements DerEncoder {
      * @return certificate chain pertaining to this {@link #SignerInfo}.
      * @throws IOException on decoding error
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public ArrayList<X509Certificate> getCertificateChain(PKCS7 block)
         throws IOException
     {

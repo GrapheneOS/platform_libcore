@@ -2528,8 +2528,6 @@ public class CompletableFuture<T> implements Future<T>, CompletionStage<T> {
      * @return this CompletableFuture
      * @since 9
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public CompletableFuture<T> completeOnTimeout(T value, long timeout,
                                                   TimeUnit unit) {
         if (unit == null)
@@ -2602,8 +2600,6 @@ public class CompletableFuture<T> implements Future<T>, CompletionStage<T> {
      * @return the exceptionally completed CompletableFuture
      * @since 9
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static <U> CompletableFuture<U> failedFuture(Throwable ex) {
         if (ex == null) throw new NullPointerException();
         return new CompletableFuture<U>(new AltResult(ex));

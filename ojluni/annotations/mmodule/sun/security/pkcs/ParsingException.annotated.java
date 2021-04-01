@@ -33,7 +33,7 @@
 package sun.security.pkcs;
 
 @libcore.api.Hide
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @SuppressWarnings({"unchecked", "deprecation", "all"})
 public class ParsingException extends java.io.IOException {
 
