@@ -52,6 +52,7 @@ class ClassLoaderTestSupport {
     static void cleanUpResources(Map<String, File> resources) {
         // Class loaders may leave files behind. Make sure we collect class loaders.
         Runtime.getRuntime().gc();
+        System.runFinalization();
         cleanUpDir(resources.get(null));
     }
 
