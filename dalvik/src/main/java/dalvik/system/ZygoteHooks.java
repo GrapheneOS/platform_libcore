@@ -180,7 +180,7 @@ public final class ZygoteHooks {
      *         indefinitely in the zygote; and {@code false} otherwise
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public static boolean indefiniteThreadSuspensionOK() {
+    public static boolean isIndefiniteThreadSuspensionSafe() {
         // TODO: Make this return true if we're done with JIT compilation.
         //
         // We only care about JIT compilation that affects other processes.
