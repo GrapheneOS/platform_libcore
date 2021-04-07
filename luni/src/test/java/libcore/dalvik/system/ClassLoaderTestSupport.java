@@ -50,9 +50,6 @@ class ClassLoaderTestSupport {
     }
 
     static void cleanUpResources(Map<String, File> resources) {
-        // Class loaders may leave files behind. Make sure we collect class loaders.
-        Runtime.getRuntime().gc();
-        System.runFinalization();
         cleanUpDir(resources.get(null));
     }
 
@@ -61,15 +58,17 @@ class ClassLoaderTestSupport {
             return;
         }
 
-        File[] files = dir.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                cleanUpDir(file);
-            } else {
-                assertTrue(file.delete());
+        // The runtime may create files in the background. Loop until we remove all such files.
+        while (!dir.delete()) {
+            File[] files = dir.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    cleanUpDir(file);
+                } else {
+                    assertTrue(file.delete());
+                }
             }
         }
-        assertTrue(dir.delete());
     }
 
     /**
