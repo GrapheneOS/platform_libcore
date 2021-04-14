@@ -54,6 +54,18 @@ package dalvik.system {
     method public StackTraceElement getStackTraceElement();
   }
 
+  public class BaseDexClassLoader extends java.lang.ClassLoader {
+    method public void addDexPath(String);
+    method public void addNativePath(java.util.Collection<java.lang.String>);
+    method public String getLdLibraryPath();
+    method public void reportClassLoaderChain();
+    method public static void setReporter(dalvik.system.BaseDexClassLoader.Reporter);
+  }
+
+  public static interface BaseDexClassLoader.Reporter {
+    method public void report(java.util.Map<java.lang.String,java.lang.String>);
+  }
+
   public abstract class SocketTagger {
     ctor public SocketTagger();
     method public static dalvik.system.SocketTagger get();
@@ -174,10 +186,54 @@ package dalvik.system {
 
 package java.net {
 
+  public class DatagramSocket implements java.io.Closeable {
+    method public java.io.FileDescriptor getFileDescriptor$();
+  }
+
+  public final class Inet4Address extends java.net.InetAddress {
+    field public static final java.net.InetAddress ALL;
+    field public static final java.net.InetAddress ANY;
+    field public static final java.net.InetAddress LOOPBACK;
+  }
+
+  public final class Inet6Address extends java.net.InetAddress {
+    field public static final java.net.InetAddress ANY;
+    field public static final java.net.InetAddress LOOPBACK;
+  }
+
   public class InetAddress implements java.io.Serializable {
     method public static void clearDnsCache();
     method public static java.net.InetAddress[] getAllByNameOnNet(String, int) throws java.net.UnknownHostException;
     method public static java.net.InetAddress getByNameOnNet(String, int) throws java.net.UnknownHostException;
+  }
+
+  public class Socket implements java.io.Closeable {
+    method public java.io.FileDescriptor getFileDescriptor$();
+  }
+
+  public abstract class SocketImpl implements java.net.SocketOptions {
+    method public java.io.FileDescriptor getFD$();
+  }
+
+}
+
+package java.nio {
+
+  public class DirectByteBuffer extends java.nio.MappedByteBuffer {
+    ctor public DirectByteBuffer(int, long, java.io.FileDescriptor, Runnable, boolean);
+    method public final long address();
+    method public final void setAccessible(boolean);
+  }
+
+  public final class NIOAccess {
+    method public static Object getBaseArray(java.nio.Buffer);
+    method public static int getBaseArrayOffset(java.nio.Buffer);
+  }
+
+  public final class NioUtils {
+    method public static void freeDirectBuffer(java.nio.ByteBuffer);
+    method public static byte[] unsafeArray(java.nio.ByteBuffer);
+    method public static int unsafeArrayOffset(java.nio.ByteBuffer);
   }
 
 }
@@ -349,7 +405,9 @@ package sun.misc {
     method public boolean getBoolean(Object, long);
     method public byte getByte(Object, long);
     method public byte getByte(long);
+    method public double getDouble(Object, long);
     method public double getDouble(long);
+    method public float getFloat(Object, long);
     method public float getFloat(long);
     method public int getInt(Object, long);
     method public int getInt(long);
@@ -361,13 +419,24 @@ package sun.misc {
     method public void putBoolean(Object, long, boolean);
     method public void putByte(Object, long, byte);
     method public void putByte(long, byte);
+    method public void putDouble(Object, long, double);
     method public void putDouble(long, double);
+    method public void putFloat(Object, long, float);
     method public void putFloat(long, float);
     method public void putInt(Object, long, int);
     method public void putInt(long, int);
     method public void putLong(Object, long, long);
     method public void putLong(long, long);
     method public void putObject(Object, long, Object);
+  }
+
+}
+
+package sun.security.jca {
+
+  public class Providers {
+    method public static Object startJarVerification();
+    method public static void stopJarVerification(Object);
   }
 
 }

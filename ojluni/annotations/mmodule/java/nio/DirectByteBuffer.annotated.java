@@ -28,11 +28,11 @@
 package java.nio;
 
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @SuppressWarnings({"unchecked", "deprecation", "all"})
 public class DirectByteBuffer extends java.nio.MappedByteBuffer implements sun.nio.ch.DirectBuffer {
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public DirectByteBuffer(int cap, long addr, java.io.FileDescriptor fd, java.lang.Runnable unmapper, boolean isReadOnly) { super(0, 0, 0, 0); throw new RuntimeException("Stub!"); }
 
 public final java.lang.Object attachment() { throw new RuntimeException("Stub!"); }
@@ -45,7 +45,7 @@ public final java.nio.ByteBuffer duplicate() { throw new RuntimeException("Stub!
 
 public final java.nio.ByteBuffer asReadOnlyBuffer() { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final long address() { throw new RuntimeException("Stub!"); }
 
 public final byte get() { throw new RuntimeException("Stub!"); }
@@ -130,6 +130,7 @@ public final java.nio.DoubleBuffer asDoubleBuffer() { throw new RuntimeException
 
 public final boolean isAccessible() { throw new RuntimeException("Stub!"); }
 
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final void setAccessible(boolean value) { throw new RuntimeException("Stub!"); }
 }
 

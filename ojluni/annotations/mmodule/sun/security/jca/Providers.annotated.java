@@ -31,7 +31,7 @@ import java.security.Provider;
 import java.util.Set;
 import java.security.NoSuchAlgorithmException;
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.Hide
 @SuppressWarnings({"unchecked", "deprecation", "all"})
 public class Providers {
@@ -40,11 +40,11 @@ Providers() { throw new RuntimeException("Stub!"); }
 
 public static java.security.Provider getSunProvider() { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public static java.lang.Object startJarVerification() { throw new RuntimeException("Stub!"); }
 
 
-  @libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public static void stopJarVerification(java.lang.Object obj) { throw new RuntimeException("Stub!"); }
 
 public static sun.security.jca.ProviderList getProviderList() { throw new RuntimeException("Stub!"); }

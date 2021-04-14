@@ -39,8 +39,6 @@ import java.lang.reflect.Modifier;
  * @author John R. Rose
  * @see #getUnsafe
  */
-// Android-added: stable CorePlatformAPI
-@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class Unsafe {
     /** Traditional dalvik name. */
     private static final Unsafe THE_ONE = new Unsafe();
@@ -57,8 +55,6 @@ public final class Unsafe {
      * Gets the unique instance of this class. This is only allowed in
      * very limited situations.
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Unsafe getUnsafe() {
         Class<?> caller = Reflection.getCallerClass();
         /*
@@ -81,8 +77,6 @@ public final class Unsafe {
      * instance field
      * @return the offset to the field
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public long objectFieldOffset(Field field) {
         if (Modifier.isStatic(field.getModifiers())) {
             throw new IllegalArgumentException("valid for instance fields only");
@@ -97,8 +91,6 @@ public final class Unsafe {
      * @param clazz non-{@code null}; class in question; must be an array class
      * @return the offset to the initial element
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public int arrayBaseOffset(Class clazz) {
         Class<?> component = clazz.getComponentType();
         if (component == null) {
@@ -113,8 +105,6 @@ public final class Unsafe {
      * @param clazz non-{@code null}; class in question; must be an array class
      * @return &gt; 0; the size of each element of the array
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public int arrayIndexScale(Class clazz) {
       Class<?> component = clazz.getComponentType();
       if (component == null) {
@@ -250,8 +240,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native int getInt(Object obj, long offset);
 
@@ -262,8 +250,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putInt(Object obj, long offset, int newValue);
 
@@ -284,8 +270,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native long getLong(Object obj, long offset);
 
@@ -296,8 +280,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putLong(Object obj, long offset, long newValue);
 
@@ -318,8 +300,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native Object getObject(Object obj, long offset);
 
@@ -330,8 +310,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putObject(Object obj, long offset, Object newValue);
 
@@ -353,8 +331,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native boolean getBoolean(Object obj, long offset);
 
@@ -365,8 +341,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putBoolean(Object obj, long offset, boolean newValue);
 
@@ -377,8 +351,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @return the retrieved value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native byte getByte(Object obj, long offset);
 
@@ -389,8 +361,6 @@ public final class Unsafe {
      * @param offset offset to the field within {@code obj}
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putByte(Object obj, long offset, byte newValue);
 
@@ -557,8 +527,6 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code byte} value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native byte getByte(long address);
 
@@ -568,8 +536,6 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putByte(long address, byte x);
 
@@ -615,8 +581,6 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code int} value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native int getInt(long address);
 
@@ -626,8 +590,6 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putInt(long address, int x);
 
@@ -638,8 +600,6 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code long} value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native long getLong(long address);
 
@@ -649,8 +609,6 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putLong(long address, long x);
 
@@ -660,8 +618,6 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code long} value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native float getFloat(long address);
 
@@ -671,8 +627,6 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putFloat(long address, float x);
 
@@ -682,8 +636,6 @@ public final class Unsafe {
      * @param address address in memory
      * @return {@code double} value
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native double getDouble(long address);
 
@@ -693,8 +645,6 @@ public final class Unsafe {
      * @param address address in memory where to store the value
      * @param newValue the value to store
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void putDouble(long address, double x);
 
@@ -730,8 +680,6 @@ public final class Unsafe {
      * @param dstAddr address of the destination memory to copy to
      * @param bytes number of bytes to copy
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @FastNative
     public native void copyMemory(long srcAddr, long dstAddr, long bytes);
 
