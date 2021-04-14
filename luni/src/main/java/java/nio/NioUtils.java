@@ -32,13 +32,18 @@ import static android.system.OsConstants.O_WRONLY;
 /**
  * @hide internal use only
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class NioUtils {
     private NioUtils() {
     }
 
+    /**
+     * Frees {@link DirectByteBuffer} running associated {@link sun.misc.Cleaner Cleaner}.
+     *
+     * @param buffer to free with associated {@code Cleaner}
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void freeDirectBuffer(ByteBuffer buffer) {
         if (buffer == null) {
             return;
@@ -71,21 +76,28 @@ public final class NioUtils {
     }
 
     /**
-     * Exposes the array backing a non-direct ByteBuffer, even if the ByteBuffer is read-only.
+     * Exposes the array backing a non-direct {@link java.nio.ByteBuffer ByteBuffer}, even if
+     * the {@link java.nio.ByteBuffer ByteBuffer} is read-only.
      * Normally, attempting to access the array backing a read-only buffer throws.
+     *
+     * @param b  {@link java.nio.ByteBuffer ByteBuffer} to access its backing array.
+     * @return   buffer's underlying array.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static byte[] unsafeArray(ByteBuffer b) {
         return b.array();
     }
 
     /**
-     * Exposes the array offset for the array backing a non-direct ByteBuffer,
-     * even if the ByteBuffer is read-only.
+     * Exposes the array offset for the array backing a non-direct {@link java.nio.ByteBuffer ByteBuffer},
+     * even if the {@link java.nio.ByteBuffer ByteBuffer} is read-only.
+     *
+     * @param b  {@link java.nio.ByteBuffer ByteBuffer} to access its backing array offset.
+     * @return   buffer's underlying array data offset.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int unsafeArrayOffset(ByteBuffer b) {
         return b.arrayOffset();
     }

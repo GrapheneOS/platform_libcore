@@ -103,7 +103,7 @@ public java.nio.channels.DatagramChannel getChannel() { throw new RuntimeExcepti
 
 public static synchronized void setDatagramSocketImplFactory(java.net.DatagramSocketImplFactory fac) throws java.io.IOException { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public java.io.FileDescriptor getFileDescriptor$() { throw new RuntimeException("Stub!"); }
 }
 

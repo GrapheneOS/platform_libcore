@@ -24,7 +24,7 @@ import android.compat.annotation.UnsupportedAppUsage;
  * @hide
  */
 // @VisibleForTesting : was default
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class NIOAccess {
 
     /**
@@ -46,9 +46,12 @@ public final class NIOAccess {
     /**
      * Returns the underlying Java array containing the data of the
      * given Buffer, or null if the Buffer is not backed by a Java array.
+     *
+     * @param b  {@code Buffer} to get its underlying data array
+     * @return   underlying Java array
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Object getBaseArray(Buffer b) {
         return b.hasArray() ? b.array() : null;
     }
@@ -58,10 +61,13 @@ public final class NIOAccess {
      * Java array object containing the data of the given Buffer to
      * the actual start of the data. The start of the data takes into
      * account the Buffer's current position. This method is only
-     * meaningful if getBaseArray() returns non-null.
+     * meaningful if {@link #getBaseArray(Buffer)} returns non-null.
+     *
+     * @param b {@code Buffer} to get its underlying data array's base offset
+     * @return  underlying Java array's base offset
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int getBaseArrayOffset(Buffer b) {
         return b.hasArray() ? ((b.arrayOffset() + b.position) << b._elementSizeShift) : 0;
     }

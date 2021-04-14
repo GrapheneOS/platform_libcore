@@ -187,11 +187,6 @@ public final class DexPathList {
         } else {
             dexElementsSuppressedExceptions = null;
         }
-        for (Element element : dexElements) {
-            if (element.dexFile != null && !element.dexFile.isBackedByOatFile()) {
-                element.dexFile.verifyInBackground(definingContext);
-            }
-        }
     }
 
     @Override public String toString() {
@@ -268,16 +263,6 @@ public final class DexPathList {
             Element[] null_elements = null;
             DexFile dex = new DexFile(dexFiles, definingContext, null_elements);
             dexElements = new Element[] { new Element(dex) };
-            // Spawn background thread to verify all classes and cache verification results.
-            // Must be called *after* `dexElements` has been initialized for ART to find
-            // its classes (the field is hardcoded in ART and dex files iterated over in
-            // the order of the array).
-            // We only spawn the background thread if the bytecode is not backed by an oat
-            // file, i.e. this is the first time this bytecode is being loaded and/or
-            // verification results have not been cached yet.
-            if (!dex.isBackedByOatFile()) {
-                dex.verifyInBackground(definingContext);
-            }
         } catch (IOException suppressed) {
             System.logE("Unable to load dex files", suppressed);
             suppressedExceptions.add(suppressed);
@@ -287,6 +272,21 @@ public final class DexPathList {
         if (suppressedExceptions.size() > 0) {
             dexElementsSuppressedExceptions = suppressedExceptions.toArray(
                     new IOException[suppressedExceptions.size()]);
+        }
+    }
+
+    /* package */ void maybeRunBackgroundVerification(ClassLoader loader) {
+        // Spawn background thread to verify all classes and cache verification results.
+        // Must be called *after* `this.dexElements` has been initialized and `loader.pathList`
+        // has been set for ART to find its classes (the fields are hardcoded in ART and dex
+        // files iterated over in the order of the array).
+        // We only spawn the background thread if the bytecode is not backed by an oat
+        // file, i.e. this is the first time this bytecode is being loaded and/or
+        // verification results have not been cached yet.
+        for (Element element : dexElements) {
+            if (element.dexFile != null && !element.dexFile.isBackedByOatFile()) {
+                element.dexFile.verifyInBackground(loader);
+            }
         }
     }
 

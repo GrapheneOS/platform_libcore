@@ -187,11 +187,19 @@ class Inet6Address extends InetAddress {
     // END Android-removed: Remove special handling for link-local addresses.
 
     // BEGIN Android-added: Define special-purpose IPv6 address.
-    /** @hide */
+    /**
+     * Reserved address for {@code INADDR_ANY}, to specify any IPv6 address at all.
+     *
+     * @hide
+     */
     public static final InetAddress ANY =
             new Inet6Address("::", new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }, 0);
 
-    /** @hide */
+    /**
+     * Loopback address to the local host.
+     *
+     * @hide
+     */
     public static final InetAddress LOOPBACK = new Inet6Address("ip6-localhost",
             new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1}, 0);
     // END Android-added: Define special-purpose IPv6 address.

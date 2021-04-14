@@ -140,8 +140,10 @@ public class Providers {
     /**
      * Start JAR verification. This sets a special provider list for
      * the current thread. You MUST save the return value from this
-     * method and you MUST call stopJarVerification() with that object
+     * method and you MUST call {@link #stopJarVerification(Object)} with that object
      * once you are done.
+     *
+     * @return old thread-local provider
      */
     public static Object startJarVerification() {
         ProviderList currentList = getProviderList();
@@ -151,7 +153,11 @@ public class Providers {
     }
 
     /**
-     * Stop JAR verification. Call once you have completed JAR verification.
+     * Stop JAR verification. Call once you have completed JAR verification,
+     * passing previously saved return value of {@link #startJarVerification()}.
+     *
+     * @param obj previously saved from {@link #startJarVerification()} old
+     *            thread-local provider list
      */
     public static void stopJarVerification(Object obj) {
         // restore old thread-local provider list

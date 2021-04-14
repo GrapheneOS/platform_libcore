@@ -94,14 +94,27 @@ class Inet4Address extends InetAddress {
     private static final long serialVersionUID = 3286316764910316507L;
 
     // BEGIN Android-added: Define special-purpose IPv4 address.
-    /** @hide */
+    /**
+     * Reserved address for {@code INADDR_ANY}, to specify any IPv4 address at all.
+     *
+     * @hide
+     */
     public static final InetAddress ANY = new Inet4Address(null, new byte[] { 0, 0, 0, 0 });
 
-    /** @hide */
+    /**
+     * Broadcast address to transmit to all devices on network.
+     *
+     * @hide
+     */
     public static final InetAddress ALL =
             new Inet4Address(null, new byte[] { (byte) 255, (byte) 255,
                   (byte) 255, (byte) 255 });
-    /** @hide */
+
+    /**
+     * Loopback address to the local host.
+     *
+     * @hide
+     */
     public static final InetAddress LOOPBACK =
             new Inet4Address("localhost", new byte[] { 127, 0, 0, 1 });
     // END Android-added: Define special-purpose IPv4 address.
