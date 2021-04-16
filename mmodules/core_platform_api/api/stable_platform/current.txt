@@ -66,6 +66,26 @@ package dalvik.system {
     method public void report(java.util.Map<java.lang.String,java.lang.String>);
   }
 
+  public final class BlockGuard {
+    method @NonNull public static dalvik.system.BlockGuard.Policy getThreadPolicy();
+    method @NonNull public static dalvik.system.BlockGuard.VmPolicy getVmPolicy();
+    method public static void setThreadPolicy(@NonNull dalvik.system.BlockGuard.Policy);
+    method public static void setVmPolicy(@NonNull dalvik.system.BlockGuard.VmPolicy);
+    field public static final dalvik.system.BlockGuard.Policy LAX_POLICY;
+    field public static final dalvik.system.BlockGuard.VmPolicy LAX_VM_POLICY;
+  }
+
+  public static interface BlockGuard.Policy {
+    method public int getPolicyMask();
+    method public void onReadFromDisk();
+    method public void onUnbufferedIO();
+    method public void onWriteToDisk();
+  }
+
+  public static interface BlockGuard.VmPolicy {
+    method public void onPathAccess(String);
+  }
+
   public abstract class SocketTagger {
     ctor public SocketTagger();
     method public static dalvik.system.SocketTagger get();
@@ -397,6 +417,11 @@ package libcore.util {
 }
 
 package sun.misc {
+
+  public class Cleaner extends java.lang.ref.PhantomReference<java.lang.Object> {
+    method public void clean();
+    method public static sun.misc.Cleaner create(Object, Runnable);
+  }
 
   public final class Unsafe {
     method public int arrayBaseOffset(Class);

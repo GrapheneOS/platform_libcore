@@ -52,11 +52,11 @@ package dalvik.annotation.optimization {
 
 package dalvik.system {
 
-  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public final class BlockGuard {
-    method @NonNull @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static dalvik.system.BlockGuard.Policy getThreadPolicy();
+  @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public final class BlockGuard {
+    method @NonNull @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public static dalvik.system.BlockGuard.Policy getThreadPolicy();
   }
 
-  @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static interface BlockGuard.Policy {
+  @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public static interface BlockGuard.Policy {
     method @libcore.api.IntraCoreApi public void onNetwork();
   }
 
