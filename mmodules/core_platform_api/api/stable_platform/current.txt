@@ -30,6 +30,12 @@ package android.compat {
 
 package android.system {
 
+  public final class NetlinkSocketAddress extends java.net.SocketAddress {
+    ctor public NetlinkSocketAddress(int, int);
+    method public int getGroupsMask();
+    method public int getPortId();
+  }
+
   public final class Os {
     method public static int ioctlInt(java.io.FileDescriptor, int) throws android.system.ErrnoException;
   }
