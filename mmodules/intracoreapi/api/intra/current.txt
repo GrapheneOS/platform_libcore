@@ -22,7 +22,7 @@ package android.compat {
 package android.system {
 
   public final class Os {
-    method @libcore.api.CorePlatformApi @libcore.api.IntraCoreApi public static String realpath(String) throws android.system.ErrnoException;
+    method @Nullable @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public static String realpath(@Nullable String) throws android.system.ErrnoException;
   }
 
 }

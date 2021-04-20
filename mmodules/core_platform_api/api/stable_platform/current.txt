@@ -37,11 +37,56 @@ package android.system {
   }
 
   public final class Os {
-    method public static int ioctlInt(java.io.FileDescriptor, int) throws android.system.ErrnoException;
+    method @Nullable public static android.system.StructCapUserData[] capget(@NonNull android.system.StructCapUserHeader) throws android.system.ErrnoException;
+    method public static void capset(@NonNull android.system.StructCapUserHeader, @NonNull android.system.StructCapUserData[]) throws android.system.ErrnoException;
+    method public static int getpgid(int) throws android.system.ErrnoException;
+    method @Nullable public static android.system.StructRlimit getrlimit(int) throws android.system.ErrnoException;
+    method public static int getsockoptInt(@NonNull java.io.FileDescriptor, int, int) throws android.system.ErrnoException;
+    method @Nullable public static android.system.StructLinger getsockoptLinger(@NonNull java.io.FileDescriptor, int, int) throws android.system.ErrnoException;
+    method public static int ioctlInt(@NonNull java.io.FileDescriptor, int) throws android.system.ErrnoException;
+    method @Nullable public static java.io.FileDescriptor[] pipe2(int) throws android.system.ErrnoException;
+    method @Nullable public static String realpath(@Nullable String) throws android.system.ErrnoException;
+    method public static void setpgid(int, int) throws android.system.ErrnoException;
+    method public static void setregid(int, int) throws android.system.ErrnoException;
+    method public static void setreuid(int, int) throws android.system.ErrnoException;
+    method public static void setsockoptIfreq(@NonNull java.io.FileDescriptor, int, int, @Nullable String) throws android.system.ErrnoException;
+    method public static void setsockoptLinger(@NonNull java.io.FileDescriptor, int, int, @NonNull android.system.StructLinger) throws android.system.ErrnoException;
+    method public static long splice(@NonNull java.io.FileDescriptor, @Nullable android.system.Int64Ref, @NonNull java.io.FileDescriptor, @Nullable android.system.Int64Ref, long, int) throws android.system.ErrnoException;
+    method public static void unlink(@Nullable String) throws android.system.ErrnoException;
   }
 
   public final class OsConstants {
     field public static final int TIOCOUTQ;
+    field public static final int _LINUX_CAPABILITY_VERSION_3;
+  }
+
+  public final class PacketSocketAddress extends java.net.SocketAddress {
+    ctor public PacketSocketAddress(int, int, byte[]);
+  }
+
+  public final class StructCapUserData {
+    ctor public StructCapUserData(int, int, int);
+    field public final int effective;
+    field public final int inheritable;
+    field public final int permitted;
+  }
+
+  public final class StructCapUserHeader {
+    ctor public StructCapUserHeader(int, int);
+  }
+
+  public final class StructLinger {
+    ctor public StructLinger(int, int);
+    method public boolean isOn();
+    field public final int l_linger;
+  }
+
+  public final class StructRlimit {
+    field public final long rlim_cur;
+  }
+
+  public final class UnixSocketAddress extends java.net.SocketAddress {
+    method public static android.system.UnixSocketAddress createFileSystem(String);
   }
 
   public final class VmSocketAddress extends java.net.SocketAddress {
