@@ -22,12 +22,16 @@ import libcore.util.Objects;
  * Information returned by {@link Os#getrlimit}. Corresponds to C's {@code struct rlimit} from
  * {@code <sys/resource.h>}.
  *
+ * See <a href="https://man7.org/linux/man-pages/man3/vlimit.3.html">getrlimit(2)</a>.
+ *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class StructRlimit {
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    /** Soft limit */
     public final long rlim_cur;
+    /** Hard limit (ceiling for rlim_cur) */
     public final long rlim_max;
 
     public StructRlimit(long rlim_cur, long rlim_max) {

@@ -23,9 +23,13 @@ import java.util.Arrays;
 /**
  * A UNIX-domain (AF_UNIX / AF_LOCAL) socket address.
  *
+ * See <a href="https://man7.org/linux/man-pages/man7/unix.7.html">unix(7)</a>.
+ *
+ * @see OsConstants#AF_UNIX
+ *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class UnixSocketAddress extends SocketAddress {
 
     private static final int NAMED_PATH_LENGTH = OsConstants.UNIX_PATH_MAX;
@@ -70,12 +74,15 @@ public final class UnixSocketAddress extends SocketAddress {
     }
 
     /**
-     * Creates a named, filesystem AF_UNIX socket address.
+     * Creates a named, filesystem {@link OsConstants#AF_UNIX} socket address.
      *
-     * @throws NullPointerException if {@code name} is null
+     * See <a href="https://man7.org/linux/man-pages/man7/unix.7.html">unix(7)</a>.
+     *
+     * @param pathname filename for named unix socket
+     * @throws NullPointerException if {@code name} is {@code null}
      * @throws IllegalArgumentException if {@code name} is invalid, e.g. too long
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static UnixSocketAddress createFileSystem(String pathName) {
         byte[] pathNameBytes = pathName.getBytes(StandardCharsets.UTF_8);
         // File system sockets have a path that ends with (byte) 0.

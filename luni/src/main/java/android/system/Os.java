@@ -74,20 +74,38 @@ public final class Os {
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/capget.2.html">capget(2)</a>.
      *
+     * @param hdr capabilities header, containing version and pid
+     * @return list of capabilities data structures, each containing effective, permitted,
+     *         and inheritable fields are bit masks of the capabilities
+     * @throws ErrnoException if {@code hdr} structure contains invalid data
+     *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static StructCapUserData[] capget(StructCapUserHeader hdr) throws ErrnoException {
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static @Nullable StructCapUserData[] capget(@NonNull StructCapUserHeader hdr) throws ErrnoException {
         return Libcore.os.capget(hdr);
     }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/capset.2.html">capset(2)</a>.
      *
+     * @param hdr capabilities header, containing version and pid
+     * @param data capabilities data list, containing effective, permitted,
+     *             and inheritable fields. Must be the same length as returned value
+     * @throws ErrnoException if {@code hdr} structure contains invalid data; or
+     *                        an attempt was made to add a capability to the permitted
+     *                        set, or to set a capability in the effective set that is
+     *                        not in the permitted set; or
+     *                        the caller attempted to use
+     *                        {@link capset(StructCapUserHeader, StructCapUserData[])}
+     *                        to modify the capabilities of a thread other than itself,
+     *                        but lacked sufficient privilege;
+     *                        or there is no such thread.
+     *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static void capset(StructCapUserHeader hdr, StructCapUserData[] data)
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void capset(@NonNull StructCapUserHeader hdr, @NonNull StructCapUserData[] data)
             throws ErrnoException {
         Libcore.os.capset(hdr, data);
     }
@@ -225,10 +243,17 @@ public final class Os {
     public static SocketAddress getpeername(FileDescriptor fd) throws ErrnoException { return Libcore.os.getpeername(fd); }
 
     /**
+     * Gets process's pgid (process group ID).
+     *
      * See <a href="http://man7.org/linux/man-pages/man2/getpgid.2.html">getpgid(2)</a>.
+     *
+     * @param pid process id to get the pgid of
+     * @return process's pgid
+     * @throws ErrnoException if {@code pid} does not match any process
+     *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int getpgid(int pid) throws ErrnoException { return Libcore.os.getpgid(pid); }
 
     /**
@@ -247,9 +272,19 @@ public final class Os {
     /** @hide */
     public static StructPasswd getpwuid(int uid) throws ErrnoException { return Libcore.os.getpwuid(uid); }
 
-    /** @hide */
-    @libcore.api.CorePlatformApi
-    public static StructRlimit getrlimit(int resource) throws ErrnoException { return Libcore.os.getrlimit(resource); }
+    /**
+     * Gets the resource limit.
+     *
+     * See <a href="https://man7.org/linux/man-pages/man3/vlimit.3.html">getrlimit(2)</a>.
+     *
+     * @param resource resource id
+     * @return         the limit of the given resource
+     * @throws ErrnoException the value specified in {@code resource} is not valid
+     *
+     * @hide
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static @Nullable StructRlimit getrlimit(int resource) throws ErrnoException { return Libcore.os.getrlimit(resource); }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/getsockname.2.html">getsockname(2)</a>.
@@ -262,13 +297,45 @@ public final class Os {
     /** @hide */
     public static InetAddress getsockoptInAddr(FileDescriptor fd, int level, int option) throws ErrnoException { return Libcore.os.getsockoptInAddr(fd, level, option); }
 
-    /** @hide */
-    @libcore.api.CorePlatformApi
-    public static int getsockoptInt(FileDescriptor fd, int level, int option) throws ErrnoException { return Libcore.os.getsockoptInt(fd, level, option); }
+    /**
+     * Gets socket options for the socket referred to by the file descriptor {@code fd}.
+     *
+     * See <a href="https://man7.org/linux/man-pages/man2/getsockopt.2.html">getsockopt(2)</a>.
+     * For the list of available options see <a href="https://man7.org/linux/man-pages/man7/socket.7.html">socket(7)</a>.
+     *
+     * @param fd    file descriptor of the socket to get options of
+     * @param level level at which the {@code option} resides. For example,
+     *              to indicate that an option is to be interpreted by the TCP protocol,
+     *              level should be set to the protocol number of TCP
+     * @param option name of the option to get
+     * @return socket options for file descriptor {@code fd}
+     * @throws ErrnoException if {@code fd} is invalid; or
+     *                        {@code option} is unknown at given {@code level}
+     *
+     * @hide
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static int getsockoptInt(@NonNull FileDescriptor fd, int level, int option) throws ErrnoException { return Libcore.os.getsockoptInt(fd, level, option); }
 
-    /** @hide */
-    @libcore.api.CorePlatformApi
-    public static StructLinger getsockoptLinger(FileDescriptor fd, int level, int option) throws ErrnoException { return Libcore.os.getsockoptLinger(fd, level, option); }
+    /**
+     * Gets {@link OsConstants#SO_LINGER} option for the socket referred to by the file descriptor {@code fd}.
+     * When enabled, a {@link close(FileDescriptor) or {@link shutdown(FileDescriptor, int)} will
+     * not return until all queued messages for the socket have been successfully sent or the
+     * linger timeout has been reached. Otherwise, the call returns immediately and the closing is
+     * done in the background.
+     *
+     * See <a href="https://man7.org/linux/man-pages/man7/socket.7.html">socket(7)</a>.
+     *
+     * @param fd     file descriptor of the socket to get {@code OsConstants.SO_LINGER} option of
+     * @param level  level at which the {@code option} resides
+     * @param option name of the option to get
+     * @return       {@link StructLinger} associated with given {@code fd}
+     * @throws ErrnoException
+     *
+     * @hide
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static @Nullable StructLinger getsockoptLinger(@NonNull FileDescriptor fd, int level, int option) throws ErrnoException { return Libcore.os.getsockoptLinger(fd, level, option); }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/setsockopt.2.html">getsockopt(2)</a>.
@@ -329,7 +396,7 @@ public final class Os {
      * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public static int ioctlInt(FileDescriptor fd, int cmd) throws ErrnoException {
+    public static int ioctlInt(@NonNull FileDescriptor fd, int cmd) throws ErrnoException {
         return Libcore.os.ioctlInt(fd, cmd);
     }
 
@@ -428,9 +495,28 @@ public final class Os {
      */
     public static FileDescriptor[] pipe() throws ErrnoException { return Libcore.os.pipe2(0); }
 
-    /** @hide */
-    @libcore.api.CorePlatformApi
-    public static FileDescriptor[] pipe2(int flags) throws ErrnoException { return Libcore.os.pipe2(flags); }
+    /**
+     * Creates a pipe, a unidirectional data channel that can be used for interprocess communication.
+     *
+     * See <a href="http://man7.org/linux/man-pages/man2/pipe.2.html">pipe(2)</a>.
+     *
+     * @param flags bitmask of options, e.g. {@link OsConstants#O_CLOEXEC}, {@link OsConstants#O_DIRECT}
+     *              or {@link OsConstants#O_NONBLOCK}.
+     *              If {@code flags} is {@code 0}, then {@link pipe2(int)} is the same as {@link pipe()}.
+     * @return array of two file descriptors referring to the ends of the pipe, where
+     *         first file descriptor is the read end of the pipe, and second is a write end
+     * @throws ErrnoException if {@code flags} contains invalid value; or
+     *                        the per-process limit on the number of open file
+     *                        descriptors has been reached; or
+     *                        the system-wide limit on the total number of open files
+     *                        has been reached; or
+     *                        the user hard limit on memory that can be allocated for
+     *                        pipes has been reached and the caller is not privileged
+     *
+     * @hide
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static @Nullable FileDescriptor[] pipe2(int flags) throws ErrnoException { return Libcore.os.pipe2(flags); }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/poll.2.html">poll(2)</a>.
@@ -487,12 +573,27 @@ public final class Os {
     public static String readlink(String path) throws ErrnoException { return Libcore.os.readlink(path); }
 
     /**
+     * Eexpands all symbolic links and resolves references to {@code /./},
+     * {@code /../} and extra {@code /} characters string named by path
+     * to produce a canonicalized absolute pathname.
+     *
      * See <a href="http://man7.org/linux/man-pages/man3/realpath.3.html">realpath(3)</a>.
+     *
+     * @param path string to resolve
+     * @return     resolved path if no error occurred. Returns {@code null} if {@code path}
+     *             is {@code null}
+     * @throws ErrnoException read or search permission was denied for a component of
+     *                        the path prefix; or an I/O error occurred while reading
+     *                        from the filesystem; or too many symbolic links were
+     *                        encountered in translating the pathname; or
+     *                        the named file does not exist; or a component of the path
+     *                        prefix is not a directory
+     *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
-    public static String realpath(String path) throws ErrnoException { return Libcore.os.realpath(path); }
+    public static @Nullable String realpath(@Nullable String path) throws ErrnoException { return Libcore.os.realpath(path); }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/readv.2.html">readv(2)</a>.
@@ -585,24 +686,59 @@ public final class Os {
     public static void setgid(int gid) throws ErrnoException { Libcore.os.setgid(gid); }
 
     /**
+     * Sets process's pgid (process group ID).
+     *
      * See <a href="http://man7.org/linux/man-pages/man2/setpgid.2.html">setpgid(2)</a>.
+     *
+     * @param pid  process id to set the pgid of
+     * @param pgid new pgid for process {@code pid}
+     * @throws ErrnoException an attempt was made to change the process group ID of one
+     *                        of the children of the calling process and the child had
+     *                        already performed an {@link execve(String, String[], String[])}; or
+     *                        {@code pgid} is less than {@code 0}; or
+     *                        an attempt was made to move a process into a process group
+     *                        in a different session, or to change the process group ID
+     *                        of one of the children of the calling process and the
+     *                        child was in a different session, or to change the process
+     *                        group ID of a session leader; or
+     *                        {@code pid} is not the calling process and not a child
+     *                        of the calling process
+     *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setpgid(int pid, int pgid) throws ErrnoException { Libcore.os.setpgid(pid, pgid); }
 
     /**
+     * Set real and/or effective group ID of the calling process.
+     *
      * See <a href="http://man7.org/linux/man-pages/man2/setregid.2.html">setregid(2)</a>.
+     *
+     * @param rgid real group ID
+     * @param egid effective group ID
+     * @throws ErrnoException one or more of the target group IDs is not valid
+     *                        in this user namespace; or the calling process is
+     *                        not privileged
+     *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setregid(int rgid, int egid) throws ErrnoException { Libcore.os.setregid(rgid, egid); }
 
     /**
+     * Set real and/or effective user ID of the calling process.
+     *
      * See <a href="http://man7.org/linux/man-pages/man2/setreuid.2.html">setreuid(2)</a>.
+     *
+     * @param ruid real user ID
+     * @param euid effective user ID
+     * @throws ErrnoException one or more of the target user IDs is not valid
+     *                        in this user namespace; or the calling process is
+     *                        not privileged
+     *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setreuid(int ruid, int euid) throws ErrnoException { Libcore.os.setreuid(ruid, euid); }
 
     /**
@@ -613,10 +749,28 @@ public final class Os {
     /** @hide */
     public static void setsockoptByte(FileDescriptor fd, int level, int option, int value) throws ErrnoException { Libcore.os.setsockoptByte(fd, level, option, value); }
 
-    /** @hide */
+    /**
+     * Sets a supplied socket {@code option} to {@code value}.
+     *
+     * See <a href="https://man7.org/linux/man-pages/man2/getsockopt.2.html">getsockopt(2)</a>.
+     * For the list of available options see <a href="https://man7.org/linux/man-pages/man7/socket.7.html">socket(7)</a>.
+     * Corresponding socket options constants reside in {@link OsCosntants}, e.g. {@link OsConstants#SO_REUSEADDR}.
+     *
+     * @param fd    file descriptor of the socket to set options of
+     * @param level level at which the {@code option} resides. For example,
+     *              to indicate that an option is to be interpreted by the TCP protocol,
+     *              level should be set to the protocol number of TCP
+     * @param option name of the option to set
+     * @param value  interface name
+     * @return socket options for file descriptor {@code fd}
+     * @throws ErrnoException if {@code fd} is invalid; or
+     *                        {@code option} is unknown at given {@code level}
+     *
+     * @hide
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    public static void setsockoptIfreq(FileDescriptor fd, int level, int option, String value) throws ErrnoException { Libcore.os.setsockoptIfreq(fd, level, option, value); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void setsockoptIfreq(@NonNull FileDescriptor fd, int level, int option, @Nullable String value) throws ErrnoException { Libcore.os.setsockoptIfreq(fd, level, option, value); }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/setsockopt.2.html">setsockopt(2)</a>.
@@ -629,9 +783,21 @@ public final class Os {
     /** @hide */
     public static void setsockoptGroupReq(FileDescriptor fd, int level, int option, StructGroupReq value) throws ErrnoException { Libcore.os.setsockoptGroupReq(fd, level, option, value); }
 
-    /** @hide */
-    @libcore.api.CorePlatformApi
-    public static void setsockoptLinger(FileDescriptor fd, int level, int option, StructLinger value) throws ErrnoException { Libcore.os.setsockoptLinger(fd, level, option, value); }
+    /**
+     * Sets {@link OsConstants#SO_LINGER} option for the socket referred to by the file descriptor
+     * {@code fd}.
+     *
+     * @param fd     file descriptor
+     * @param level  level at which the {@code option} resides
+     * @param option name of the option to set
+     * @param value  {@link StructLinger} to set for {@code fd}
+     * @throws ErrnoException if {@code fd} is invalid; or
+     *                        {@code option} is unknown at given {@code level}
+     *
+     * @hide
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void setsockoptLinger(@NonNull FileDescriptor fd, int level, int option, @NonNull StructLinger value) throws ErrnoException { Libcore.os.setsockoptLinger(fd, level, option, value); }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/setsockopt.2.html">setsockopt(2)</a>.
@@ -670,11 +836,64 @@ public final class Os {
     public static void socketpair(int domain, int type, int protocol, FileDescriptor fd1, FileDescriptor fd2) throws ErrnoException { Libcore.os.socketpair(domain, type, protocol, fd1, fd2); }
 
     /**
+     * Moves data between two file descriptors without copying
+     * between kernel address space and user address space. It
+     * transfers up to {@code len} bytes of data from the file descriptor {@code fdIn}
+     * to the file descriptor {@code fdOut}, where one of the file descriptors
+     * must refer to a pipe.
+     *
+     * The following semantics apply for {@code fdIn} and {@code offIn}:
+     * <ul>
+     *   <li>If {@code fdIn} refers to a pipe, then {@code offIn} must be {@code null}.</li>
+     *   <li>If {@code fdIn} does not refer to a pipe and {@code offIn} is {@code null}, then
+     *       bytes are read from {@code fdIn} starting from the file offset, and
+     *       the file offset is adjusted appropriately.</li>
+     *   <li>If {@code fdIn} does not refer to a pipe and {@code offIn} is not {@code null}, then
+     *       {@code offIn} must point to a buffer which specifies the starting
+     *       offset from which bytes will be read from {@code fdIn}; in this case,
+     *       the file offset of {@code fdIn} is not changed.</li>
+     * </ul>
+     *
+     * Analogous statements apply for {@code fdOut} and {@code offOut}.
+     *
+     * The flags argument is a bit mask that is composed by ORing
+     * together zero or more of the following values:
+     * <ul>
+     *   <li>{@link OsConstants#SPLICE_F_MOVE}
+     *       Attempt to move pages instead of copying. This is only a
+     *       hint to the kernel: pages may still be copied if the
+     *       kernel cannot move the pages from the pipe, or if the pipe
+     *       buffers don't refer to full pages.</li>
+     *   <li>{@link OsConstants#SPLICE_F_NONBLOCK}
+     *       Do not block on I/O. This makes the splice pipe
+     *       operations nonblocking, but
+     *       {@link splice(FileDescriptor, Int64Ref, FileDescriptor, Int64Ref, long, int)}
+     *       may nevertheless block because the file descriptors that are spliced
+     *       to/from may block (unless they have the {@link OsConstants#O_NONBLOCK} flag set).</li>
+     *   <li>{@link OsConstants#SPLICE_F_MORE}
+     *       More data will be coming in a subsequent splice.</li>
+     *   <li>{@link OsConstants#SPLICE_F_GIFT} Unused</li>
+     * </ul>
+     *
      * See <a href="http://man7.org/linux/man-pages/man2/splice.2.html">splice(2)</a>.
+     *
+     * @param fdIn   file descriptor to read from
+     * @param offIn  {@code null} for pipe; file offset; or pointer to a buffer that specifies starting offset
+     * @param fdOut  file descriptor to write to
+     * @param offOut {@code null} for pipe; file offset; or pointer to a buffer that specifies starting offset
+     * @param len    number of bytes to read/write
+     * @param flags  bitmask of options
+     * @return       number of bytes spliced on success. A return value of {@code 0} means end of input.
+     * @throws ErrnoException if target fs does not support splicing; or
+     *                        target file opened in append mode; or
+     *                        one or both file descriptors are invalid; or
+     *                        neither of file descriptors refer to a pipe; or
+     *                        {@code fdIn} and {@code fdOut} refer to a same pipe
+     *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static long splice(FileDescriptor fdIn, Int64Ref offIn, FileDescriptor fdOut, Int64Ref offOut, long len, int flags) throws ErrnoException { return Libcore.os.splice(fdIn, offIn, fdOut, offOut, len, flags); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static long splice(@NonNull FileDescriptor fdIn, @Nullable Int64Ref offIn, @NonNull FileDescriptor fdOut, @Nullable Int64Ref offOut, long len, int flags) throws ErrnoException { return Libcore.os.splice(fdIn, offIn, fdOut, offOut, len, flags); }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man2/stat.2.html">stat(2)</a>.
@@ -727,10 +946,23 @@ public final class Os {
     public static StructUtsname uname() { return Libcore.os.uname(); }
 
     /**
-     * @hide See <a href="http://man7.org/linux/man-pages/man2/unlink.2.html">unlink(2)</a>.
+     * Deletes a name from the filesystem. If that name was the last link to a file
+     * and no processes have the file open, the file is deleted and the space it was
+     * using is made available for reuse.
+     *
+     * See <a href="http://man7.org/linux/man-pages/man2/unlink.2.html">unlink(2)</a>.
+     *
+     * @param pathname name in the filesystem to delete
+     * @throws ErrnoException write access to {@code pathname} is not allowed; or
+     *                        I/O error occurred; or
+     *                        {@code pathname} refers to directory; or
+     *                        too many symbolic links were encountered in translating {@code pathname}; or
+     *                        {@code pathname} is used by the system or another process
+     *
+     * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static void unlink(String pathname) throws ErrnoException { Libcore.os.unlink(pathname); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void unlink(@Nullable String pathname) throws ErrnoException { Libcore.os.unlink(pathname); }
 
     /**
      * See <a href="http://man7.org/linux/man-pages/man3/unsetenv.3.html">unsetenv(3)</a>.
