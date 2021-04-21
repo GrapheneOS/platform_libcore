@@ -93,6 +93,9 @@ java_sdk_library {
     droiddoc_options: [
         "--show-single-annotation libcore.api.CorePlatformApi",
     ],
+
+    // Make dex jars for the stubs available for use by hiddenapi processing.
+    compile_dex: true,
 }
 
 // Referenced implicitly from stable.art.module.platform.api.

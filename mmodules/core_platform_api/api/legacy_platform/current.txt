@@ -72,6 +72,7 @@ package android.system {
     field public static final int UDP_ENCAP;
     field public static final int UDP_ENCAP_ESPINUDP;
     field public static final int XATTR_CREATE;
+    field public static final int XATTR_REPLACE;
     field public static final int _LINUX_CAPABILITY_VERSION_3;
   }
 
