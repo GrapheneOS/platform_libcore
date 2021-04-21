@@ -287,10 +287,8 @@ java_library {
     visibility: [
         "//art/build/apex",
         "//art/build/sdk",
-        "//external/robolectric-shadows",
         "//external/wycheproof",
         "//libcore/benchmarks",
-        "//frameworks/layoutlib",
         "//packages/modules/ArtPrebuilt",
     ],
     apex_available: [
@@ -332,6 +330,21 @@ java_library {
             enabled: false,
         },
     },
+}
+
+// Java library for use on host, e.g. by robolectric or layoutlib.
+java_library {
+    name: "core-libart-for-host",
+    visibility: [
+        "//art/build/sdk",
+        "//external/robolectric-shadows",
+        "//frameworks/layoutlib",
+    ],
+    static_libs: [
+        "core-libart",
+    ],
+    sdk_version: "none",
+    system_modules: "none",
 }
 
 // Provided solely to contribute information about which hidden parts of the
@@ -871,6 +884,9 @@ java_sdk_library {
         "i18n.module.intra.core.api.stubs",
     ],
     java_version: "1.9",
+
+    // Make dex jars for the stubs available for use by hiddenapi processing.
+    compile_dex: true,
 
     public: {
         enabled: true,

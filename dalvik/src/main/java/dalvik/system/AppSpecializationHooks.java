@@ -23,7 +23,7 @@ import libcore.api.CorePlatformApi;
  *
  * @hide
  */
-@CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class AppSpecializationHooks {
 
     /**
@@ -37,7 +37,7 @@ public class AppSpecializationHooks {
      *
      * @hide
      */
-    @CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void handleCompatChangesBeforeBindingApplication() {
         com.android.i18n.system.AppSpecializationHooks
                 .handleCompatChangesBeforeBindingApplication();
