@@ -2129,7 +2129,16 @@ class Thread implements Runnable {
         uncaughtExceptionPreHandler = eh;
     }
 
-    /** @hide */
+    /**
+     * Gets an {@link UncaughtExceptionHandler} that will be called before any
+     * returned by {@link #getUncaughtExceptionHandler()}. Can be {@code null} if
+     * was not explicitly set with
+     * {@link #setUncaughtExceptionPreHandler(UncaughtExceptionHandler)}.
+     *
+     * @return the uncaught exception prehandler for this thread
+     *
+     * @hide
+     */
     public static UncaughtExceptionHandler getUncaughtExceptionPreHandler() {
         return uncaughtExceptionPreHandler;
     }

@@ -106,7 +106,7 @@ public void setUnregistered() { throw new RuntimeException("Stub!"); }
 
 public boolean isRegistered() { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public synchronized void warmUpServiceProvision() { throw new RuntimeException("Stub!"); }
 @SuppressWarnings({"unchecked", "deprecation", "all"})
 public static class Service {

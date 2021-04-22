@@ -46,19 +46,27 @@ import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.Objects;
 
+import libcore.util.NonNull;
+import libcore.util.Nullable;
+
 /**
  * Subclass this if you want to override some {@link Os} methods but otherwise delegate.
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class ForwardingOs implements Os {
     @UnsupportedAppUsage
     private final Os os;
 
+    /**
+     * Constructs new {@link ForwardingOs}.
+     *
+     * @param os {@link Os} delegate for not overridden methods
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    protected ForwardingOs(Os os) {
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    protected ForwardingOs(@NonNull Os os) {
         this.os = Objects.requireNonNull(os);
     }
 
@@ -68,9 +76,37 @@ public class ForwardingOs implements Os {
     }
 
     public FileDescriptor accept(FileDescriptor fd, SocketAddress peerAddress) throws ErrnoException, SocketException { return os.accept(fd, peerAddress); }
+
+    /**
+     * Checks whether the calling process can access the file
+     * {@code path}. If {@code path} is a symbolic link, it is dereferenced.
+     *
+     * The mode specifies the accessibility check(s) to be performed,
+     * and is either the value {@link android.system.OsConstants#F_OK},
+     * or a mask consisting of the bitwise OR of one or more of
+     * {@link android.system.OsConstants#R_OK}, {@link android.system.OsConstants#W_OK},
+     * and {@link android.system.OsConstants#X_OK}.
+     *
+     * {@link android.system.OsConstants#F_OK} tests for the
+     * existence of the file. {@link android.system.OsConstants#R_OK},
+     * {@link android.system.OsConstants#W_OK}, and {@link android.system.OsConstants#X_OK}
+     * test whether the file exists and grants read, write, and execute permissions, respectively.
+     *
+     * @see <a href="https://man7.org/linux/man-pages/man2/access.2.html">access(2)</a>.
+     *
+     * @param path path of the file to check access for
+     * @param mode accessibility checks mask
+     * @return {@code true} if file is accessible (all requested permissions granted,
+     *         or mode is {@link android.system.OsConstants#F_OK} and the file exists));
+     *         and throws otherwise
+     * @throws ErrnoException if at least one bit in mode asked for a permission that is denied,
+     *                        or mode is {@link android.system.OsConstants#F_OK} and the file
+     *                        does not exist, or some other error occurred. See the full list
+     *                        of errors in the "See Also" list.
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    public boolean access(String path, int mode) throws ErrnoException { return os.access(path, mode); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public boolean access(@Nullable String path, int mode) throws ErrnoException { return os.access(path, mode); }
     public InetAddress[] android_getaddrinfo(String node, StructAddrinfo hints, int netId) throws GaiException { return os.android_getaddrinfo(node, hints, netId); }
     public void bind(FileDescriptor fd, InetAddress address, int port) throws ErrnoException, SocketException { os.bind(fd, address, port); }
     public void bind(FileDescriptor fd, SocketAddress address) throws ErrnoException, SocketException { os.bind(fd, address); }
@@ -162,9 +198,45 @@ public class ForwardingOs implements Os {
     public void msync(long address, long byteCount, int flags) throws ErrnoException { os.msync(address, byteCount, flags); }
     public void munlock(long address, long byteCount) throws ErrnoException { os.munlock(address, byteCount); }
     public void munmap(long address, long byteCount) throws ErrnoException { os.munmap(address, byteCount); }
+
+    /**
+     * Opens the file specified by {@code path}.
+     *
+     * If the specified file does not exist, it may optionally (if
+     * {@link android.system.OsConstants#O_CREAT} is specified in flags)
+     * be created by {@link #open(String, int, int)}.
+     *
+     * The argument flags must include one of the following access
+     * modes: {@link android.system.OsConstants#O_RDONLY},
+     * {@link android.system.OsConstants#O_WRONLY}, or
+     * {@link android.system.OsConstants#O_RDWR}. These request opening the
+     * file read-only, write-only, or read/write, respectively.
+     *
+     * In addition, zero or more file creation flags and file status
+     * flags can be bitwise-or'd in flags. The file creation flags are
+     * {@link android.system.OsConstants#O_CLOEXEC}, {@link android.system.OsConstants#O_CREAT},
+     * {@link android.system.OsConstants#O_DIRECTORY}, {@link android.system.OsConstants#O_EXCL},
+     * {@link android.system.OsConstants#O_NOCTTY}, {@link android.system.OsConstants#O_NOFOLLOW},
+     * {@link android.system.OsConstants#O_TMPFILE}, and {@link android.system.OsConstants#O_TRUNC}.
+     *
+     * @see <a href="https://man7.org/linux/man-pages/man2/open.2.html">open(2)</a>.
+     *
+     * @param path  path of the file to be opened
+     * @param flags bitmask of the access, file creation and file status flags
+     * @param mode  specifies the file mode bits to be applied when a new file is
+     *              created. If neither {@link android.system.OsConstants#O_CREAT}
+     *              nor {@link android.system.OsConstants#O_TMPFILE} is specified in
+     *              flags, then mode is ignored (and can thus be specified as 0, or simply omitted).
+     * @return {@link FileDescriptor} of an opened file
+     * @throws ErrnoException if requested access to the file is not allowed, or search
+     *                        permission is denied for one of the directories in the
+     *                        path prefix of {@code path}, or the file did not exist yet and
+     *                        write access to the parent directory is not allowed, or other error.
+     *                        See the full list of errors in the "See Also" list.
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    public FileDescriptor open(String path, int flags, int mode) throws ErrnoException { return os.open(path, flags, mode); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public FileDescriptor open(@Nullable String path, int flags, int mode) throws ErrnoException { return os.open(path, flags, mode); }
     public FileDescriptor[] pipe2(int flags) throws ErrnoException { return os.pipe2(flags); }
     public int poll(StructPollfd[] fds, int timeoutMs) throws ErrnoException { return os.poll(fds, timeoutMs); }
     public void posix_fallocate(FileDescriptor fd, long offset, long length) throws ErrnoException { os.posix_fallocate(fd, offset, length); }
@@ -182,14 +254,52 @@ public class ForwardingOs implements Os {
     public int recvfrom(FileDescriptor fd, ByteBuffer buffer, int flags, InetSocketAddress srcAddress) throws ErrnoException, SocketException { return os.recvfrom(fd, buffer, flags, srcAddress); }
     public int recvfrom(FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount, int flags, InetSocketAddress srcAddress) throws ErrnoException, SocketException { return os.recvfrom(fd, bytes, byteOffset, byteCount, flags, srcAddress); }
     public int recvmsg(FileDescriptor fd, StructMsghdr msg, int flags) throws ErrnoException, SocketException { return os.recvmsg(fd, msg, flags); }
+
+    /**
+     * Deletes a name from the filesystem.
+     *
+     * If the removed name was the last link to a file and no processes
+     * have the file open, the file is deleted and the space it was
+     * using is made available for reuse.
+     *
+     * If the name was the last link to a file, but any processes still
+     * have the file open, the file will remain in existence until the
+     * last file descriptor referring to it is closed.
+     *
+     * If the name referred to a symbolic link, the link is removed.
+     *
+     * If the name referred to a socket, FIFO, or device, the name is
+     * removed, but processes which have the object open may continue to
+     * use it.
+     *
+     * @see <a href="https://man7.org/linux/man-pages/man3/remove.3.html">remove(3)</a>.
+     *
+     * @param path file to delete
+     * @throws ErrnoException if access to {@code path} is not allowed, an I/O error occurred.
+     *                        See the full list of errors in the "See Also" list.
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    public void remove(String path) throws ErrnoException { os.remove(path); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public void remove(@Nullable String path) throws ErrnoException { os.remove(path); }
     @UnsupportedAppUsage
     public void removexattr(String path, String name) throws ErrnoException { os.removexattr(path, name); }
+
+    /**
+     * Renames a file, moving it between directories if required.
+     *
+     * @see <a href="https://man7.org/linux/man-pages/man2/rename.2.html">rename(2)</a>.
+     *
+     * @param oldPath file to be moved to a new location {@code newPath}
+     * @param newPath destination to move file {@code oldPath}
+     * @throws ErrnoException if write permission is denied for the directory containing
+     *                        {@code oldPath} or {@code newPath}, or, search permission is denied for
+     *                        one of the directories in the path prefix of {@code oldPath} or
+     *                        {@code newPath}, or {@code oldPath} is a directory and does not allow
+     *                        write permission. See the full list of errors in the "See Also" list.
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    public void rename(String oldPath, String newPath) throws ErrnoException { os.rename(oldPath, newPath); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public void rename(@Nullable String oldPath, @Nullable String newPath) throws ErrnoException { os.rename(oldPath, newPath); }
     public long sendfile(FileDescriptor outFd, FileDescriptor inFd, Int64Ref offset, long byteCount) throws ErrnoException { return os.sendfile(outFd, inFd, offset, byteCount); }
     public int sendmsg(FileDescriptor fd, StructMsghdr msg, int flags) throws ErrnoException, SocketException { return os.sendmsg(fd, msg, flags); }
     public int sendto(FileDescriptor fd, ByteBuffer buffer, int flags, InetAddress inetAddress, int port) throws ErrnoException, SocketException { return os.sendto(fd, buffer, flags, inetAddress, port); }
@@ -219,9 +329,19 @@ public class ForwardingOs implements Os {
     public FileDescriptor socket(int domain, int type, int protocol) throws ErrnoException { return os.socket(domain, type, protocol); }
     public void socketpair(int domain, int type, int protocol, FileDescriptor fd1, FileDescriptor fd2) throws ErrnoException { os.socketpair(domain, type, protocol, fd1, fd2); }
     public long splice(FileDescriptor fdIn, Int64Ref offIn, FileDescriptor fdOut, Int64Ref offOut, long len, int flags) throws ErrnoException { return os.splice(fdIn, offIn, fdOut, offOut, len, flags); }
+
+    /**
+     * Returns information about a file.
+     *
+     * @see <a href="https://man7.org/linux/man-pages/man2/lstat.2.html">stat(2)</a>.
+     *
+     * @param path path to file to get info about
+     * @return {@link StructStat} containing information about the file
+     * @throws ErrnoException See the full list of errors in the "See Also" list.
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    public StructStat stat(String path) throws ErrnoException { return os.stat(path); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public @Nullable StructStat stat(@Nullable String path) throws ErrnoException { return os.stat(path); }
     @UnsupportedAppUsage
     public StructStatVfs statvfs(String path) throws ErrnoException { return os.statvfs(path); }
     public String strerror(int errno) { return os.strerror(errno); }
@@ -234,9 +354,33 @@ public class ForwardingOs implements Os {
     public void tcsendbreak(FileDescriptor fd, int duration) throws ErrnoException { os.tcsendbreak(fd, duration); }
     public int umask(int mask) { return os.umask(mask); }
     public StructUtsname uname() { return os.uname(); }
+
+    /**
+     * Deletes a name from the filesystem.
+     *
+     * If the removed name was the last link to a file and no processes
+     * have the file open, the file is deleted and the space it was
+     * using is made available for reuse.
+     *
+     * If the name was the last link to a file, but any processes still
+     * have the file open, the file will remain in existence until the
+     * last file descriptor referring to it is closed.
+     *
+     * If the name referred to a symbolic link, the link is removed.
+     *
+     * If the name referred to a socket, FIFO, or device, the name is
+     * removed, but processes which have the object open may continue to
+     * use it.
+     *
+     * @see <a href="https://man7.org/linux/man-pages/man2/unlink.2.html">unlink(2)</a>.
+     *
+     * @param pathname file to unlink
+     * @throws ErrnoException if access to {@code pathname} is not allowed, an I/O error occurred.
+     *                        See the full list of errors in the "See Also" list.
+     */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    public void unlink(String pathname) throws ErrnoException { os.unlink(pathname); }
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public void unlink(@Nullable String pathname) throws ErrnoException { os.unlink(pathname); }
     public void unsetenv(String name) throws ErrnoException { os.unsetenv(name); }
     public int waitpid(int pid, Int32Ref status, int options) throws ErrnoException { return os.waitpid(pid, status, options); }
     public int write(FileDescriptor fd, ByteBuffer buffer) throws ErrnoException, InterruptedIOException { return os.write(fd, buffer); }

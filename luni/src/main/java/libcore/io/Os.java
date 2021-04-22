@@ -45,8 +45,17 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 
-/** @hide */
-@libcore.api.CorePlatformApi
+/**
+ * Linux-like operating system. The user of this interface has access to various methods
+ * that expose basic operating system functionality, like file and file descriptors operations
+ * (open, close, read, write), socket operations (connect, bind, send*, recv*), process
+ * operations (exec*, getpid), filesystem operations (mkdir, unlink, chmod, chown) and others.
+ *
+ * @see Linux
+ *
+ * @hide
+ */
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public interface Os {
     public FileDescriptor accept(FileDescriptor fd, SocketAddress peerAddress) throws ErrnoException, SocketException;
     public boolean access(String path, int mode) throws ErrnoException;
@@ -215,7 +224,7 @@ public interface Os {
      * @param update the new value to set; must not be null.
      * @return whether the update was successful.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean compareAndSetDefault(Os expect, Os update) {
         return Libcore.compareAndSetOs(expect, update);
     }
@@ -223,7 +232,7 @@ public interface Os {
     /**
      * @return the system's default {@link Os} implementation currently in use.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Os getDefault() {
         return Libcore.getOs();
     }

@@ -38,7 +38,7 @@ public FileInputStream(java.io.File file) throws java.io.FileNotFoundException {
 
 public FileInputStream(java.io.FileDescriptor fdObj) { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public FileInputStream(java.io.FileDescriptor fdObj, boolean isFdOwner) { throw new RuntimeException("Stub!"); }
 
 public int read() throws java.io.IOException { throw new RuntimeException("Stub!"); }

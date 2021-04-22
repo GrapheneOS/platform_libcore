@@ -2,17 +2,17 @@
 package android.compat {
 
   public final class Compatibility {
+    method public static void clearBehaviorChangeDelegate();
     method public static void clearOverrides();
     method public static boolean isChangeEnabled(long);
-    method public static void reportChange(long);
-    method public static void setCallbacks(android.compat.Compatibility.Callbacks);
+    method public static void reportUnconditionalChange(long);
+    method public static void setBehaviorChangeDelegate(android.compat.Compatibility.BehaviorChangeDelegate);
     method public static void setOverrides(android.compat.Compatibility.ChangeConfig);
   }
 
-  public static class Compatibility.Callbacks {
-    ctor protected Compatibility.Callbacks();
-    method protected boolean isChangeEnabled(long);
-    method protected void reportChange(long);
+  public static interface Compatibility.BehaviorChangeDelegate {
+    method public default boolean isChangeEnabled(long);
+    method public default void onChangeReported(long);
   }
 
   public static final class Compatibility.ChangeConfig {
@@ -157,6 +157,47 @@ package dalvik.system {
     method public void onPathAccess(String);
   }
 
+  public final class CloseGuard {
+    method public void close();
+    method public static dalvik.system.CloseGuard get();
+    method public static dalvik.system.CloseGuard.Reporter getReporter();
+    method public void open(String);
+    method public void openWithCallSite(String, String);
+    method public static void setEnabled(boolean);
+    method public static void setReporter(dalvik.system.CloseGuard.Reporter);
+    method public void warnIfOpen();
+  }
+
+  public static interface CloseGuard.Reporter {
+    method public void report(String, Throwable);
+    method public default void report(String);
+  }
+
+  @Deprecated public final class DexFile {
+    method @Deprecated @NonNull public static dalvik.system.DexFile.OptimizationInfo getDexFileOptimizationInfo(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
+    method @Deprecated @Nullable public static String[] getDexFileOutputPaths(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
+    method @Deprecated public static int getDexOptNeeded(@NonNull String, @NonNull String, @NonNull String, @Nullable String, boolean, boolean) throws java.io.FileNotFoundException, java.io.IOException;
+    method @Deprecated @NonNull public static String getSafeModeCompilerFilter(@NonNull String);
+    method @Deprecated public static boolean isProfileGuidedCompilerFilter(@NonNull String);
+    method @Deprecated public static boolean isValidCompilerFilter(@NonNull String);
+    field @Deprecated public static final int DEX2OAT_FOR_FILTER = 3; // 0x3
+    field @Deprecated public static final int NO_DEXOPT_NEEDED = 0; // 0x0
+  }
+
+  @Deprecated public static final class DexFile.OptimizationInfo {
+    method @Deprecated @NonNull public String getReason();
+    method @Deprecated @NonNull public String getStatus();
+  }
+
+  public class PathClassLoader extends dalvik.system.BaseDexClassLoader {
+    ctor public PathClassLoader(@NonNull String, @Nullable String, @Nullable ClassLoader, @Nullable ClassLoader[]);
+  }
+
+  public final class RuntimeHooks {
+    method public static void setTimeZoneIdSupplier(@NonNull java.util.function.Supplier<java.lang.String>);
+    method public static void setUncaughtExceptionPreHandler(@Nullable java.lang.Thread.UncaughtExceptionHandler);
+  }
+
   public abstract class SocketTagger {
     ctor public SocketTagger();
     method public static dalvik.system.SocketTagger get();
@@ -275,6 +316,28 @@ package dalvik.system {
 
 }
 
+package java.io {
+
+  public final class FileDescriptor {
+    method public int getInt$();
+    method public void setInt$(int);
+  }
+
+  public class FileInputStream extends java.io.InputStream {
+    ctor public FileInputStream(java.io.FileDescriptor, boolean);
+  }
+
+}
+
+package java.lang {
+
+  public class Thread implements java.lang.Runnable {
+    method public static java.lang.Thread.UncaughtExceptionHandler getUncaughtExceptionPreHandler();
+    method public static void setUncaughtExceptionPreHandler(java.lang.Thread.UncaughtExceptionHandler);
+  }
+
+}
+
 package java.net {
 
   public class DatagramSocket implements java.io.Closeable {
@@ -294,8 +357,10 @@ package java.net {
 
   public class InetAddress implements java.io.Serializable {
     method public static void clearDnsCache();
-    method public static java.net.InetAddress[] getAllByNameOnNet(String, int) throws java.net.UnknownHostException;
-    method public static java.net.InetAddress getByNameOnNet(String, int) throws java.net.UnknownHostException;
+    method @NonNull public static java.net.InetAddress[] getAllByNameOnNet(@Nullable String, int) throws java.net.UnknownHostException;
+    method @NonNull public static java.net.InetAddress getByNameOnNet(@Nullable String, int) throws java.net.UnknownHostException;
+    method @Deprecated public static boolean isNumeric(String);
+    method @Deprecated public static java.net.InetAddress parseNumericAddress(String);
   }
 
   public class Socket implements java.io.Closeable {
@@ -309,6 +374,10 @@ package java.net {
 }
 
 package java.nio {
+
+  public abstract class ByteBuffer extends java.nio.Buffer implements java.lang.Comparable<java.nio.ByteBuffer> {
+    method public void setAccessible(boolean);
+  }
 
   public class DirectByteBuffer extends java.nio.MappedByteBuffer {
     ctor public DirectByteBuffer(int, long, java.io.FileDescriptor, Runnable, boolean);
@@ -329,6 +398,34 @@ package java.nio {
 
 }
 
+package java.security {
+
+  public abstract class Provider extends java.util.Properties {
+    method public void warmUpServiceProvision();
+  }
+
+  public abstract class Signature extends java.security.SignatureSpi {
+    method public java.security.SignatureSpi getCurrentSpi();
+  }
+
+}
+
+package java.text {
+
+  public abstract class DateFormat extends java.text.Format {
+    method public static final void set24HourTimePref(Boolean);
+  }
+
+}
+
+package java.util {
+
+  public class LinkedHashMap<K, V> extends java.util.HashMap<K,V> implements java.util.Map<K,V> {
+    method public java.util.Map.Entry<K,V> eldest();
+  }
+
+}
+
 package java.util.concurrent {
 
   public class CompletableFuture<T> implements java.util.concurrent.CompletionStage<T> java.util.concurrent.Future<T> {
@@ -342,6 +439,14 @@ package java.util.zip {
 
   public class ZipEntry implements java.lang.Cloneable {
     method public long getDataOffset();
+  }
+
+}
+
+package javax.net.ssl {
+
+  public abstract class HttpsURLConnection extends java.net.HttpURLConnection {
+    method public static javax.net.ssl.HostnameVerifier getStrictHostnameVerifier();
   }
 
 }
@@ -370,19 +475,51 @@ package libcore.content.type {
 
 package libcore.io {
 
+  public class ForwardingOs implements libcore.io.Os {
+    ctor protected ForwardingOs(@NonNull libcore.io.Os);
+    method public boolean access(@Nullable String, int) throws android.system.ErrnoException;
+    method public java.io.FileDescriptor open(@Nullable String, int, int) throws android.system.ErrnoException;
+    method public void remove(@Nullable String) throws android.system.ErrnoException;
+    method public void rename(@Nullable String, @Nullable String) throws android.system.ErrnoException;
+    method @Nullable public android.system.StructStat stat(@Nullable String) throws android.system.ErrnoException;
+    method public void unlink(@Nullable String) throws android.system.ErrnoException;
+  }
+
   public final class IoUtils {
-    method public static void close(java.io.FileDescriptor) throws java.io.IOException;
-    method public static void closeQuietly(AutoCloseable);
-    method public static void closeQuietly(java.io.FileDescriptor);
-    method public static void closeQuietly(java.net.Socket);
-    method public static void setBlocking(java.io.FileDescriptor, boolean) throws java.io.IOException;
+    method public static int acquireRawFd(@NonNull java.io.FileDescriptor);
+    method public static void close(@Nullable java.io.FileDescriptor) throws java.io.IOException;
+    method public static void closeQuietly(@Nullable AutoCloseable);
+    method public static void closeQuietly(@Nullable java.io.FileDescriptor);
+    method public static void closeQuietly(@Nullable java.net.Socket);
+    method @NonNull public static byte[] readFileAsByteArray(@NonNull String) throws java.io.IOException;
+    method @NonNull public static String readFileAsString(@NonNull String) throws java.io.IOException;
+    method public static void setBlocking(@NonNull java.io.FileDescriptor, boolean) throws java.io.IOException;
+    method public static void setFdOwner(@NonNull java.io.FileDescriptor, @NonNull Object);
+  }
+
+  public final class Memory {
+    method public static void memmove(@NonNull Object, int, @NonNull Object, int, long);
+    method public static int peekInt(@NonNull byte[], int, @NonNull java.nio.ByteOrder);
+    method public static short peekShort(@NonNull byte[], int, @NonNull java.nio.ByteOrder);
+    method public static void pokeInt(@NonNull byte[], int, int, @NonNull java.nio.ByteOrder);
+    method public static void pokeLong(@NonNull byte[], int, long, @NonNull java.nio.ByteOrder);
+    method public static void pokeShort(@NonNull byte[], int, short, @NonNull java.nio.ByteOrder);
+  }
+
+  public interface Os {
+    method public static boolean compareAndSetDefault(libcore.io.Os, libcore.io.Os);
+    method public static libcore.io.Os getDefault();
   }
 
   public final class Streams {
-    method public static int copy(java.io.InputStream, java.io.OutputStream) throws java.io.IOException;
-    method public static byte[] readFully(java.io.InputStream) throws java.io.IOException;
-    method public static String readFully(java.io.Reader) throws java.io.IOException;
-    method public static byte[] readFullyNoClose(java.io.InputStream) throws java.io.IOException;
+    method public static int copy(@NonNull java.io.InputStream, @NonNull java.io.OutputStream) throws java.io.IOException;
+    method public static void readFully(@NonNull java.io.InputStream, @NonNull byte[]) throws java.io.IOException;
+    method @NonNull public static byte[] readFully(@NonNull java.io.InputStream) throws java.io.IOException;
+    method @NonNull public static String readFully(@NonNull java.io.Reader) throws java.io.IOException;
+    method @NonNull public static byte[] readFullyNoClose(@NonNull java.io.InputStream) throws java.io.IOException;
+    method public static int readSingleByte(@NonNull java.io.InputStream) throws java.io.IOException;
+    method public static long skipByReading(@NonNull java.io.InputStream, long) throws java.io.IOException;
+    method public static void writeSingleByte(@NonNull java.io.OutputStream, int) throws java.io.IOException;
   }
 
 }
@@ -483,6 +620,25 @@ package libcore.util {
     method public static String encodeToString(byte, boolean);
     method public static String encodeToString(byte[]);
     method public static String encodeToString(byte[], boolean);
+  }
+
+  public class NativeAllocationRegistry {
+    ctor public NativeAllocationRegistry(@NonNull ClassLoader, long, long);
+    method public static void applyFreeFunction(long, long);
+    method public static libcore.util.NativeAllocationRegistry createMalloced(@NonNull ClassLoader, long, long);
+    method public static libcore.util.NativeAllocationRegistry createMalloced(@NonNull ClassLoader, long);
+    method public static libcore.util.NativeAllocationRegistry createNonmalloced(@NonNull ClassLoader, long, long);
+    method @NonNull public Runnable registerNativeAllocation(@NonNull Object, long);
+  }
+
+  public class SneakyThrow {
+    method public static void sneakyThrow(@NonNull Throwable);
+  }
+
+  public class XmlObjectFactory {
+    method @NonNull public static org.xml.sax.XMLReader newXMLReader();
+    method @NonNull public static org.xmlpull.v1.XmlPullParser newXmlPullParser();
+    method @NonNull public static org.xmlpull.v1.XmlSerializer newXmlSerializer();
   }
 
 }

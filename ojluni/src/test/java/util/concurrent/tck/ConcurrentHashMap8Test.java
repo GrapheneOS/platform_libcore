@@ -49,6 +49,13 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.ToDoubleBiFunction;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntBiFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongBiFunction;
+import java.util.function.ToLongFunction;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -189,7 +196,8 @@ public class ConcurrentHashMap8Test extends JSR166TestCase {
     }
 
     static Set<Integer> populatedSet(int n) {
-        Set<Integer> a = ConcurrentHashMap.<Integer>newKeySet();
+        // Android-changed: Use the overload of newKeySet with specified initial capacity.
+        Set<Integer> a = ConcurrentHashMap.<Integer>newKeySet(n);
         assertTrue(a.isEmpty());
         for (int i = 0; i < n; i++)
             assertTrue(a.add(i));
@@ -606,6 +614,52 @@ public class ConcurrentHashMap8Test extends JSR166TestCase {
         }
     }
 
+    // BEGIN Android-added: More explicit function classes to avoid type inference problems.
+    static class IncrementKey implements Function<Map.Entry<Long,Long>, Map.Entry<Long,Long>> {
+        public Map.Entry<Long,Long> apply(Map.Entry<Long,Long> in) {
+            return new AbstractMap.SimpleEntry<Long,Long>
+             (Long.valueOf(in.getKey().longValue() + 1),
+              Long.valueOf(1L));
+        }
+    }
+
+    static class KeyAsDouble implements ToDoubleFunction<Map.Entry<Long,Long>> {
+        public double applyAsDouble(Map.Entry<Long,Long> in) {
+            return in.getKey().doubleValue();
+        }
+    }
+
+    static class KeyAsInt implements ToIntFunction<Map.Entry<Long,Long>> {
+        public int applyAsInt(Map.Entry<Long,Long> in) {
+            return in.getKey().intValue();
+        }
+    }
+
+    static class KeyAsLong implements ToLongFunction<Map.Entry<Long,Long>> {
+        public long applyAsLong(Map.Entry<Long,Long> in) {
+            return in.getKey().longValue();
+        }
+    }
+
+    static class IncrementKeyToDouble implements ToDoubleBiFunction<Long, Long> {
+        public double applyAsDouble(Long key, Long value) {
+            return (key.doubleValue() + 1);
+        }
+    }
+
+    static class IncrementKeyToInt implements ToIntBiFunction<Long, Long> {
+        public int applyAsInt(Long key, Long value) {
+            return (key.intValue() + 1);
+        }
+    }
+
+    static class IncrementKeyToLong implements ToLongBiFunction<Long, Long> {
+        public long applyAsLong(Long key, Long value) {
+            return (key.longValue() + 1);
+        }
+    }
+    // END Android-added: More explicit function classes to avoid type inference problems.
+
     /**
      * forEachKeySequentially traverses all keys
      */
@@ -811,6 +865,136 @@ public class ConcurrentHashMap8Test extends JSR166TestCase {
         r = m.reduceEntries(Long.MAX_VALUE, new AddKeys());
         assertEquals(r.getKey().longValue(), (long)SIZE * (SIZE - 1) / 2);
     }
+
+    // BEGIN Android-added: Extra unit tests to cover missing APIs.
+    /**
+     * transformReduceEntriesSequentially accumulates across all entries
+     */
+    public void testTransformReduceEntriesSequentially() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        Map.Entry<Long,Long> r;
+        r = m.reduceEntries(Long.MAX_VALUE, new IncrementKey(), new AddKeys());
+        assertEquals(r.getKey().longValue(), (long)SIZE * (SIZE + 1) / 2);
+    }
+
+    /**
+     * reduceEntriesToDoubleSequentially accumulates across all entries
+     */
+    public void testReduceEntriesToDoubleSequentially() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        double dr = m.reduceEntriesToDouble(Long.MAX_VALUE, new KeyAsDouble(), 0.0, Double::sum);
+        assertEquals(dr, (double)SIZE * (SIZE - 1) / 2);
+    }
+
+    /**
+     * reduceEntriesToIntSequentially accumulates across all entries
+     */
+    public void testReduceEntriesToIntSequentially() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        int ir = m.reduceEntriesToInt(Long.MAX_VALUE, new KeyAsInt(), 0, Integer::sum);
+        assertEquals(ir, (int)SIZE * (SIZE - 1) / 2);
+    }
+
+    /**
+     * reduceEntriesToLongSequentially accumulates across all entries
+     */
+    public void testReduceEntriesToLongSequentially() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        long lr = m.reduceEntriesToLong(Long.MAX_VALUE, new KeyAsLong(), 0L, Long::sum);
+        assertEquals(lr, (long)SIZE * (SIZE - 1) / 2);
+    }
+
+    /**
+     * transformReduceEntriesToDoubleSequentially accumulates across all entries
+     */
+    public void testTransformReduceEntriesToDoubleSequentially() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        double dr = m.reduceToDouble(Long.MAX_VALUE, new IncrementKeyToDouble(), 0.0, Double::sum);
+        assertEquals(dr, (double)SIZE * (SIZE + 1) / 2);
+    }
+
+    /**
+     * transformReduceEntriesToIntSequentially accumulates across all entries
+     */
+    public void testTransformReduceEntriesToIntSequentially() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        int ir = m.reduceToInt(Long.MAX_VALUE, new IncrementKeyToInt(), 0, Integer::sum);
+        assertEquals(ir, SIZE * (SIZE + 1) / 2);
+    }
+
+    /**
+     * transformReduceEntriesToLongSequentially accumulates across all entries
+     */
+    public void testTransformReduceEntriesToLongSequentially() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        long lr = m.reduceToLong(Long.MAX_VALUE, new IncrementKeyToLong(), 0L, Long::sum);
+        assertEquals(lr, (long)SIZE * (SIZE + 1) / 2);
+    }
+
+    /**
+     * transformReduceEntriesInParallel accumulates across all entries
+     */
+    public void testTransformReduceEntriesInParallel() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        Map.Entry<Long,Long> r;
+        r = m.reduceEntries(1L, new IncrementKey(), new AddKeys());
+        assertEquals(r.getKey().longValue(), (long)SIZE * (SIZE + 1) / 2);
+    }
+
+    /**
+     * reduceEntriesToDoubleInParallel accumulates across all entries
+     */
+    public void testReduceEntriesToDoubleInParallel() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        double dr = m.reduceEntriesToDouble(1L, new KeyAsDouble(), 0.0, Double::sum);
+        assertEquals(dr, (double)SIZE * (SIZE - 1) / 2);
+    }
+
+    /**
+     * reduceEntriesToIntInParallel accumulates across all entries
+     */
+    public void testReduceEntriesToIntInParallel() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        int ir = m.reduceEntriesToInt(1L, new KeyAsInt(), 0, Integer::sum);
+        assertEquals(ir, SIZE * (SIZE - 1) / 2);
+    }
+
+    /**
+     * reduceEntriesToLongInParallel accumulates across all entries
+     */
+    public void testReduceEntriesToLongInParallel() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        long lr = m.reduceEntriesToLong(1L, new KeyAsLong(), 0L, Long::sum);
+        assertEquals(lr, (long)SIZE * (SIZE - 1) / 2);
+    }
+
+    /**
+     * transformReduceEntriesToDoubleInParallel accumulates across all entries
+     */
+    public void testTransformReduceEntriesToDoubleInParallel() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        double dr = m.reduceToDouble(1L, new IncrementKeyToDouble(), 0.0, Double::sum);
+        assertEquals(dr, (double)SIZE * (SIZE + 1) / 2);
+    }
+
+    /**
+     * transformReduceEntriesToIntInParallel accumulates across all entries
+     */
+    public void testTransformReduceEntriesToIntInParallel() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        int ir = m.reduceToInt(1L, new IncrementKeyToInt(), 0, Integer::sum);
+        assertEquals(ir, SIZE * (SIZE + 1) / 2);
+    }
+
+    /**
+     * transformReduceEntriesToLongInParallel accumulates across all entries
+     */
+    public void testTransformReduceEntriesToLongInParallel() {
+        ConcurrentHashMap<Long, Long> m = longMap();
+        long lr = m.reduceToLong(1L, new IncrementKeyToLong(), 0L, Long::sum);
+        assertEquals(lr, (long)SIZE * (SIZE + 1) / 2);
+    }
+    // END Android-added: Extra unit tests to cover missing APIs.
 
     /**
      * reduceKeysInParallel accumulates across all keys

@@ -16,6 +16,9 @@
 
 package dalvik.system;
 
+import libcore.util.NonNull;
+import libcore.util.Nullable;
+
 /**
  * Provides a simple {@link ClassLoader} implementation that operates on a list
  * of files and directories in the local file system, but does not attempt to
@@ -92,10 +95,10 @@ public class PathClassLoader extends BaseDexClassLoader {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public PathClassLoader(
-            String dexPath, String librarySearchPath, ClassLoader parent,
-            ClassLoader[] sharedLibraryLoaders) {
+            @NonNull String dexPath, @Nullable String librarySearchPath, @Nullable ClassLoader parent,
+            @Nullable ClassLoader[] sharedLibraryLoaders) {
         super(dexPath, librarySearchPath, parent, sharedLibraryLoaders);
     }
 }

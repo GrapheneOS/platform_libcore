@@ -110,7 +110,7 @@ import android.compat.annotation.UnsupportedAppUsage;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.IntraCoreApi
 public final class CloseGuard {
 
@@ -140,9 +140,11 @@ public final class CloseGuard {
     /**
      * Returns a CloseGuard instance. {@code #open(String)} can be used to set
      * up the instance to warn on failure to close.
+     *
+     * @return {@link CloseGuard} instance.
      */
     @UnsupportedAppUsage(trackingBug=111170242)
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public static CloseGuard get() {
         return new CloseGuard();
@@ -154,9 +156,11 @@ public final class CloseGuard {
      * if enabled is true. If a stack trace was captured, the {@link
      * #getReporter() reporter} is informed of unclosed resources; otherwise a
      * one-line warning is logged.
+     *
+     * @param enabled whether stack capture and tracking is enabled.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setEnabled(boolean enabled) {
         CloseGuard.stackAndTrackingEnabled = enabled;
     }
@@ -171,9 +175,11 @@ public final class CloseGuard {
     /**
      * Used to replace default Reporter used to warn of CloseGuard
      * violations when stack tracking is enabled. Must be non-null.
+     *
+     * @param rep replacement for default Reporter.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setReporter(Reporter rep) {
         if (rep == null) {
             throw new NullPointerException("reporter == null");
@@ -183,8 +189,10 @@ public final class CloseGuard {
 
     /**
      * Returns non-null CloseGuard.Reporter.
+     *
+     * @return CloseGuard's Reporter.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Reporter getReporter() {
         return reporter;
     }
@@ -224,7 +232,7 @@ public final class CloseGuard {
      * @throws NullPointerException if closer is null.
      */
     @UnsupportedAppUsage(trackingBug=111170242)
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public void open(String closer) {
         openWithCallSite(closer, null /* callsite */);
@@ -240,7 +248,7 @@ public final class CloseGuard {
      * @param closer Non-null name of explicit termination method. Printed by warnIfOpen.
      * @param callsite Non-null string uniquely identifying the callsite.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public void openWithCallSite(String closer, String callsite) {
         // always perform the check for valid API usage...
         if (closer == null) {
@@ -276,7 +284,7 @@ public final class CloseGuard {
      * finalization.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public void close() {
         Tracker tracker = currentTracker;
@@ -295,7 +303,7 @@ public final class CloseGuard {
      * directly logs a brief message.
      */
     @UnsupportedAppUsage(trackingBug=111170242)
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public void warnIfOpen() {
         if (closerNameOrAllocationInfo != null) {
@@ -326,13 +334,13 @@ public final class CloseGuard {
      * Interface to allow customization of reporting behavior.
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public interface Reporter {
         @UnsupportedAppUsage
-        @libcore.api.CorePlatformApi
+        @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         void report(String message, Throwable allocationSite);
 
-        @libcore.api.CorePlatformApi
+        @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         default void report(String message) {}
     }
 

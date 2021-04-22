@@ -51,8 +51,17 @@ java_defaults {
         "--hide HiddenSuperclass",
         "--hide-annotation libcore.api.Hide",
         "--skip-annotation-instance-methods=false",
+        "--force-convert-to-warning-nullability-annotations +*:-android.*:+android.icu.*:-dalvik.* ",
     ],
     merge_inclusion_annotations_dirs: ["ojluni-annotated-mmodule-stubs"],
+
+    // Emit nullability annotations from the source to the stub files.
+    annotations_enabled: true,
+
+    merge_annotations_dirs: [
+        "metalava-manual",
+        "ojluni-annotated-sdk-stubs",
+    ],
 
     sdk_version: "none",
     system_modules: "none",

@@ -86,7 +86,7 @@ public final java.lang.Object getParameter(java.lang.String param) throws java.s
 
 public java.lang.Object clone() throws java.lang.CloneNotSupportedException { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public java.security.SignatureSpi getCurrentSpi() { throw new RuntimeException("Stub!"); }
 
 protected static final int SIGN = 2; // 0x2
