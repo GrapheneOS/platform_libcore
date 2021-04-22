@@ -768,6 +768,9 @@ java_test {
 // available to metalava. Used for nullability annotations in OpenJDK source.
 droiddoc_exported_dir {
     name: "ojluni-annotated-sdk-stubs",
+    visibility: [
+        "//libcore:__subpackages__",
+    ],
     path: "ojluni/annotations/sdk",
 }
 

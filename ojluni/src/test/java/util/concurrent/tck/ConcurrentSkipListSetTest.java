@@ -42,6 +42,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentSkipListSet;
 
 import junit.framework.Test;
@@ -159,6 +160,45 @@ public class ConcurrentSkipListSetTest extends JSR166TestCase {
         for (int i = SIZE - 1; i >= 0; --i)
             assertEquals(ints[i], q.pollFirst());
     }
+
+    // BEGIN Android-added: Extra unit tests for covering constructor and clone APIs.
+    /**
+     * A sorted set is used in constructor - the new set will contain the same elements and using the
+     * same ordering as the source
+     */
+    public void testConstructorFromSortedSet() {
+        TreeSet ts = new TreeSet();
+        ts.add(one);
+        ts.add(two);
+        ts.add(three);
+        ts.add(four);
+        ts.add(five);
+        ConcurrentSkipListSet q = new ConcurrentSkipListSet(ts);
+        assertEquals(ts.size(), q.size());
+        while(!ts.isEmpty()) {
+            assertFalse(q.isEmpty());
+            assertEquals(ts.pollFirst(), q.pollFirst());
+        }
+    }
+
+    /**
+     * clone creates set with a shallow copy of the source set
+     */
+    public void testClone() {
+        ConcurrentSkipListSet x = set5();
+        ConcurrentSkipListSet y = x.clone();
+        assertNotSame(x, y);
+        Iterator itX = x.iterator();
+        Iterator itY = y.iterator();
+        while(itX.hasNext() && itY.hasNext()) {
+            Integer iX = (Integer) itX.next();
+            Integer iY = (Integer) itY.next();
+            assertSame(iX, iY);
+        }
+        assertFalse(itX.hasNext());
+        assertFalse(itY.hasNext());
+    }
+    // END Android-added: Extra unit tests for covering constructor and clone APIs.
 
     /**
      * isEmpty is true before add, false after
@@ -508,11 +548,40 @@ public class ConcurrentSkipListSetTest extends JSR166TestCase {
         ConcurrentSkipListSet q = populatedSet(SIZE);
         Iterator it = q.iterator();
         int i;
-        for (i = 0; it.hasNext(); i++)
-            assertTrue(q.contains(it.next()));
+        Integer lastVal = null;
+        for (i = 0; it.hasNext(); i++) {
+            Integer val = (Integer) it.next();
+            assertTrue(q.contains(val));
+            if(lastVal != null) {
+                assertTrue(0 >= lastVal.compareTo(val));
+            }
+            lastVal = val;
+        }
         assertEquals(i, SIZE);
         assertIteratorExhausted(it);
     }
+
+    // BEGIN Android-added: Unit test for descending iterator API.
+    /**
+     * descendingIterator iterates through all elements
+     */
+    public void testDescendingIterator() {
+        ConcurrentSkipListSet q = populatedSet(SIZE);
+        Iterator it = q.descendingIterator();
+        int i;
+        Integer lastVal = null;
+        for (i = 0; it.hasNext(); i++) {
+            Integer val = (Integer) it.next();
+            assertTrue(q.contains(val));
+            if(lastVal != null) {
+                assertTrue(0 <= lastVal.compareTo(val));
+            }
+            lastVal = val;
+        }
+        assertEquals(i, SIZE);
+        assertIteratorExhausted(it);
+    }
+    // END Android-added: Unit test for descending iterator API.
 
     /**
      * iterator of empty set has no elements

@@ -23,12 +23,15 @@ import java.nio.ByteOrder;
 
 import dalvik.annotation.optimization.FastNative;
 
+import libcore.util.NonNull;
+import libcore.util.Nullable;
+
 /**
  * Unsafe access to memory.
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class Memory {
     private Memory() { }
 
@@ -46,8 +49,17 @@ public final class Memory {
     public static native void unsafeBulkPut(byte[] dst, int dstOffset, int byteCount,
             Object src, int srcOffset, int sizeofElements, boolean swap);
 
-    @libcore.api.CorePlatformApi
-    public static int peekInt(byte[] src, int offset, ByteOrder order) {
+    /**
+     * Gets int value from a byte buffer {@code src} at offset {@code offset} using
+     * {@code order} byte order.
+     *
+     * @param src    source byte buffer
+     * @param offset offset in {@code src} to get bytes from
+     * @param order  byte order
+     * @return int value
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static int peekInt(@NonNull byte[] src, int offset, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             return (((src[offset++] & 0xff) << 24) |
                     ((src[offset++] & 0xff) << 16) |
@@ -85,8 +97,17 @@ public final class Memory {
         }
     }
 
-    @libcore.api.CorePlatformApi
-    public static short peekShort(byte[] src, int offset, ByteOrder order) {
+    /**
+     * Gets short value from a byte buffer {@code src} at offset {@code offset} using
+     * {@code order} byte order.
+     *
+     * @param src    source byte buffer
+     * @param offset offset in {@code src} to get bytes from
+     * @param order  byte order
+     * @return short value
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static short peekShort(@NonNull byte[] src, int offset, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             return (short) ((src[offset] << 8) | (src[offset + 1] & 0xff));
         } else {
@@ -94,8 +115,17 @@ public final class Memory {
         }
     }
 
-    @libcore.api.CorePlatformApi
-    public static void pokeInt(byte[] dst, int offset, int value, ByteOrder order) {
+    /**
+     * Writes given int value {@code value} to a byte buffer {@code dst} using
+     * {@code order} byte order.
+     *
+     * @param dst    byte buffer where to write {@code value}
+     * @param offset offset in {@code dst} to put value to
+     * @param value  int value to write
+     * @param order  byte order
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void pokeInt(@NonNull byte[] dst, int offset, int value, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             dst[offset++] = (byte) ((value >> 24) & 0xff);
             dst[offset++] = (byte) ((value >> 16) & 0xff);
@@ -109,8 +139,17 @@ public final class Memory {
         }
     }
 
-    @libcore.api.CorePlatformApi
-    public static void pokeLong(byte[] dst, int offset, long value, ByteOrder order) {
+    /**
+     * Writes given long value {@code value} to a byte buffer {@code dst} using
+     * {@code order} byte order.
+     *
+     * @param dst    byte buffer where to write {@code value}
+     * @param offset offset in {@code dst} to put value to
+     * @param value  long value to write
+     * @param order  byte order
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void pokeLong(@NonNull byte[] dst, int offset, long value, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             int i = (int) (value >> 32);
             dst[offset++] = (byte) ((i >> 24) & 0xff);
@@ -136,8 +175,17 @@ public final class Memory {
         }
     }
 
-    @libcore.api.CorePlatformApi
-    public static void pokeShort(byte[] dst, int offset, short value, ByteOrder order) {
+    /**
+     * Writes given short value {@code value} to a byte buffer {@code dst} using
+     * {@code order} byte order.
+     *
+     * @param dst    byte buffer where to write {@code value}
+     * @param offset offset in {@code dst} to put value to
+     * @param value  short value to write
+     * @param order  byte order
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void pokeShort(@NonNull byte[] dst, int offset, short value, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             dst[offset++] = (byte) ((value >> 8) & 0xff);
             dst[offset  ] = (byte) ((value >> 0) & 0xff);
@@ -148,17 +196,26 @@ public final class Memory {
     }
 
     /**
-     * Copies 'byteCount' bytes from the source to the destination. The objects are either
-     * instances of DirectByteBuffer or byte[]. The offsets in the byte[] case must include
-     * the Buffer.arrayOffset if the array came from a Buffer.array call. We could make this
-     * private and provide the four type-safe variants, but then ByteBuffer.put(ByteBuffer)
-     * would need to work out which to call based on whether the source and destination buffers
-     * are direct or not.
+     * Copies {@code byteCount} bytes from the source {@code srcObject} to the
+     * destination {@code dstObject}. The objects are either instances of
+     * {@code DirectByteBuffer} or {@code byte[]}. The offsets in the {@code byte[]}
+     * case must include the {@link Buffer#arrayOffset()} if the array came from a
+     * {@link Buffer#array()} call.
+     *
+     * <p>We could make this private and provide the four type-safe variants, but then
+     * {@link ByteBuffer#put(ByteBuffer)} would need to work out which to call based on
+     * whether the source and destination buffers are direct or not.
+     *
+     * @param dstObject destination buffer
+     * @param dstOffset offset in the destination buffer
+     * @param srcObject source buffer
+     * @param srcOffset offset in the source buffer
+     * @param byteCount number of bytes to copy
      *
      * @hide make type-safe before making public?
      */
-    @libcore.api.CorePlatformApi
-    public static native void memmove(Object dstObject, int dstOffset, Object srcObject, int srcOffset, long byteCount);
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static native void memmove(@NonNull Object dstObject, int dstOffset, @NonNull Object srcObject, int srcOffset, long byteCount);
 
     @UnsupportedAppUsage
     @FastNative

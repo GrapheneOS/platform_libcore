@@ -151,7 +151,7 @@ public abstract java.nio.DoubleBuffer asDoubleBuffer();
 
 public boolean isAccessible() { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public void setAccessible(boolean value) { throw new RuntimeException("Stub!"); }
 }
 

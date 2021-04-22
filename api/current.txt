@@ -5150,15 +5150,15 @@ package java.net {
 
   public class InetAddress implements java.io.Serializable {
     method public byte[] getAddress();
-    method public static java.net.InetAddress[] getAllByName(String) throws java.net.UnknownHostException;
-    method public static java.net.InetAddress getByAddress(String, byte[]) throws java.net.UnknownHostException;
-    method public static java.net.InetAddress getByAddress(byte[]) throws java.net.UnknownHostException;
-    method public static java.net.InetAddress getByName(String) throws java.net.UnknownHostException;
-    method public String getCanonicalHostName();
-    method public String getHostAddress();
-    method public String getHostName();
-    method public static java.net.InetAddress getLocalHost() throws java.net.UnknownHostException;
-    method public static java.net.InetAddress getLoopbackAddress();
+    method public static java.net.InetAddress[] getAllByName(@Nullable String) throws java.net.UnknownHostException;
+    method @NonNull public static java.net.InetAddress getByAddress(@Nullable String, byte[]) throws java.net.UnknownHostException;
+    method @NonNull public static java.net.InetAddress getByAddress(byte[]) throws java.net.UnknownHostException;
+    method @NonNull public static java.net.InetAddress getByName(@Nullable String) throws java.net.UnknownHostException;
+    method @NonNull public String getCanonicalHostName();
+    method @Nullable public String getHostAddress();
+    method @NonNull public String getHostName();
+    method @NonNull public static java.net.InetAddress getLocalHost() throws java.net.UnknownHostException;
+    method @NonNull public static java.net.InetAddress getLoopbackAddress();
     method public boolean isAnyLocalAddress();
     method public boolean isLinkLocalAddress();
     method public boolean isLoopbackAddress();
@@ -5169,7 +5169,7 @@ package java.net {
     method public boolean isMCSiteLocal();
     method public boolean isMulticastAddress();
     method public boolean isReachable(int) throws java.io.IOException;
-    method public boolean isReachable(java.net.NetworkInterface, int, int) throws java.io.IOException;
+    method public boolean isReachable(@Nullable java.net.NetworkInterface, int, int) throws java.io.IOException;
     method public boolean isSiteLocalAddress();
   }
 

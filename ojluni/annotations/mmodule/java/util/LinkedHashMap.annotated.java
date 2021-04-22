@@ -48,7 +48,7 @@ public V getOrDefault(java.lang.Object key, V defaultValue) { throw new RuntimeE
 
 public void clear() { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public java.util.Map.Entry<K,V> eldest() { throw new RuntimeException("Stub!"); }
 
 protected boolean removeEldestEntry(java.util.Map.Entry<K,V> eldest) { throw new RuntimeException("Stub!"); }

@@ -19,6 +19,8 @@ package dalvik.system;
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.function.Supplier;
+import libcore.util.NonNull;
+import libcore.util.Nullable;
 
 /**
  * Provides lifecycle methods and other hooks for an Android runtime "container" to call into the
@@ -30,7 +32,7 @@ import java.util.function.Supplier;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class RuntimeHooks {
 
     private static Supplier<String> zoneIdSupplier;
@@ -45,12 +47,14 @@ public final class RuntimeHooks {
      *
      * <p>This method also clears the current {@link TimeZone} default ensuring that the supplier
      * will be used next time {@link TimeZone#getDefault()} is called (unless
-     * {@link TimeZone#setDefault(TimeZone)} is called with a non-null value in the interim).
+     * {@link TimeZone#setDefault(TimeZone)} is called with a non-{@code null} value in the interim).
      *
      * <p>Once set the supplier cannot be changed.
+     *
+     * @param zoneIdSupplier new {@link Supplier} of the time zone ID
      */
-    @libcore.api.CorePlatformApi
-    public static void setTimeZoneIdSupplier(Supplier<String> zoneIdSupplier) {
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void setTimeZoneIdSupplier(@NonNull Supplier<String> zoneIdSupplier) {
         if (RuntimeHooks.zoneIdSupplier != null) {
             throw new UnsupportedOperationException("zoneIdSupplier instance already set");
         }
@@ -74,9 +78,9 @@ public final class RuntimeHooks {
      *
      * @param uncaughtExceptionHandler handler for uncaught exceptions
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setUncaughtExceptionPreHandler(
-            Thread.UncaughtExceptionHandler uncaughtExceptionHandler) {
+            @Nullable Thread.UncaughtExceptionHandler uncaughtExceptionHandler) {
         Thread.setUncaughtExceptionPreHandler(uncaughtExceptionHandler);
     }
 }
