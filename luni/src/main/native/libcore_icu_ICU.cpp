@@ -46,7 +46,7 @@ static jstring ICU_getScript(JNIEnv* env, jclass, jstring javaLocaleName) {
   // Normal script part is 4-char long. Being conservative for allocation size
   // because if the locale contains script part, it should not be longer than the locale itself.
   int32_t capacity = std::max(ULOC_SCRIPT_CAPACITY, icuLocale.locale_length() + 1);
-  std::unique_ptr<char[]> buffer(new char(capacity));
+  auto buffer = std::make_unique<char[]>(capacity);
   UErrorCode status = U_ZERO_ERROR;
   uloc_getScript(icuLocale.locale(), buffer.get(), capacity, &status);
   if (U_FAILURE(status)) {

@@ -886,6 +886,7 @@ java_sdk_library {
         // android.icu.text.CollationElementIterator.NULLORDER.
         "i18n.module.intra.core.api.stubs",
     ],
+    stub_only_static_libs: ["notices-for-stubs-jar"],
     java_version: "1.9",
 
     // Make dex jars for the stubs available for use by hiddenapi processing.
