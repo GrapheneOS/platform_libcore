@@ -133,12 +133,10 @@ public native java.lang.Class<?>[] getDeclaredClasses();
 
 public native java.lang.reflect.Field[] getDeclaredFields();
 
-@libcore.api.CorePlatformApi
 public native java.lang.reflect.Field[] getDeclaredFieldsUnchecked(boolean publicOnly);
 
 public java.lang.reflect.Method[] getDeclaredMethods() throws java.lang.SecurityException { throw new RuntimeException("Stub!"); }
 
-@libcore.api.CorePlatformApi
 public native java.lang.reflect.Method[] getDeclaredMethodsUnchecked(boolean publicOnly);
 
 public java.lang.reflect.Constructor<?>[] getDeclaredConstructors() throws java.lang.SecurityException { throw new RuntimeException("Stub!"); }

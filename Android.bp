@@ -62,27 +62,16 @@ build = [
     "NativeCode.bp",
 ]
 
-genrule {
-    name: "notices-for-framework-stubs-gen",
+java_genrule {
+    name: "notices-for-stubs-jar",
+    tools: ["soong_zip"],
     tool_files: [
         "NOTICE",
         "ojluni/NOTICE",
     ],
-    cmd: "cp -f $(location NOTICE) $(genDir)/NOTICES/libcore-NOTICE && cp -f $(location ojluni/NOTICE) $(genDir)/NOTICES/ojluni-NOTICE",
-    out: [
-        "NOTICES/libcore-NOTICE",
-        "NOTICES/ojluni-NOTICE",
-    ],
-}
-
-java_library {
-    name: "art-notices-for-framework-stubs-jar",
-    visibility: [
-        "//art/build/sdk",
-        "//frameworks/base",
-    ],
-    java_resources: [
-        ":notices-for-framework-stubs-gen",
-    ],
-    sdk_version: "core_current",
+    cmd: "mkdir $(genDir)/NOTICES && " +
+        "cp -f $(location NOTICE) $(genDir)/NOTICES/libcore-NOTICE && " +
+        "cp -f $(location ojluni/NOTICE) $(genDir)/NOTICES/ojluni-NOTICE && " +
+        "$(location soong_zip) -o $(out) -C $(genDir) -D $(genDir)/NOTICES",
+    out: ["notices-for-stubs.jar"],
 }
