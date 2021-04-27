@@ -171,47 +171,6 @@ public class ConcurrentSkipListMapTest extends JSR166TestCase {
         assertFalse(s.containsAll(Arrays.asList(ar)));
     }
 
-    // BEGIN Android-added: Extra unit tests for missing APIs.
-    /**
-     * clone creates map with a shallow copy of the source map
-     */
-    public void testCloneFromSorted() {
-        ConcurrentSkipListMap map = map5();
-        ConcurrentSkipListMap map2 = map.clone();
-        assertNotSame(map, map2);
-        Set s = map.entrySet();
-        Set s2 = map2.entrySet();
-        Iterator it = s.iterator();
-        Iterator it2 = s2.iterator();
-        while(it.hasNext() && it2.hasNext()) {
-            Map.Entry e = (Map.Entry) it.next();
-            Map.Entry e2 = (Map.Entry) it2.next();
-            assertSame(e.getKey(), e2.getKey());
-            assertSame(e.getValue(), e2.getValue());
-        }
-        assertFalse(it.hasNext());
-        assertFalse(it2.hasNext());
-    }
-
-    /**
-     * firstEntry returns first key-value entry
-     */
-    public void testFirstEntry() {
-        ConcurrentSkipListMap map = map5();
-        assertEquals(one, map.firstEntry().getKey());
-        assertEquals("A", map.firstEntry().getValue());
-    }
-
-    /**
-     * lastEntry returns last key-value entry
-     */
-    public void testLastEntry() {
-        ConcurrentSkipListMap map = map5();
-        assertEquals(five, map.lastEntry().getKey());
-        assertEquals("E", map.lastEntry().getValue());
-    }
-    // END Android-added: Extra unit tests for missing APIs.
-
     /**
      * descendingkeySet.toArray returns contains all keys
      */
@@ -888,8 +847,7 @@ public class ConcurrentSkipListMapTest extends JSR166TestCase {
      */
     public void testSubMapContents() {
         ConcurrentSkipListMap map = map5();
-        // Android-changed: Use the "default" subMap overload.
-        NavigableMap sm = map.subMap(two, four);
+        NavigableMap sm = map.subMap(two, true, four, false);
         assertEquals(two, sm.firstKey());
         assertEquals(three, sm.lastKey());
         assertEquals(2, sm.size());
@@ -927,8 +885,7 @@ public class ConcurrentSkipListMapTest extends JSR166TestCase {
 
     public void testSubMapContents2() {
         ConcurrentSkipListMap map = map5();
-        // Android-changed: Use the "default" subMap overload.
-        NavigableMap sm = map.subMap(two, three);
+        NavigableMap sm = map.subMap(two, true, three, false);
         assertEquals(1, sm.size());
         assertEquals(two, sm.firstKey());
         assertEquals(two, sm.lastKey());
@@ -963,8 +920,7 @@ public class ConcurrentSkipListMapTest extends JSR166TestCase {
      */
     public void testHeadMapContents() {
         ConcurrentSkipListMap map = map5();
-        // Android-changed: Use the "default" headMap overload.
-        NavigableMap sm = map.headMap(four);
+        NavigableMap sm = map.headMap(four, false);
         assertTrue(sm.containsKey(one));
         assertTrue(sm.containsKey(two));
         assertTrue(sm.containsKey(three));
@@ -990,8 +946,7 @@ public class ConcurrentSkipListMapTest extends JSR166TestCase {
      */
     public void testTailMapContents() {
         ConcurrentSkipListMap map = map5();
-        // Android-changed: Use the "default" tailMap overload.
-        NavigableMap sm = map.tailMap(two);
+        NavigableMap sm = map.tailMap(two, true);
         assertFalse(sm.containsKey(one));
         assertTrue(sm.containsKey(two));
         assertTrue(sm.containsKey(three));
