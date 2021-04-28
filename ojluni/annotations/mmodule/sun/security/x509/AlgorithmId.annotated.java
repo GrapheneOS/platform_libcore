@@ -31,17 +31,17 @@ import java.security.NoSuchAlgorithmException;
 import sun.security.util.DerEncoder;
 import sun.security.util.ObjectIdentifier;
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.IntraCoreApi
 @libcore.api.Hide
 public class AlgorithmId implements Serializable, DerEncoder {
 
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public AlgorithmId(ObjectIdentifier oid) {
         throw new RuntimeException("Stub!");
     }
 
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public String getName() {
         throw new RuntimeException("Stub!");
