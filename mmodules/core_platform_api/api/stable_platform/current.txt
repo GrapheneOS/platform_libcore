@@ -725,6 +725,7 @@ package sun.security.util {
 package sun.security.x509 {
 
   public class AlgorithmId implements java.io.Serializable {
+    ctor public AlgorithmId(sun.security.util.ObjectIdentifier);
     method public String getName();
   }
 
