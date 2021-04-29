@@ -12,10 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Phony target that causes the build to check the license file in this
-// directory, detect that it is a GPL license and then copy all the files
-// from this directory and its subdirectories in to the
-// ${OUT}/obj/PACKAGING/gpl_source_intermediates/gpl_source.tgz file.
 package {
     default_applicable_licenses: ["libcore_ojluni_license"],
 }
@@ -48,11 +44,15 @@ license {
     ],
 }
 
+// Phony target that causes the build to check the license file in this
+// directory, detect that it is a GPL license and then copy all the files
+// from this directory and its subdirectories in to the
+// ${OUT}/obj/PACKAGING/gpl_source_intermediates/gpl_source.tgz file.
 phony {
     name: "ojluni-phony",
 
     // A phony module must have at least one dependency.
     required: [
-        "art-notices-for-framework-stubs-jar",
+        "core-all",
     ],
 }
