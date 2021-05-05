@@ -29,6 +29,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import libcore.util.NonNull;
+import libcore.util.Nullable;
 import sun.misc.CompoundEnumeration;
 
 /**
@@ -228,7 +230,7 @@ public class BaseDexClassLoader extends ClassLoader {
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public void addDexPath(String dexPath) {
+    public void addDexPath(@Nullable String dexPath) {
         addDexPath(dexPath, false /*isTrusted*/);
     }
 
@@ -249,7 +251,7 @@ public class BaseDexClassLoader extends ClassLoader {
      * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public void addNativePath(Collection<String> libPaths) {
+    public void addNativePath(@NonNull Collection<String> libPaths) {
         pathList.addNativePath(libPaths);
     }
 
@@ -345,7 +347,7 @@ public class BaseDexClassLoader extends ClassLoader {
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public String getLdLibraryPath() {
+    public @NonNull String getLdLibraryPath() {
         StringBuilder result = new StringBuilder();
         for (File directory : pathList.getNativeLibraryDirectories()) {
             if (result.length() > 0) {
@@ -366,11 +368,11 @@ public class BaseDexClassLoader extends ClassLoader {
      * Once set, all new instances of BaseDexClassLoader will report upon
      * constructions the loaded dex files.
      *
-     * @param newReporter the new Reporter. Setting null will cancel reporting.
+     * @param newReporter the new Reporter. Setting {@code null} will cancel reporting.
      * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public static void setReporter(Reporter newReporter) {
+    public static void setReporter(@Nullable Reporter newReporter) {
         reporter = newReporter;
     }
 
@@ -400,6 +402,6 @@ public class BaseDexClassLoader extends ClassLoader {
          *     each dex file.
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-        void report(Map<String, String> contextsMap);
+        void report(@NonNull Map<String, String> contextsMap);
     }
 }

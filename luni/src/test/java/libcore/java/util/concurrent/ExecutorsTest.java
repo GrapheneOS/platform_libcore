@@ -16,11 +16,8 @@
 
 package libcore.java.util.concurrent;
 
-import static org.junit.Assert.fail;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -32,32 +29,10 @@ public class ExecutorsTest {
         public void run() { }
     }
 
-    class TestCleaner implements AutoCloseable {
-        private final ExecutorService service;
-
-        public TestCleaner(ExecutorService service) {
-            this.service = service;
-        }
-
-        public void close() {
-            try {
-                service.shutdown();
-
-                if(!service.awaitTermination(5000, TimeUnit.MILLISECONDS)) {
-                    service.shutdownNow();
-                    service.awaitTermination(1000, TimeUnit.MILLISECONDS);
-                    fail();
-                }
-            } catch(InterruptedException e) {
-                fail("Unexpected InterruptedException: " + e.getMessage());
-            }
-        };
-    }
-
     @Test
     public void testNewWorkStealingPoolDefault() {
         final ExecutorService e = Executors.newWorkStealingPool();
-        try (TestCleaner cleaner = new TestCleaner(e)) {
+        try (ExecutorServiceAutoCloseable cleaner = new ExecutorServiceAutoCloseable(e)) {
             e.execute(new TestRunnable());
             e.execute(new TestRunnable());
             e.execute(new TestRunnable());
@@ -67,7 +42,7 @@ public class ExecutorsTest {
     @Test
     public void testNewWorkStealingPoolWithParallelism() {
         final ExecutorService e = Executors.newWorkStealingPool(2);
-        try (TestCleaner cleaner = new TestCleaner(e)) {
+        try (ExecutorServiceAutoCloseable cleaner = new ExecutorServiceAutoCloseable(e)) {
             e.execute(new TestRunnable());
             e.execute(new TestRunnable());
             e.execute(new TestRunnable());
