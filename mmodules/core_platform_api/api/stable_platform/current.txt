@@ -126,15 +126,15 @@ package dalvik.system {
   }
 
   public class BaseDexClassLoader extends java.lang.ClassLoader {
-    method public void addDexPath(String);
-    method public void addNativePath(java.util.Collection<java.lang.String>);
-    method public String getLdLibraryPath();
+    method public void addDexPath(@Nullable String);
+    method public void addNativePath(@NonNull java.util.Collection<java.lang.String>);
+    method @NonNull public String getLdLibraryPath();
     method public void reportClassLoaderChain();
-    method public static void setReporter(dalvik.system.BaseDexClassLoader.Reporter);
+    method public static void setReporter(@Nullable dalvik.system.BaseDexClassLoader.Reporter);
   }
 
   public static interface BaseDexClassLoader.Reporter {
-    method public void report(java.util.Map<java.lang.String,java.lang.String>);
+    method public void report(@NonNull java.util.Map<java.lang.String,java.lang.String>);
   }
 
   public final class BlockGuard {
@@ -454,8 +454,8 @@ package javax.net.ssl {
 package libcore.content.type {
 
   public final class MimeMap {
-    method public libcore.content.type.MimeMap.Builder buildUpon();
-    method public static libcore.content.type.MimeMap.Builder builder();
+    method @NonNull public libcore.content.type.MimeMap.Builder buildUpon();
+    method @NonNull public static libcore.content.type.MimeMap.Builder builder();
     method @NonNull public java.util.Set<java.lang.String> extensions();
     method @NonNull public static libcore.content.type.MimeMap getDefault();
     method @Nullable public String guessExtensionFromMimeType(@Nullable String);
@@ -467,8 +467,8 @@ package libcore.content.type {
   }
 
   public static final class MimeMap.Builder {
-    method public libcore.content.type.MimeMap build();
-    method public libcore.content.type.MimeMap.Builder put(@NonNull String, @NonNull java.util.List<java.lang.String>);
+    method @NonNull public libcore.content.type.MimeMap.Builder addMimeMapping(@NonNull String, @NonNull java.util.List<java.lang.String>);
+    method @NonNull public libcore.content.type.MimeMap build();
   }
 
 }
@@ -568,7 +568,7 @@ package libcore.net.http {
 
 package libcore.util {
 
-  public class FP16 {
+  public final class FP16 {
     method public static short ceil(short);
     method public static int compare(short, short);
     method public static boolean equals(short, short);

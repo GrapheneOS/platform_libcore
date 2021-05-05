@@ -42,10 +42,10 @@ public final class MimeMap {
      *
      * @return builder
      *
-     * @see {@link MimeMap.Builder}
+     * @see MimeMap.Builder
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-    public static Builder builder() {
+    public static @NonNull Builder builder() {
         return new Builder();
     }
 
@@ -55,10 +55,10 @@ public final class MimeMap {
      *
      * @return builder
      *
-     * @see {@link MimeMap.Builder}
+     * @see MimeMap.Builder
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-    public Builder buildUpon() {
+    public @NonNull Builder buildUpon() {
         return new Builder(mimeToExt, extToMime);
     }
 
@@ -75,12 +75,12 @@ public final class MimeMap {
     private static volatile MemoizingSupplier<@NonNull MimeMap> instanceSupplier =
             new MemoizingSupplier<>(
                     () -> builder()
-                            .put("application/pdf", "pdf")
-                            .put("image/jpeg", "jpg")
-                            .put("image/x-ms-bmp", "bmp")
-                            .put("text/html", Arrays.asList("htm", "html"))
-                            .put("text/plain", Arrays.asList("text", "txt"))
-                            .put("text/x-java", "java")
+                            .addMimeMapping("application/pdf", "pdf")
+                            .addMimeMapping("image/jpeg", "jpg")
+                            .addMimeMapping("image/x-ms-bmp", "bmp")
+                            .addMimeMapping("text/html", Arrays.asList("htm", "html"))
+                            .addMimeMapping("text/plain", Arrays.asList("text", "txt"))
+                            .addMimeMapping("text/x-java", "java")
                             .build());
 
     private MimeMap(Map<String, String> mimeToExt, Map<String, String> extToMime) {
@@ -245,7 +245,7 @@ public final class MimeMap {
 
     /**
      * A builder for mapping of MIME types to extensions and back.
-     * Use {@link #put(String, List)} and {@link #put(String, String)} to add
+     * Use {@link #addMimeMapping(String, List)} and {@link #addMimeMapping(String, String)} to add
      * mapping entries and build final {@link MimeMap} with {@link #build()}.
      *
      * @hide
@@ -353,7 +353,7 @@ public final class MimeMap {
          * @return This builder.
          */
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-        public Builder put(@NonNull String mimeSpec, @NonNull List<@NonNull String> extensionSpecs)
+        public @NonNull Builder addMimeMapping(@NonNull String mimeSpec, @NonNull List<@NonNull String> extensionSpecs)
         {
             Element mimeElement = Element.ofMimeSpec(mimeSpec); // validate mimeSpec unconditionally
             if (extensionSpecs.isEmpty()) {
@@ -374,8 +374,8 @@ public final class MimeMap {
          *
          * @hide
          */
-        public Builder put(@NonNull String mimeSpec, @NonNull String extensionSpec) {
-            return put(mimeSpec, Collections.singletonList(extensionSpec));
+        public @NonNull Builder addMimeMapping(@NonNull String mimeSpec, @NonNull String extensionSpec) {
+            return addMimeMapping(mimeSpec, Collections.singletonList(extensionSpec));
         }
 
         /**
@@ -384,7 +384,7 @@ public final class MimeMap {
          * @return {@link MimeMap} containing previously added MIME mapping entries
          */
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-        public MimeMap build() {
+        public @NonNull MimeMap build() {
             return new MimeMap(mimeToExt, extToMime);
         }
 

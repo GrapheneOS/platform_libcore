@@ -900,9 +900,9 @@ public final class URLConnectionTest {
 
     @Test public void getFileNameMap_compositeExtension_customMimeMap() {
         MimeMap testMimeMap = MimeMap.builder()
-                .put("text/html", "html")
-                .put("application/gzip", "gz")
-                .put("application/tar+gzip", "tar.gz")
+                .addMimeMapping("text/html", "html")
+                .addMimeMapping("application/gzip", "gz")
+                .addMimeMapping("application/tar+gzip", "tar.gz")
                 .build();
         MimeMap defaultMimeMap = MimeMap.getDefault();
         MimeMap.setDefaultSupplier(() -> testMimeMap);

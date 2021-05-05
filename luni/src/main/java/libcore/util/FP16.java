@@ -87,7 +87,7 @@ package libcore.util;
  */
 
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-public class FP16 {
+public final class FP16 {
     /**
      * The number of bits used to represent a half-precision float value.
      */
