@@ -674,11 +674,13 @@ public class JSONObject {
      *
      * See {@link #keys()}.
      *
+     * @return set of keys in this object
+     *
      * @hide.
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
-    public Set<String> keySet() {
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    @NonNull public Set<@NonNull String> keySet() {
         return nameValuePairs.keySet();
     }
 
