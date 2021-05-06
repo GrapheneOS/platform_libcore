@@ -643,6 +643,14 @@ package libcore.util {
 
 }
 
+package org.json {
+
+  public class JSONObject {
+    method @NonNull public java.util.Set<java.lang.String> keySet();
+  }
+
+}
+
 package sun.misc {
 
   public class Cleaner extends java.lang.ref.PhantomReference<java.lang.Object> {

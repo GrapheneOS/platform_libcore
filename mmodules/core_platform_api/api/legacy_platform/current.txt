@@ -805,7 +805,7 @@ package org.apache.harmony.dalvik.ddmc {
 package org.json {
 
   public class JSONObject {
-    method public java.util.Set<java.lang.String> keySet();
+    method @NonNull public java.util.Set<java.lang.String> keySet();
   }
 
 }
