@@ -25,6 +25,7 @@ import java.net.URLConnection;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.SocketFactory;
+import libcore.util.NonNull;
 
 /**
  * A HttpURLConnectionFactory that supports some configuration on a per-factory or per-connection
@@ -41,7 +42,7 @@ public class HttpURLConnectionFactory {
      * Create a new {@link HttpURLConnectionFactory} instance.
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-    public static HttpURLConnectionFactory createInstance() {
+    @NonNull public static HttpURLConnectionFactory createInstance() {
         return new HttpURLConnectionFactory();
     }
 
@@ -59,7 +60,7 @@ public class HttpURLConnectionFactory {
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public void setNewConnectionPool(int maxIdleConnections, long keepAliveDuration,
-            TimeUnit timeUnit) {
+            @NonNull TimeUnit timeUnit) {
         mFactory.setNewConnectionPool(maxIdleConnections, keepAliveDuration, timeUnit);
     }
 
@@ -69,7 +70,7 @@ public class HttpURLConnectionFactory {
      * @param dns the dns resolver for looking up.
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-    public void setDns(Dns dns) {
+    public void setDns(@NonNull Dns dns) {
         mFactory.setDns(dns);
     }
 
@@ -85,8 +86,8 @@ public class HttpURLConnectionFactory {
      *         configuration.
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-    public URLConnection openConnection(URL url, SocketFactory socketFactory, Proxy proxy) throws
-            IOException {
+    public URLConnection openConnection(@NonNull URL url, @NonNull SocketFactory socketFactory,
+            @NonNull Proxy proxy) throws IOException {
         return mFactory.openConnection(url, socketFactory, proxy);
     }
 }

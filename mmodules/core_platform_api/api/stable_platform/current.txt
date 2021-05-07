@@ -16,11 +16,11 @@ package android.compat {
   }
 
   public static final class Compatibility.ChangeConfig {
-    ctor public Compatibility.ChangeConfig(java.util.Set<java.lang.Long>, java.util.Set<java.lang.Long>);
-    method public long[] forceDisabledChangesArray();
-    method public java.util.Set<java.lang.Long> forceDisabledSet();
-    method public long[] forceEnabledChangesArray();
-    method public java.util.Set<java.lang.Long> forceEnabledSet();
+    ctor public Compatibility.ChangeConfig(@NonNull java.util.Set<java.lang.Long>, @NonNull java.util.Set<java.lang.Long>);
+    method @NonNull public long[] getDisabledChangesArray();
+    method @NonNull public java.util.Set<java.lang.Long> getDisabledSet();
+    method @NonNull public long[] getEnabledChangesArray();
+    method @NonNull public java.util.Set<java.lang.Long> getEnabledSet();
     method public boolean isEmpty();
     method public boolean isForceDisabled(long);
     method public boolean isForceEnabled(long);
@@ -154,7 +154,7 @@ package dalvik.system {
   }
 
   public static interface BlockGuard.VmPolicy {
-    method public void onPathAccess(String);
+    method public void onPathAccess(@NonNull String);
   }
 
   public final class CloseGuard {
@@ -554,14 +554,14 @@ package libcore.net.event {
 package libcore.net.http {
 
   public interface Dns {
-    method public java.util.List<java.net.InetAddress> lookup(String) throws java.net.UnknownHostException;
+    method @NonNull public java.util.List<java.net.InetAddress> lookup(@Nullable String) throws java.net.UnknownHostException;
   }
 
   public class HttpURLConnectionFactory {
-    method public static libcore.net.http.HttpURLConnectionFactory createInstance();
-    method public java.net.URLConnection openConnection(java.net.URL, javax.net.SocketFactory, java.net.Proxy) throws java.io.IOException;
-    method public void setDns(libcore.net.http.Dns);
-    method public void setNewConnectionPool(int, long, java.util.concurrent.TimeUnit);
+    method @NonNull public static libcore.net.http.HttpURLConnectionFactory createInstance();
+    method public java.net.URLConnection openConnection(@NonNull java.net.URL, @NonNull javax.net.SocketFactory, @NonNull java.net.Proxy) throws java.io.IOException;
+    method public void setDns(@NonNull libcore.net.http.Dns);
+    method public void setNewConnectionPool(int, long, @NonNull java.util.concurrent.TimeUnit);
   }
 
 }
