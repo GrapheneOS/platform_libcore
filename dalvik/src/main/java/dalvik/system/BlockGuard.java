@@ -118,7 +118,7 @@ public final class BlockGuard {
          *            for reading or writing.
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-        void onPathAccess(String path);
+        void onPathAccess(@NonNull String path);
     }
 
     /**

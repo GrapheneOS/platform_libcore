@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import libcore.util.NonNull;
 
 /**
  * Internal APIs for logging and gating compatibility changes.
@@ -165,7 +166,7 @@ public final class Compatibility {
         private final Set<Long> enabled;
         private final Set<Long> disabled;
 
-        public ChangeConfig(Set<Long> enabled, Set<Long> disabled) {
+        public ChangeConfig(@NonNull Set<@NonNull Long> enabled, @NonNull Set<@NonNull Long> disabled) {
             this.enabled = Objects.requireNonNull(enabled);
             this.disabled = Objects.requireNonNull(disabled);
             if (enabled.contains(null)) {
@@ -195,19 +196,19 @@ public final class Compatibility {
             return result;
         }
 
-        public long[] forceEnabledChangesArray() {
+        public @NonNull long[] getEnabledChangesArray() {
             return toLongArray(enabled);
         }
 
-        public long[] forceDisabledChangesArray() {
+        public @NonNull long[] getDisabledChangesArray() {
             return toLongArray(disabled);
         }
 
-        public Set<Long> forceEnabledSet() {
+        public @NonNull Set<@NonNull Long> getEnabledSet() {
             return Collections.unmodifiableSet(enabled);
         }
 
-        public Set<Long> forceDisabledSet() {
+        public @NonNull Set<@NonNull Long> getDisabledSet() {
             return Collections.unmodifiableSet(disabled);
         }
 

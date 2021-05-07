@@ -7,11 +7,11 @@ package android.compat {
   }
 
   @libcore.api.CorePlatformApi(status=libcore.api.CorePlatformApi.Status.STABLE) @libcore.api.IntraCoreApi public static final class Compatibility.ChangeConfig {
-    ctor public Compatibility.ChangeConfig(java.util.Set<java.lang.Long>, java.util.Set<java.lang.Long>);
-    method public long[] forceDisabledChangesArray();
-    method public java.util.Set<java.lang.Long> forceDisabledSet();
-    method public long[] forceEnabledChangesArray();
-    method public java.util.Set<java.lang.Long> forceEnabledSet();
+    ctor public Compatibility.ChangeConfig(@NonNull java.util.Set<java.lang.Long>, @NonNull java.util.Set<java.lang.Long>);
+    method @NonNull public long[] getDisabledChangesArray();
+    method @NonNull public java.util.Set<java.lang.Long> getDisabledSet();
+    method @NonNull public long[] getEnabledChangesArray();
+    method @NonNull public java.util.Set<java.lang.Long> getEnabledSet();
     method public boolean isEmpty();
     method public boolean isForceDisabled(long);
     method public boolean isForceEnabled(long);
