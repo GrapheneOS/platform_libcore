@@ -43,7 +43,7 @@ import android.icu.text.TimeZoneNames;
 import android.icu.util.ULocale;
 
 import com.android.icu.text.ExtendedTimeZoneNames;
-import com.android.icu.text.ExtendedTimeZoneNames.MatchedTimeZone;
+import com.android.icu.text.ExtendedTimeZoneNames.Match;
 
 import java.io.IOException;
 import java.io.InvalidObjectException;
@@ -2011,27 +2011,27 @@ public class SimpleDateFormat extends DateFormat {
     private int subParseZoneStringFromICU(String text, int start, CalendarBuilder calb) {
         String currentTimeZoneID = android.icu.util.TimeZone.getCanonicalID(getTimeZone().getID());
 
-        MatchedTimeZone matchedTimeZone = getExtendedTimeZoneNames().matchName(text, start,
+        Match matchedName = getExtendedTimeZoneNames().matchNameToBeRenamed(text, start,
                 currentTimeZoneID);
-        if (matchedTimeZone == null) {
+        if (matchedName == null) {
             // No match found, return error.
             return -start;
         }
 
-        String tzId = matchedTimeZone.getTzId();
+        String tzId = matchedName.getTzId();
         TimeZone newTimeZone = TimeZone.getTimeZone(tzId);
         if (!currentTimeZoneID.equals(tzId)) {
             setTimeZone(newTimeZone);
         }
 
         // Same logic as in subParseZoneStringFromSymbols, see below for details.
-        boolean isDst = matchedTimeZone.isDst();
+        boolean isDst = matchedName.isDst();
         int dstAmount = isDst ? newTimeZone.getDSTSavings() : 0;
         if (!isDst || dstAmount != 0) {
             calb.clear(Calendar.ZONE_OFFSET).set(Calendar.DST_OFFSET, dstAmount);
         }
 
-        return matchedTimeZone.getMatchLength() + start;
+        return matchedName.getMatchLength() + start;
     }
 
     /**
