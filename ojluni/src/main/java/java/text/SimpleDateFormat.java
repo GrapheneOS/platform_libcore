@@ -2011,8 +2011,7 @@ public class SimpleDateFormat extends DateFormat {
     private int subParseZoneStringFromICU(String text, int start, CalendarBuilder calb) {
         String currentTimeZoneID = android.icu.util.TimeZone.getCanonicalID(getTimeZone().getID());
 
-        Match matchedName = getExtendedTimeZoneNames().matchNameToBeRenamed(text, start,
-                currentTimeZoneID);
+        Match matchedName = getExtendedTimeZoneNames().matchName(text, start, currentTimeZoneID);
         if (matchedName == null) {
             // No match found, return error.
             return -start;
