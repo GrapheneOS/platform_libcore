@@ -24,6 +24,7 @@ import libcore.junit.util.SwitchTargetSdkVersionRule;
 import libcore.junit.util.SwitchTargetSdkVersionRule.TargetSdkVersion;
 import org.junit.Rule;
 import org.junit.rules.TestRule;
+import org.mockito.internal.matchers.Null;
 
 public final class PackageTest extends TestCaseWithRules {
 
@@ -69,5 +70,23 @@ public final class PackageTest extends TestCaseWithRules {
     // http://b/5171136
     public void testGetPackages() {
         assertTrue(packages.contains(getClass().getPackage()));
+    }
+
+    public void testGetAnnotationsByType() {
+        Package libcoreJavaLang = Package.getPackage("libcore.java.lang");
+
+        assertEquals(1, libcoreJavaLang.getAnnotationsByType(TestPackageAnnotation.class).length);
+        assertEquals(0, libcoreJavaLang.getAnnotationsByType(Override.class).length);
+    }
+
+    public void testGetAnnotationsByType_shouldThrowNPE_whenNullIsPassed() {
+        Package libcoreJavaLang = Package.getPackage("libcore.java.lang");
+
+        try {
+            libcoreJavaLang.getAnnotationsByType(null);
+            fail();
+        } catch (NullPointerException ignored) {
+            // expected
+        }
     }
 }
