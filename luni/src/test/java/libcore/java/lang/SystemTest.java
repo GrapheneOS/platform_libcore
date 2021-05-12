@@ -273,4 +273,12 @@ public class SystemTest extends TestCase {
         } catch (SecurityException expected) {
         }
     }
+
+    /**
+     * Overall {@link System#console()} return value depends on how exactly runtime was started, but
+     * for Android apps it will be null.
+     */
+    public void testSystem_console() {
+        assertNull(System.console());
+    }
 }

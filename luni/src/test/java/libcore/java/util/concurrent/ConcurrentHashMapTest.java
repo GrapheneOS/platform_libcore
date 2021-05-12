@@ -22,9 +22,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.LongAdder;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.ToDoubleBiFunction;
@@ -116,7 +118,7 @@ public class ConcurrentHashMapTest {
         ConcurrentHashMap<Long, Long> map = createMap();
         double result = map.reduceEntriesToDouble(SEQUENTIALLY,
                 new KeyAsDouble(), 0.0, Double::sum);
-        assertEquals(result, (double)MAP_SIZE * (MAP_SIZE - 1) / 2, 0.5);
+        assertEquals((double)MAP_SIZE * (MAP_SIZE - 1) / 2, result, 0.5);
     }
 
     @Test
@@ -124,35 +126,35 @@ public class ConcurrentHashMapTest {
         ConcurrentHashMap<Long, Long> map = createMap();
         double result = map.reduceEntriesToDouble(IN_PARALLEL,
                 new KeyAsDouble(), 0.0, Double::sum);
-        assertEquals(result, (double)MAP_SIZE * (MAP_SIZE - 1) / 2, 0.5);
+        assertEquals((double)MAP_SIZE * (MAP_SIZE - 1) / 2, result, 0.5);
     }
 
     @Test
     public void testReduceEntriesToIntSequentially() {
         ConcurrentHashMap<Long, Long> map = createMap();
         int result = map.reduceEntriesToInt(SEQUENTIALLY, new KeyAsInt(), 0, Integer::sum);
-        assertEquals(result, (int)MAP_SIZE * (MAP_SIZE - 1) / 2);
+        assertEquals((int)MAP_SIZE * (MAP_SIZE - 1) / 2, result);
     }
 
     @Test
     public void testReduceEntriesToIntInParallel() {
         ConcurrentHashMap<Long, Long> map = createMap();
         int result = map.reduceEntriesToInt(IN_PARALLEL, new KeyAsInt(), 0, Integer::sum);
-        assertEquals(result, MAP_SIZE * (MAP_SIZE - 1) / 2);
+        assertEquals(MAP_SIZE * (MAP_SIZE - 1) / 2, result);
     }
 
     @Test
     public void testReduceEntriesToLongSequentially() {
         ConcurrentHashMap<Long, Long> map = createMap();
         long result = map.reduceEntriesToLong(SEQUENTIALLY, new KeyAsLong(), 0L, Long::sum);
-        assertEquals(result, (long)MAP_SIZE * (MAP_SIZE - 1) / 2);
+        assertEquals((long)MAP_SIZE * (MAP_SIZE - 1) / 2, result);
     }
 
     @Test
     public void testReduceEntriesToLongInParallel() {
         ConcurrentHashMap<Long, Long> map = createMap();
         long result = map.reduceEntriesToLong(IN_PARALLEL, new KeyAsLong(), 0L, Long::sum);
-        assertEquals(result, (long)MAP_SIZE * (MAP_SIZE - 1) / 2);
+        assertEquals((long)MAP_SIZE * (MAP_SIZE - 1) / 2, result);
     }
 
     @Test
@@ -160,7 +162,7 @@ public class ConcurrentHashMapTest {
         ConcurrentHashMap<Long, Long> map = createMap();
         Map.Entry<Long, Long> result;
         result = map.reduceEntries(SEQUENTIALLY, new IncrementKey(), new SumKeys());
-        assertEquals(result.getKey().longValue(), (long)MAP_SIZE * (MAP_SIZE + 1) / 2);
+        assertEquals((long)MAP_SIZE * (MAP_SIZE + 1) / 2, result.getKey().longValue());
     }
 
     @Test
@@ -168,7 +170,7 @@ public class ConcurrentHashMapTest {
         ConcurrentHashMap<Long, Long> map = createMap();
         Map.Entry<Long, Long> result;
         result = map.reduceEntries(IN_PARALLEL, new IncrementKey(), new SumKeys());
-        assertEquals(result.getKey().longValue(), (long)MAP_SIZE * (MAP_SIZE + 1) / 2);
+        assertEquals((long)MAP_SIZE * (MAP_SIZE + 1) / 2, result.getKey().longValue());
     }
 
     @Test
@@ -176,7 +178,7 @@ public class ConcurrentHashMapTest {
         ConcurrentHashMap<Long, Long> map = createMap();
         double result = map.reduceToDouble(SEQUENTIALLY,
                 new IncrementKeyToDouble(), 0.0, Double::sum);
-        assertEquals(result, (double)MAP_SIZE * (MAP_SIZE + 1) / 2, 0.5);
+        assertEquals((double)MAP_SIZE * (MAP_SIZE + 1) / 2, result, 0.5);
     }
 
     @Test
@@ -184,35 +186,35 @@ public class ConcurrentHashMapTest {
         ConcurrentHashMap<Long, Long> map = createMap();
         double result = map.reduceToDouble(IN_PARALLEL,
                 new IncrementKeyToDouble(), 0.0, Double::sum);
-        assertEquals(result, (double)MAP_SIZE * (MAP_SIZE + 1) / 2, 0.5);
+        assertEquals((double)MAP_SIZE * (MAP_SIZE + 1) / 2, result, 0.5);
     }
 
     @Test
     public void testTransformReduceEntriesToIntSequentially() {
         ConcurrentHashMap<Long, Long> map = createMap();
         int result = map.reduceToInt(SEQUENTIALLY, new IncrementKeyToInt(), 0, Integer::sum);
-        assertEquals(result, MAP_SIZE * (MAP_SIZE + 1) / 2);
+        assertEquals(MAP_SIZE * (MAP_SIZE + 1) / 2, result);
     }
 
     @Test
     public void testTransformReduceEntriesToIntInParallel() {
         ConcurrentHashMap<Long, Long> map = createMap();
         int result = map.reduceToInt(IN_PARALLEL, new IncrementKeyToInt(), 0, Integer::sum);
-        assertEquals(result, MAP_SIZE * (MAP_SIZE + 1) / 2);
+        assertEquals(MAP_SIZE * (MAP_SIZE + 1) / 2, result);
     }
 
     @Test
     public void testTransformReduceEntriesToLongSequentially() {
         ConcurrentHashMap<Long, Long> map = createMap();
         long result = map.reduceToLong(SEQUENTIALLY, new IncrementKeyToLong(), 0L, Long::sum);
-        assertEquals(result, (long)MAP_SIZE * (MAP_SIZE + 1) / 2);
+        assertEquals((long)MAP_SIZE * (MAP_SIZE + 1) / 2, result);
     }
 
     @Test
     public void testTransformReduceEntriesToLongInParallel() {
         ConcurrentHashMap<Long, Long> map = createMap();
         long result = map.reduceToLong(IN_PARALLEL, new IncrementKeyToLong(), 0L, Long::sum);
-        assertEquals(result, (long)MAP_SIZE * (MAP_SIZE + 1) / 2);
+        assertEquals((long)MAP_SIZE * (MAP_SIZE + 1) / 2, result);
     }
 
     @Test
@@ -313,6 +315,77 @@ public class ConcurrentHashMapTest {
     public void testMerge() {
         MapDefaultMethodTester.test_merge(new ConcurrentHashMap<>(),
                 false /*doesNotAcceptNullKey*/);
+    }
+
+    private ConcurrentHashMap.KeySetView<String, Boolean> createKeySet() {
+        final int count = 5;
+        ConcurrentHashMap.KeySetView<String, Boolean> set =
+            ConcurrentHashMap.<String>newKeySet(count);
+        assertTrue(set.isEmpty());
+        set.add("A");
+        set.add("B");
+        set.add("C");
+        set.add("D");
+        set.add("E");
+        assertFalse(set.isEmpty());
+        assertEquals(count, set.size());
+        return set;
+    }
+
+    @Test
+    public void testKeySetViewClear() {
+        ConcurrentHashMap.KeySetView set = createKeySet();
+        assertFalse(set.isEmpty());
+        set.clear();
+        assertEquals(0, set.size());
+        assertTrue(set.isEmpty());
+    }
+
+    @Test
+    public void testKeySetViewContainsAll() {
+        ConcurrentHashMap.KeySetView set = createKeySet();
+        assertTrue(set.containsAll(Arrays.asList()));
+        assertTrue(set.containsAll(Arrays.asList("A")));
+        assertTrue(set.containsAll(Arrays.asList("A", "E")));
+        assertTrue(set.containsAll(Arrays.asList("A", "B", "C", "D", "E")));
+        assertFalse(set.containsAll(Arrays.asList("A", "B", "F")));
+        assertFalse(set.containsAll(Arrays.asList("F")));
+    }
+
+    @Test
+    public void testKeySetViewForEach() {
+        final int count = 8;
+        ConcurrentHashMap.KeySetView<Integer, Boolean> set =
+            ConcurrentHashMap.<Integer>newKeySet(count);
+        for(int i = 0; i < count; ++i) {
+            set.add(i+1);
+        }
+        LongAdder adder = new LongAdder();
+        set.forEach((Integer x) -> adder.add(x.longValue()));
+        // The size is small enough for the sum not to overflow
+        assertEquals(set.size() * (set.size() + 1) / 2, adder.sum());
+    }
+
+    @Test
+    public void testKeySetViewRemoveAll() {
+        ConcurrentHashMap.KeySetView set = createKeySet();
+        assertTrue(set.removeAll(Arrays.asList("A", "C")));
+        assertEquals(set.size(), 3);
+        assertTrue(set.containsAll(Arrays.asList("B", "D", "E")));
+        assertFalse(set.removeAll(Arrays.asList("A", "C")));
+        assertEquals(set.size(), 3);
+        assertTrue(set.containsAll(Arrays.asList("B", "D", "E")));
+    }
+
+    @Test
+    public void testKeySetViewRetainAll() {
+        ConcurrentHashMap.KeySetView set = createKeySet();
+        assertTrue(set.retainAll(Arrays.asList("A", "C")));
+        assertEquals(set.size(), 2);
+        assertTrue(set.containsAll(Arrays.asList("A", "C")));
+        assertFalse(set.retainAll(Arrays.asList("A", "C")));
+        assertEquals(set.size(), 2);
+        assertTrue(set.containsAll(Arrays.asList("A", "C")));
     }
 
 }
