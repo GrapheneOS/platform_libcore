@@ -17,6 +17,8 @@
 package libcore.java.lang;
 
 import dalvik.system.VMRuntime;
+
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import libcore.junit.junit3.TestCaseWithRules;
@@ -87,6 +89,121 @@ public final class PackageTest extends TestCaseWithRules {
             fail();
         } catch (NullPointerException ignored) {
             // expected
+        }
+    }
+
+    public void testIsSealed_nonSealedPackage() throws Exception {
+        TestClassLoader testClassLoader = new TestClassLoader();
+        Package nonSealedPackage = testClassLoader.definePackage(
+                "libcore.java.lang.nonsealed",
+                "spec title",
+                "spec version",
+                "spec vendor",
+                "impl title",
+                "impl version",
+                "impl vendor",
+                null /* sealBase */);
+
+        assertFalse(nonSealedPackage.isSealed());
+        assertFalse(nonSealedPackage.isSealed(new URL("file://libcore/java/lang/nonsealed")));
+    }
+
+    public void testIsSealed_sealedPackage() throws Exception {
+        TestClassLoader testClassLoader = new TestClassLoader();
+        URL sealBase = new URL("file://libcore/java/lang/sealed");
+        Package sealedPackage = testClassLoader.definePackage(
+                "libcore.java.lang.sealed",
+                "spec title",
+                "spec version",
+                "spec vendor",
+                "impl title",
+                "impl version",
+                "impl vendor",
+                sealBase);
+
+        assertTrue(sealedPackage.isSealed());
+        assertTrue(sealedPackage.isSealed(sealBase));
+        assertFalse(sealedPackage.isSealed(new URL("file://libcore/java/lang")));
+        try {
+            sealedPackage.isSealed(null);
+            fail();
+        } catch (NullPointerException ignored) {
+            // expected
+        }
+    }
+
+    public void testGetSpecificationVendor() {
+        String specVendor = "specification vendor";
+        TestClassLoader testClassLoader = new TestClassLoader();
+        Package aPackage = testClassLoader.definePackage(
+                "libcore.java.lang.nonsealed",
+                "spec title",
+                "spec version",
+                specVendor,
+                "impl title",
+                "impl version",
+                "impl vendor",
+                null /* sealBase */);
+
+        assertEquals(specVendor, aPackage.getSpecificationVendor());
+    }
+
+    public void testGetSpecificationVersion() {
+        String specVersion = "specification version";
+        TestClassLoader testClassLoader = new TestClassLoader();
+        Package aPackage = testClassLoader.definePackage(
+                "libcore.java.lang.nonsealed",
+                "spec title",
+                specVersion,
+                "spec vendor",
+                "impl title",
+                "impl version",
+                "impl vendor",
+                null /* sealBase */);
+
+        assertEquals(specVersion, aPackage.getSpecificationVersion());
+    }
+
+    public void testIsCompatibleWith() {
+        String specVersion = "2.3.1";
+        TestClassLoader testClassLoader = new TestClassLoader();
+        Package aPackage = testClassLoader.definePackage(
+                "libcore.java.lang.nonsealed",
+                "spec title",
+                specVersion,
+                "spec vendor",
+                "impl title",
+                "impl version",
+                "impl vendor",
+                null /* sealBase */);
+
+        assertTrue(aPackage.isCompatibleWith(specVersion));
+        assertTrue(aPackage.isCompatibleWith("2.2.99.1"));
+        assertTrue(aPackage.isCompatibleWith("1.0"));
+        assertTrue(aPackage.isCompatibleWith("2.3.1.0"));
+        assertTrue(aPackage.isCompatibleWith("2.3"));
+        assertFalse(aPackage.isCompatibleWith("2.4"));
+        try {
+            aPackage.isCompatibleWith(null);
+            fail();
+        } catch (NullPointerException ignored) {
+            // expected
+        }
+    }
+
+
+    /**
+     * {@link java.lang.Package} constructors are package-private and
+     * {@link java.lang.ClassLoader#definePackage(String, String, String, String, String, String, String, URL)}
+     * is other way to create instance of {@link java.lang.Package}
+     */
+    private static final class TestClassLoader extends ClassLoader {
+        @Override
+        public Package definePackage(String name, String specTitle, String specVersion,
+                String specVendor, String implTitle, String implVersion, String implVendor,
+                URL sealBase) throws IllegalArgumentException {
+            return super.definePackage(name, specTitle, specVersion, specVendor, implTitle,
+                    implVersion, implVendor, sealBase);
         }
     }
 }

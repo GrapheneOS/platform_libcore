@@ -41,6 +41,7 @@ public final class VMDebug {
      * startAllocCounting to the trace key file.
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    // Must match android.os.Debug.TRACE_COUNT_ALLOCS.
     public static final int TRACE_COUNT_ALLOCS = 1;
 
     /* constants for getAllocCount */

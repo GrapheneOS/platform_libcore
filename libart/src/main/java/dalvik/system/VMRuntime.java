@@ -186,6 +186,7 @@ public final class VMRuntime {
      * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    // Must match android.os.Build.VERSION_CODES.CUR_DEVELOPMENT.
     public static final int SDK_VERSION_CUR_DEVELOPMENT = 10000;
 
     private static Consumer<String> nonSdkApiUsageConsumer = null;

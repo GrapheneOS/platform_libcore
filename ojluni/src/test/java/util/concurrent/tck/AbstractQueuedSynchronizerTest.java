@@ -183,6 +183,11 @@ public class AbstractQueuedSynchronizerTest extends JSR166TestCase {
         assertEquals(expected.length == 0, actual.isEmpty());
         assertEquals(new HashSet<Thread>(actual),
                      new HashSet<Thread>(Arrays.asList(expected)));
+        // Android-added: Since we check queued threads, also check queued predecessors
+        final boolean expectedQueuedPredecessors =
+            sync.getFirstQueuedThread() != Thread.currentThread() &&
+            sync.hasQueuedThreads();
+        assertEquals(expectedQueuedPredecessors, sync.hasQueuedPredecessors());
     }
 
     /**
