@@ -16,7 +16,10 @@
 
 package libcore.java.util.stream;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import static java.util.stream.Collectors.counting;
 
@@ -25,6 +28,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.Arrays;
+import java.util.stream.Collector;
 import java.util.stream.Stream;
 
 @RunWith(JUnit4.class)
@@ -58,5 +62,27 @@ public class CollectorsTest {
                 .collect(counting());
 
         assertEquals(size, actual);
+    }
+
+    @Test
+    public void collectorOf() {
+        Collector<Integer, int[], int[]> sqSumCollector =
+                Collector.of(
+                        () -> new int[] {0},
+                        (sum, next) -> sum[0] = sum[0] + next * next,
+                        (a, b) -> new int[] {a[0] + b[0]},
+                        Collector.Characteristics.UNORDERED);
+
+        int[] anArray = new int[] {10};
+        assertSame("Finisher is identity fn", anArray, sqSumCollector.finisher().apply(anArray));
+
+        assertArrayEquals(new int[]{0}, sqSumCollector.supplier().get());
+        assertArrayEquals(new int[] {20}, sqSumCollector.combiner().apply(anArray, anArray));
+
+        sqSumCollector.accumulator().accept(anArray, 10);
+        assertArrayEquals(new int[] {110}, anArray);
+        assertTrue(sqSumCollector.characteristics().contains(Collector.Characteristics.UNORDERED));
+
+        assertArrayEquals(new int[] {30}, Stream.of(1, 2, 3, 4).collect(sqSumCollector));
     }
 }
