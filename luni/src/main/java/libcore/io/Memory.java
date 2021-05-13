@@ -23,21 +23,23 @@ import java.nio.ByteOrder;
 
 import dalvik.annotation.optimization.FastNative;
 
+import libcore.api.CorePlatformApi;
 import libcore.util.NonNull;
-import libcore.util.Nullable;
 
 /**
  * Unsafe access to memory.
  *
  * @hide
  */
-@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+@CorePlatformApi(status = CorePlatformApi.Status.STABLE)
 public final class Memory {
     private Memory() { }
 
     /**
      * Used to optimize nio heap buffer bulk get operations. 'dst' must be a primitive array.
      * 'dstOffset' is measured in units of 'sizeofElements' bytes.
+     *
+     * @hide
      */
     public static native void unsafeBulkGet(Object dst, int dstOffset, int byteCount,
             byte[] src, int srcOffset, int sizeofElements, boolean swap);
@@ -45,6 +47,7 @@ public final class Memory {
     /**
      * Used to optimize nio heap buffer bulk put operations. 'src' must be a primitive array.
      * 'srcOffset' is measured in units of 'sizeofElements' bytes.
+     * @hide
      */
     public static native void unsafeBulkPut(byte[] dst, int dstOffset, int byteCount,
             Object src, int srcOffset, int sizeofElements, boolean swap);
@@ -57,8 +60,10 @@ public final class Memory {
      * @param offset offset in {@code src} to get bytes from
      * @param order  byte order
      * @return int value
+     *
+     * @hide
      */
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static int peekInt(@NonNull byte[] src, int offset, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             return (((src[offset++] & 0xff) << 24) |
@@ -73,6 +78,9 @@ public final class Memory {
         }
     }
 
+    /**
+     * @hide
+     */
     public static long peekLong(byte[] src, int offset, ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             int h = ((src[offset++] & 0xff) << 24) |
@@ -105,8 +113,10 @@ public final class Memory {
      * @param offset offset in {@code src} to get bytes from
      * @param order  byte order
      * @return short value
+     *
+     * @hide
      */
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static short peekShort(@NonNull byte[] src, int offset, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             return (short) ((src[offset] << 8) | (src[offset + 1] & 0xff));
@@ -123,8 +133,10 @@ public final class Memory {
      * @param offset offset in {@code dst} to put value to
      * @param value  int value to write
      * @param order  byte order
+     *
+     * @hide
      */
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void pokeInt(@NonNull byte[] dst, int offset, int value, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             dst[offset++] = (byte) ((value >> 24) & 0xff);
@@ -147,8 +159,10 @@ public final class Memory {
      * @param offset offset in {@code dst} to put value to
      * @param value  long value to write
      * @param order  byte order
+     *
+     * @hide
      */
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void pokeLong(@NonNull byte[] dst, int offset, long value, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             int i = (int) (value >> 32);
@@ -183,8 +197,10 @@ public final class Memory {
      * @param offset offset in {@code dst} to put value to
      * @param value  short value to write
      * @param order  byte order
+     *
+     * @hide
      */
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void pokeShort(@NonNull byte[] dst, int offset, short value, @NonNull ByteOrder order) {
         if (order == ByteOrder.BIG_ENDIAN) {
             dst[offset++] = (byte) ((value >> 8) & 0xff);
@@ -214,13 +230,19 @@ public final class Memory {
      *
      * @hide make type-safe before making public?
      */
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static native void memmove(@NonNull Object dstObject, int dstOffset, @NonNull Object srcObject, int srcOffset, long byteCount);
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     @FastNative
     public static native byte peekByte(long address);
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     public static int peekInt(long address, boolean swap) {
         int result = peekIntNative(address);
@@ -232,6 +254,9 @@ public final class Memory {
     @FastNative
     private static native int peekIntNative(long address);
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     public static long peekLong(long address, boolean swap) {
         long result = peekLongNative(address);
@@ -243,6 +268,9 @@ public final class Memory {
     @FastNative
     private static native long peekLongNative(long address);
 
+    /**
+     * @hide
+     */
     public static short peekShort(long address, boolean swap) {
         short result = peekShortNative(address);
         if (swap) {
@@ -253,19 +281,52 @@ public final class Memory {
     @FastNative
     private static native short peekShortNative(long address);
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     public static native void peekByteArray(long address, byte[] dst, int dstOffset, int byteCount);
+
+    /**
+     * @hide
+     */
     public static native void peekCharArray(long address, char[] dst, int dstOffset, int charCount, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void peekDoubleArray(long address, double[] dst, int dstOffset, int doubleCount, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void peekFloatArray(long address, float[] dst, int dstOffset, int floatCount, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void peekIntArray(long address, int[] dst, int dstOffset, int intCount, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void peekLongArray(long address, long[] dst, int dstOffset, int longCount, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void peekShortArray(long address, short[] dst, int dstOffset, int shortCount, boolean swap);
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     @FastNative
     public static native void pokeByte(long address, byte value);
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     public static void pokeInt(long address, int value, boolean swap) {
         if (swap) {
@@ -276,6 +337,9 @@ public final class Memory {
     @FastNative
     private static native void pokeIntNative(long address, int value);
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     public static void pokeLong(long address, long value, boolean swap) {
         if (swap) {
@@ -286,6 +350,9 @@ public final class Memory {
     @FastNative
     private static native void pokeLongNative(long address, long value);
 
+    /**
+     * @hide
+     */
     public static void pokeShort(long address, short value, boolean swap) {
         if (swap) {
             value = Short.reverseBytes(value);
@@ -295,12 +362,39 @@ public final class Memory {
     @FastNative
     private static native void pokeShortNative(long address, short value);
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     public static native void pokeByteArray(long address, byte[] src, int offset, int count);
+
+    /**
+     * @hide
+     */
     public static native void pokeCharArray(long address, char[] src, int offset, int count, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void pokeDoubleArray(long address, double[] src, int offset, int count, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void pokeFloatArray(long address, float[] src, int offset, int count, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void pokeIntArray(long address, int[] src, int offset, int count, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void pokeLongArray(long address, long[] src, int offset, int count, boolean swap);
+
+    /**
+     * @hide
+     */
     public static native void pokeShortArray(long address, short[] src, int offset, int count, boolean swap);
 }

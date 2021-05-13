@@ -91,7 +91,8 @@ public final class ReferenceQueueTest extends TestCase {
         final long enqueueDelayMsec = 500L;
         final long startNanos = System.nanoTime();
         enqueueLater(referenceQueue, enqueueDelayMsec);
-        referenceQueue.remove();
+        Object result = referenceQueue.remove();
+        assertNotNull(result);
         final long durationNanos = System.nanoTime() - startNanos;
         final long durationMillis = TimeUnit.NANOSECONDS.toMillis(durationNanos);
         checkDuration(enqueueDelayMsec, durationMillis);
@@ -102,7 +103,12 @@ public final class ReferenceQueueTest extends TestCase {
         final long enqueueDelayMsec = 500L;
         final long startNanos = System.nanoTime();
         enqueueLater(referenceQueue, enqueueDelayMsec);
-        referenceQueue.remove(1000);
+        Object result = referenceQueue.remove(1000);
+        if (result == null) {
+          // Also report the actual queue status.
+          assertNotNull(referenceQueue.poll());
+          assertNotNull(result);
+        }
         final long durationNanos = System.nanoTime() - startNanos;
         final long durationMillis = TimeUnit.NANOSECONDS.toMillis(durationNanos);
         checkDuration(enqueueDelayMsec, durationMillis);
