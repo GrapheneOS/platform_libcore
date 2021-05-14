@@ -167,6 +167,8 @@ java_library {
         ":i18n.module.intra.core.api{.public.stubs.source}",
         ":core_oj_java_files",
         ":core_libart_java_files",
+        // framework-api-annotations contain API annotations, e.g. @SystemApi.
+        ":framework-api-annotations",
         ":openjdk_lambda_stub_files",
         ":openjdk_generated_annotation_stub_files",
         ":app-compat-annotations-source",
@@ -867,6 +869,18 @@ rewrite_openjdk_doc_args = "--replace-documentation " +
     // replacement (with $1, $2 backreferences to the regex groups)
     "'$$1https://docs.oracle.com/javase/8/docs/$$2\">' "
 
+java_library {
+    name: "framework-api-annotations-lib",
+    srcs: [":framework-api-annotations"],
+    sdk_version: "none",
+    patch_module: "java.base",
+    system_modules: "core-all-system-modules",
+    installable: false,
+    visibility: [
+        "//visibility:private",
+    ],
+}
+
 // Define the public SDK API provided by the ART module.
 java_sdk_library {
     name: "art.module.public.api",
@@ -880,6 +894,9 @@ java_sdk_library {
         ":core_libart_api_files",
     ],
     libs: [
+        // Put framework-api-annotations into libs to avoid exposing the definition of framework's
+        // annotations from libcore (wrong place) instead of framework (correct place).
+        "framework-api-annotations-lib",
         // Provide access to I18N constants that are used to initialize
         // constants in the public API. i.e. to allow the value of the
         // java.text.CollectionElementIterator.NULLORDER to be initialized from
@@ -893,6 +910,12 @@ java_sdk_library {
     compile_dex: true,
 
     public: {
+        enabled: true,
+    },
+    system: {
+        enabled: true,
+    },
+    module_lib: {
         enabled: true,
     },
 
