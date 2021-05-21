@@ -20,6 +20,7 @@
 
 cc_defaults {
     name: "core_native_default_flags",
+    defaults: ["art_module_source_build_defaults"],
     host_supported: true,
     cflags: [
         "-Wall",
@@ -213,6 +214,10 @@ cc_test {
     name: "libjavacore-unit-tests",
     defaults: ["core_native_default_flags"],
 
+    // TODO(b/172480617): Fix this source dependency from
+    // platform_testing/build/tasks/tests/native_test_list.mk.
+    enabled: true,
+
     // Add -fno-builtin so that the compiler doesn't attempt to inline
     // memcpy calls that are not really aligned.
     cflags: ["-fno-builtin"],
@@ -233,6 +238,10 @@ cc_test {
 cc_benchmark {
     name: "libjavacore-benchmarks",
     defaults: ["core_native_default_flags"],
+
+    // TODO(b/172480617): Fix this source dependency from
+    // platform_testing/build/tasks/tests/native_metric_test_list.mk.
+    enabled: true,
 
     srcs: [
         "luni/src/benchmark/native/libcore_io_Memory_bench.cpp",
