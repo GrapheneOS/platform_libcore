@@ -682,12 +682,49 @@ public final class VMRuntime {
     public native void preloadDexCaches();
 
     /**
-     * Register application info.
-     * @param profileFile the path of the file where the profile information should be stored.
-     * @param codePaths the code paths that should be profiled.
+     * Flag denoting that the code paths passed to
+     * {@link #registerAppInfo(String, String, String, String[], int, boolean)}
+     * contains the app primary APK.
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public static native void registerAppInfo(String profileFile, String[] codePaths);
+    public static final int CODE_PATH_TYPE_PRIMARY_APK = 1 << 0;
+    /**
+     * Flag denoting that the code paths passed to
+     * {@link #registerAppInfo(String, String, String, String[], int, boolean)}
+     * contains the a split APK.
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static final int CODE_PATH_TYPE_SPLIT_APK = 1 << 1;
+    /**
+     * Flag denoting that the code paths passed to
+     * {@link #registerAppInfo(String, String, String, String[], int, boolean)}
+     * contains a secondary dex file (dynamically loaded by the app).
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static final int CODE_PATH_TYPE_SECONDARY_DEX = 1 << 2;
+
+    /**
+     * Register application info to ART.
+     * This enables ART to support certain low level features (such as profiling) and provide
+     * better debug information. The method should be called after the application loads its
+     * apks or dex files.
+     *
+     * @param packageName the name of the package being ran.
+     * @param currentProfileFile the path of the file where the profile information for the current
+     *        execution should be stored.
+     * @param referenceProfileFile the path of the file where the reference profile information
+     *        (for past executions) is stored.
+     * @param appCodePaths the code paths (apk/dex files) of the applications that were loaded.
+     *        These paths will also be profiled.
+     * @param codePathsTypes the type of the code paths.
+     */
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static native void registerAppInfo(
+            String packageName,
+            String currentProfileFile,
+            String referenceProfileFile,
+            String[] appCodePaths,
+            int codePathsType);
 
     /**
      * Returns the runtime instruction set corresponding to a given ABI. Multiple
