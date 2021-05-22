@@ -270,7 +270,7 @@ package dalvik.system {
     method public Object newUnpaddedArray(Class<?>, int);
     method public void notifyStartupCompleted();
     method public void preloadDexCaches();
-    method public static void registerAppInfo(String, String[]);
+    method public static void registerAppInfo(String, String, String, String[], int);
     method public void registerNativeAllocation(long);
     method @Deprecated public void registerNativeAllocation(int);
     method public void registerNativeFree(long);
@@ -290,6 +290,9 @@ package dalvik.system {
     method public void updateProcessState(int);
     method public String vmInstructionSet();
     method public String vmLibrary();
+    field public static final int CODE_PATH_TYPE_PRIMARY_APK = 1; // 0x1
+    field public static final int CODE_PATH_TYPE_SECONDARY_DEX = 4; // 0x4
+    field public static final int CODE_PATH_TYPE_SPLIT_APK = 2; // 0x2
     field public static final int SDK_VERSION_CUR_DEVELOPMENT = 10000; // 0x2710
   }
 
