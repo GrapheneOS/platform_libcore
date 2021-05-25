@@ -66,15 +66,12 @@ cc_library_shared {
     ],
     shared_libs: [
         "libandroidio",
-        "libbase",
         "libcrypto",
         "libicu",
         "libexpat",
-        "libnativehelper",
         "libz",
     ],
     static_libs: [
-        "libnativehelper_compat_libc++",
         "libziparchive",
     ],
 }
@@ -130,12 +127,10 @@ cc_defaults {
         "libandroidio",
         "libcrypto",
         "libicu",
-        "libnativehelper",
         "libz",
     ],
     static_libs: [
         "libfdlibm",
-        "libnativehelper_compat_libc++",
     ],
 
     target: {
