@@ -651,10 +651,8 @@ java_test {
         "harmony-tests/src/test/java/org/apache/harmony/tests/javax/net/ssl/*.java",
         "luni/src/test/java/libcore/javax/crypto/**/*.java",
         "luni/src/test/java/libcore/javax/net/ssl/**/*.java",
+        "luni/src/test/java/libcore/libcore/util/SerializationTester.java",
         "luni/src/test/java/org/apache/harmony/crypto/**/*.java",
-    ],
-    exclude_srcs: [
-        "luni/src/test/java/org/apache/harmony/crypto/tests/javax/crypto/SealedObjectTest.java",
     ],
 
     java_resource_dirs: [
