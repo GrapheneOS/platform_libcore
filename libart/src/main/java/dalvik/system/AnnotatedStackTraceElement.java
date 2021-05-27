@@ -16,6 +16,9 @@
 
 package dalvik.system;
 
+import libcore.util.NonNull;
+import libcore.util.Nullable;
+
 /**
  * A class encapsulating a StackTraceElement and lock state. This adds
  * critical thread state to the standard stack trace information, which
@@ -24,7 +27,7 @@ package dalvik.system;
  * @hide
  */
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-public class AnnotatedStackTraceElement {
+public final class AnnotatedStackTraceElement {
     /**
      * The traditional StackTraceElement describing the Java stack frame.
      */
@@ -52,7 +55,7 @@ public class AnnotatedStackTraceElement {
      * @return {@link StackTraceElement} describing the Java stack frame.
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public StackTraceElement getStackTraceElement() {
+    @NonNull public StackTraceElement getStackTraceElement() {
         return stackTraceElement;
     }
 
@@ -63,7 +66,7 @@ public class AnnotatedStackTraceElement {
      * @return array of objects current frame is syncronized on.
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public Object[] getHeldLocks() {
+    @Nullable public Object[] getHeldLocks() {
         return heldLocks;
     }
 
@@ -75,7 +78,7 @@ public class AnnotatedStackTraceElement {
      *         or {@code null}, if none.
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    public Object getBlockedOn() {
+    @Nullable public Object getBlockedOn() {
         return blockedOn;
     }
 }

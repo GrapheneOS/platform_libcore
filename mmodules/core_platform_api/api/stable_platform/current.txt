@@ -115,10 +115,10 @@ package android.system {
 
 package dalvik.system {
 
-  public class AnnotatedStackTraceElement {
-    method public Object getBlockedOn();
-    method public Object[] getHeldLocks();
-    method public StackTraceElement getStackTraceElement();
+  public final class AnnotatedStackTraceElement {
+    method @Nullable public Object getBlockedOn();
+    method @Nullable public Object[] getHeldLocks();
+    method @NonNull public StackTraceElement getStackTraceElement();
   }
 
   public class AppSpecializationHooks {
@@ -429,15 +429,6 @@ package java.util {
 
 }
 
-package java.util.concurrent {
-
-  public class CompletableFuture<T> implements java.util.concurrent.CompletionStage<T> java.util.concurrent.Future<T> {
-    method public java.util.concurrent.CompletableFuture<T> completeOnTimeout(T, long, java.util.concurrent.TimeUnit);
-    method public static <U> java.util.concurrent.CompletableFuture<U> failedFuture(Throwable);
-  }
-
-}
-
 package java.util.zip {
 
   public class ZipEntry implements java.lang.Cloneable {
@@ -547,9 +538,9 @@ package libcore.net {
 
 package libcore.net.event {
 
-  public class NetworkEventDispatcher {
+  public final class NetworkEventDispatcher {
+    method public void dispatchNetworkConfigurationChange();
     method public static libcore.net.event.NetworkEventDispatcher getInstance();
-    method public void onNetworkConfigurationChanged();
   }
 
 }
@@ -642,6 +633,40 @@ package libcore.util {
     method @NonNull public static org.xml.sax.XMLReader newXMLReader();
     method @NonNull public static org.xmlpull.v1.XmlPullParser newXmlPullParser();
     method @NonNull public static org.xmlpull.v1.XmlSerializer newXmlSerializer();
+  }
+
+}
+
+package org.apache.harmony.dalvik.ddmc {
+
+  public class Chunk {
+    ctor public Chunk(int, byte[], int, int);
+    ctor public Chunk(int, java.nio.ByteBuffer);
+    field public int type;
+  }
+
+  public abstract class ChunkHandler {
+    ctor public ChunkHandler();
+    method public static org.apache.harmony.dalvik.ddmc.Chunk createFailChunk(int, String);
+    method public abstract org.apache.harmony.dalvik.ddmc.Chunk handleChunk(org.apache.harmony.dalvik.ddmc.Chunk);
+    method public static String name(int);
+    method public abstract void onConnected();
+    method public abstract void onDisconnected();
+    method public static int type(String);
+    method public static java.nio.ByteBuffer wrapChunk(org.apache.harmony.dalvik.ddmc.Chunk);
+    field public static final java.nio.ByteOrder CHUNK_ORDER;
+  }
+
+  public final class DdmServer {
+    method public static void registerHandler(int, org.apache.harmony.dalvik.ddmc.ChunkHandler);
+    method public static void registrationComplete();
+    method public static void sendChunk(org.apache.harmony.dalvik.ddmc.Chunk);
+    method public static org.apache.harmony.dalvik.ddmc.ChunkHandler unregisterHandler(int);
+  }
+
+  public final class DdmVmInternal {
+    method public static void setRecentAllocationsTrackingEnabled(boolean);
+    method public static void setThreadNotifyEnabled(boolean);
   }
 
 }

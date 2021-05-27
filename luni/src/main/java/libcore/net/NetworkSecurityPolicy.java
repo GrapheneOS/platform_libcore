@@ -25,8 +25,9 @@ import android.compat.annotation.UnsupportedAppUsage;
  * Android framework API should be accessing this policy via the framework's
  * {@code android.security.NetworkSecurityPolicy} instead of via this class.
  *
- * <p>The policy currently consists of a single flag: whether cleartext network traffic is
- * permitted. See {@link #isCleartextTrafficPermitted()}.
+ * <p>The policy can be determined by the {@link #isCleartextTrafficPermitted()},
+ * {@link #isCleartextTrafficPermitted(String)} and
+ * {@link #isCertificateTransparencyVerificationRequired(String)} methods.
  *
  * @hide
  */

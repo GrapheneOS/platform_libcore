@@ -28,13 +28,13 @@ import java.nio.ByteBuffer;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class Chunk {
 
     /*
      * Public members.  Do not rename without updating the VM.
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public int type;                // chunk type
     public byte[] data;             // chunk data
     public int offset, length;      // position within "data"
@@ -46,8 +46,13 @@ public class Chunk {
 
     /**
      * Constructor with all fields.
+     *
+     * @param type   chunk type
+     * @param data   chunk data
+     * @param offset offset in {@code data} where actual data starts from
+     * @param length length of the {@code data}
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public Chunk(int type, byte[] data, int offset, int length) {
         this.type = type;
         this.data = data;
@@ -56,11 +61,14 @@ public class Chunk {
     }
 
     /**
-     * Construct from a ByteBuffer.  The chunk is assumed to start at
+     * Construct from a {@link ByteBuffer}.  The chunk is assumed to start at
      * offset 0 and continue to the current position.
+     *
+     * @param type chunk type
+     * @param buf  {@link ByteBuffer} containing chunk data
      */
     @UnsupportedAppUsage
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public Chunk(int type, ByteBuffer buf) {
         this.type = type;
 
