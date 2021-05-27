@@ -24,8 +24,8 @@ import dalvik.annotation.optimization.FastNative;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
-public class DdmVmInternal {
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+public final class DdmVmInternal {
 
     /* do not instantiate */
     private DdmVmInternal() {}
@@ -34,9 +34,11 @@ public class DdmVmInternal {
      * Enable thread notification.
      *
      * This is built into the VM, since that's where threads get managed.
+     *
+     * @param enabled {@code true} to enable thread notification; {@code false} to disable
      */
-    @libcore.api.CorePlatformApi
-    native public static void threadNotify(boolean enable);
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    native public static void setThreadNotifyEnabled(boolean enabled);
 
     /**
      * Get status info for all threads.  This is for the THST chunk.
@@ -60,7 +62,9 @@ public class DdmVmInternal {
 
     /**
      * Enable or disable "recent allocation" tracking.
+     *
+     * @param enabled {@code true} to enable recent allocation tracking; {@code false} to disable
      */
-    @libcore.api.CorePlatformApi
-    native public static void enableRecentAllocations(boolean enable);
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    native public static void setRecentAllocationsTrackingEnabled(boolean enabled);
 }
