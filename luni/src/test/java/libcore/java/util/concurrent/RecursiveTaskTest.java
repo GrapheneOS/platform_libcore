@@ -48,7 +48,7 @@ public class RecursiveTaskTest {
         }
 
         public void waitForCompletion(Integer forceResult) {
-            if(!TestUtils.waitWhileTrueOrTimeout(Duration.ofSeconds(2),
+            if(!TestUtils.waitWhileTrueOrTimeout(Duration.ofSeconds(10),
                         () -> { return !isDone(); })) {
                 fail("timed out waiting for task completion");
             }
