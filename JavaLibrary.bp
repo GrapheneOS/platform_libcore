@@ -949,6 +949,7 @@ java_sdk_library {
     // the API will be checked for compatibility against the latest released
     // version of the API.
     dist_stem: "art",
+    dist_group: "android",
 }
 
 // Used when compiling higher-level code against art.module.public.api.stubs.
