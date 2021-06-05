@@ -66,9 +66,8 @@ java_defaults {
     sdk_version: "none",
     system_modules: "none",
     patch_module: "java.base",
-
-    // Don't copy any output files to the dist.
-    no_dist: true,
+    dist_group: "android",
+    unsafe_ignore_missing_latest_api: true,
 }
 
 // Referenced implicitly from legacy.art.module.platform.api.
@@ -105,6 +104,7 @@ java_sdk_library {
 
     // Make dex jars for the stubs available for use by hiddenapi processing.
     compile_dex: true,
+    dist_stem: "art-coreplatform-legacy",
 }
 
 // Referenced implicitly from stable.art.module.platform.api.
@@ -138,6 +138,7 @@ java_sdk_library {
     droiddoc_options: [
         "--show-single-annotation libcore.api.CorePlatformApi\\(status=libcore.api.CorePlatformApi.Status.STABLE\\)",
     ],
+    dist_stem: "art-coreplatform-stable",
 }
 
 // Used when compiling higher-level code against *.core.platform.api.stubs.
