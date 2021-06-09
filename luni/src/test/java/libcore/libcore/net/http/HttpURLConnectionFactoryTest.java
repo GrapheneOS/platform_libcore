@@ -29,11 +29,13 @@ import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -61,5 +63,25 @@ public class HttpURLConnectionFactoryTest {
         final URLConnection connection = factory.openConnection(url, SocketFactory.getDefault(),
                 java.net.Proxy.NO_PROXY);
         assertEquals(connection.getURL(), url);
+    }
+
+    @Test
+    public void testDns() throws IOException  {
+        final String testHostName1 = "test1.com";
+        final String testHostName2 = "test2.com";
+        final String testHostName3 = "test3.com";
+        final List<InetAddress> testHostAddresses1 = List.of(Inet4Address.ALL);
+        final List<InetAddress> testHostAddresses2 = List.of(Inet6Address.ANY);
+        final List<InetAddress> testHostAddresses3 =
+                List.of(Inet4Address.ANY, Inet6Address.LOOPBACK);
+        final Map<String, List<InetAddress>> lookupResult = new HashMap();
+        lookupResult.put(testHostName1, testHostAddresses1);
+        lookupResult.put(testHostName2, testHostAddresses2);
+        lookupResult.put(testHostName3, testHostAddresses3);
+
+        final Dns dns = hostname -> lookupResult.get(hostname);
+        assertEquals(testHostAddresses1, dns.lookup(testHostName1));
+        assertEquals(testHostAddresses2, dns.lookup(testHostName2));
+        assertEquals(testHostAddresses3, dns.lookup(testHostName3));
     }
 }
