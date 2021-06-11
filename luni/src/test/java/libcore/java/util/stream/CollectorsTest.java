@@ -22,13 +22,19 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RunWith(JUnit4.class)
@@ -84,5 +90,27 @@ public class CollectorsTest {
         assertTrue(sqSumCollector.characteristics().contains(Collector.Characteristics.UNORDERED));
 
         assertArrayEquals(new int[] {30}, Stream.of(1, 2, 3, 4).collect(sqSumCollector));
+    }
+
+    @Test
+    public void mapping_asArgumentToCollect() {
+        Collector<Integer, ?, List<Integer>> plusOneCollector =
+                Collectors.mapping((Integer x) -> x + 1, toList());
+
+        List<Integer> actual = Stream.of(1, 2, 10).collect(plusOneCollector);
+
+        assertEquals(List.of(2, 3, 11), actual);
+    }
+
+    @Test
+    public void mapping_asArgumentInGroupingBy() {
+        Collector<Integer, ?, List<Integer>> plusOneCollector =
+                Collectors.mapping((Integer x) -> x + 1, toList());
+
+        Map<Boolean, List<Integer>> actual = Stream.of(1, 2, 3, 4)
+                .collect(groupingBy(x -> x % 2 == 0, plusOneCollector));
+        Map<Boolean, List<Integer>> expected = Map.of(true, List.of(3, 5), false, List.of(2, 4));
+
+        assertEquals(expected, actual);
     }
 }
