@@ -61,8 +61,6 @@ import sun.security.x509.X500Name;
  *
  * @author Benjamin Renaud
  */
-// Android-added: stable CorePlatformAPI
-@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class PKCS7 {
 
     private ObjectIdentifier contentType;

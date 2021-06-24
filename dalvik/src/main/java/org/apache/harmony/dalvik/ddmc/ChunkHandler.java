@@ -33,15 +33,22 @@ public abstract class ChunkHandler {
 
     /**
      * Byte order of the data in the chunk.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final ByteOrder CHUNK_ORDER = ByteOrder.BIG_ENDIAN;
 
+    /**
+     * @hide
+     */
     public static final int CHUNK_FAIL = type("FAIL");
 
     /**
      * Constructs chunk handler.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public ChunkHandler() {}
@@ -49,6 +56,8 @@ public abstract class ChunkHandler {
     /**
      * Called when the DDM server connects.  The handler is allowed to
      * send messages to the server.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract void onConnected();
@@ -56,6 +65,8 @@ public abstract class ChunkHandler {
     /**
      * Called when the DDM server disconnects.  Can be used to disable
      * periodic transmissions or clean up saved state.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract void onDisconnected();
@@ -68,6 +79,8 @@ public abstract class ChunkHandler {
      *
      * @param request chunk type and payload
      * @return        {@link Chunk} with response
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract Chunk handleChunk(Chunk request);
@@ -79,6 +92,8 @@ public abstract class ChunkHandler {
      * @param errorCode arbitrary number to distinguish error
      * @param msg       error message
      * @return          {@link Chunk} with response
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Chunk createFailChunk(int errorCode, String msg) {
@@ -102,6 +117,8 @@ public abstract class ChunkHandler {
      *
      * @param request chunk to be wrapped
      * @return        {@link ByteBuffer} wrapping data from the given chunk
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static ByteBuffer wrapChunk(Chunk request) {
@@ -114,6 +131,8 @@ public abstract class ChunkHandler {
 
     /**
      * Convert a 4-character string to a 32-bit type.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int type(String typeName) {
@@ -129,6 +148,8 @@ public abstract class ChunkHandler {
 
     /**
      * Convert an integer type to a 4-character string.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static String name(int type)

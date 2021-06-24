@@ -35,10 +35,16 @@ public final class StructCapUserHeader {
      * See <a href="http://man7.org/linux/man-pages/man2/capget.2.html">capget(2)</a>.
      *
      * @see {@link OsConstants._LINUX_CAPABILITY_VERSION_3}.
+     *
+     * @hide
      */
     public int version; /* __u32 */
 
-    /** Pid of the header. The pid a call applies to. */
+    /**
+     * Pid of the header. The pid a call applies to.
+     *
+     * @hide
+     */
     public final int pid;
 
     /**
@@ -46,6 +52,8 @@ public final class StructCapUserHeader {
      *
      * @param version linux capability version
      * @param pid     process id
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public StructCapUserHeader(int version, int pid) {
@@ -53,6 +61,9 @@ public final class StructCapUserHeader {
         this.pid = pid;
     }
 
+    /**
+     * @hide
+     */
     @Override public String toString() {
         return Objects.toString(this);
     }

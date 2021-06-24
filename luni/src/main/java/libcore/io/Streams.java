@@ -49,6 +49,8 @@ public final class Streams {
      * @param in {@link InputStream} to read byte from
      * @return singlge byte read from {@code in}
      * @throws IOException in case of I/O error
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -66,6 +68,8 @@ public final class Streams {
      * @param out {@link OutputStream} to write byte to
      * @param b byte to write to stream {@code out}
      * @throws IOException in case of I/O error
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -82,6 +86,8 @@ public final class Streams {
      * @param in {@link InputStream} to read data from
      * @param dst byte buffer to write data to
      * @throws IOException in case of I/O error
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -94,6 +100,8 @@ public final class Streams {
      * EOFException if insufficient bytes are available.
      *
      * Used to implement {@link java.io.DataInputStream#readFully(byte[], int, int)}.
+     *
+     * @hide
      */
     public static void readFully(InputStream in, byte[] dst, int offset, int byteCount) throws IOException {
         if (byteCount == 0) {
@@ -123,6 +131,8 @@ public final class Streams {
      * @param in {@link InputStream} to read data from
      * @return remaining bytes in {@code in} stream.
      * @throws IOException thrown by {@link InputStream#read(byte[])}.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -141,6 +151,8 @@ public final class Streams {
      * @param in {@link InputStream} to read data from
      * @return remaining bytes in {@code in} stream.
      * @throws IOException thrown by {@link InputStream#read(byte[])}.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull byte[] readFullyNoClose(@NonNull InputStream in) throws IOException {
@@ -159,6 +171,8 @@ public final class Streams {
      * @param reader {@link Reader} instance.
      * @return remainder of {@code reader} as {@link String}.
      * @throws IOException thrown by {@link Reader#read(java.nio.CharBuffer)}.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull String readFully(@NonNull Reader reader) throws IOException {
@@ -175,6 +189,9 @@ public final class Streams {
         }
     }
 
+    /**
+     * @hide
+     */
     @UnsupportedAppUsage
     public static void skipAll(InputStream in) throws IOException {
         do {
@@ -198,6 +215,8 @@ public final class Streams {
      * @param byteCount number of bytes to skip from {@code in}
      * @return number of bytes skipped from {@code in}
      * @throws IOException in case of I/O error
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static long skipByReading(@NonNull InputStream in, long byteCount) throws IOException {
@@ -234,6 +253,8 @@ public final class Streams {
      * @param out {@link InputStream} to write copied data to
      * @return the total number of bytes transferred.
      * @throws IOException reading from {@link InputStream} or writing to {@link OutputStream}.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -254,6 +275,8 @@ public final class Streams {
      *
      * @throws java.io.EOFException if the stream is exhausted before the next newline
      *     character.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     public static String readAsciiLine(InputStream in) throws IOException {

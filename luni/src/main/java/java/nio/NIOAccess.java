@@ -27,6 +27,8 @@ import android.compat.annotation.UnsupportedAppUsage;
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class NIOAccess {
 
+    private NIOAccess() {}
+
     /**
      * Returns the underlying native pointer to the data of the given
      * Buffer starting at the Buffer's current position, or 0 if the
@@ -49,6 +51,8 @@ public final class NIOAccess {
      *
      * @param b  {@code Buffer} to get its underlying data array
      * @return   underlying Java array
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -65,6 +69,8 @@ public final class NIOAccess {
      *
      * @param b {@code Buffer} to get its underlying data array's base offset
      * @return  underlying Java array's base offset
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)

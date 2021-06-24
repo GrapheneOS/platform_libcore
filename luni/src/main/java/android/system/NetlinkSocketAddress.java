@@ -50,17 +50,30 @@ import libcore.util.Objects;
  */
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class NetlinkSocketAddress extends SocketAddress {
-    /** port ID */
+    /**
+     * port ID
+     *
+     * @hide
+     */
     private final int nlPortId;
 
-    /** multicast groups mask */
+    /**
+     * multicast groups mask
+     *
+     * @hide
+     */
     private final int nlGroupsMask;
 
+    /**
+     * @hide
+     */
     // VisibleForTesting
     public NetlinkSocketAddress() {
         this(0, 0);
     }
-
+    /**
+     * @hide
+     */
     // VisibleForTesting
     public NetlinkSocketAddress(int nlPortId) {
         this(nlPortId, 0);
@@ -71,6 +84,8 @@ public final class NetlinkSocketAddress extends SocketAddress {
      *
      * @param nlPortId     port id
      * @param nlGroupsMask groups mask
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -83,6 +98,8 @@ public final class NetlinkSocketAddress extends SocketAddress {
      * Returns this address's port id.
      *
      * @return port id
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public int getPortId() {
@@ -93,12 +110,17 @@ public final class NetlinkSocketAddress extends SocketAddress {
      * Returns this address's groups multicast mask.
      *
      * @return groups mask
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public int getGroupsMask() {
         return nlGroupsMask;
     }
 
+    /**
+     * @hide
+     */
     @Override public String toString() {
       return Objects.toString(this);
     }

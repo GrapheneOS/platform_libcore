@@ -49,8 +49,6 @@ import java.util.Arrays;
  * @author Amit Kapoor
  * @author Hemma Prafullchandra
  */
-// Android-added: stable CorePlatformAPI
-@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 final public
 class ObjectIdentifier implements Serializable
 {
@@ -140,8 +138,6 @@ class ObjectIdentifier implements Serializable
      * Constructs, from a string.  This string should be of the form 1.23.56.
      * Validity check included.
      */
-    // Android-added: stable CorePlatformAPI
-    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public ObjectIdentifier (String oid) throws IOException
     {
         int ch = '.';

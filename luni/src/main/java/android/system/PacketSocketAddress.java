@@ -32,27 +32,47 @@ import libcore.util.Objects;
  */
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class PacketSocketAddress extends SocketAddress {
-    /** Protocol. An Ethernet protocol type, e.g., {@link OsConstants#ETH_P_IPV6}. */
+    /**
+     * Protocol. An Ethernet protocol type, e.g., {@link OsConstants#ETH_P_IPV6}.
+     *
+     * @hide
+     */
     public final int sll_protocol;
 
-    /** Interface index. */
+    /**
+     * Interface index.
+     *
+     * @hide
+     */
     public final int sll_ifindex;
 
     /**
      * ARP hardware type. One of the {@code ARPHRD_*} constants, such as
      * {@link OsConstants#ARPHRD_ETHER}.
+     *
+     * @hide
      */
     public final int sll_hatype;
 
     /**
      * Packet type.
+     *
+     * @hide
      */
     public final int sll_pkttype;
 
-    /** Hardware address. */
+    /**
+     * Hardware address.
+     *
+     * @hide
+     */
     public final byte[] sll_addr;
 
-    /** Constructs a new PacketSocketAddress. Used from native code. */
+    /**
+     * Constructs a new PacketSocketAddress. Used from native code.
+     *
+     * @hide
+     */
     public PacketSocketAddress(int sll_protocol, int sll_ifindex, int sll_hatype, int sll_pkttype,
             byte[] sll_addr) {
         this.sll_protocol = sll_protocol;
@@ -71,6 +91,8 @@ public final class PacketSocketAddress extends SocketAddress {
      * @param sll_protocol protocol field in {@code struct sockaddr_ll}
      * @param sll_ifindex  interface index number field in {@code struct sockaddr_ll}
      * @param sll_addr     physical-layer address field in {@code struct sockaddr_ll}
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public PacketSocketAddress(int sll_protocol, int sll_ifindex, byte[] sll_addr) {
@@ -81,7 +103,11 @@ public final class PacketSocketAddress extends SocketAddress {
         this.sll_addr = sll_addr;
     }
 
-    /** Legacy constructor. Kept for @UnsupportedAppUsage only. */
+    /**
+     * Legacy constructor. Kept for @UnsupportedAppUsage only.
+     *
+     * @hide
+     */
     @UnsupportedAppUsage
     public PacketSocketAddress(short sll_protocol, int sll_ifindex) {
         this.sll_protocol = sll_protocol;
@@ -91,7 +117,11 @@ public final class PacketSocketAddress extends SocketAddress {
         this.sll_addr = null;
     }
 
-    /** Legacy constructor. Kept for @UnsupportedAppUsage only. */
+    /**
+     * Legacy constructor. Kept for @UnsupportedAppUsage only.
+     *
+     * @hide
+     */
     @UnsupportedAppUsage
     public PacketSocketAddress(int sll_ifindex, byte[] sll_addr) {
         this.sll_protocol = 0;
@@ -101,6 +131,9 @@ public final class PacketSocketAddress extends SocketAddress {
         this.sll_addr = sll_addr;
     }
 
+    /**
+     * @hide
+     */
     @Override
     public String toString() {
         return Objects.toString(this);

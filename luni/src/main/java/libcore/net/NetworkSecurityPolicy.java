@@ -41,6 +41,8 @@ public abstract class NetworkSecurityPolicy {
      * Constructs a default {@code NetworkSecurityPolicy}.
      *
      * @see {@link #DefaultNetworkSecurityPolicy}.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
@@ -51,6 +53,8 @@ public abstract class NetworkSecurityPolicy {
      * Gets current singleton {@code NetworkSecurityPolicy} instance.
      *
      * @return the current {@code NetworkSecurityPolicy}.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
@@ -62,6 +66,8 @@ public abstract class NetworkSecurityPolicy {
      * Sets current singleton instance
      *
      * @param policy new {@code NetworlSecurityPolicy} instance.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setInstance(NetworkSecurityPolicy policy) {
@@ -91,6 +97,8 @@ public abstract class NetworkSecurityPolicy {
      * honor it.
      *
      * @return {@code true} if cleartext traffic is permitted and {@code false} otherwise.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -105,6 +113,8 @@ public abstract class NetworkSecurityPolicy {
      *
      * @param hostname hostname to check if cleartext traffic is permitted for
      * @return {@code true} if cleartext traffic is permitted and {@code false} otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract boolean isCleartextTrafficPermitted(String hostname);
@@ -119,6 +129,8 @@ public abstract class NetworkSecurityPolicy {
      *                 is required
      * @return {@code true} if certificate transparency verification is required and
      *         {@code false} otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
@@ -127,6 +139,8 @@ public abstract class NetworkSecurityPolicy {
     /**
      * Default network security policy that allows cleartext traffic and does not require
      * certificate transparency verification.
+     *
+     * @hide
      */
     public static final class DefaultNetworkSecurityPolicy extends NetworkSecurityPolicy {
         @Override

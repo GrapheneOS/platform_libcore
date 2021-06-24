@@ -43,6 +43,8 @@ public final class MimeMap {
      * @return builder
      *
      * @see MimeMap.Builder
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static @NonNull Builder builder() {
@@ -56,6 +58,8 @@ public final class MimeMap {
      * @return builder
      *
      * @see MimeMap.Builder
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public @NonNull Builder buildUpon() {
@@ -100,6 +104,8 @@ public final class MimeMap {
      * Gets system's current default {@link MimeMap}
      *
      * @return The system's current default {@link MimeMap}.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static @NonNull MimeMap getDefault() {
@@ -116,6 +122,8 @@ public final class MimeMap {
      * {@link #getDefault()} without an intervening call to
      * {@link #setDefaultSupplier(Supplier)} will return that same instance
      * without consulting {@code mimeMapSupplier} a second time.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void setDefaultSupplier(@NonNull Supplier<@NonNull MimeMap> mimeMapSupplier) {
@@ -128,6 +136,8 @@ public final class MimeMap {
      * @param extension A file extension without the leading '.'
      * @return Whether a MIME type has been registered for the given case insensitive file
      *         extension.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final boolean hasExtension(@Nullable String extension) {
@@ -141,6 +151,8 @@ public final class MimeMap {
      * @param extension A file extension without the leading '.'
      * @return The lower-case MIME type registered for the given case insensitive file extension,
      *         or null if there is none.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final @Nullable String guessMimeTypeFromExtension(@Nullable String extension) {
@@ -157,6 +169,8 @@ public final class MimeMap {
      * @param mimeType A MIME type (i.e. {@code "text/plain")
      * @return Whether the given case insensitive MIME type is
      *         {@link #guessMimeTypeFromExtension(String) mapped} to a file extension.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final boolean hasMimeType(@Nullable String mimeType) {
@@ -170,6 +184,8 @@ public final class MimeMap {
      * @param mimeType A MIME type (i.e. text/plain)
      * @return The lower-case file extension (without the leading "." that has been registered for
      *         the given case insensitive MIME type, or null if there is none.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final @Nullable String guessExtensionFromMimeType(@Nullable String mimeType) {
@@ -218,6 +234,10 @@ public final class MimeMap {
 
     private volatile int hashCode = 0;
 
+    /**
+     *
+     * @hide
+     */
     @Override
     public int hashCode() {
         if (hashCode == 0) { // potentially uninitialized
@@ -226,6 +246,10 @@ public final class MimeMap {
         return hashCode;
     }
 
+    /**
+     *
+     * @hide
+     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof MimeMap)) {
@@ -238,6 +262,10 @@ public final class MimeMap {
         return mimeToExt.equals(that.mimeToExt) && extToMime.equals(that.extToMime);
     }
 
+    /**
+     *
+     * @hide
+     */
     @Override
     public String toString() {
         return "MimeMap[" + mimeToExt + ", " + extToMime + "]";
@@ -351,6 +379,8 @@ public final class MimeMap {
          *                 are invalid (null, empty, contain ' ', or '?' after an initial '?' has
          *                 been stripped off).
          * @return This builder.
+         *
+         * @hide
          */
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         public @NonNull Builder addMimeMapping(@NonNull String mimeSpec, @NonNull List<@NonNull String> extensionSpecs)
@@ -382,12 +412,18 @@ public final class MimeMap {
          * Builds {@link MimeMap} containing all added MIME mappings.
          *
          * @return {@link MimeMap} containing previously added MIME mapping entries
+         *
+         * @hide
          */
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         public @NonNull MimeMap build() {
             return new MimeMap(mimeToExt, extToMime);
         }
 
+        /**
+         *
+         * @hide
+         */
         @Override
         public String toString() {
             return "MimeMap.Builder[" + mimeToExt + ", " + extToMime + "]";

@@ -51,12 +51,16 @@ public final class BlockGuard {
     public interface Policy {
         /**
          * Called on disk writes.
+         *
+         * @hide
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         void onWriteToDisk();
 
         /**
          * Called on disk reads.
+         *
+         * @hide
          */
         @UnsupportedAppUsage
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -64,6 +68,8 @@ public final class BlockGuard {
 
         /**
          * Called on network operations.
+         *
+         * @hide
          */
         @UnsupportedAppUsage
         @libcore.api.IntraCoreApi
@@ -71,12 +77,16 @@ public final class BlockGuard {
 
         /**
          * Called on unbuffered input/ouput operations.
+         *
+         * @hide
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         void onUnbufferedIO();
 
         /**
          * Called on explicit GC request, i.e. Runtime.gc().
+         *
+         * @hide
          */
         void onExplicitGc();
 
@@ -87,6 +97,8 @@ public final class BlockGuard {
          * {@code PENALTY_*} constants declared in {@code StrictMode} class.
          *
          * @return policy bitmask
+         *
+         * @hide
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         int getPolicyMask();
@@ -116,6 +128,8 @@ public final class BlockGuard {
          *
          * @param path The path in the local file system that is being accessed
          *            for reading or writing.
+         *
+         * @hide
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         void onPathAccess(@NonNull String path);
@@ -123,6 +137,8 @@ public final class BlockGuard {
 
     /**
      * @deprecated no longer actively used, but kept intact for hidden API lists.
+     *
+     * @hide
      */
     @Deprecated
     public static class BlockGuardPolicyException extends RuntimeException {
@@ -168,6 +184,8 @@ public final class BlockGuard {
 
     /**
      * The default, permissive per-thread policy.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -187,6 +205,8 @@ public final class BlockGuard {
 
     /**
      * The default, permissive per-process policy.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final VmPolicy LAX_VM_POLICY = new VmPolicy() {
@@ -208,6 +228,8 @@ public final class BlockGuard {
      *
      * @return the current thread's policy. Will return the {@link #LAX_POLICY}
      *         instance if nothing else is set.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -224,6 +246,8 @@ public final class BlockGuard {
      *
      * @param policy policy to set. Use the public {@link #LAX_POLICY} if you
      *            want to unset the active policy.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -236,6 +260,8 @@ public final class BlockGuard {
      *
      * @return the current process's policy. Will return the
      *         {@link #LAX_VM_POLICY} instance if nothing else is set.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull VmPolicy getVmPolicy() {
@@ -250,6 +276,8 @@ public final class BlockGuard {
      *
      * @param policy policy to set. Use the public {@link #LAX_VM_POLICY} if you
      *            want to unset the active policy.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setVmPolicy(@NonNull VmPolicy policy) {

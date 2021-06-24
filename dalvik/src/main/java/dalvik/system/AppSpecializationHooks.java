@@ -26,6 +26,8 @@ import libcore.api.CorePlatformApi;
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class AppSpecializationHooks {
 
+    private AppSpecializationHooks() {}
+
     /**
      * Called in {@link android.app.ActivityThread}, but before binding the application. This method
      * should be called only after {@link android.compat.Compatibility#setCallbacks}

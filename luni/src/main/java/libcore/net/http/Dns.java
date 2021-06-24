@@ -35,6 +35,8 @@ public interface Dns extends com.android.okhttp.internalandroidapi.Dns {
      * be attempted. Returns loopback addresses for {@code null} host.
      *
      * @param hostname The host name will be looked up.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @NonNull List<@NonNull InetAddress> lookup(@Nullable String hostname) throws UnknownHostException;

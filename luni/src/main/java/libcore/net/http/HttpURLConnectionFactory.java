@@ -40,6 +40,8 @@ public class HttpURLConnectionFactory {
 
     /**
      * Create a new {@link HttpURLConnectionFactory} instance.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @NonNull public static HttpURLConnectionFactory createInstance() {
@@ -57,6 +59,8 @@ public class HttpURLConnectionFactory {
      * @param maxIdleConnections The maximum number of idle connections to each to keep in the pool.
      * @param keepAliveDuration Time to keep the connection alive in the pool before closing it.
      * @param timeUnit The time unit of keep alive duration.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public void setNewConnectionPool(int maxIdleConnections, long keepAliveDuration,
@@ -68,6 +72,8 @@ public class HttpURLConnectionFactory {
      * Sets a new dns resolver.
      *
      * @param dns the dns resolver for looking up.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public void setDns(@NonNull Dns dns) {
@@ -84,6 +90,8 @@ public class HttpURLConnectionFactory {
      *
      * @return An {@link java.net.URLConnection} using given SocketFactory, proxy settings and
      *         configuration.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public URLConnection openConnection(@NonNull URL url, @NonNull SocketFactory socketFactory,

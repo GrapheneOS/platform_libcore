@@ -29,12 +29,12 @@ package sun.security.util;
 import java.io.*;
 import java.math.BigInteger;
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.Hide
 @SuppressWarnings({"unchecked", "deprecation", "all"})
 public final class ObjectIdentifier implements java.io.Serializable {
 
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public ObjectIdentifier(java.lang.String oid) throws java.io.IOException { throw new RuntimeException("Stub!"); }
 
 public ObjectIdentifier(int[] values) throws java.io.IOException { throw new RuntimeException("Stub!"); }

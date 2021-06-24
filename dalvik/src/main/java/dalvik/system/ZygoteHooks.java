@@ -43,12 +43,16 @@ public final class ZygoteHooks {
     /**
      * Called by the zygote when starting up. It marks the point when any thread
      * start should be an error, as only internal daemon threads are allowed there.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static native void startZygoteNoThreadCreation();
 
     /**
      * Called when the zygote begins preloading classes and data.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void onBeginPreload() {
@@ -72,6 +76,8 @@ public final class ZygoteHooks {
 
     /**
      * Called when the zygote has completed preloading classes and data.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void onEndPreload() {
@@ -87,6 +93,8 @@ public final class ZygoteHooks {
      * Runs several special GCs to try to clean up a few generations of
      * softly- and final-reachable objects, along with any other garbage.
      * This is only useful just before a fork().
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void gcAndFinalize() {
@@ -103,6 +111,8 @@ public final class ZygoteHooks {
     /**
      * Called by the zygote when startup is finished. It marks the point when it is
      * conceivable that threads would be started again, e.g., restarting daemons.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static native void stopZygoteNoThreadCreation();
@@ -113,6 +123,8 @@ public final class ZygoteHooks {
      * the child process and {@link #postForkCommon()} on both the parent and the child
      * process. {@code postForkCommon} is called after {@code postForkChild} in
      * the child process.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void preFork() {
@@ -126,6 +138,8 @@ public final class ZygoteHooks {
      * before {@code postForkChild} for system server.
      *
      * @param runtimeFlags The flags listed in com.android.internal.os.Zygote passed to the runtime.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkSystemServer(int runtimeFlags) {
@@ -140,6 +154,8 @@ public final class ZygoteHooks {
      * @param isChildZygote Whether the child process is a child zygote.
      * @param instructionSet The instruction set of the child, used to determine
      *                       whether to use a native bridge.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkChild(int runtimeFlags, boolean isSystemServer,
@@ -163,6 +179,8 @@ public final class ZygoteHooks {
      * Called by the zygote in both the parent and child processes after
      * every fork. In the child process, this method is called after
      * {@code postForkChild}.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkCommon() {
@@ -178,6 +196,8 @@ public final class ZygoteHooks {
      *
      * @return {@code true} if it's safe to keep all ART daemon threads stopped
      *         indefinitely in the zygote; and {@code false} otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean isIndefiniteThreadSuspensionSafe() {

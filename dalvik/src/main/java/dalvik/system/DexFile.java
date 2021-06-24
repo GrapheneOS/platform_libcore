@@ -580,6 +580,8 @@ public final class DexFile {
          * Returns the human readable refined status of the validity of the odex file.
          *
          * @return optimization status
+         *
+         * @hide
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         public @NonNull String getStatus() {
@@ -590,6 +592,8 @@ public final class DexFile {
          * Returns the reason of a particular optimization used.
          *
          * @return optimization reason
+         *
+         * @hide
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         public @NonNull String getReason() {

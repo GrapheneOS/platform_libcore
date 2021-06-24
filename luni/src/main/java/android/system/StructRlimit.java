@@ -28,17 +28,31 @@ import libcore.util.Objects;
  */
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class StructRlimit {
+
+    /**
+     * Soft limit
+     *
+     * @hide
+     */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
-    /** Soft limit */
     public final long rlim_cur;
-    /** Hard limit (ceiling for rlim_cur) */
+    /**
+     * Hard limit (ceiling for rlim_cur)
+     *
+     * @hide
+     */
     public final long rlim_max;
 
+    /**
+     * @hide
+     */
     public StructRlimit(long rlim_cur, long rlim_max) {
         this.rlim_cur = rlim_cur;
         this.rlim_max = rlim_max;
     }
-
+    /**
+     * @hide
+     */
     @Override public String toString() {
         return Objects.toString(this);
     }

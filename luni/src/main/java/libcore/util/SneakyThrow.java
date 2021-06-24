@@ -36,6 +36,8 @@ public class SneakyThrow {
      * and is not declared to be thrown.
      *
      * @param t throwable to throw
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void sneakyThrow(@NonNull Throwable t) {
