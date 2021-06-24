@@ -50,6 +50,8 @@ public class InetAddressUtils {
      *
      * @param address the address to parse.
      * @return true if the supplied address is numeric, false otherwise.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean isNumericAddress(String address) {
@@ -68,6 +70,8 @@ public class InetAddressUtils {
      * @param address the address to parse, must be numeric.
      * @return an {@link InetAddress} instance corresponding to the address.
      * @throws IllegalArgumentException if {@code address} is not a numeric address.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static InetAddress parseNumericAddress(String address) {
@@ -78,6 +82,9 @@ public class InetAddressUtils {
         return result;
     }
 
+    /**
+     * @hide
+     */
     public static InetAddress parseNumericAddressNoThrow(String address) {
         StructAddrinfo hints = new StructAddrinfo();
         hints.ai_flags = AI_NUMERICHOST;
@@ -95,6 +102,8 @@ public class InetAddressUtils {
     /**
      * Like {@link #parseNumericAddressNoThrow(String)}}, but strips optional []
      * around a numeric IPv6 address.
+     *
+     * @hide
      */
     public static InetAddress parseNumericAddressNoThrowStripOptionalBrackets(String address) {
         // Accept IPv6 addresses (only) in square brackets for compatibility.

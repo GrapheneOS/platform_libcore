@@ -90,6 +90,8 @@ package libcore.util;
 public final class FP16 {
     /**
      * The number of bits used to represent a half-precision float value.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int SIZE = 16;
@@ -97,105 +99,143 @@ public final class FP16 {
     /**
      * Epsilon is the difference between 1.0 and the next value representable
      * by a half-precision floating-point.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short EPSILON = (short) 0x1400;
 
     /**
      * Maximum exponent a finite half-precision float may have.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int MAX_EXPONENT = 15;
     /**
      * Minimum exponent a normalized half-precision float may have.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int MIN_EXPONENT = -14;
 
     /**
      * Smallest negative value a half-precision float may have.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short LOWEST_VALUE = (short) 0xfbff;
     /**
      * Maximum positive finite value a half-precision float may have.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short MAX_VALUE = (short) 0x7bff;
     /**
      * Smallest positive normal value a half-precision float may have.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short MIN_NORMAL = (short) 0x0400;
     /**
      * Smallest positive non-zero value a half-precision float may have.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short MIN_VALUE = (short) 0x0001;
     /**
      * A Not-a-Number representation of a half-precision float.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short NaN = (short) 0x7e00;
     /**
      * Negative infinity of type half-precision float.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short NEGATIVE_INFINITY = (short) 0xfc00;
     /**
      * Negative 0 of type half-precision float.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short NEGATIVE_ZERO = (short) 0x8000;
     /**
      * Positive infinity of type half-precision float.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short POSITIVE_INFINITY = (short) 0x7c00;
     /**
      * Positive 0 of type half-precision float.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final short POSITIVE_ZERO = (short) 0x0000;
 
     /**
      * The offset to shift by to obtain the sign bit.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int SIGN_SHIFT                = 15;
 
     /**
      * The offset to shift by to obtain the exponent bits.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int EXPONENT_SHIFT            = 10;
 
     /**
      * The bitmask to AND a number with to obtain the sign bit.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int SIGN_MASK                 = 0x8000;
 
     /**
      * The bitmask to AND a number shifted by {@link #EXPONENT_SHIFT} right, to obtain exponent bits.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int SHIFTED_EXPONENT_MASK     = 0x1f;
 
     /**
      * The bitmask to AND a number with to obtain significand bits.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int SIGNIFICAND_MASK          = 0x3ff;
 
     /**
      * The bitmask to AND with to obtain exponent and significand bits.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int EXPONENT_SIGNIFICAND_MASK = 0x7fff;
 
     /**
      * The offset of the exponent from the actual value.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final int EXPONENT_BIAS             = 15;
@@ -230,6 +270,8 @@ public final class FP16 {
      *          value less than {@code 0} if {@code x} is numerically less than {@code y},
      *          and a value greater than {@code 0} if {@code x} is numerically greater
      *          than {@code y}
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int compare(short x, short y) {
@@ -260,6 +302,8 @@ public final class FP16 {
      * @param h A half-precision float value
      * @return The value of the specified half-precision float rounded to the nearest
      *         half-precision float value
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static short rint(short h) {
@@ -303,6 +347,8 @@ public final class FP16 {
      * @param h A half-precision float value
      * @return The smallest half-precision float value toward negative infinity
      *         greater than or equal to the specified half-precision float value
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static short ceil(short h) {
@@ -344,6 +390,8 @@ public final class FP16 {
      * @param h A half-precision float value
      * @return The largest half-precision float value toward positive infinity
      *         less than or equal to the specified half-precision float value
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static short floor(short h) {
@@ -383,6 +431,8 @@ public final class FP16 {
      * @param h A half-precision float value
      * @return The truncated half-precision float value of the specified
      *         half-precision float value
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static short trunc(short h) {
@@ -412,6 +462,8 @@ public final class FP16 {
      * @param x The first half-precision value
      * @param y The second half-precision value
      * @return The smaller of the two specified half-precision values
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static short min(short x, short y) {
@@ -438,6 +490,8 @@ public final class FP16 {
      * @param y The second half-precision value
      *
      * @return The larger of the two specified half-precision values
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static short max(short x, short y) {
@@ -461,6 +515,8 @@ public final class FP16 {
      * @param y The second half-precision value
      *
      * @return True if x is less than y, false otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean less(short x, short y) {
@@ -480,6 +536,8 @@ public final class FP16 {
      * @param y The second half-precision value
      *
      * @return True if x is less than or equal to y, false otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean lessEquals(short x, short y) {
@@ -499,6 +557,8 @@ public final class FP16 {
      * @param y The second half-precision value
      *
      * @return True if x is greater than y, false otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean greater(short x, short y) {
@@ -518,6 +578,8 @@ public final class FP16 {
      * @param y The second half-precision value
      *
      * @return True if x is greater than y, false otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean greaterEquals(short x, short y) {
@@ -537,6 +599,8 @@ public final class FP16 {
      * @param y The second half-precision value
      *
      * @return True if x is equal to y, false otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean equals(short x, short y) {
@@ -553,6 +617,8 @@ public final class FP16 {
      * @param h A half-precision float value
      * @return True if the value is positive infinity or negative infinity,
      *         false otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean isInfinite(short h) {
@@ -565,6 +631,8 @@ public final class FP16 {
      *
      * @param h A half-precision float value
      * @return True if the value is a NaN, false otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean isNaN(short h) {
@@ -580,6 +648,8 @@ public final class FP16 {
      *
      * @param h A half-precision float value
      * @return True if the value is normalized, false otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean isNormalized(short h) {
@@ -600,6 +670,8 @@ public final class FP16 {
      *
      * @param h The half-precision float value to convert to single-precision
      * @return A normalized single-precision float value
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static float toFloat(short h) {
@@ -655,6 +727,8 @@ public final class FP16 {
      *
      * @param f The single-precision float value to convert to half-precision
      * @return A half-precision float value
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static short toHalf(float f) {
@@ -735,6 +809,8 @@ public final class FP16 {
      *
      * @param h A half-precision float value
      * @return A hexadecimal string representation of the specified value
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static String toHexString(short h) {

@@ -35,6 +35,10 @@ public abstract class SocketTagger {
         @Override public void untag(FileDescriptor socketDescriptor) throws SocketException {}
     };
 
+    /**
+     *
+     * @hide
+     */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public SocketTagger() {
     }
@@ -46,6 +50,8 @@ public abstract class SocketTagger {
      *
      * @param socketDescriptor to be assigned to the current thread
      * @throws SocketException when {@link SocketException} occurs
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract void tag(FileDescriptor socketDescriptor) throws SocketException;
@@ -60,6 +66,8 @@ public abstract class SocketTagger {
      *
      * @param socketDescriptor to be released from the current thread to a connection pool
      * @throws SocketException when {@link SocketException} occurs
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract void untag(FileDescriptor socketDescriptor) throws SocketException;
@@ -71,6 +79,8 @@ public abstract class SocketTagger {
      *
      * @param socket to be assigned to the current thread
      * @throws SocketException when {@link SocketException} occurs
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -91,6 +101,8 @@ public abstract class SocketTagger {
      * @param socket           to be released from the current thread
      *                         to a connection pool
      * @throws SocketException when {@link SocketException} occurs
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -107,6 +119,8 @@ public abstract class SocketTagger {
      *
      * @param socket           to be assigned to the current thread
      * @throws SocketException when {@link SocketException} occurs
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final void tag(DatagramSocket socket) throws SocketException {
@@ -126,6 +140,8 @@ public abstract class SocketTagger {
      * @param socket           to be released from the current thread
      *                         to a connection pool
      * @throws SocketException when {@link SocketException} occurs
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final void untag(DatagramSocket socket) throws SocketException {
@@ -138,6 +154,8 @@ public abstract class SocketTagger {
      * Sets this process' socket tagger to {@code tagger}.
      *
      * @param tagger socket tagger to be assigned to this process
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static synchronized void set(SocketTagger tagger) {
@@ -151,6 +169,8 @@ public abstract class SocketTagger {
      * Returns this process socket tagger.
      *
      * @return {@link SocketTagger} assigned to this process
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)

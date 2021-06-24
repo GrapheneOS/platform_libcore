@@ -64,6 +64,8 @@ public final class UnixSocketAddress extends SocketAddress {
      *
      * @throws NullPointerException if {@code name} is null
      * @throws IllegalArgumentException if {@code name} is invalid, e.g. too long
+     *
+     * @hide
      */
     public static UnixSocketAddress createAbstract(String name) {
         byte[] nameBytes = name.getBytes(StandardCharsets.UTF_8);
@@ -81,6 +83,8 @@ public final class UnixSocketAddress extends SocketAddress {
      * @param pathname filename for named unix socket
      * @throws NullPointerException if {@code name} is {@code null}
      * @throws IllegalArgumentException if {@code name} is invalid, e.g. too long
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static UnixSocketAddress createFileSystem(String pathName) {
@@ -93,12 +97,18 @@ public final class UnixSocketAddress extends SocketAddress {
 
     /**
      * Creates an unnamed, filesystem AF_UNIX socket address.
+     *
+     * @hide
      */
     public static UnixSocketAddress createUnnamed() {
         return new UnixSocketAddress(UNNAMED_PATH);
     }
 
-    /** Used for testing. */
+    /**
+     * Used for testing.
+     *
+     * @hide
+     */
     public byte[] getSunPath() {
         if (sun_path.length == 0) {
             return sun_path;
@@ -108,6 +118,9 @@ public final class UnixSocketAddress extends SocketAddress {
         return sunPathCopy;
     }
 
+    /**
+     * @hide
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -121,11 +134,17 @@ public final class UnixSocketAddress extends SocketAddress {
         return Arrays.equals(sun_path, that.sun_path);
     }
 
+    /**
+     * @hide
+     */
     @Override
     public int hashCode() {
         return Arrays.hashCode(sun_path);
     }
 
+    /**
+     * @hide
+     */
     @Override
     public String toString() {
         return "UnixSocketAddress[" +

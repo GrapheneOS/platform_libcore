@@ -38,6 +38,8 @@ public class XmlObjectFactory {
      * using {@code XmlPullParserFactory.newInstance().newSerializer()}.
      *
      * @return platform default {@link XmlSerializer}
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull XmlSerializer newXmlSerializer() {
@@ -49,6 +51,8 @@ public class XmlObjectFactory {
      * using {@code XmlPullParserFactory.newInstance().newPullParser()}.
      *
      * @return platform default {@link XmlPullParser}
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull XmlPullParser newXmlPullParser() {
@@ -59,6 +63,8 @@ public class XmlObjectFactory {
      * Returns the plaform default {@link XMLReader}.
      *
      * @return plaform default {@link XMLReader}
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull XMLReader newXMLReader() {

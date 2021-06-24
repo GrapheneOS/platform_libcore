@@ -67,6 +67,8 @@ public @interface CovariantReturnType {
     /**
      * The return type of the synthetic method to generate. Must be a subclass of the return type
      * of the method being annotated.
+     *
+     * @hide
      */
     @CorePlatformApi
     Class<?> returnType();
@@ -74,6 +76,8 @@ public @interface CovariantReturnType {
     /**
      * The last Android API level not to have the generated synthetic method. The annotation can be
      * removed and the actual return type updated when support for this API level is dropped.
+     *
+     * @hide
      */
     @CorePlatformApi
     int presentAfter();
@@ -84,6 +88,7 @@ public @interface CovariantReturnType {
     @CorePlatformApi
     @interface CovariantReturnTypes {
         @CorePlatformApi
+        /** @hide */
         CovariantReturnType[] value();
     }
 }

@@ -29,15 +29,27 @@ import libcore.util.Objects;
  */
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class StructCapUserData {
-    /** Effective capability mask. */
+    /**
+     * Effective capability mask.
+     *
+     * @hide
+     */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final int effective; /* __u32 */
 
-    /** Permitted capability mask. */
+    /**
+     * Permitted capability mask.
+     *
+     * @hide
+     */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final int permitted; /* __u32 */
 
-    /** Inheritable capability mask. */
+    /**
+     * Inheritable capability mask.
+     *
+     * @hide
+     */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final int inheritable; /* __u32 */
 
@@ -47,6 +59,8 @@ public final class StructCapUserData {
      * @param effective   effective capability mask
      * @param permitted   permitted capability mask
      * @param inheritable inheritable capability mask
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public StructCapUserData(int effective, int permitted, int inheritable) {
@@ -55,6 +69,9 @@ public final class StructCapUserData {
         this.inheritable = inheritable;
     }
 
+    /**
+     * @hide
+     */
     @Override public String toString() {
         return Objects.toString(this);
     }

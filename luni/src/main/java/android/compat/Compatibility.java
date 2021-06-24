@@ -53,6 +53,8 @@ public final class Compatibility {
      * {@link #isChangeEnabled(long)} returns {@code true}.
      *
      * @param changeId The ID of the compatibility change taking effect.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @IntraCoreApi
@@ -74,6 +76,8 @@ public final class Compatibility {
      *
      * @param changeId The ID of the compatibility change in question.
      * @return {@code true} if the change is enabled for the current app.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @IntraCoreApi
@@ -89,6 +93,8 @@ public final class Compatibility {
      * Sets the behavior change delegate.
      *
      * All changes reported via the {@link Compatibility} class will be forwarded to this class.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void setBehaviorChangeDelegate(BehaviorChangeDelegate callbacks) {
@@ -97,6 +103,8 @@ public final class Compatibility {
 
     /**
      * Removes a behavior change delegate previously set via {@link #setBehaviorChangeDelegate}.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void clearBehaviorChangeDelegate() {
@@ -106,6 +114,8 @@ public final class Compatibility {
     /**
      * For use by tests only. Causes values from {@code overrides} to be returned instead of the
      * real value.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void setOverrides(ChangeConfig overrides) {
@@ -122,6 +132,8 @@ public final class Compatibility {
 
     /**
      * For use by tests only. Removes overrides set by {@link #setOverrides}.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void clearOverrides() {
@@ -137,11 +149,15 @@ public final class Compatibility {
      *
      * This is provided as a class rather than an interface to allow new methods to be added without
      * breaking @CorePlatformApi binary compatibility.
+     *
+     * @hide
      */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public interface BehaviorChangeDelegate {
         /**
          * Called when a change is reported via {@link Compatibility#reportUnconditionalChange}
+         *
+         * @hide
          */
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         default void onChangeReported(long changeId) {
@@ -151,6 +167,8 @@ public final class Compatibility {
 
         /**
          * Called when a change is queried via {@link Compatibility#isChangeEnabled}
+         *
+         * @hide
          */
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         default boolean isChangeEnabled(long changeId) {

@@ -52,6 +52,8 @@ public final class RuntimeHooks {
      * <p>Once set the supplier cannot be changed.
      *
      * @param zoneIdSupplier new {@link Supplier} of the time zone ID
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setTimeZoneIdSupplier(@NonNull Supplier<String> zoneIdSupplier) {
@@ -64,6 +66,8 @@ public final class RuntimeHooks {
 
     /**
      * Returns the {@link Supplier} that should be used to discover the time zone.
+     *
+     * @hide
      */
     public static Supplier<String> getTimeZoneIdSupplier() {
         return RuntimeHooks.zoneIdSupplier;
@@ -77,6 +81,8 @@ public final class RuntimeHooks {
      * {@link Thread#dispatchUncaughtException(Throwable)}.
      *
      * @param uncaughtExceptionHandler handler for uncaught exceptions
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setUncaughtExceptionPreHandler(

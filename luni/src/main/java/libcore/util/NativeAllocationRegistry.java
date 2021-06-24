@@ -77,6 +77,8 @@ public class NativeAllocationRegistry {
      *                     Approximate values are acceptable.
      * @return allocated {@link NativeAllocationRegistry}
      * @throws IllegalArgumentException If {@code size} is negative
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static NativeAllocationRegistry createNonmalloced(
@@ -105,6 +107,8 @@ public class NativeAllocationRegistry {
      *                     a few hundered KB, use the simplified overload below.
      * @return allocated {@link NativeAllocationRegistry}
      * @throws IllegalArgumentException If {@code size} is negative
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static NativeAllocationRegistry createMalloced(
@@ -122,6 +126,8 @@ public class NativeAllocationRegistry {
      *                     {@code void f(void* nativePtr)} used to free this
      *                     kind of native allocation
      * @return allocated {@link NativeAllocationRegistry}
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
@@ -193,6 +199,8 @@ public class NativeAllocationRegistry {
      *                     allocation, excluding memory allocated with system malloc.
      *                     A value of 0 indicates that the memory was allocated mainly
      *                     with malloc.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public NativeAllocationRegistry(@NonNull ClassLoader classLoader, long freeFunction, long size) {
@@ -230,6 +238,8 @@ public class NativeAllocationRegistry {
      *                           called with {@code nativePtr} as its
      *                           argument before the {@link OutOfMemoryError} is
      *                           thrown.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
@@ -322,6 +332,8 @@ public class NativeAllocationRegistry {
      * @param freeFunction address of a native function used to free this
      *                     kind of native allocation
      * @param nativePtr    pointer to pass to freeing function
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static native void applyFreeFunction(long freeFunction, long nativePtr);

@@ -57,6 +57,8 @@ public final class DdmServer {
      * @param type    int describing registered handler
      * @param handler handler to be registered
      * @throws NullPointerException if {@code handler} is {@code null}
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void registerHandler(int type, ChunkHandler handler) {
@@ -76,6 +78,8 @@ public final class DdmServer {
      * Unregister the existing handler for the specified type.
      *
      * Returns the old handler.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static ChunkHandler unregisterHandler(int type) {
@@ -87,6 +91,8 @@ public final class DdmServer {
     /**
      * The application must call here after it finishes registering
      * handlers.
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void registrationComplete() {
@@ -105,6 +111,8 @@ public final class DdmServer {
      * Use this for "unsolicited" chunks.
      *
      * @param chunk to send
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -119,6 +127,8 @@ public final class DdmServer {
 
     /*
      * Called by the VM when the DDM server connects or disconnects.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     private static void broadcast(int event)

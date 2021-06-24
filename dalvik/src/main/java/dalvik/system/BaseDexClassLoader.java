@@ -400,6 +400,8 @@ public class BaseDexClassLoader extends ClassLoader {
          *
          * @param contextsMap A map from dex file paths to the class loader context used to load
          *     each dex file.
+         *
+         * @hide
          */
         @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
         void report(@NonNull Map<String, String> contextsMap);

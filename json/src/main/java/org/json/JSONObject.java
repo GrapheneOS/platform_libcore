@@ -676,7 +676,7 @@ public class JSONObject {
      *
      * @return set of keys in this object
      *
-     * @hide.
+     * @hide
      */
     @UnsupportedAppUsage
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)

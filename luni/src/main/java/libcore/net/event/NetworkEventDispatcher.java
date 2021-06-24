@@ -37,6 +37,8 @@ public final class NetworkEventDispatcher {
    * Returns the shared {@link NetworkEventDispatcher} instance.
    *
    * @return singleton instance of {@link NetworkEventDispatcher}
+   *
+   * @hide
    */
   @UnsupportedAppUsage
   @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
@@ -51,6 +53,8 @@ public final class NetworkEventDispatcher {
   /**
    * Registers a listener to be notified when network events occur.
    * It can be deregistered using {@link #removeListener(NetworkEventListener)}
+   *
+   * @hide
    */
   @UnsupportedAppUsage
   public void addListener(NetworkEventListener toAdd) {
@@ -63,6 +67,8 @@ public final class NetworkEventDispatcher {
   /**
    * De-registers a listener previously added with {@link #addListener(NetworkEventListener)}. If
    * the listener was not previously registered this is a no-op.
+   *
+   * @hide
    */
   public void removeListener(NetworkEventListener toRemove) {
     for (NetworkEventListener listener : listeners) {
@@ -75,6 +81,8 @@ public final class NetworkEventDispatcher {
 
   /**
    * Notifies registered listeners of a network configuration change.
+   *
+   * @hide
    */
   @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
   public void dispatchNetworkConfigurationChange() {

@@ -52,26 +52,36 @@ public final class VmSocketAddress extends SocketAddress {
     private int svmCid;
 
     /**
-      * Creates a new instance of VmSocketAddress.
-      *
-      * @param svmPort      The svmPort field value,
-      *                     see {@link OsConstants.VMADDR_PORT_ANY}.
-      * @param svmCid       The svmCid field value,
-      *                     see OsConstants.VMADDR_CID_* for VMADDR_CID_* values.
-      */
+     * Creates a new instance of VmSocketAddress.
+     *
+     * @param svmPort      The svmPort field value,
+     *                     see {@link OsConstants.VMADDR_PORT_ANY}.
+     * @param svmCid       The svmCid field value,
+     *                     see OsConstants.VMADDR_CID_* for VMADDR_CID_* values.
+     *
+     * @hide
+     */
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public VmSocketAddress(int svmPort, int svmCid) {
         this.svmPort = svmPort;
         this.svmCid = svmCid;
     }
 
-    /** Returns the value of the svmPort field */
+    /**
+     * Returns the value of the svmPort field
+     *
+     * @hide
+     */
     @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public int getSvmPort() {
         return svmPort;
     }
 
-    /** Returns the value of the svmCid field */
+    /**
+     * Returns the value of the svmCid field
+     *
+     * @hide
+     */
     @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public int getSvmCid() {
         return svmCid;
