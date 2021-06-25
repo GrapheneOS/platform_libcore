@@ -31,17 +31,25 @@ import libcore.util.Objects;
  * See <a href="https://man7.org/linux/man-pages/man7/socket.7.html">socket(7)</a>
  * for linger struct description.
  *
- * @see {@link Os.getsockoptLinger(java.io.FileDescriptor, int, int)}.
- * @see {@link OsConstants.SO_LINGER}.
+ * @see Os#getsockoptLinger(java.io.FileDescriptor, int, int).
+ * @see OsConstants#SO_LINGER
  *
  * @hide
  */
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class StructLinger {
-    /** Whether or not linger is enabled. Non-zero is on. */
+    /**
+     * Whether or not linger is enabled. Non-zero is on.
+     *
+     * @hide
+     */
     public final int l_onoff;
 
-    /** Linger time in seconds. */
+    /**
+     * Linger time in seconds.
+     *
+     * @hide
+     */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final int l_linger;
 
@@ -50,6 +58,8 @@ public final class StructLinger {
      *
      * @param l_onoff  whether or not linger is enabled, non-zero is on
      * @param l_linger linger time, in seconds
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public StructLinger(int l_onoff, int l_linger) {
@@ -61,13 +71,19 @@ public final class StructLinger {
      * Returns whether linger is on or not.
      *
      * @return {@code true} if linger is enabled, and {@code false} otherwise
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public boolean isOn() {
         return l_onoff != 0;
     }
 
-    @Override public String toString() {
+    /**
+     * @hide
+     */
+    @Override
+    public String toString() {
         return Objects.toString(this);
     }
 }
