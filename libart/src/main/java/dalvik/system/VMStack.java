@@ -40,6 +40,8 @@ public final class VMStack {
      * @deprecated Use {@code ClassLoader.getClassLoader(sun.reflect.Reflection.getCallerClass())}.
      *         Note that that can return {@link BootClassLoader} on Android where the RI
      *         would have returned null.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @FastNative
@@ -51,6 +53,8 @@ public final class VMStack {
      *
      * @return the requested class, or {@code null}.
      * @deprecated Use {@link sun.reflect.Reflection#getCallerClass()}.
+     *
+     * @hide
      */
     @Deprecated
     public static Class<?> getStackClass1() {
@@ -61,6 +65,8 @@ public final class VMStack {
      * Returns the class of the caller's caller's caller.
      *
      * @return the requested class, or {@code null}.
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @FastNative
@@ -69,6 +75,8 @@ public final class VMStack {
     /**
      * Returns the first ClassLoader on the call stack that isn't the
      * bootstrap class loader.
+     *
+     * @hide
      */
     @FastNative
     public native static ClassLoader getClosestUserClassLoader();
@@ -80,6 +88,8 @@ public final class VMStack {
      *      thread of interest
      * @return an array of stack trace elements, or null if the thread
      *      doesn't have a stack trace (e.g. because it exited)
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @FastNative
@@ -92,6 +102,8 @@ public final class VMStack {
      *      thread of interest
      * @return an array of annotated stack frames, or null if the thread
      *      doesn't have a stack trace (e.g. because it exited)
+     *
+     * @hide
      */
     @libcore.api.CorePlatformApi
     @FastNative
@@ -108,6 +120,8 @@ public final class VMStack {
      *      preallocated array for use when only the top of stack is
      *      desired. Unused elements will be filled with null values.
      * @return the number of elements filled
+     *
+     * @hide
      */
     @UnsupportedAppUsage
     @FastNative
