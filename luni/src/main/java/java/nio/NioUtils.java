@@ -16,6 +16,9 @@
 
 package java.nio;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import java.io.Closeable;
@@ -32,6 +35,7 @@ import static android.system.OsConstants.O_WRONLY;
 /**
  * @hide internal use only
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class NioUtils {
     private NioUtils() {
@@ -45,6 +49,7 @@ public final class NioUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void freeDirectBuffer(ByteBuffer buffer) {
         if (buffer == null) {
@@ -92,6 +97,7 @@ public final class NioUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static byte[] unsafeArray(ByteBuffer b) {
         return b.array();
@@ -107,6 +113,7 @@ public final class NioUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int unsafeArrayOffset(ByteBuffer b) {
         return b.arrayOffset();

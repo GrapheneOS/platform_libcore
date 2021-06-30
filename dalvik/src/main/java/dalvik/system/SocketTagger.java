@@ -16,6 +16,9 @@
 
 package dalvik.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import java.io.FileDescriptor;
 import java.net.DatagramSocket;
@@ -27,6 +30,7 @@ import java.net.SocketException;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public abstract class SocketTagger {
 
@@ -39,6 +43,7 @@ public abstract class SocketTagger {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public SocketTagger() {
     }
@@ -53,6 +58,7 @@ public abstract class SocketTagger {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract void tag(FileDescriptor socketDescriptor) throws SocketException;
 
@@ -69,6 +75,7 @@ public abstract class SocketTagger {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract void untag(FileDescriptor socketDescriptor) throws SocketException;
 
@@ -83,6 +90,7 @@ public abstract class SocketTagger {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final void tag(Socket socket) throws SocketException {
         if (!socket.isClosed()) {
@@ -105,6 +113,7 @@ public abstract class SocketTagger {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final void untag(Socket socket) throws SocketException {
         if (!socket.isClosed()) {
@@ -122,6 +131,7 @@ public abstract class SocketTagger {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final void tag(DatagramSocket socket) throws SocketException {
         if (!socket.isClosed()) {
@@ -143,6 +153,7 @@ public abstract class SocketTagger {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public final void untag(DatagramSocket socket) throws SocketException {
         if (!socket.isClosed()) {
@@ -157,6 +168,7 @@ public abstract class SocketTagger {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static synchronized void set(SocketTagger tagger) {
         if (tagger == null) {
@@ -173,6 +185,7 @@ public abstract class SocketTagger {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static synchronized SocketTagger get() {
         return tagger;

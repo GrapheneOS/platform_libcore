@@ -16,6 +16,10 @@
 
 package dalvik.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import libcore.util.NonNull;
 import libcore.util.Nullable;
 
@@ -95,6 +99,7 @@ public class PathClassLoader extends BaseDexClassLoader {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public PathClassLoader(
             @NonNull String dexPath, @Nullable String librarySearchPath, @Nullable ClassLoader parent,

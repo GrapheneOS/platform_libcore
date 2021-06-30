@@ -16,6 +16,10 @@
 
 package android.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import libcore.util.Objects;
 
 /**
@@ -26,6 +30,7 @@ import libcore.util.Objects;
  * Capabilities defined in <a href="https://man7.org/linux/man-pages/man7/capabilities.7.html">capabilities(7)</a>
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class StructCapUserHeader {
     /**
@@ -55,6 +60,7 @@ public final class StructCapUserHeader {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public StructCapUserHeader(int version, int pid) {
         this.version = version;

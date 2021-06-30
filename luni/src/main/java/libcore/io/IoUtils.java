@@ -16,6 +16,9 @@
 
 package libcore.io;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.system.ErrnoException;
 import android.system.StructStat;
@@ -39,6 +42,7 @@ import static android.system.OsConstants.O_NONBLOCK;
 import static android.system.OsConstants.O_RDONLY;
 
 /** @hide */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class IoUtils {
     private IoUtils() {
@@ -60,6 +64,7 @@ public final class IoUtils {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int acquireRawFd(@NonNull FileDescriptor fd) {
         Objects.requireNonNull(fd);
@@ -145,6 +150,7 @@ public final class IoUtils {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setFdOwner(@NonNull FileDescriptor fd, @NonNull Object owner) {
         Objects.requireNonNull(fd);
@@ -172,6 +178,7 @@ public final class IoUtils {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void close(@Nullable FileDescriptor fd) throws IOException {
         IoBridge.closeAndSignalBlockedThreads(fd);
@@ -185,6 +192,7 @@ public final class IoUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void closeQuietly(@Nullable AutoCloseable closeable) {
         if (closeable != null) {
@@ -205,6 +213,7 @@ public final class IoUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void closeQuietly(@Nullable FileDescriptor fd) {
         try {
@@ -221,6 +230,7 @@ public final class IoUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void closeQuietly(@Nullable Socket socket) {
         if (socket != null) {
@@ -243,6 +253,7 @@ public final class IoUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setBlocking(@NonNull FileDescriptor fd, boolean blocking) throws IOException {
         try {
@@ -268,6 +279,7 @@ public final class IoUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull byte[] readFileAsByteArray(@NonNull String absolutePath) throws IOException {
         return new FileReader(absolutePath).readFully().toByteArray();
@@ -283,6 +295,7 @@ public final class IoUtils {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull String readFileAsString(@NonNull String absolutePath) throws IOException {
         return new FileReader(absolutePath).readFully().toString(StandardCharsets.UTF_8);
@@ -299,9 +312,7 @@ public final class IoUtils {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    @Deprecated
-    public static void deleteContents(File dir) throws IOException {
+    public static void deleteContents(@NonNull File dir) throws IOException {
         File[] files = dir.listFiles();
         if (files != null) {
             for (File file : files) {

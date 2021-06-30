@@ -16,6 +16,9 @@
 
 package dalvik.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import libcore.util.NonNull;
 import libcore.util.Nullable;
 
@@ -26,6 +29,7 @@ import libcore.util.Nullable;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class AnnotatedStackTraceElement {
     /**
@@ -56,6 +60,7 @@ public final class AnnotatedStackTraceElement {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @NonNull public StackTraceElement getStackTraceElement() {
         return stackTraceElement;
@@ -69,6 +74,7 @@ public final class AnnotatedStackTraceElement {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @Nullable public Object[] getHeldLocks() {
         return heldLocks;
@@ -83,6 +89,7 @@ public final class AnnotatedStackTraceElement {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @Nullable public Object getBlockedOn() {
         return blockedOn;

@@ -16,6 +16,9 @@
 
 package org.apache.harmony.dalvik.ddmc;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import java.util.Collection;
@@ -30,6 +33,7 @@ import dalvik.annotation.optimization.FastNative;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class DdmServer {
 
@@ -60,6 +64,7 @@ public final class DdmServer {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void registerHandler(int type, ChunkHandler handler) {
         if (handler == null) {
@@ -81,6 +86,7 @@ public final class DdmServer {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static ChunkHandler unregisterHandler(int type) {
         synchronized (mHandlerMap) {
@@ -94,6 +100,7 @@ public final class DdmServer {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void registrationComplete() {
         // sync on mHandlerMap because it's convenient and makes a kind of
@@ -115,6 +122,7 @@ public final class DdmServer {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void sendChunk(Chunk chunk) {
         nativeSendChunk(chunk.type, chunk.data, chunk.offset, chunk.length);

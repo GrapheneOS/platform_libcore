@@ -16,6 +16,10 @@
 
 package dalvik.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.function.Supplier;
@@ -32,6 +36,7 @@ import libcore.util.Nullable;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class RuntimeHooks {
 
@@ -55,6 +60,7 @@ public final class RuntimeHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setTimeZoneIdSupplier(@NonNull Supplier<String> zoneIdSupplier) {
         if (RuntimeHooks.zoneIdSupplier != null) {
@@ -84,6 +90,7 @@ public final class RuntimeHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setUncaughtExceptionPreHandler(
             @Nullable Thread.UncaughtExceptionHandler uncaughtExceptionHandler) {

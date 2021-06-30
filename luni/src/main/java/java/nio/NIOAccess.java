@@ -16,6 +16,10 @@
 
 package java.nio;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import android.compat.annotation.UnsupportedAppUsage;
 
 /**
@@ -24,6 +28,7 @@ import android.compat.annotation.UnsupportedAppUsage;
  * @hide
  */
 // @VisibleForTesting : was default
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class NIOAccess {
 
@@ -55,6 +60,7 @@ public final class NIOAccess {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Object getBaseArray(Buffer b) {
         return b.hasArray() ? b.array() : null;
@@ -73,6 +79,7 @@ public final class NIOAccess {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int getBaseArrayOffset(Buffer b) {
         return b.hasArray() ? ((b.arrayOffset() + b.position) << b._elementSizeShift) : 0;

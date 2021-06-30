@@ -15,6 +15,10 @@
  */
 package libcore.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import android.system.GaiException;
 import android.system.StructAddrinfo;
 import java.net.Inet4Address;
@@ -30,6 +34,7 @@ import static android.system.OsConstants.AI_NUMERICHOST;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class InetAddressUtils {
 
@@ -53,6 +58,7 @@ public class InetAddressUtils {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean isNumericAddress(String address) {
         return parseNumericAddressNoThrow(address) != null;
@@ -73,6 +79,7 @@ public class InetAddressUtils {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static InetAddress parseNumericAddress(String address) {
         InetAddress result = parseNumericAddressNoThrow(address);

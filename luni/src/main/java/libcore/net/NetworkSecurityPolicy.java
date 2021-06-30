@@ -16,6 +16,9 @@
 
 package libcore.net;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
 /**
@@ -31,6 +34,7 @@ import android.compat.annotation.UnsupportedAppUsage;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.IntraCoreApi
 public abstract class NetworkSecurityPolicy {
@@ -44,6 +48,7 @@ public abstract class NetworkSecurityPolicy {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public NetworkSecurityPolicy() {
@@ -56,6 +61,7 @@ public abstract class NetworkSecurityPolicy {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public static NetworkSecurityPolicy getInstance() {
@@ -69,6 +75,7 @@ public abstract class NetworkSecurityPolicy {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void setInstance(NetworkSecurityPolicy policy) {
         if (policy == null) {
@@ -101,6 +108,7 @@ public abstract class NetworkSecurityPolicy {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract boolean isCleartextTrafficPermitted();
 
@@ -116,6 +124,7 @@ public abstract class NetworkSecurityPolicy {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract boolean isCleartextTrafficPermitted(String hostname);
 
@@ -132,6 +141,7 @@ public abstract class NetworkSecurityPolicy {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @libcore.api.IntraCoreApi
     public abstract boolean isCertificateTransparencyVerificationRequired(String hostname);

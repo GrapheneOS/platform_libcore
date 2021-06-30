@@ -16,6 +16,8 @@
 
 package libcore.io;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
 import android.system.ErrnoException;
 import android.system.GaiException;
 import android.system.Int32Ref;
@@ -36,6 +38,7 @@ import android.system.StructTimeval;
 import android.system.StructUcred;
 import android.system.StructUtsname;
 
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import java.io.FileDescriptor;
 import java.io.InterruptedIOException;
@@ -55,6 +58,7 @@ import java.nio.ByteBuffer;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public interface Os {
 
@@ -785,6 +789,7 @@ public interface Os {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean compareAndSetDefault(Os expect, Os update) {
         return Libcore.compareAndSetOs(expect, update);
@@ -795,6 +800,7 @@ public interface Os {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Os getDefault() {
         return Libcore.getOs();

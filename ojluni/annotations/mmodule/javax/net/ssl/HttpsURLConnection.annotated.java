@@ -43,6 +43,7 @@ abstract public class HttpsURLConnection extends HttpURLConnection {
 
     public void setHostnameVerifier(javax.net.ssl.HostnameVerifier v) { throw new RuntimeException("Stub!"); }
 
+    @android.annotation.SystemApi(client = android.annotation.SystemApi.Client.MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static javax.net.ssl.HostnameVerifier getStrictHostnameVerifier() { throw new RuntimeException("Stub!"); }
 

@@ -16,6 +16,10 @@
 
 package libcore.net.http;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import libcore.api.CorePlatformApi;
 
 import java.io.IOException;
@@ -34,6 +38,7 @@ import libcore.util.NonNull;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
 public class HttpURLConnectionFactory {
     private final com.android.okhttp.internalandroidapi.HttpURLConnectionFactory mFactory;
@@ -43,6 +48,7 @@ public class HttpURLConnectionFactory {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     @NonNull public static HttpURLConnectionFactory createInstance() {
         return new HttpURLConnectionFactory();
@@ -62,6 +68,7 @@ public class HttpURLConnectionFactory {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public void setNewConnectionPool(int maxIdleConnections, long keepAliveDuration,
             @NonNull TimeUnit timeUnit) {
@@ -75,6 +82,7 @@ public class HttpURLConnectionFactory {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public void setDns(@NonNull Dns dns) {
         mFactory.setDns(dns);
@@ -93,6 +101,7 @@ public class HttpURLConnectionFactory {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public URLConnection openConnection(@NonNull URL url, @NonNull SocketFactory socketFactory,
             @NonNull Proxy proxy) throws IOException {
