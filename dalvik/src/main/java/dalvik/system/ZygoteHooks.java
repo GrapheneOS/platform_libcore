@@ -16,6 +16,10 @@
 
 package dalvik.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import libcore.icu.ICU;
 
 import java.io.File;
@@ -31,6 +35,7 @@ import java.lang.ReflectiveOperationException;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class ZygoteHooks {
     private static long token;
@@ -46,6 +51,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static native void startZygoteNoThreadCreation();
 
@@ -54,6 +60,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void onBeginPreload() {
         com.android.i18n.system.ZygoteHooks.onBeginPreload();
@@ -79,6 +86,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void onEndPreload() {
         com.android.i18n.system.ZygoteHooks.onEndPreload();
@@ -96,6 +104,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void gcAndFinalize() {
         final VMRuntime runtime = VMRuntime.getRuntime();
@@ -114,6 +123,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static native void stopZygoteNoThreadCreation();
 
@@ -126,6 +136,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void preFork() {
         Daemons.stop();
@@ -141,6 +152,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkSystemServer(int runtimeFlags) {
         nativePostForkSystemServer(runtimeFlags);
@@ -157,6 +169,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkChild(int runtimeFlags, boolean isSystemServer,
             boolean isChildZygote, String instructionSet) {
@@ -182,6 +195,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void postForkCommon() {
         // Notify the runtime before creating new threads.
@@ -199,6 +213,7 @@ public final class ZygoteHooks {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static boolean isIndefiniteThreadSuspensionSafe() {
         // TODO: Make this return true if we're done with JIT compilation.

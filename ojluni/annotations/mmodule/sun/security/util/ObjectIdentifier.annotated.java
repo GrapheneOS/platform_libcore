@@ -26,32 +26,40 @@
 
 package sun.security.util;
 
-import java.io.*;
-import java.math.BigInteger;
-
+@android.annotation.SystemApi(client = android.annotation.SystemApi.Client.MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 @libcore.api.Hide
 @SuppressWarnings({"unchecked", "deprecation", "all"})
 public final class ObjectIdentifier implements java.io.Serializable {
 
+@android.annotation.SystemApi(client = android.annotation.SystemApi.Client.MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+@libcore.api.Hide
 public ObjectIdentifier(java.lang.String oid) throws java.io.IOException { throw new RuntimeException("Stub!"); }
 
+@libcore.api.Hide
 public ObjectIdentifier(int[] values) throws java.io.IOException { throw new RuntimeException("Stub!"); }
 
-public ObjectIdentifier(sun.security.util.DerInputStream in) throws java.io.IOException { throw new RuntimeException("Stub!"); }
+@libcore.api.Hide
+public ObjectIdentifier(DerInputStream in) throws java.io.IOException { throw new RuntimeException("Stub!"); }
 
+@libcore.api.Hide
 public static sun.security.util.ObjectIdentifier newInternal(int[] values) { throw new RuntimeException("Stub!"); }
 
+@libcore.api.Hide
 @Deprecated
 public boolean equals(sun.security.util.ObjectIdentifier other) { throw new RuntimeException("Stub!"); }
 
+@libcore.api.Hide
 public boolean equals(java.lang.Object obj) { throw new RuntimeException("Stub!"); }
 
+@libcore.api.Hide
 public int hashCode() { throw new RuntimeException("Stub!"); }
 
+@libcore.api.Hide
 public int[] toIntArray() { throw new RuntimeException("Stub!"); }
 
+@libcore.api.Hide
 public java.lang.String toString() { throw new RuntimeException("Stub!"); }
 }
 

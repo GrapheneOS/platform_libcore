@@ -16,9 +16,14 @@
 
 package dalvik.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import dalvik.annotation.optimization.FastNative;
+
+import libcore.util.Nullable;
 
 /**
  * Provides a limited interface to the Dalvik VM stack. This class is mostly
@@ -26,7 +31,8 @@ import dalvik.annotation.optimization.FastNative;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+@SystemApi(client = MODULE_LIBRARIES)
 public final class VMStack {
 
     private VMStack() {
@@ -105,9 +111,10 @@ public final class VMStack {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    @SystemApi(client = MODULE_LIBRARIES)
     @FastNative
-    native public static AnnotatedStackTraceElement[]
+    native public static @Nullable AnnotatedStackTraceElement[]
             getAnnotatedThreadStackTrace(Thread t);
 
     /**

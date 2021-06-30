@@ -113,6 +113,57 @@ package android.system {
 
 }
 
+package com.android.okhttp.internalandroidapi {
+
+  public final class AndroidResponseCacheAdapter {
+    ctor public AndroidResponseCacheAdapter(@NonNull com.android.okhttp.internalandroidapi.HasCacheHolder.CacheHolder);
+    method public void close() throws java.io.IOException;
+    method public void delete() throws java.io.IOException;
+    method public void flush() throws java.io.IOException;
+    method @Nullable public java.net.CacheResponse get(@NonNull java.net.URI, @NonNull String, @Nullable java.util.Map<java.lang.String,java.util.List<java.lang.String>>) throws java.io.IOException;
+    method @NonNull public com.android.okhttp.internalandroidapi.HasCacheHolder.CacheHolder getCacheHolder();
+    method public int getHitCount();
+    method public long getMaxSize();
+    method public int getNetworkCount();
+    method public int getRequestCount();
+    method public long getSize() throws java.io.IOException;
+    method @Nullable public java.net.CacheRequest put(@NonNull java.net.URI, @NonNull java.net.URLConnection) throws java.io.IOException;
+  }
+
+  public interface HasCacheHolder {
+    method @NonNull public com.android.okhttp.internalandroidapi.HasCacheHolder.CacheHolder getCacheHolder();
+  }
+
+  public static final class HasCacheHolder.CacheHolder {
+    method @NonNull public static com.android.okhttp.internalandroidapi.HasCacheHolder.CacheHolder create(@NonNull java.io.File, long);
+    method public boolean isEquivalent(@NonNull java.io.File, long);
+  }
+
+}
+
+package dalvik.annotation.codegen {
+
+  @java.lang.annotation.Repeatable(CovariantReturnType.CovariantReturnTypes.class) @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) @java.lang.annotation.Target({java.lang.annotation.ElementType.METHOD}) public @interface CovariantReturnType {
+    method public abstract int presentAfter();
+    method public abstract Class<?> returnType();
+  }
+
+  @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) @java.lang.annotation.Target({java.lang.annotation.ElementType.METHOD}) public static @interface CovariantReturnType.CovariantReturnTypes {
+    method public abstract dalvik.annotation.codegen.CovariantReturnType[] value();
+  }
+
+}
+
+package dalvik.annotation.optimization {
+
+  @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) @java.lang.annotation.Target(java.lang.annotation.ElementType.METHOD) public @interface CriticalNative {
+  }
+
+  @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.CLASS) @java.lang.annotation.Target(java.lang.annotation.ElementType.METHOD) public @interface FastNative {
+  }
+
+}
+
 package dalvik.system {
 
   public final class AnnotatedStackTraceElement {
@@ -173,6 +224,10 @@ package dalvik.system {
     method public default void report(String);
   }
 
+  public final class DelegateLastClassLoader extends dalvik.system.PathClassLoader {
+    ctor public DelegateLastClassLoader(String, String, ClassLoader, ClassLoader[]);
+  }
+
   @Deprecated public final class DexFile {
     method @Deprecated @NonNull public static dalvik.system.DexFile.OptimizationInfo getDexFileOptimizationInfo(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
     method @Deprecated @Nullable public static String[] getDexFileOutputPaths(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
@@ -219,15 +274,15 @@ package dalvik.system {
     method public static void dumpHprofDataDdms();
     method public static void dumpReferenceTables();
     method public static int getAllocCount(int);
-    method public static int getLoadedClassCount();
+    method @dalvik.annotation.optimization.FastNative public static int getLoadedClassCount();
     method public static int getMethodTracingMode();
     method public static String getRuntimeStat(String);
     method public static java.util.Map<java.lang.String,java.lang.String> getRuntimeStats();
     method public static String[] getVmFeatureList();
-    method public static boolean isDebuggerConnected();
-    method public static boolean isDebuggingEnabled();
-    method public static long lastDebuggerActivity();
-    method public static void printLoadedClasses(int);
+    method @dalvik.annotation.optimization.FastNative public static boolean isDebuggerConnected();
+    method @dalvik.annotation.optimization.FastNative public static boolean isDebuggingEnabled();
+    method @dalvik.annotation.optimization.FastNative public static long lastDebuggerActivity();
+    method @dalvik.annotation.optimization.FastNative public static void printLoadedClasses(int);
     method public static void resetAllocCount(int);
     method public static void setAllocTrackerStackDepth(int);
     method public static void startAllocCounting();
@@ -236,7 +291,7 @@ package dalvik.system {
     method public static void startMethodTracingDdms(int, int, boolean, int);
     method public static void stopAllocCounting();
     method public static void stopMethodTracing();
-    method public static long threadCpuTimeNanos();
+    method @dalvik.annotation.optimization.FastNative public static long threadCpuTimeNanos();
     field public static final int KIND_ALL_COUNTS = -1; // 0xffffffff
     field public static final int KIND_GLOBAL_ALLOCATED_BYTES = 2; // 0x2
     field public static final int KIND_GLOBAL_ALLOCATED_OBJECTS = 1; // 0x1
@@ -252,7 +307,7 @@ package dalvik.system {
   }
 
   public final class VMRuntime {
-    method public long addressOf(Object);
+    method @dalvik.annotation.optimization.FastNative public long addressOf(Object);
     method public static void bootCompleted();
     method public void clampGrowthLimit();
     method public void clearGrowthLimit();
@@ -260,14 +315,14 @@ package dalvik.system {
     method public static String getInstructionSet(String);
     method public static dalvik.system.VMRuntime getRuntime();
     method public int getTargetSdkVersion();
-    method public boolean is64Bit();
+    method @dalvik.annotation.optimization.FastNative public boolean is64Bit();
     method public static boolean is64BitAbi(String);
     method public static boolean is64BitInstructionSet(String);
-    method public boolean isCheckJniEnabled();
-    method public boolean isNativeDebuggable();
+    method @dalvik.annotation.optimization.FastNative public boolean isCheckJniEnabled();
+    method @dalvik.annotation.optimization.FastNative public boolean isNativeDebuggable();
     method public static boolean isValidClassLoaderContext(String);
-    method public Object newNonMovableArray(Class<?>, int);
-    method public Object newUnpaddedArray(Class<?>, int);
+    method @dalvik.annotation.optimization.FastNative public Object newNonMovableArray(Class<?>, int);
+    method @dalvik.annotation.optimization.FastNative public Object newUnpaddedArray(Class<?>, int);
     method public void notifyStartupCompleted();
     method public void preloadDexCaches();
     method public static void registerAppInfo(String, String, String, String[], int);
@@ -302,6 +357,10 @@ package dalvik.system {
     field public static final int ACCESS_METHOD_LINKING = 3; // 0x3
     field public static final int ACCESS_METHOD_NONE = 0; // 0x0
     field public static final int ACCESS_METHOD_REFLECTION = 1; // 0x1
+  }
+
+  public final class VMStack {
+    method @Nullable @dalvik.annotation.optimization.FastNative public static dalvik.system.AnnotatedStackTraceElement[] getAnnotatedThreadStackTrace(Thread);
   }
 
   public final class ZygoteHooks {
@@ -364,6 +423,14 @@ package java.net {
     method @NonNull public static java.net.InetAddress getByNameOnNet(@Nullable String, int) throws java.net.UnknownHostException;
     method @Deprecated public static boolean isNumeric(String);
     method @Deprecated public static java.net.InetAddress parseNumericAddress(String);
+  }
+
+  public class InetSocketAddress extends java.net.SocketAddress {
+    ctor public InetSocketAddress();
+  }
+
+  public class ServerSocket implements java.io.Closeable {
+    method public java.net.SocketImpl getImpl() throws java.net.SocketException;
   }
 
   public class Socket implements java.io.Closeable {
@@ -437,6 +504,18 @@ package java.util.zip {
 
 }
 
+package javax.crypto {
+
+  public class Cipher {
+    method public javax.crypto.CipherSpi getCurrentSpi();
+  }
+
+  public class Mac implements java.lang.Cloneable {
+    method public javax.crypto.MacSpi getCurrentSpi();
+  }
+
+}
+
 package javax.net.ssl {
 
   public abstract class HttpsURLConnection extends java.net.HttpURLConnection {
@@ -477,6 +556,13 @@ package libcore.io {
     method public void rename(@Nullable String, @Nullable String) throws android.system.ErrnoException;
     method @Nullable public android.system.StructStat stat(@Nullable String) throws android.system.ErrnoException;
     method public void unlink(@Nullable String) throws android.system.ErrnoException;
+  }
+
+  public final class IoBridge {
+    method public static void closeAndSignalBlockedThreads(@NonNull java.io.FileDescriptor) throws java.io.IOException;
+    method @NonNull public static java.io.FileDescriptor open(@NonNull String, int) throws java.io.FileNotFoundException;
+    method public static int read(@NonNull java.io.FileDescriptor, @NonNull byte[], int, int) throws java.io.IOException;
+    method public static void write(@NonNull java.io.FileDescriptor, @NonNull byte[], int, int) throws java.io.IOException;
   }
 
   public final class IoUtils {
@@ -561,6 +647,16 @@ package libcore.net.http {
 }
 
 package libcore.util {
+
+  public final class EmptyArray {
+    field @NonNull public static final boolean[] BOOLEAN;
+    field @NonNull public static final byte[] BYTE;
+    field @NonNull public static final float[] FLOAT;
+    field @NonNull public static final int[] INT;
+    field @NonNull public static final long[] LONG;
+    field @NonNull public static final Object[] OBJECT;
+    field @NonNull public static final String[] STRING;
+  }
 
   public final class FP16 {
     method public static short ceil(short);
@@ -689,33 +785,33 @@ package sun.misc {
   public final class Unsafe {
     method public int arrayBaseOffset(Class);
     method public int arrayIndexScale(Class);
-    method public void copyMemory(long, long, long);
-    method public boolean getBoolean(Object, long);
-    method public byte getByte(Object, long);
-    method public byte getByte(long);
-    method public double getDouble(Object, long);
-    method public double getDouble(long);
-    method public float getFloat(Object, long);
-    method public float getFloat(long);
-    method public int getInt(Object, long);
-    method public int getInt(long);
-    method public long getLong(Object, long);
-    method public long getLong(long);
-    method public Object getObject(Object, long);
+    method @dalvik.annotation.optimization.FastNative public void copyMemory(long, long, long);
+    method @dalvik.annotation.optimization.FastNative public boolean getBoolean(Object, long);
+    method @dalvik.annotation.optimization.FastNative public byte getByte(Object, long);
+    method @dalvik.annotation.optimization.FastNative public byte getByte(long);
+    method @dalvik.annotation.optimization.FastNative public double getDouble(Object, long);
+    method @dalvik.annotation.optimization.FastNative public double getDouble(long);
+    method @dalvik.annotation.optimization.FastNative public float getFloat(Object, long);
+    method @dalvik.annotation.optimization.FastNative public float getFloat(long);
+    method @dalvik.annotation.optimization.FastNative public int getInt(Object, long);
+    method @dalvik.annotation.optimization.FastNative public int getInt(long);
+    method @dalvik.annotation.optimization.FastNative public long getLong(Object, long);
+    method @dalvik.annotation.optimization.FastNative public long getLong(long);
+    method @dalvik.annotation.optimization.FastNative public Object getObject(Object, long);
     method public static sun.misc.Unsafe getUnsafe();
     method public long objectFieldOffset(java.lang.reflect.Field);
-    method public void putBoolean(Object, long, boolean);
-    method public void putByte(Object, long, byte);
-    method public void putByte(long, byte);
-    method public void putDouble(Object, long, double);
-    method public void putDouble(long, double);
-    method public void putFloat(Object, long, float);
-    method public void putFloat(long, float);
-    method public void putInt(Object, long, int);
-    method public void putInt(long, int);
-    method public void putLong(Object, long, long);
-    method public void putLong(long, long);
-    method public void putObject(Object, long, Object);
+    method @dalvik.annotation.optimization.FastNative public void putBoolean(Object, long, boolean);
+    method @dalvik.annotation.optimization.FastNative public void putByte(Object, long, byte);
+    method @dalvik.annotation.optimization.FastNative public void putByte(long, byte);
+    method @dalvik.annotation.optimization.FastNative public void putDouble(Object, long, double);
+    method @dalvik.annotation.optimization.FastNative public void putDouble(long, double);
+    method @dalvik.annotation.optimization.FastNative public void putFloat(Object, long, float);
+    method @dalvik.annotation.optimization.FastNative public void putFloat(long, float);
+    method @dalvik.annotation.optimization.FastNative public void putInt(Object, long, int);
+    method @dalvik.annotation.optimization.FastNative public void putInt(long, int);
+    method @dalvik.annotation.optimization.FastNative public void putLong(Object, long, long);
+    method @dalvik.annotation.optimization.FastNative public void putLong(long, long);
+    method @dalvik.annotation.optimization.FastNative public void putObject(Object, long, Object);
   }
 
 }

@@ -16,6 +16,10 @@
 
 package android.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import java.net.SocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -29,6 +33,7 @@ import java.util.Arrays;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class UnixSocketAddress extends SocketAddress {
 
@@ -86,6 +91,7 @@ public final class UnixSocketAddress extends SocketAddress {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static UnixSocketAddress createFileSystem(String pathName) {
         byte[] pathNameBytes = pathName.getBytes(StandardCharsets.UTF_8);

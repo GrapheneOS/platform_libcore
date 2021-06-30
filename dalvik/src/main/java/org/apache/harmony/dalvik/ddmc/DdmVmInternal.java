@@ -16,14 +16,17 @@
 
 package org.apache.harmony.dalvik.ddmc;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
-import dalvik.annotation.optimization.FastNative;
 
 /**
  * Declarations for some VM-internal DDM stuff.
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class DdmVmInternal {
 
@@ -39,6 +42,7 @@ public final class DdmVmInternal {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     native public static void setThreadNotifyEnabled(boolean enabled);
 
@@ -69,6 +73,7 @@ public final class DdmVmInternal {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     native public static void setRecentAllocationsTrackingEnabled(boolean enabled);
 }

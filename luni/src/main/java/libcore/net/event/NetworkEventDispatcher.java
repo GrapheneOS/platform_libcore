@@ -16,6 +16,9 @@
 
 package libcore.net.event;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -25,6 +28,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class NetworkEventDispatcher {
 
@@ -41,6 +45,7 @@ public final class NetworkEventDispatcher {
    * @hide
    */
   @UnsupportedAppUsage
+  @SystemApi(client = MODULE_LIBRARIES)
   @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
   public static NetworkEventDispatcher getInstance() {
     return instance;
@@ -84,6 +89,7 @@ public final class NetworkEventDispatcher {
    *
    * @hide
    */
+  @SystemApi(client = MODULE_LIBRARIES)
   @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
   public void dispatchNetworkConfigurationChange() {
     for (NetworkEventListener listener : listeners) {

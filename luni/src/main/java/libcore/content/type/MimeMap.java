@@ -16,6 +16,10 @@
 
 package libcore.content.type;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,6 +38,7 @@ import libcore.util.Nullable;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
 public final class MimeMap {
 
@@ -46,6 +51,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static @NonNull Builder builder() {
         return new Builder();
@@ -61,6 +67,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public @NonNull Builder buildUpon() {
         return new Builder(mimeToExt, extToMime);
@@ -107,6 +114,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static @NonNull MimeMap getDefault() {
         return Objects.requireNonNull(instanceSupplier.get());
@@ -125,6 +133,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static void setDefaultSupplier(@NonNull Supplier<@NonNull MimeMap> mimeMapSupplier) {
         instanceSupplier = new MemoizingSupplier<>(Objects.requireNonNull(mimeMapSupplier));
@@ -139,6 +148,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final boolean hasExtension(@Nullable String extension) {
         return guessMimeTypeFromExtension(extension) != null;
@@ -154,6 +164,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final @Nullable String guessMimeTypeFromExtension(@Nullable String extension) {
         if (extension == null) {
@@ -172,6 +183,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final boolean hasMimeType(@Nullable String mimeType) {
         return guessExtensionFromMimeType(mimeType) != null;
@@ -187,6 +199,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public final @Nullable String guessExtensionFromMimeType(@Nullable String mimeType) {
         if (mimeType == null) {
@@ -205,6 +218,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public @NonNull Set<String> mimeTypes() {
         return Collections.unmodifiableSet(mimeToExt.keySet());
@@ -220,6 +234,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public @NonNull Set<String> extensions() {
         return Collections.unmodifiableSet(extToMime.keySet());
@@ -278,6 +293,7 @@ public final class MimeMap {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public static final class Builder {
         private final Map<String, String> mimeToExt;
@@ -382,6 +398,7 @@ public final class MimeMap {
          *
          * @hide
          */
+        @SystemApi(client = MODULE_LIBRARIES)
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         public @NonNull Builder addMimeMapping(@NonNull String mimeSpec, @NonNull List<@NonNull String> extensionSpecs)
         {
@@ -415,6 +432,7 @@ public final class MimeMap {
          *
          * @hide
          */
+        @SystemApi(client = MODULE_LIBRARIES)
         @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
         public @NonNull MimeMap build() {
             return new MimeMap(mimeToExt, extToMime);

@@ -16,6 +16,10 @@
 
 package libcore.util;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import com.android.org.kxml2.io.KXmlParser;
 import com.android.org.kxml2.io.KXmlSerializer;
 import org.apache.harmony.xml.ExpatReader;
@@ -28,6 +32,7 @@ import org.xmlpull.v1.XmlSerializer;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public class XmlObjectFactory {
 
@@ -41,6 +46,7 @@ public class XmlObjectFactory {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull XmlSerializer newXmlSerializer() {
         return new KXmlSerializer();
@@ -54,6 +60,7 @@ public class XmlObjectFactory {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull XmlPullParser newXmlPullParser() {
         return new KXmlParser();
@@ -66,6 +73,7 @@ public class XmlObjectFactory {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull XMLReader newXMLReader() {
         return new ExpatReader();

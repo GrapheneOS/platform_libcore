@@ -16,6 +16,9 @@
 
 package org.apache.harmony.dalvik.ddmc;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -28,6 +31,7 @@ import java.nio.ByteOrder;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public abstract class ChunkHandler {
 
@@ -37,6 +41,7 @@ public abstract class ChunkHandler {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static final ByteOrder CHUNK_ORDER = ByteOrder.BIG_ENDIAN;
 
@@ -50,6 +55,7 @@ public abstract class ChunkHandler {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public ChunkHandler() {}
 
@@ -59,6 +65,7 @@ public abstract class ChunkHandler {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract void onConnected();
 
@@ -68,6 +75,7 @@ public abstract class ChunkHandler {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract void onDisconnected();
 
@@ -82,6 +90,7 @@ public abstract class ChunkHandler {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public abstract Chunk handleChunk(Chunk request);
 
@@ -95,6 +104,7 @@ public abstract class ChunkHandler {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static Chunk createFailChunk(int errorCode, String msg) {
         if (msg == null)
@@ -120,6 +130,7 @@ public abstract class ChunkHandler {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static ByteBuffer wrapChunk(Chunk request) {
         ByteBuffer in;
@@ -134,6 +145,7 @@ public abstract class ChunkHandler {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int type(String typeName) {
         if (typeName.length() != 4) {
@@ -151,6 +163,7 @@ public abstract class ChunkHandler {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static String name(int type)
     {

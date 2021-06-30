@@ -16,6 +16,10 @@
 
 package android.system;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
+
 import java.net.SocketAddress;
 import libcore.api.CorePlatformApi;
 import libcore.util.Objects;
@@ -37,6 +41,7 @@ import libcore.util.Objects;
  * @see <a href="https://man7.org/linux/man-pages/man7/vsock.7.html">vsock(7)</a>
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
 public final class VmSocketAddress extends SocketAddress {
     /**
@@ -61,6 +66,7 @@ public final class VmSocketAddress extends SocketAddress {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public VmSocketAddress(int svmPort, int svmCid) {
         this.svmPort = svmPort;
@@ -72,6 +78,7 @@ public final class VmSocketAddress extends SocketAddress {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public int getSvmPort() {
         return svmPort;
@@ -82,6 +89,7 @@ public final class VmSocketAddress extends SocketAddress {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = CorePlatformApi.Status.STABLE)
     public int getSvmCid() {
         return svmCid;

@@ -16,6 +16,9 @@
 
 package org.json;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import java.util.ArrayList;
@@ -679,6 +682,7 @@ public class JSONObject {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     @NonNull public Set<@NonNull String> keySet() {
         return nameValuePairs.keySet();

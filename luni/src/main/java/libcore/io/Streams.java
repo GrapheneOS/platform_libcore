@@ -16,6 +16,9 @@
 
 package libcore.io;
 
+import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
+
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import java.io.ByteArrayOutputStream;
@@ -35,6 +38,7 @@ import libcore.util.Nullable;
  *
  * @hide
  */
+@SystemApi(client = MODULE_LIBRARIES)
 @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class Streams {
     private static AtomicReference<byte[]> skipBuffer = new AtomicReference<byte[]>();
@@ -53,6 +57,7 @@ public final class Streams {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int readSingleByte(@NonNull InputStream in) throws IOException {
         byte[] buffer = new byte[1];
@@ -72,6 +77,7 @@ public final class Streams {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void writeSingleByte(@NonNull OutputStream out, int b) throws IOException {
         byte[] buffer = new byte[1];
@@ -90,6 +96,7 @@ public final class Streams {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static void readFully(@NonNull InputStream in, @NonNull byte[] dst) throws IOException {
         readFully(in, dst, 0, dst.length);
@@ -135,6 +142,7 @@ public final class Streams {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull byte[] readFully(@NonNull InputStream in) throws IOException {
         try {
@@ -154,6 +162,7 @@ public final class Streams {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull byte[] readFullyNoClose(@NonNull InputStream in) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -174,6 +183,7 @@ public final class Streams {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static @NonNull String readFully(@NonNull Reader reader) throws IOException {
         try {
@@ -218,6 +228,7 @@ public final class Streams {
      *
      * @hide
      */
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static long skipByReading(@NonNull InputStream in, long byteCount) throws IOException {
         // acquire the shared skip buffer.
@@ -257,6 +268,7 @@ public final class Streams {
      * @hide
      */
     @UnsupportedAppUsage
+    @SystemApi(client = MODULE_LIBRARIES)
     @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
     public static int copy(@NonNull InputStream in, @NonNull OutputStream out) throws IOException {
         int total = 0;

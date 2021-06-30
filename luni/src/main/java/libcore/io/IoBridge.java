@@ -47,6 +47,8 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 
 import libcore.util.ArrayUtils;
+import libcore.util.NonNull;
+import libcore.util.Nullable;
 
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 import static android.system.OsConstants.*;
@@ -92,7 +94,8 @@ import static android.system.OsConstants.*;
  *
  * @hide
  */
-@libcore.api.CorePlatformApi
+@SystemApi(client = MODULE_LIBRARIES)
+@libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
 public final class IoBridge {
 
     private IoBridge() {
@@ -290,8 +293,9 @@ public final class IoBridge {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static void closeAndSignalBlockedThreads(FileDescriptor fd) throws IOException {
+    @SystemApi(client = MODULE_LIBRARIES)
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void closeAndSignalBlockedThreads(@NonNull FileDescriptor fd) throws IOException {
         if (fd == null) {
             return;
         }
@@ -549,13 +553,14 @@ public final class IoBridge {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static FileDescriptor open(String path, int flags) throws FileNotFoundException {
+    @SystemApi(client = MODULE_LIBRARIES)
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static @NonNull FileDescriptor open(@NonNull String path, int flags) throws FileNotFoundException {
         FileDescriptor fd = null;
         try {
             fd = Libcore.os.open(path, flags, 0666);
             // Posix open(2) fails with EISDIR only if you ask for write permission.
-            // Java disallows reading directories too.
+            // Java disallows reading directories too.f
             if (S_ISDIR(Libcore.os.fstat(fd).st_mode)) {
                 throw new ErrnoException("open", EISDIR);
             }
@@ -590,8 +595,9 @@ public final class IoBridge {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static int read(FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount) throws IOException {
+    @SystemApi(client = MODULE_LIBRARIES)
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static int read(@NonNull FileDescriptor fd, @NonNull byte[] bytes, int byteOffset, int byteCount) throws IOException {
         ArrayUtils.throwsIfOutOfBounds(bytes.length, byteOffset, byteCount);
         if (byteCount == 0) {
             return 0;
@@ -631,8 +637,9 @@ public final class IoBridge {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static void write(FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount) throws IOException {
+    @SystemApi(client = MODULE_LIBRARIES)
+    @libcore.api.CorePlatformApi(status = libcore.api.CorePlatformApi.Status.STABLE)
+    public static void write(@NonNull FileDescriptor fd,@NonNull  byte[] bytes, int byteOffset, int byteCount) throws IOException {
         ArrayUtils.throwsIfOutOfBounds(bytes.length, byteOffset, byteCount);
         if (byteCount == 0) {
             return;
@@ -672,8 +679,7 @@ public final class IoBridge {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static int sendto(FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount, int flags, InetAddress inetAddress, int port) throws IOException {
+    public static int sendto(@NonNull FileDescriptor fd, @NonNull byte[] bytes, int byteOffset, int byteCount, int flags, @Nullable InetAddress inetAddress, int port) throws IOException {
         boolean isDatagram = (inetAddress != null);
         if (!isDatagram && byteCount <= 0) {
             return 0;
@@ -743,8 +749,7 @@ public final class IoBridge {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static int recvfrom(boolean isRead, FileDescriptor fd, byte[] bytes, int byteOffset, int byteCount, int flags, DatagramPacket packet, boolean isConnected) throws IOException {
+    public static int recvfrom(boolean isRead, @NonNull FileDescriptor fd, @NonNull byte[] bytes, int byteOffset, int byteCount, int flags, @Nullable DatagramPacket packet, boolean isConnected) throws IOException {
         int result;
         try {
             InetSocketAddress srcAddress = packet != null ? new InetSocketAddress() : null;
@@ -832,8 +837,7 @@ public final class IoBridge {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static FileDescriptor socket(int domain, int type, int protocol) throws SocketException {
+    public static @NonNull FileDescriptor socket(int domain, int type, int protocol) throws SocketException {
         FileDescriptor fd;
         try {
             fd = Libcore.os.socket(domain, type, protocol);
@@ -880,8 +884,7 @@ public final class IoBridge {
      *
      * @hide
      */
-    @libcore.api.CorePlatformApi
-    public static InetSocketAddress getLocalInetSocketAddress(FileDescriptor fd)
+    public static @NonNull InetSocketAddress getLocalInetSocketAddress(@NonNull FileDescriptor fd)
             throws SocketException {
         try {
             SocketAddress socketAddress = Libcore.os.getsockname(fd);
