@@ -1056,6 +1056,43 @@ java_system_modules {
     ],
 }
 
+// A stubs target containing the parts of the public SDK & @SystemApi(MODULE_LIBRARIES) API
+// provided by the core library.
+//
+// Don't use this directly, use "sdk_version: module_current".
+java_library {
+    name: "core.module_lib.stubs",
+    static_libs: [
+        "art.module.public.api.stubs.module_lib",
+
+        // Replace the following with the module-lib correspondence when Conscrypt or i18N module
+        // provides @SystemApi(MODULE_LIBRARIES). Currently, assume that only ART module provides
+        // @SystemApi(MODULE_LIBRARIES).
+        "conscrypt.module.public.api.stubs",
+        "i18n.module.public.api.stubs",
+    ],
+    sdk_version: "none",
+    system_modules: "none",
+    visibility: ["//visibility:private"],
+}
+
+// Used when compiling higher-level code with sdk_version "module_current"
+java_system_modules {
+    name: "core-module-lib-stubs-system-modules",
+    libs: [
+        "core.module_lib.stubs",
+        // This one is not on device but it's needed when javac compiles code
+        // containing lambdas.
+        "core-lambda-stubs-for-system-modules",
+        // This one is not on device but it's needed when javac compiles code
+        // containing @Generated annotations produced by some code generation
+        // tools.
+        // See http://b/123891440.
+        "core-generated-annotation-stubs",
+    ],
+    visibility: ["//visibility:public"],
+}
+
 // Target for validating nullability annotations for correctness and
 // completeness. To check that there are no nullability errors:
 //   m art-module-public-api-stubs-nullability-validation
