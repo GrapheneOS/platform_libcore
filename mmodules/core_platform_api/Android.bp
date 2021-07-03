@@ -41,133 +41,6 @@ package {
     default_applicable_licenses: ["libcore_license"],
 }
 
-java_defaults {
-    name: "art-module-platform-api-defaults",
-    srcs: [
-        ":art_module_api_files",
-    ],
-    api_only: true,
-    droiddoc_options: [
-        "--hide HiddenSuperclass",
-        "--hide-annotation libcore.api.Hide",
-        "--skip-annotation-instance-methods=false",
-        "--force-convert-to-warning-nullability-annotations +*:-android.*:+android.icu.*:-dalvik.* ",
-    ],
-    merge_inclusion_annotations_dirs: ["ojluni-annotated-mmodule-stubs"],
-
-    // Emit nullability annotations from the source to the stub files.
-    annotations_enabled: true,
-
-    merge_annotations_dirs: [
-        "metalava-manual",
-        "ojluni-annotated-sdk-stubs",
-    ],
-
-    sdk_version: "none",
-    system_modules: "none",
-    patch_module: "java.base",
-    dist_group: "android",
-    unsafe_ignore_missing_latest_api: true,
-}
-
-// Referenced implicitly from legacy.art.module.platform.api.
-filegroup {
-    name: "legacy.art.module.platform.api.api.public.latest",
-    srcs: [
-        "api/legacy_platform/last-api.txt",
-    ],
-}
-
-// Referenced implicitly from legacy.art.module.platform.api.
-filegroup {
-    name: "legacy.art.module.platform.api-removed.api.public.latest",
-    srcs: [
-        "api/legacy_platform/last-removed.txt",
-    ],
-}
-
-// Referenced implicitly from legacy.art.module.platform.api.
-filegroup {
-    name: "legacy.art.module.platform.api-incompatibilities.api.public.latest",
-    srcs: [
-        "api/legacy_platform/last-incompatibilities.txt",
-    ],
-}
-
-java_sdk_library {
-    name: "legacy.art.module.platform.api",
-    defaults: ["art-module-platform-api-defaults"],
-    api_dir: "api/legacy_platform",
-    droiddoc_options: [
-        "--show-single-annotation libcore.api.CorePlatformApi",
-    ],
-
-    // Make dex jars for the stubs available for use by hiddenapi processing.
-    compile_dex: true,
-    dist_stem: "art-coreplatform-legacy",
-}
-
-// Referenced implicitly from stable.art.module.platform.api.
-filegroup {
-    name: "stable.art.module.platform.api.api.public.latest",
-    srcs: [
-        "api/stable_platform/last-api.txt",
-    ],
-}
-
-// Referenced implicitly from stable.art.module.platform.api.
-filegroup {
-    name: "stable.art.module.platform.api-removed.api.public.latest",
-    srcs: [
-        "api/stable_platform/last-removed.txt",
-    ],
-}
-
-// Referenced implicitly from stable.art.module.platform.api.
-filegroup {
-    name: "stable.art.module.platform.api-incompatibilities.api.public.latest",
-    srcs: [
-        "api/stable_platform/last-incompatibilities.txt",
-    ],
-}
-
-java_sdk_library {
-    name: "stable.art.module.platform.api",
-    defaults: ["art-module-platform-api-defaults"],
-    api_dir: "api/stable_platform",
-    droiddoc_options: [
-        "--show-single-annotation libcore.api.CorePlatformApi\\(status=libcore.api.CorePlatformApi.Status.STABLE\\)",
-    ],
-    dist_stem: "art-coreplatform-stable",
-}
-
-// Used when compiling higher-level code against *.core.platform.api.stubs.
-java_system_modules {
-    name: "legacy-art-module-platform-api-stubs-system-modules",
-    visibility: [
-        "//art/build/sdk",
-        "//external/conscrypt",
-        "//external/icu/android_icu4j",
-        "//external/wycheproof",
-    ],
-    libs: [
-        "legacy.art.module.platform.api.stubs",
-    ],
-}
-
-java_system_modules {
-    name: "stable-art-module-platform-api-stubs-system-modules",
-    visibility: [
-        "//art/build/sdk",
-        "//external/conscrypt",
-        "//external/icu/android_icu4j",
-        "//external/wycheproof",
-    ],
-    libs: [
-        "stable.art.module.platform.api.stubs",
-    ],
-}
-
 // Ideally this should be a restricted allowlist but there are hundreds of modules that depend on
 // this.
 // TODO(http://b/134561230) - limit the number of dependents on this.
@@ -188,7 +61,7 @@ java_library {
     sdk_version: "none",
     system_modules: "none",
     static_libs: [
-        "legacy.art.module.platform.api.stubs",
+        "art.module.public.api.stubs.module_lib",
         "conscrypt.module.platform.api.stubs",
         "legacy.i18n.module.platform.api.stubs",
     ],
@@ -204,7 +77,7 @@ java_library {
     sdk_version: "none",
     system_modules: "none",
     static_libs: [
-        "stable.art.module.platform.api.stubs",
+        "art.module.public.api.stubs.module_lib",
         // conscrypt only has a stable version, so it is okay to depend on it here:
         "conscrypt.module.platform.api.stubs",
         "stable.i18n.module.platform.api.stubs",

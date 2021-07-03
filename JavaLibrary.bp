@@ -883,6 +883,7 @@ java_sdk_library {
     name: "art.module.public.api",
     visibility: [
         "//art/build/sdk",
+        "//libcore/mmodules/core_platform_api",
         "//frameworks/base",
         "//frameworks/base/api",
     ],
@@ -994,6 +995,22 @@ java_system_modules {
         // annotations are not themselves part of the public API provided by
         // this module they are used in the stubs.
         "stub-annotations",
+    ],
+}
+
+// Used when compiling higher-level code against art.module.public.api.stubs.module_lib.
+//
+// This is only intended for use within core libraries and must not be used
+// from outside.
+java_system_modules {
+    name: "art-module-lib-api-stubs-system-modules",
+    visibility: [
+        "//art/build/sdk",
+        "//external/conscrypt",
+        "//external/icu/android_icu4j",
+    ],
+    libs: [
+        "art.module.public.api.stubs.module_lib",
     ],
 }
 
