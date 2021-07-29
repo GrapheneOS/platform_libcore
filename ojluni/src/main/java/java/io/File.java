@@ -26,6 +26,10 @@
 
 package java.io;
 
+import android.annotation.SystemApi;
+
+import libcore.api.CorePlatformApi;
+
 import java.net.URI;
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -35,6 +39,9 @@ import java.util.ArrayList;
 import java.security.AccessController;
 import java.nio.file.Path;
 import java.nio.file.FileSystems;
+import java.util.function.Consumer;
+import java.util.function.ToLongFunction;
+
 import sun.security.action.GetPropertyAction;
 
 // Android-added: Info about UTF-8 usage in filenames.
@@ -160,6 +167,22 @@ public class File
      * The FileSystem object representing the platform's local file system.
      */
     private static final FileSystem fs = DefaultFileSystem.getFileSystem();
+
+    /**
+     * File#lastModified() hook for GmsCompat
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
+    public static ToLongFunction<File> lastModifiedHook;
+
+    /**
+     * File#mkdirs() hook for GmsCompat
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
+    public static Consumer<File> mkdirsFailedHook;
 
     /**
      * This abstract pathname's normalized pathname string. A normalized
@@ -934,7 +957,14 @@ public class File
         if (isInvalid()) {
             return 0L;
         }
-        return fs.getLastModifiedTime(this);
+        long res = fs.getLastModifiedTime(this);
+        if (res == 0L) {
+            ToLongFunction<File> hook = lastModifiedHook;
+            if (hook != null) {
+                res = hook.applyAsLong(this);
+            }
+        }
+        return res;
     }
 
     /**
@@ -1358,8 +1388,16 @@ public class File
         }
 
         File parent = canonFile.getParentFile();
-        return (parent != null && (parent.mkdirs() || parent.exists()) &&
+        boolean res = (parent != null && (parent.mkdirs() || parent.exists()) &&
                 canonFile.mkdir());
+
+        if (!res) {
+            Consumer<File> hook = mkdirsFailedHook;
+            if (hook != null) {
+                hook.accept(this);
+            }
+        }
+        return res;
     }
 
     // Android-changed: Replaced generic platform info with Android specific one.
