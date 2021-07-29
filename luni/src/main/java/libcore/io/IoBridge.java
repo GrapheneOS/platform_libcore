@@ -557,7 +557,16 @@ public final class IoBridge {
     public static @NonNull FileDescriptor open(@NonNull String path, int flags) throws FileNotFoundException {
         FileDescriptor fd = null;
         try {
-            fd = Libcore.os.open(path, flags, 0666);
+            String gmscompatPrefix = "gmscompat_fd_";
+            if (path.startsWith(gmscompatPrefix)) {
+                int fdInt = Integer.parseInt(path.substring(gmscompatPrefix.length()));
+                FileDescriptor jfd = new FileDescriptor();
+                jfd.setInt$(fdInt);
+                fd = Os.getDefault().dup(jfd);
+            }
+            if (fd == null) {
+                fd = Libcore.os.open(path, flags, 0666);
+            }
             // Posix open(2) fails with EISDIR only if you ask for write permission.
             // Java disallows reading directories too.f
             if (S_ISDIR(Libcore.os.fstat(fd).st_mode)) {

@@ -252,7 +252,16 @@ Java_java_io_UnixFileSystem_getLastModifiedTime0(JNIEnv *env, jobject this,
 
     WITH_FIELD_PLATFORM_STRING(env, file, ids.path, path) {
         struct stat64 sb;
-        if (stat64(path, &sb) == 0) {
+        int ret;
+        int gmscompat_fd;
+        if (strncmp("/gmscompat_fd_", path, strlen("/gmscompat_fd_")) == 0
+                && sscanf(path, "/gmscompat_fd_%d", &gmscompat_fd) == 1) {
+            ret = fstat64(gmscompat_fd, &sb);
+        } else {
+            ret = stat64(path, &sb);
+        }
+
+        if (ret == 0) {
 #if defined(_AIX)
             rv =  (jlong)sb.st_mtime * 1000;
             rv += (jlong)sb.st_mtime_n / 1000000;
