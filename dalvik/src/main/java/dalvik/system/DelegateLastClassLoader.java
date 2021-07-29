@@ -25,6 +25,7 @@ import sun.misc.CompoundEnumeration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.function.BiFunction;
 
 import libcore.util.NonNull;
 import libcore.util.Nullable;
@@ -42,6 +43,13 @@ import libcore.util.Nullable;
  * </ul>
  */
 public final class DelegateLastClassLoader extends PathClassLoader {
+
+    /**
+     * Pre-constructor librarySearchPath hook for GmsCompat
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    public static BiFunction<String, Boolean, String> modifyClassLoaderPathHook;
 
     /**
      * Whether resource loading delegates to the parent class loader. True by default.
@@ -103,7 +111,10 @@ public final class DelegateLastClassLoader extends PathClassLoader {
 
     public DelegateLastClassLoader(@NonNull String dexPath, @Nullable String librarySearchPath,
             @Nullable ClassLoader parent, boolean delegateResourceLoading) {
-        super(dexPath, librarySearchPath, parent);
+        super(
+            maybeModifyClassLoaderPath(dexPath, Boolean.FALSE),
+            maybeModifyClassLoaderPath(librarySearchPath, Boolean.TRUE),
+            parent);
         this.delegateResourceLoading = delegateResourceLoading;
     }
 
@@ -175,6 +186,15 @@ public final class DelegateLastClassLoader extends PathClassLoader {
         super(dexPath, librarySearchPath, parent, sharedLibraryLoaders, sharedLibraryLoadersAfter);
         // Delegating is the default behavior.
         this.delegateResourceLoading = true;
+    }
+
+    private static String maybeModifyClassLoaderPath(String path, Boolean nativeLibsPath) {
+        BiFunction<String, Boolean, String> hook = modifyClassLoaderPathHook;
+        return hook == null ?
+                path :
+                // replace file paths of GMS Dynamite modules with "/gmscompat_fd_%d" file descriptor
+                // references
+                hook.apply(path, nativeLibsPath);
     }
 
     @Override
