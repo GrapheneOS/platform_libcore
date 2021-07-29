@@ -109,7 +109,12 @@ ZipFile_open(JNIEnv *env, jclass cls, jstring name,
                 goto finally;
             }
 #else
-            zfd = JVM_Open(path, flag, 0);
+            if (!strncmp("/proc/self/fd/", path, strlen("/proc/self/fd/")) &&
+                    sscanf(path, "/proc/self/fd/%d", &zfd) == 1) {
+                zfd = dup(zfd);
+            } else {
+                zfd = JVM_Open(path, flag, 0);
+            }
             if (zfd < 0) {
                 throwFileNotFoundException(env, name);
                 goto finally;
