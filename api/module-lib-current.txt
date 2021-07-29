@@ -221,6 +221,7 @@ package dalvik.system {
   public final class DelegateLastClassLoader extends dalvik.system.PathClassLoader {
     ctor public DelegateLastClassLoader(String, String, ClassLoader, ClassLoader[]);
     ctor public DelegateLastClassLoader(String, String, ClassLoader, ClassLoader[], ClassLoader[]);
+    field public static java.util.function.BiFunction<java.lang.String,java.lang.Boolean,java.lang.String> modifyClassLoaderPathHook;
   }
 
   public final class DexFile {
@@ -380,6 +381,11 @@ package dalvik.system {
 }
 
 package java.io {
+
+  public class File implements java.lang.Comparable<java.io.File> java.io.Serializable {
+    field public static java.util.function.ToLongFunction<java.io.File> lastModifiedHook;
+    field public static java.util.function.Consumer<java.io.File> mkdirsFailedHook;
+  }
 
   public final class FileDescriptor {
     method public int getInt$();
