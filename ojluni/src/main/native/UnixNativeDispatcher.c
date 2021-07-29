@@ -23,6 +23,7 @@
  * questions.
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -484,6 +485,17 @@ static void prepAttributes(JNIEnv* env, struct stat64* buf, jobject attrs) {
 #endif
 }
 
+static bool interceptGmsCompatFdStat(JNIEnv* env, jclass this, const char* path, jobject attrs) {
+    int fd;
+    if (strncmp("/gmscompat_fd_", path, strlen("/gmscompat_fd_")) == 0
+            && sscanf(path, "/gmscompat_fd_%d", &fd) == 1) {
+        Java_sun_nio_fs_UnixNativeDispatcher_fstat(env, this, fd, attrs);
+        return true;
+    }
+
+    return false;
+}
+
 JNIEXPORT void JNICALL
 Java_sun_nio_fs_UnixNativeDispatcher_stat0(JNIEnv* env, jclass this,
     jlong pathAddress, jobject attrs)
@@ -491,6 +503,10 @@ Java_sun_nio_fs_UnixNativeDispatcher_stat0(JNIEnv* env, jclass this,
     int err;
     struct stat64 buf;
     const char* path = (const char*)jlong_to_ptr(pathAddress);
+
+    if (interceptGmsCompatFdStat(env, this, path, attrs)) {
+        return;
+    }
 
     RESTARTABLE(stat64(path, &buf), err);
     if (err == -1) {
@@ -521,6 +537,10 @@ Java_sun_nio_fs_UnixNativeDispatcher_lstat0(JNIEnv* env, jclass this,
     int err;
     struct stat64 buf;
     const char* path = (const char*)jlong_to_ptr(pathAddress);
+
+    if (interceptGmsCompatFdStat(env, this, path, attrs)) {
+        return;
+    }
 
     RESTARTABLE(lstat64(path, &buf), err);
     if (err == -1) {
