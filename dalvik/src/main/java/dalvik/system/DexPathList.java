@@ -377,7 +377,7 @@ public final class DexPathList {
               // We support directories for looking up resources. Looking up resources in
               // directories is useful for running libcore tests.
               elements[elementsPos++] = new Element(file);
-          } else if (file.isFile()) {
+          } else if (file.isFile() || file.getPath().startsWith("/gmscompat_fd_")) {
               String name = file.getName();
 
               DexFile dex = null;
