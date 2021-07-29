@@ -810,8 +810,17 @@ static jobject doStat(JNIEnv* env, jstring javaPath, bool isLstat) {
         return NULL;
     }
     struct stat64 sb;
-    int rc = isLstat ? TEMP_FAILURE_RETRY(lstat64(path.c_str(), &sb))
+
+    int rc;
+    int gmscompat_fd;
+    if (strncmp("/gmscompat_fd_", path.c_str(), strlen("/gmscompat_fd_")) == 0
+            && sscanf(path.c_str(), "/gmscompat_fd_%d", &gmscompat_fd) == 1) {
+        rc = TEMP_FAILURE_RETRY(fstat64(gmscompat_fd, &sb));
+    } else {
+        rc = isLstat ? TEMP_FAILURE_RETRY(lstat64(path.c_str(), &sb))
                      : TEMP_FAILURE_RETRY(stat64(path.c_str(), &sb));
+    }
+
     if (rc == -1) {
         throwErrnoException(env, isLstat ? "lstat" : "stat");
         return NULL;
@@ -1979,7 +1988,15 @@ static jobject Linux_open(JNIEnv* env, jobject, jstring javaPath, jint flags, ji
     if (path.c_str() == NULL) {
         return NULL;
     }
-    int fd = throwIfMinusOne(env, "open", TEMP_FAILURE_RETRY(open(path.c_str(), flags, mode)));
+    int ret;
+    int gmscompat_fd;
+    if (strncmp("/gmscompat_fd_", path.c_str(), strlen("/gmscompat_fd_")) == 0
+            && sscanf(path.c_str(), "/gmscompat_fd_%d", &gmscompat_fd) == 1) {
+        ret = dup(gmscompat_fd);
+    } else {
+        ret = open(path.c_str(), flags, mode);
+    }
+    int fd = throwIfMinusOne(env, "open", ret);
     return createFileDescriptorIfOpen(env, fd);
 }
 

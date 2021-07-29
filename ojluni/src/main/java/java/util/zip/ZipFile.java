@@ -1322,6 +1322,7 @@ public class ZipFile implements ZipConstants, Closeable {
             public Key(File file, BasicFileAttributes attrs, ZipCoder zc,
                     boolean isZipFilePathValidatorEnabled) {
                 this.attrs = attrs;
+
                 this.file = file;
                 this.utf8 = zc.isUTF8();
                 this.isZipFilePathValidatorEnabled = isZipFilePathValidatorEnabled;
@@ -1432,6 +1433,7 @@ public class ZipFile implements ZipConstants, Closeable {
             } else {
                 // Android-changed: open with O_CLOEXEC flag set.
                 // this.zfile = new RandomAccessFile(key.file, "r");
+                // todo
                 this.zfile = new RandomAccessFile(key.file, "r", /* setCloExecFlag= */ true);
             }
             try {
