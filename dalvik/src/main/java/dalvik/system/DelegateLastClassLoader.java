@@ -25,7 +25,9 @@ import sun.misc.CompoundEnumeration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.function.Function;
 
+import libcore.api.CorePlatformApi;
 import libcore.util.NonNull;
 import libcore.util.Nullable;
 
@@ -42,6 +44,14 @@ import libcore.util.Nullable;
  * </ul>
  */
 public final class DelegateLastClassLoader extends PathClassLoader {
+
+    /**
+     * Pre-constructor librarySearchPath hook for GmsCompat
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
+    public static volatile Function<String, String> librarySearchPathHook;
 
     /**
      * Whether resource loading delegates to the parent class loader. True by default.
@@ -103,7 +113,7 @@ public final class DelegateLastClassLoader extends PathClassLoader {
 
     public DelegateLastClassLoader(@NonNull String dexPath, @Nullable String librarySearchPath,
             @Nullable ClassLoader parent, boolean delegateResourceLoading) {
-        super(dexPath, librarySearchPath, parent);
+        super(dexPath, filterLibrarySearchPath(librarySearchPath), parent);
         this.delegateResourceLoading = delegateResourceLoading;
     }
 
@@ -140,6 +150,12 @@ public final class DelegateLastClassLoader extends PathClassLoader {
         super(dexPath, librarySearchPath, parent, sharedLibraryLoaders);
         // Delegating is the default behavior.
         this.delegateResourceLoading = true;
+    }
+
+    private static String filterLibrarySearchPath(String librarySearchPath) {
+        return librarySearchPathHook == null ?
+                librarySearchPath :
+                librarySearchPathHook.apply(librarySearchPath);
     }
 
     @Override
