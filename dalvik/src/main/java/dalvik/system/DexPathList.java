@@ -33,6 +33,9 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+
+import libcore.api.CorePlatformApi;
 import libcore.io.ClassPathURLStreamHandler;
 import libcore.io.IoUtils;
 import libcore.io.Libcore;
@@ -54,9 +57,17 @@ import static android.system.OsConstants.S_ISDIR;
  *
  * @hide
  */
+@CorePlatformApi
 public final class DexPathList {
     private static final String DEX_SUFFIX = ".dex";
     private static final String zipSeparator = "!/";
+
+    /**
+     * Post-constructor hook for GmsCompat
+     * @hide
+     */
+    @CorePlatformApi
+    public static volatile Function<DexPathList, ByteBuffer[]> postConstructorBufferHook;
 
     /** class definition context */
     @UnsupportedAppUsage
@@ -186,6 +197,18 @@ public final class DexPathList {
                 suppressedExceptions.toArray(new IOException[suppressedExceptions.size()]);
         } else {
             dexElementsSuppressedExceptions = null;
+        }
+
+        runGmsCompatHook();
+    }
+
+    private void runGmsCompatHook() {
+        if (postConstructorBufferHook != null) {
+            ByteBuffer[] buffers = postConstructorBufferHook.apply(this);
+            if (buffers != null) {
+                dexElements = null;
+                initByteBufferDexPath(buffers);
+            }
         }
     }
 
