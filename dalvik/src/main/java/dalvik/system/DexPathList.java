@@ -16,6 +16,7 @@
 
 package dalvik.system;
 
+import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.system.ErrnoException;
 import android.system.StructStat;
@@ -33,6 +34,9 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
+
+import libcore.api.CorePlatformApi;
 import libcore.io.ClassPathURLStreamHandler;
 import libcore.io.IoUtils;
 import libcore.io.Libcore;
@@ -54,9 +58,19 @@ import static android.system.OsConstants.S_ISDIR;
  *
  * @hide
  */
+@SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+@CorePlatformApi(status = CorePlatformApi.Status.STABLE)
 public final class DexPathList {
     private static final String DEX_SUFFIX = ".dex";
     private static final String zipSeparator = "!/";
+
+    /**
+     * Post-constructor hook for GmsCompat
+     * @hide
+     */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
+    @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
+    public static volatile Function<DexPathList, ByteBuffer[]> postConstructorBufferHook;
 
     /** class definition context */
     @UnsupportedAppUsage
@@ -186,6 +200,18 @@ public final class DexPathList {
                 suppressedExceptions.toArray(new IOException[suppressedExceptions.size()]);
         } else {
             dexElementsSuppressedExceptions = null;
+        }
+
+        runGmsCompatHook();
+    }
+
+    private void runGmsCompatHook() {
+        if (postConstructorBufferHook != null) {
+            ByteBuffer[] buffers = postConstructorBufferHook.apply(this);
+            if (buffers != null) {
+                dexElements = null;
+                initByteBufferDexPath(buffers);
+            }
         }
     }
 
@@ -332,6 +358,7 @@ public final class DexPathList {
     }
 
     // This method is not used anymore. Kept around only because there are many legacy users of it.
+    /** @hide */
     @SuppressWarnings("unused")
     @UnsupportedAppUsage
     public static Element[] makeInMemoryDexElements(ByteBuffer[] dexFiles,
