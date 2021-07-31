@@ -226,6 +226,7 @@ package dalvik.system {
 
   public final class DelegateLastClassLoader extends dalvik.system.PathClassLoader {
     ctor public DelegateLastClassLoader(String, String, ClassLoader, ClassLoader[]);
+    field public static volatile java.util.function.Function<java.lang.String,java.lang.String> librarySearchPathHook;
   }
 
   @Deprecated public final class DexFile {
@@ -242,6 +243,20 @@ package dalvik.system {
   @Deprecated public static final class DexFile.OptimizationInfo {
     method @Deprecated @NonNull public String getReason();
     method @Deprecated @NonNull public String getStatus();
+  }
+
+  public final class DexPathList {
+    ctor public DexPathList(ClassLoader, String);
+    ctor public DexPathList(ClassLoader, String, String, java.io.File);
+    method public void addDexPath(String, java.io.File);
+    method public void addDexPath(String, java.io.File, boolean);
+    method public void addNativePath(java.util.Collection<java.lang.String>);
+    method public Class<?> findClass(String, java.util.List<java.lang.Throwable>);
+    method public String findLibrary(String);
+    method public java.net.URL findResource(String);
+    method public java.util.Enumeration<java.net.URL> findResources(String);
+    method public java.util.List<java.io.File> getNativeLibraryDirectories();
+    field public static volatile java.util.function.Function<dalvik.system.DexPathList,java.nio.ByteBuffer[]> postConstructorBufferHook;
   }
 
   public class PathClassLoader extends dalvik.system.BaseDexClassLoader {
@@ -379,6 +394,10 @@ package dalvik.system {
 }
 
 package java.io {
+
+  public class File implements java.lang.Comparable<java.io.File> java.io.Serializable {
+    field public static volatile java.util.function.Function<java.io.File,java.lang.Long> lastModifiedHook;
+  }
 
   public final class FileDescriptor {
     method public int getInt$();
