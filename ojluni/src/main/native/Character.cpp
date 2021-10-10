@@ -158,7 +158,7 @@ Character_getNameImpl(JNIEnv* env, jclass, jint codePoint) {
     return (U_FAILURE(status) || byteCount == 0) ? NULL : env->NewStringUTF(buf);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   FAST_NATIVE_METHOD(Character, digitImpl, "(II)I"),
   FAST_NATIVE_METHOD(Character, getDirectionalityImpl, "(I)B"),
   NATIVE_METHOD(Character, getNameImpl, "(I)Ljava/lang/String;"),
