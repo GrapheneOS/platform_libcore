@@ -66,11 +66,13 @@ public final class ZygoteHooks {
      */
     @SystemApi(client = MODULE_LIBRARIES)
     public static void onBeginPreload(boolean fullPreload) {
-        com.android.i18n.system.ZygoteHooks.onBeginPreload();
+        if (fullPreload) {
+            com.android.i18n.system.ZygoteHooks.onBeginPreload();
 
-        ICU.initializeCacheInZygote();
-        DecimalFormatData.initializeCacheInZygote();
-        SimpleDateFormatData.initializeCacheInZygote();
+            ICU.initializeCacheInZygote();
+            DecimalFormatData.initializeCacheInZygote();
+            SimpleDateFormatData.initializeCacheInZygote();
+        }
 
         // Look up JaCoCo on the boot classpath, if it exists. This will be used later for enabling
         // memory-mapped Java coverage.
@@ -103,7 +105,9 @@ public final class ZygoteHooks {
      */
     @SystemApi(client = MODULE_LIBRARIES)
     public static void onEndPreload(boolean fullPreload) {
-        com.android.i18n.system.ZygoteHooks.onEndPreload();
+        if (fullPreload) {
+            com.android.i18n.system.ZygoteHooks.onEndPreload();
+        }
 
         // Clone standard descriptors as originals closed / rebound during zygote post fork.
         FileDescriptor.in.cloneForFork();
