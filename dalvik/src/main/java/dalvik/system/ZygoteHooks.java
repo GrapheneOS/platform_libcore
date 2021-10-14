@@ -72,12 +72,14 @@ public final class ZygoteHooks {
      */
     @SystemApi(client = MODULE_LIBRARIES)
     public static void onBeginPreload(boolean fullPreload) {
-        com.android.i18n.system.ZygoteHooks.onBeginPreload();
+        if (fullPreload) {
+            com.android.i18n.system.ZygoteHooks.onBeginPreload();
 
-        ICU.initializeCacheInZygote();
-        DecimalFormatData.initializeCacheInZygote();
-        SimpleDateFormatData.initializeCacheInZygote();
-        Collator.getInstance();
+            ICU.initializeCacheInZygote();
+            DecimalFormatData.initializeCacheInZygote();
+            SimpleDateFormatData.initializeCacheInZygote();
+            Collator.getInstance();
+        }
 
         // Look up JaCoCo on the boot classpath, if it exists. This will be used later for enabling
         // memory-mapped Java coverage.
@@ -110,37 +112,39 @@ public final class ZygoteHooks {
      */
     @SystemApi(client = MODULE_LIBRARIES)
     public static void onEndPreload(boolean fullPreload) {
-        // TODO(b/395108129): Switch to individual modules profile for preloading HttpEngine for
-        // devices from S -> V. This should be a cleaner way to do preloading without having the
-        // code live in libcore.
-        // This should not exist here but there's no other place to preload HttpEngine for devices
-        // predating Android B.
-        // SdkExtensionLevel 16 is where `preload` API was introduced to HttpEngine.
-        // Explicitly avoid calling this for B+ as it will be called in the ZygoteInit code.
-        if (VMRuntime.getSdkExtensionSLevel() >= 16
-                && VMRuntime.getSdkVersion() <= VersionCodes.VANILLA_ICE_CREAM) {
-            try {
-                // Reflection is used here because libcore must not depend explicitly on
-                // the connectivity module as this will create a cyclic dependency in the build
-                // graph. It's fine to call this method via reflection as it's a single static
-                // method.
-                Class.forName("android.net.http.HttpEngine").getMethod("preload").invoke(null);
-            } catch (ClassNotFoundException
-                    | NoSuchMethodException
-                    | IllegalAccessException
-                    | InvocationTargetException e) {
-                // ClassNotFoundException, NoSuchMethodException and IllegalAccessException should
-                // in theory never be thrown as we'll make sure that the method exists in the
-                // specified class and it's accessible always. Still, we swallow the exception as we
-                // don't want to crash the device on this. InvocationTargetException
-                // will be thrown as preloading HttpEngine more than once throws an exception.
-                // And this should never happen but at the moment, this will keep happening as
-                // HttpEngine is being preloaded twice from B+ path and this code path.
-                // This should go away once the SdkVersion gets bumped and the codepaths become
-                // disjoint.
+        if (fullPreload) {
+            // TODO(b/395108129): Switch to individual modules profile for preloading HttpEngine for
+            // devices from S -> V. This should be a cleaner way to do preloading without having the
+            // code live in libcore.
+            // This should not exist here but there's no other place to preload HttpEngine for devices
+            // predating Android B.
+            // SdkExtensionLevel 16 is where `preload` API was introduced to HttpEngine.
+            // Explicitly avoid calling this for B+ as it will be called in the ZygoteInit code.
+            if (VMRuntime.getSdkExtensionSLevel() >= 16
+                    && VMRuntime.getSdkVersion() <= VersionCodes.VANILLA_ICE_CREAM) {
+                try {
+                    // Reflection is used here because libcore must not depend explicitly on
+                    // the connectivity module as this will create a cyclic dependency in the build
+                    // graph. It's fine to call this method via reflection as it's a single static
+                    // method.
+                    Class.forName("android.net.http.HttpEngine").getMethod("preload").invoke(null);
+                } catch (ClassNotFoundException
+                         | NoSuchMethodException
+                         | IllegalAccessException
+                         | InvocationTargetException e) {
+                    // ClassNotFoundException, NoSuchMethodException and IllegalAccessException should
+                    // in theory never be thrown as we'll make sure that the method exists in the
+                    // specified class and it's accessible always. Still, we swallow the exception as we
+                    // don't want to crash the device on this. InvocationTargetException
+                    // will be thrown as preloading HttpEngine more than once throws an exception.
+                    // And this should never happen but at the moment, this will keep happening as
+                    // HttpEngine is being preloaded twice from B+ path and this code path.
+                    // This should go away once the SdkVersion gets bumped and the codepaths become
+                    // disjoint.
+                }
             }
+            com.android.i18n.system.ZygoteHooks.onEndPreload();
         }
-        com.android.i18n.system.ZygoteHooks.onEndPreload();
 
         // Clone standard descriptors as originals closed / rebound during zygote post fork.
         FileDescriptor.in.cloneForFork();
