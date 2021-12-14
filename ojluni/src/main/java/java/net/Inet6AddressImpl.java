@@ -147,7 +147,9 @@ class Inet6AddressImpl implements InetAddressImpl {
             if (gaiException.getCause() instanceof ErrnoException) {
                 int errno = ((ErrnoException) gaiException.getCause()).errno;
                 if (errno == EACCES || errno == EPERM) {
-                    throw new SecurityException("Permission denied (missing INTERNET permission?)", gaiException);
+                    /* throw new SecurityException("Permission denied (missing INTERNET permission?)", gaiException); */
+                    // some apps misbehave after receiving a SecurityException,
+                    // fallthrough to UnknownHostException instead
                 }
             }
             // Otherwise, throw an UnknownHostException.
