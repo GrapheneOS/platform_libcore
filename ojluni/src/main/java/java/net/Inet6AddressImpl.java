@@ -141,16 +141,7 @@ class Inet6AddressImpl implements InetAddressImpl {
             addressCache.put(host, netId, addresses);
             return addresses;
         } catch (GaiException gaiException) {
-            // If the failure appears to have been a lack of INTERNET permission, throw a clear
-            // SecurityException to aid in debugging this common mistake.
-            // http://code.google.com/p/android/issues/detail?id=15722
-            if (gaiException.getCause() instanceof ErrnoException) {
-                int errno = ((ErrnoException) gaiException.getCause()).errno;
-                if (errno == EACCES || errno == EPERM) {
-                    throw new SecurityException("Permission denied (missing INTERNET permission?)", gaiException);
-                }
-            }
-            // Otherwise, throw an UnknownHostException.
+            // Throw an UnknownHostException.
             String detailMessage = "Unable to resolve host \"" + host + "\": " + Libcore.os.gai_strerror(gaiException.error);
             addressCache.putUnknownHost(host, netId, detailMessage);
             throw gaiException.rethrowAsUnknownHostException(detailMessage);
