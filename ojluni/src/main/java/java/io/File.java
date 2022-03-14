@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.security.AccessController;
 import java.nio.file.Path;
 import java.nio.file.FileSystems;
-import java.util.function.Function;
+import java.util.function.ToLongFunction;
 
 import sun.security.action.GetPropertyAction;
 
@@ -173,7 +173,7 @@ public class File
      */
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-    public static volatile Function<File, Long> lastModifiedHook;
+    public static ToLongFunction<File> lastModifiedHook;
 
     /**
      * This abstract pathname's normalized pathname string. A normalized
@@ -948,13 +948,14 @@ public class File
         if (isInvalid()) {
             return 0L;
         }
-        if (lastModifiedHook != null) {
-            Long lastModified = lastModifiedHook.apply(this);
-            if (lastModified != null) {
-                return lastModified;
+        long res = fs.getLastModifiedTime(this);
+        if (res == 0L) {
+            ToLongFunction<File> hook = lastModifiedHook;
+            if (hook != null) {
+                res = hook.applyAsLong(this);
             }
         }
-        return fs.getLastModifiedTime(this);
+        return res;
     }
 
     /**
