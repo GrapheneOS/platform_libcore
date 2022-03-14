@@ -25,7 +25,7 @@ import sun.misc.CompoundEnumeration;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import libcore.api.CorePlatformApi;
 import libcore.util.NonNull;
@@ -51,7 +51,7 @@ public final class DelegateLastClassLoader extends PathClassLoader {
      */
     @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     @CorePlatformApi(status = CorePlatformApi.Status.STABLE)
-    public static volatile Function<String, String> librarySearchPathHook;
+    public static BiFunction<String, Boolean, String> modifyClassLoaderPathHook;
 
     /**
      * Whether resource loading delegates to the parent class loader. True by default.
@@ -113,7 +113,10 @@ public final class DelegateLastClassLoader extends PathClassLoader {
 
     public DelegateLastClassLoader(@NonNull String dexPath, @Nullable String librarySearchPath,
             @Nullable ClassLoader parent, boolean delegateResourceLoading) {
-        super(dexPath, filterLibrarySearchPath(librarySearchPath), parent);
+        super(
+            maybeModifyClassLoaderPath(dexPath, Boolean.FALSE),
+            maybeModifyClassLoaderPath(librarySearchPath, Boolean.TRUE),
+            parent);
         this.delegateResourceLoading = delegateResourceLoading;
     }
 
@@ -152,10 +155,13 @@ public final class DelegateLastClassLoader extends PathClassLoader {
         this.delegateResourceLoading = true;
     }
 
-    private static String filterLibrarySearchPath(String librarySearchPath) {
-        return librarySearchPathHook == null ?
-                librarySearchPath :
-                librarySearchPathHook.apply(librarySearchPath);
+    private static String maybeModifyClassLoaderPath(String path, Boolean nativeLibsPath) {
+        BiFunction<String, Boolean, String> hook = modifyClassLoaderPathHook;
+        return hook == null ?
+                path :
+                // replace file paths of GMS Dynamite modules with "/proc/self/fd" file descriptor
+                // references
+                hook.apply(path, nativeLibsPath);
     }
 
     @Override
