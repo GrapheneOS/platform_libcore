@@ -245,20 +245,6 @@ package dalvik.system {
     method @Deprecated @NonNull public String getStatus();
   }
 
-  public final class DexPathList {
-    ctor public DexPathList(ClassLoader, String);
-    ctor public DexPathList(ClassLoader, String, String, java.io.File);
-    method public void addDexPath(String, java.io.File);
-    method public void addDexPath(String, java.io.File, boolean);
-    method public void addNativePath(java.util.Collection<java.lang.String>);
-    method public Class<?> findClass(String, java.util.List<java.lang.Throwable>);
-    method public String findLibrary(String);
-    method public java.net.URL findResource(String);
-    method public java.util.Enumeration<java.net.URL> findResources(String);
-    method public java.util.List<java.io.File> getNativeLibraryDirectories();
-    field public static volatile java.util.function.Function<dalvik.system.DexPathList,java.nio.ByteBuffer[]> postConstructorBufferHook;
-  }
-
   public class PathClassLoader extends dalvik.system.BaseDexClassLoader {
     ctor public PathClassLoader(@NonNull String, @Nullable String, @Nullable ClassLoader, @Nullable ClassLoader[]);
   }
