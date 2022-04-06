@@ -80,13 +80,13 @@ public class Transformers {
          * @param target the method handle to invoke
          * @param stackFrame the stack frame containing arguments for the invocation
          */
-        protected void invokeFromTransform(MethodHandle target, EmulatedStackFrame stackFrame)
-                throws Throwable {
+        protected static void invokeFromTransform(MethodHandle target,
+                                                  EmulatedStackFrame stackFrame) throws Throwable {
             if (target instanceof Transformer) {
                 ((Transformer) target).transform(stackFrame);
             } else {
                 final MethodHandle adaptedTarget = target.asType(stackFrame.getMethodType());
-                adaptedTarget.invokeExact(stackFrame);
+                adaptedTarget.invokeExactWithFrame(stackFrame);
             }
         }
 
@@ -96,12 +96,12 @@ public class Transformers {
          * @param target the method handle to invoke
          * @param stackFrame the stack frame containing arguments for the invocation
          */
-        protected void invokeExactFromTransform(MethodHandle target, EmulatedStackFrame stackFrame)
-                throws Throwable {
+        protected void invokeExactFromTransform(MethodHandle target,
+                                                EmulatedStackFrame stackFrame) throws Throwable {
             if (target instanceof Transformer) {
                 ((Transformer) target).transform(stackFrame);
             } else {
-                target.invokeExact(stackFrame);
+                target.invokeExactWithFrame(stackFrame);
             }
         }
     }

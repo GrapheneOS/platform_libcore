@@ -1582,6 +1582,15 @@ assertEquals("[three, thee, tee]", asListFix.invoke((Object)argv).toString());
     }
 
     /**
+     * Entry back into the runtime to dispatch a MethodHandle with a specific EmulatedStackFrame
+     * containing the arguments to provide.
+     * @param arguments the stack frame holding arguments for the invocation.
+     * @hide
+     */
+    /* package-private */ native void invokeExactWithFrame(EmulatedStackFrame arguments)
+            throws Throwable;
+
+    /**
      * Creates a copy of this method handle, copying all relevant data.
      *
      * @hide

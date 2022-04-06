@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2018, 2019, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,7 +23,7 @@
 package test.java.nio.channels.Selector;
 
 /* @test
- * @bug 8199433
+ * @bug 8199433 8208780
  * @run testng SelectWithConsumer
  * @summary Unit test for Selector select(Consumer), select(Consumer,long) and
  *          selectNow(Consumer)
@@ -63,9 +63,19 @@ public class SelectWithConsumer {
         int interestOps = key.interestOps();
         AtomicInteger notifiedOps = new AtomicInteger();
 
+        if (expectedOps == 0) {
+            // ensure select(Consumer) does not block indefinitely
+            sel.wakeup();
+        } else {
+            // ensure that the channel is ready for all expected operations
+            sel.select();
+            while ((key.readyOps() & interestOps) != expectedOps) {
+                Thread.sleep(100);
+                sel.select();
+            }
+        }
+
         // select(Consumer)
-        if (expectedOps == 0)
-            sel.wakeup(); // ensure select does not block
         notifiedOps.set(0);
         int n = sel.select(k -> {
             assertTrue(Thread.currentThread() == callerThread);
@@ -188,19 +198,21 @@ public class SelectWithConsumer {
             // write to sink to ensure that the source is readable
             sink.write(messageBuffer());
 
-            AtomicInteger counter = new AtomicInteger();
+            // wait for key1 to be readable
+            sel.select();
+            assertTrue(key2.isWritable());
+            while (!key1.isReadable()) {
+                Thread.sleep(20);
+                sel.select();
+            }
+
+            var counter = new AtomicInteger();
 
             // select(Consumer)
             counter.set(0);
             int n = sel.select(k -> {
+                assertTrue(k == key1 || k == key2);
                 counter.incrementAndGet();
-                if (k == key1) {
-                    assertTrue(k.isReadable());
-                } else if (k == key2) {
-                    assertTrue(k.isWritable());
-                } else {
-                    assertTrue(false);
-                }
             });
             assertTrue(n == 2);
             assertTrue(counter.get() == 2);
@@ -208,14 +220,8 @@ public class SelectWithConsumer {
             // select(Consumer, timeout)
             counter.set(0);
             n = sel.select(k -> {
+                assertTrue(k == key1 || k == key2);
                 counter.incrementAndGet();
-                if (k == key1) {
-                    assertTrue(k.isReadable());
-                } else if (k == key2) {
-                    assertTrue(k.isWritable());
-                } else {
-                    assertTrue(false);
-                }
             }, 1000);
             assertTrue(n == 2);
             assertTrue(counter.get() == 2);
@@ -223,14 +229,8 @@ public class SelectWithConsumer {
             // selectNow(Consumer)
             counter.set(0);
             n = sel.selectNow(k -> {
+                assertTrue(k == key1 || k == key2);
                 counter.incrementAndGet();
-                if (k == key1) {
-                    assertTrue(k.isReadable());
-                } else if (k == key2) {
-                    assertTrue(k.isWritable());
-                } else {
-                    assertTrue(false);
-                }
             });
             assertTrue(n == 2);
             assertTrue(counter.get() == 2);

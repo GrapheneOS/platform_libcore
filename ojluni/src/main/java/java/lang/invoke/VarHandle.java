@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014, 2017, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2014, 2018, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -41,7 +41,7 @@ import java.util.Objects;
  * non-static fields, array elements, or components of an off-heap data
  * structure.  Access to such variables is supported under various
  * <em>access modes</em>, including plain read/write access, volatile
- * read/write access, and compare-and-swap.
+ * read/write access, and compare-and-set.
  *
  * <p>VarHandles are immutable and have no visible state.  VarHandles cannot be
  * subclassed by the user.
@@ -96,7 +96,7 @@ import java.util.Objects;
  * is {@code String}.  The access mode type for {@code compareAndSet} on this
  * VarHandle instance would be
  * {@code (String[] c1, int c2, String expectedValue, String newValue)boolean}.
- * Such a VarHandle instance may produced by the
+ * Such a VarHandle instance may be produced by the
  * {@link MethodHandles#arrayElementVarHandle(Class) array factory method} and
  * access array elements as follows:
  * <pre> {@code
@@ -200,7 +200,7 @@ import java.util.Objects;
  * and {@code double} on 32-bit platforms.
  *
  * <p>Access modes will override any memory ordering effects specified at
- * the declaration site of a variable.  For example, a VarHandle accessing a
+ * the declaration site of a variable.  For example, a VarHandle accessing
  * a field using the {@code get} access mode will access the field as
  * specified <em>by its access mode</em> even if that field is declared
  * {@code volatile}.  When mixed access is performed extreme care should be
@@ -418,7 +418,7 @@ import java.util.Objects;
  * {@link java.lang.invoke.MethodHandles#varHandleInvoker}.
  *
  * <h1>Interoperation between VarHandles and Java generics</h1>
- * A VarHandle can be obtained for a variable, such as a a field, which is
+ * A VarHandle can be obtained for a variable, such as a field, which is
  * declared with Java generic types.  As with the Core Reflection API, the
  * VarHandle's variable type will be constructed from the erasure of the
  * source-level type.  When a VarHandle access mode method is invoked, the
@@ -1543,7 +1543,7 @@ public abstract class VarHandle {
     enum AccessType {
         GET,
         SET,
-        COMPARE_AND_SWAP,
+        COMPARE_AND_SET,
         COMPARE_AND_EXCHANGE,
         GET_AND_UPDATE,
         // Android-added: Finer grained access types.
@@ -1565,7 +1565,7 @@ public abstract class VarHandle {
                     i = fillParameters(ps, receiver, intermediate);
                     ps[i] = value;
                     return MethodType.methodType(void.class, ps);
-                case COMPARE_AND_SWAP:
+                case COMPARE_AND_SET:
                     ps = allocateParameters(2, receiver, intermediate);
                     i = fillParameters(ps, receiver, intermediate);
                     ps[i++] = value;
@@ -1664,7 +1664,7 @@ public abstract class VarHandle {
          * method
          * {@link VarHandle#compareAndSet VarHandle.compareAndSet}
          */
-        COMPARE_AND_SET("compareAndSet", AccessType.COMPARE_AND_SWAP),
+        COMPARE_AND_SET("compareAndSet", AccessType.COMPARE_AND_SET),
         /**
          * The access mode whose access is specified by the corresponding
          * method
@@ -1688,25 +1688,25 @@ public abstract class VarHandle {
          * method
          * {@link VarHandle#weakCompareAndSetPlain VarHandle.weakCompareAndSetPlain}
          */
-        WEAK_COMPARE_AND_SET_PLAIN("weakCompareAndSetPlain", AccessType.COMPARE_AND_SWAP),
+        WEAK_COMPARE_AND_SET_PLAIN("weakCompareAndSetPlain", AccessType.COMPARE_AND_SET),
         /**
          * The access mode whose access is specified by the corresponding
          * method
          * {@link VarHandle#weakCompareAndSet VarHandle.weakCompareAndSet}
          */
-        WEAK_COMPARE_AND_SET("weakCompareAndSet", AccessType.COMPARE_AND_SWAP),
+        WEAK_COMPARE_AND_SET("weakCompareAndSet", AccessType.COMPARE_AND_SET),
         /**
          * The access mode whose access is specified by the corresponding
          * method
          * {@link VarHandle#weakCompareAndSetAcquire VarHandle.weakCompareAndSetAcquire}
          */
-        WEAK_COMPARE_AND_SET_ACQUIRE("weakCompareAndSetAcquire", AccessType.COMPARE_AND_SWAP),
+        WEAK_COMPARE_AND_SET_ACQUIRE("weakCompareAndSetAcquire", AccessType.COMPARE_AND_SET),
         /**
          * The access mode whose access is specified by the corresponding
          * method
          * {@link VarHandle#weakCompareAndSetRelease VarHandle.weakCompareAndSetRelease}
          */
-        WEAK_COMPARE_AND_SET_RELEASE("weakCompareAndSetRelease", AccessType.COMPARE_AND_SWAP),
+        WEAK_COMPARE_AND_SET_RELEASE("weakCompareAndSetRelease", AccessType.COMPARE_AND_SET),
         /**
          * The access mode whose access is specified by the corresponding
          * method
@@ -1801,10 +1801,12 @@ public abstract class VarHandle {
 
         static final Map<String, AccessMode> methodNameToAccessMode;
         static {
-            // Initial capacity of # values is sufficient to avoid resizes
-            // for the smallest table size (32)
-            methodNameToAccessMode = new HashMap<>(AccessMode.values().length);
-            for (AccessMode am : AccessMode.values()) {
+            AccessMode[] values = AccessMode.values();
+            // Initial capacity of # values divided by the load factor is sufficient
+            // to avoid resizes for the smallest table size (64)
+            int initialCapacity = (int)(values.length / 0.75f) + 1;
+            methodNameToAccessMode = new HashMap<>(initialCapacity);
+            for (AccessMode am : values) {
                 methodNameToAccessMode.put(am.methodName, am);
             }
         }
@@ -1838,7 +1840,7 @@ public abstract class VarHandle {
          *         value associated with method name (indicating the method
          *         name does not correspond to a {@code VarHandle}
          *         signature-polymorphic method name).
-         * @see #methodName
+         * @see #methodName()
          */
         public static AccessMode valueFromMethodName(String methodName) {
             AccessMode am = methodNameToAccessMode.get(methodName);
@@ -2079,12 +2081,7 @@ public abstract class VarHandle {
     private static final long VFORM_OFFSET;
 
     static {
-        try {
-            VFORM_OFFSET = UNSAFE.objectFieldOffset(VarHandle.class.getDeclaredField("vform"));
-        }
-        catch (ReflectiveOperationException e) {
-            throw newInternalError(e);
-        }
+        VFORM_OFFSET = UNSAFE.objectFieldOffset(VarHandle.class, "vform");
 
         // The VarHandleGuards must be initialized to ensure correct
         // compilation of the guard methods
@@ -2267,7 +2264,7 @@ public abstract class VarHandle {
 
         ATOMIC_UPDATE_ACCESS_MODES_BIT_MASK =
                 accessTypesToBitMask(EnumSet.of(AccessType.COMPARE_AND_EXCHANGE,
-                                                AccessType.COMPARE_AND_SWAP,
+                                                AccessType.COMPARE_AND_SET,
                                                 AccessType.GET_AND_UPDATE));
 
         NUMERIC_ATOMIC_UPDATE_ACCESS_MODES_BIT_MASK =

@@ -49,7 +49,8 @@ import java.util.MissingResourceException;
 import java.util.TimeZone;
 import libcore.icu.ICU;
 
-// Android-removed: Remove javadoc related to "rg" and "ca" Locale extension.
+// Android-removed: Remove javadoc related to "tz", "rg" and "ca" Locale extension.
+// The "tz" extension isn't supported until the Calendar class is upgraded to version 11.
 // The "ca" extension isn't supported, because Android's java.text supports Gregorian calendar only.
 // The "rg" extension isn't supported until https://unicode-org.atlassian.net/browse/ICU-21831
 // is resolved, because java.text.* stack relies on ICU on resource resolution.
@@ -96,11 +97,6 @@ import libcore.icu.ICU;
  * DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.FRANCE);
  * }</pre>
  * </blockquote>
- *
- * Starting from Android 13, <p>if the specified locale contains "tz" (timezone)
- * <a href="../util/Locale.html#def_locale_extension">Unicode
- * extensions</a>, the time zone for formatting
- * are overridden.
  *
  * <p>You can use a DateFormat to parse also.
  * <blockquote>

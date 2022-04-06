@@ -28,15 +28,44 @@
  */
 package test.java.util.function;
 
+// Android-added: workaround for d8 backports.
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
+
 import java.util.List;
 import java.util.function.Predicate;
 import org.testng.annotations.Test;
-import static java.util.function.Predicate.not;
+
 import static java.util.stream.Collectors.joining;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
 public class PredicateNotTest {
+    // BEGIN Android-added
+    // MethodHandle for invoking Predicate.not() to prevent d8 inserting it's backported
+    // `Predicate.not()` method (b/191859202, OpenJDK 11) and masking test coverage results.
+    static final MethodHandle NOT = initializeNot();
+
+    private static MethodHandle initializeNot()
+    {
+        try {
+            MethodType notType = MethodType.methodType(Predicate.class, Predicate.class);
+            return MethodHandles.lookup().findStatic(Predicate.class, "not", notType);
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
+    }
+
+    static <T> Predicate<T> not​(Predicate<? super T> target) {
+        try {
+            return (Predicate<T>) NOT.invoke(target);
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
+        }
+    }
+    // END Android-added
+
     static class IsEmptyPredicate implements Predicate<String> {
         @Override
         public boolean test(String s) {

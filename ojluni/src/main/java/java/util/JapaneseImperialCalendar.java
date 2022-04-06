@@ -45,11 +45,11 @@ import sun.util.calendar.LocalGregorianCalendar;
  * ERA value   Era name    Since (in Gregorian)
  * ------------------------------------------------------
  *     0       N/A         N/A
- *     1       Meiji       1868-01-01 midnight local time
- *     2       Taisho      1912-07-30 midnight local time
- *     3       Showa       1926-12-25 midnight local time
- *     4       Heisei      1989-01-08 midnight local time
- *     5       Reiwa       2019-05-01 midnight local time
+ *     1       Meiji       1868-01-01T00:00:00 local time
+ *     2       Taisho      1912-07-30T00:00:00 local time
+ *     3       Showa       1926-12-25T00:00:00 local time
+ *     4       Heisei      1989-01-08T00:00:00 local time
+ *     5       Reiwa       2019-05-01T00:00:00 local time
  * ------------------------------------------------------
  * }</pre>
  *
@@ -1002,9 +1002,11 @@ class JapaneseImperialCalendar extends Calendar {
 
         String name = CalendarDataUtility.retrieveFieldValueName(getCalendarType(), field,
                                                                  fieldValue, style, locale);
-        // If the ERA value is null, then
+        // If the ERA value is null or empty, then
         // try to get its name or abbreviation from the Era instance.
-        if (name == null && field == ERA && fieldValue < eras.length) {
+        if ((name == null || name.isEmpty()) &&
+                field == ERA &&
+                fieldValue < eras.length) {
             Era era = eras[fieldValue];
             name = (style == SHORT) ? era.getAbbreviation() : era.getName();
         }

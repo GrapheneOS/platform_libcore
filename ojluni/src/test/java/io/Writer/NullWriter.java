@@ -20,6 +20,8 @@
  * or visit www.oracle.com if you need additional information or have any
  * questions.
  */
+// Android-added: Test package.
+package test.java.io.Writer;
 
 import java.io.IOException;
 import java.io.Writer;

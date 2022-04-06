@@ -27,6 +27,32 @@ public class QNameTest extends TestCase {
         assertEquals("hello", qName.getLocalPart());
     }
 
+    public void testEquals() {
+        QName qName = new QName("namespace", "local part", "prefix");
+        assertTrue(qName.equals(qName));
+        assertFalse(qName.equals(null));
+        assertFalse(qName.equals(new Object()));
+
+        QName qNameSame = new QName("namespace", "local part", "prefix");
+        assertTrue(qName.equals(qNameSame));
+        assertTrue(qNameSame.equals(qName));
+
+        // Check the namespace is considered in equality considerations.
+        QName qNameDifferentNamespace = new QName("another namespace", "local part", "prefix");
+        assertFalse(qName.equals(qNameDifferentNamespace));
+        assertFalse(qNameDifferentNamespace.equals(qName));
+
+        // Check the local part is considered in equality considerations.
+        QName qNameDifferentLocalPart = new QName("namespace", "another local part", "prefix");
+        assertFalse(qName.equals(qNameDifferentLocalPart));
+        assertFalse(qNameDifferentLocalPart.equals(qName));
+
+        // Check the prefix is not considered in equality considerations.
+        QName qNameDifferentPrefix = new QName("namespace", "local part", "another prefix");
+        assertTrue(qName.equals(qNameDifferentPrefix));
+        assertTrue(qNameDifferentPrefix.equals(qName));
+    }
+
     public void testGetNamespaceURI() {
         QName qName = new QName("namespace", "local part", "prefix");
         assertEquals("namespace", qName.getNamespaceURI());

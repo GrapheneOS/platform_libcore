@@ -71,4 +71,12 @@ public class TransformerConfigurationExceptionTest  {
         assertEquals("java.lang.Throwable", e.getMessage());
         assertEquals(t, e.getCause());
     }
+
+    @Test
+    public void constructorWithString() {
+        TransformerConfigurationException e = new TransformerConfigurationException("message");
+        assertEquals("message", e.getMessage());
+        assertNull(e.getCause());
+        assertNull(e.getLocator());
+    }
 }

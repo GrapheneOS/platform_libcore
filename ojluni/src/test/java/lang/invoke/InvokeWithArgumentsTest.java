@@ -72,7 +72,9 @@ public class InvokeWithArgumentsTest {
 
         // Note: the actual array is not preserved, the elements will be
         // unpacked and then packed into a new array before invoking the method
-        String[] expected = (String[]) mh.invokeWithArguments(actual);
+        // Android-changed: Cast to Object[] to avoid compilation warning.
+        // String[] expected = (String[]) mh.invokeWithArguments(actual);
+        String[] expected = (String[]) mh.invokeWithArguments((Object[]) actual);
 
         Assert.assertTrue(actual != expected, "Array should not pass through");
         Assert.assertEquals(actual, expected, "Array contents should be equal");

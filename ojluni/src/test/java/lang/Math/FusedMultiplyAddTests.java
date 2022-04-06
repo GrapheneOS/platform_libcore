@@ -329,9 +329,7 @@ public class FusedMultiplyAddTests {
                         Math.ulp(1.0f) * Math.ulp(1.0f)},
 
                 // Double-rounding if done in double precision
-                // Android-changed: updated result test expectation
-                // {0x1.fffffep23f, 0x1.000004p28f, 0x1.fep5f, 0x1.000002p52f}
-                {0x1.fffffep23f, 0x1.000004p28f, 0x1.fep5f, 0x1.000004p52f}
+                {0x1.fffffep23f, 0x1.000004p28f, 0x1.fep5f, 0x1.000002p52f}
         };
 
         for (float[] testCase : testCases) {

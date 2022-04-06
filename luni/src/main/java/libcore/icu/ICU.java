@@ -609,4 +609,24 @@ public final class ICU {
               .setKeywordValue("calendar", calendarType);
       return ExtendedCalendar.getInstance(uLocale);
   }
+
+  /**
+   * Converts CLDR LDML short time zone id to an ID that can be recognized by
+   * {@link java.util.TimeZone#getTimeZone(String)}.
+   * @param cldrShortTzId
+   * @return null if no tz id can be matched to the short id.
+   */
+  public static String convertToTzId(String cldrShortTzId) {
+    if (cldrShortTzId == null) {
+      return null;
+    }
+    String tzid = ULocale.toLegacyType("tz", cldrShortTzId);
+    // ULocale.toLegacyType() returns the lower case of the input ID if it matches the spec, but
+    // it's not a valid tz id.
+    if (tzid == null || tzid.equals(cldrShortTzId.toLowerCase(Locale.ROOT))) {
+      return null;
+    }
+    return tzid;
+  }
+
 }

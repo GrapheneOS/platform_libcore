@@ -17,10 +17,15 @@
 package libcore.javax.xml.transform.sax;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
+import java.io.StringReader;
+
+import javax.xml.transform.Source;
 import javax.xml.transform.sax.SAXSource;
+import javax.xml.transform.stream.StreamSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,6 +84,32 @@ public class SAXSourceTest {
 
         source.setXMLReader(null);
         assertNull(source.getXMLReader());
+    }
+
+    @Test
+    public void sourceToInputSource() {
+        XMLReader reader = new XMLReaderImpl();
+        InputSource is = new InputSource();
+        source = new SAXSource(reader, is);
+        assertEquals(is, SAXSource.sourceToInputSource(source));
+
+        StreamSource ss = new StreamSource(new StringReader("<tag></tag>"));
+        assertNotNull(SAXSource.sourceToInputSource(ss));
+
+        assertNull(SAXSource.sourceToInputSource(new UnknownSource()));
+        assertNull(SAXSource.sourceToInputSource(null));
+    }
+
+    private static final class UnknownSource implements Source {
+        private String systemId;
+
+        public void setSystemId(String systemId) {
+            this.systemId = systemId;
+        }
+
+        public String getSystemId() {
+            return systemId;
+        }
     }
 
     private static final class XMLReaderImpl implements XMLReader {

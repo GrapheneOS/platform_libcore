@@ -104,7 +104,7 @@ public class LinuxFileSystemTest {
         FileStore filestore = getFilestore("/");
         assertEquals(0, filestore.getBlockSize() % 512);
         assertTrue(filestore.getTotalSpace() > 0);
-        assertTrue(filestore.getUnallocatedSpace() > 0);
+        assertTrue(filestore.getUnallocatedSpace() >= 0);
         assertTrue(filestore.getUsableSpace() >= 0);
     }
 

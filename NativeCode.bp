@@ -135,15 +135,22 @@ cc_defaults {
     ],
 
     target: {
-        linux_glibc: {
-            cflags: [ // Sigh.
+        musl: {
+            cflags: [
+                // Sigh.
                 "-D_LARGEFILE64_SOURCE",
                 "-D_GNU_SOURCE",
                 "-DLINUX",
             ],
         },
         glibc: {
-            cflags: ["-D__GLIBC__"],
+            cflags: [
+                "-D__GLIBC__",
+                // Sigh.
+                "-D_LARGEFILE64_SOURCE",
+                "-D_GNU_SOURCE",
+                "-DLINUX",
+            ],
         },
         android: {
             shared_libs: [

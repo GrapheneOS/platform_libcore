@@ -57,11 +57,13 @@ public class SharedSecrets {
     private static JavaUtilZipFileAccess javaUtilZipFileAccess;
     private static JavaAWTAccess javaAWTAccess;
     private static JavaOISAccess javaOISAccess;
+    private static JavaObjectInputStreamReadString javaObjectInputStreamReadString;
     */
     // END Android-removed: Pruned unused access interfaces.
     private static JavaObjectInputStreamAccess javaObjectInputStreamAccess;
     // BEGIN Android-removed: Pruned unused access interfaces.
     /*
+    private static JavaSecuritySignatureAccess javaSecuritySignatureAccess;
 
     public static JavaUtilJarAccess javaUtilJarAccess() {
         if (javaUtilJarAccess == null) {
@@ -215,6 +217,17 @@ public class SharedSecrets {
         }
         return javaAWTAccess;
     }
+
+    public static JavaObjectInputStreamReadString getJavaObjectInputStreamReadString() {
+        if (javaObjectInputStreamReadString == null) {
+            unsafe.ensureClassInitialized(ObjectInputStream.class);
+        }
+        return javaObjectInputStreamReadString;
+    }
+
+    public static void setJavaObjectInputStreamReadString(JavaObjectInputStreamReadString access) {
+        javaObjectInputStreamReadString = access;
+    }
     */
     // END Android-removed: Pruned unused access interfaces.
 
@@ -228,4 +241,19 @@ public class SharedSecrets {
     public static void setJavaObjectInputStreamAccess(JavaObjectInputStreamAccess access) {
         javaObjectInputStreamAccess = access;
     }
+
+    // BEGIN Android-removed: Pruned unused access interfaces.
+    /*
+    public static void setJavaSecuritySignatureAccess(JavaSecuritySignatureAccess jssa) {
+        javaSecuritySignatureAccess = jssa;
+    }
+
+    public static JavaSecuritySignatureAccess getJavaSecuritySignatureAccess() {
+        if (javaSecuritySignatureAccess == null) {
+            unsafe.ensureClassInitialized(Signature.class);
+        }
+        return javaSecuritySignatureAccess;
+    }
+    */
+    // END Android-removed: Pruned unused access interfaces.
 }
