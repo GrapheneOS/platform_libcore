@@ -143,15 +143,15 @@ public final class DecimalStyle {
         return of(Locale.getDefault(Locale.Category.FORMAT));
     }
 
+    // Android-changed: Remove "rg" extension support in the javadoc. See http://b/228322300.
     /**
      * Obtains the DecimalStyle for the specified locale.
      * <p>
      * This method provides access to locale sensitive decimal style symbols.
-     * If the locale contains "nu" (Numbering System) and/or "rg"
-     * (Region Override) <a href="../../util/Locale.html#def_locale_extension">
+     * If the locale contains "nu" (Numbering System)
+     * <a href="../../util/Locale.html#def_locale_extension">
      * Unicode extensions</a>, returned instance will reflect the values specified with
-     * those extensions. If both "nu" and "rg" are specified, the value from
-     * the "nu" extension supersedes the implicit one from the "rg" extension.
+     * those extensions.
      *
      * @param locale  the locale, not null
      * @return the decimal style, not null

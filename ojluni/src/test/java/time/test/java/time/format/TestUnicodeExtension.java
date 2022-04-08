@@ -222,14 +222,13 @@ public class TestUnicodeExtension {
         return new Object[][] {
             // Locale, Expected DayOfWeek,
             {Locale.US, DayOfWeek.SUNDAY},
-            // Android-removed: Android's ICU backend doesn't support "fw" unicode extension yet.
-            // {FW_SUN, DayOfWeek.SUNDAY},
-            // {FW_MON, DayOfWeek.MONDAY},
-            // {FW_TUE, DayOfWeek.TUESDAY},
-            // {FW_WED, DayOfWeek.WEDNESDAY},
-            // {FW_THU, DayOfWeek.THURSDAY},
-            // {FW_FRI, DayOfWeek.FRIDAY},
-            // {FW_SAT, DayOfWeek.SATURDAY},
+            {FW_SUN, DayOfWeek.SUNDAY},
+            {FW_MON, DayOfWeek.MONDAY},
+            {FW_TUE, DayOfWeek.TUESDAY},
+            {FW_WED, DayOfWeek.WEDNESDAY},
+            {FW_THU, DayOfWeek.THURSDAY},
+            {FW_FRI, DayOfWeek.FRIDAY},
+            {FW_SAT, DayOfWeek.SATURDAY},
 
             // invalid case
             {Locale.forLanguageTag("en-US-u-fw-xxx"), DayOfWeek.SUNDAY},
@@ -239,8 +238,7 @@ public class TestUnicodeExtension {
             {Locale.forLanguageTag("zh-CN-u-rg-eszzzz"), DayOfWeek.MONDAY},
 
             // "fw" and "rg".
-            // Android-removed: Android's ICU backend doesn't support "fw" unicode extension yet.
-            // {Locale.forLanguageTag("en-US-u-fw-wed-rg-gbzzzz"), DayOfWeek.WEDNESDAY},
+            {Locale.forLanguageTag("en-US-u-fw-wed-rg-gbzzzz"), DayOfWeek.WEDNESDAY},
             {Locale.forLanguageTag("en-US-u-fw-xxx-rg-gbzzzz"), DayOfWeek.MONDAY},
             {Locale.forLanguageTag("en-US-u-fw-xxx-rg-zzzz"), DayOfWeek.SUNDAY},
         };

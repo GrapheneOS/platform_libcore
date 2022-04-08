@@ -1460,19 +1460,18 @@ public final class DateTimeFormatter {
         return new DateTimeFormatter(printerParser, locale, decimalStyle, resolverStyle, resolverFields, chrono, zone);
     }
 
+    // Android-changed: Remove "rg" extension support in the javadoc. See http://b/228322300.
     /**
      * Returns a copy of this formatter with localized values of the locale,
-     * calendar, region, decimal style and/or timezone, that supercede values in
+     * calendar, decimal style and/or timezone, that superseded values in
      * this formatter.
      * <p>
      * This is used to lookup any part of the formatter needing specific
      * localization, such as the text or localized pattern. If the locale contains the
-     * "ca" (calendar), "nu" (numbering system), "rg" (region override), and/or
+     * "ca" (calendar), "nu" (numbering system) and/or
      * "tz" (timezone)
      * <a href="../../util/Locale.html#def_locale_extension">Unicode extensions</a>,
-     * the chronology, numbering system and/or the zone are overridden. If both "ca"
-     * and "rg" are specified, the chronology from the "ca" extension supersedes the
-     * implicit one from the "rg" extension. Same is true for the "nu" extension.
+     * the chronology, numbering system and/or the zone are overridden.
      * <p>
      * Unlike the {@link #withLocale withLocale} method, the call to this method may
      * produce a different formatter depending on the order of method chaining with
@@ -1482,7 +1481,7 @@ public final class DateTimeFormatter {
      *
      * @param locale  the locale, not null
      * @return a formatter based on this formatter with localized values of
-     *      the calendar, decimal style and/or timezone, that supercede values in this
+     *      the calendar, decimal style and/or timezone, that superseded values in this
      *      formatter.
      * @see #withLocale(Locale)
      * @since 10

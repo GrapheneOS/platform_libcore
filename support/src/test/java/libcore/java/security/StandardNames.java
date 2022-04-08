@@ -415,6 +415,7 @@ public final class StandardNames {
             provide("SecretKeyFactory", "HmacSHA256");
             provide("SecretKeyFactory", "HmacSHA384");
             provide("SecretKeyFactory", "HmacSHA512");
+            provide("SecretKeyFactory", "SCRYPT");
             provide("Signature", "SHA1withRSA/PSS");
             provide("Signature", "SHA224withRSA/PSS");
             provide("Signature", "SHA256withRSA/PSS");

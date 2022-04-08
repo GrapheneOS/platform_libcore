@@ -282,15 +282,16 @@ public final class WeekFields implements Serializable {
     private final transient TemporalField weekBasedYear = ComputedDayOfField.ofWeekBasedYearField(this);
 
     //-----------------------------------------------------------------------
+    // Android-changed: Remove "rg" support in the javadoc. See http://b/228322300.
+    // Android-changed: Support the "fw" extension since Android 13. See http://b/228322300.
     /**
      * Obtains an instance of {@code WeekFields} appropriate for a locale.
      * <p>
      * This will look up appropriate values from the provider of localization data.
-     * If the locale contains "fw" (First day of week) and/or "rg"
-     * (Region Override) <a href="../../util/Locale.html#def_locale_extension">
+     * Since Android 13, if the locale contains "fw" (First day of week)
+     * <a href="../../util/Locale.html#def_locale_extension">
      * Unicode extensions</a>, returned instance will reflect the values specified with
-     * those extensions. If both "fw" and "rg" are specified, the value from
-     * the "fw" extension supersedes the implicit one from the "rg" extension.
+     * those extensions.
      *
      * @param locale  the locale to use, not null
      * @return the week-definition, not null
@@ -298,18 +299,48 @@ public final class WeekFields implements Serializable {
     public static WeekFields of(Locale locale) {
         Objects.requireNonNull(locale, "locale");
 
-        // Android-changed: get Week data from ICU4J
-        /*
-        int calDow = CalendarDataUtility.retrieveFirstDayOfWeek(locale);
-        DayOfWeek dow = DayOfWeek.SUNDAY.plus(calDow - 1);
-        int minDays = CalendarDataUtility.retrieveMinimalDaysInFirstWeek(locale);
-        return WeekFields.of(dow, minDays);
-         */
+        // Android-changed: Obtain week data from ICU4J.
+        // int calDow = CalendarDataUtility.retrieveFirstDayOfWeek(locale);
         Calendar calendar = Calendar.getInstance(locale);
         Calendar.WeekData weekData = calendar.getWeekData();
-        DayOfWeek dow = DayOfWeek.SUNDAY.plus(weekData.firstDayOfWeek - 1);
-        return WeekFields.of(dow, weekData.minimalDaysInFirstWeek);
+        int calDow = retrieveFirstDayOfWeek(locale, weekData);
+        DayOfWeek dow = DayOfWeek.SUNDAY.plus(calDow - 1);
+        // Android-changed: Obtain minimal days from ICU4J.
+        // int minDays = CalendarDataUtility.retrieveMinimalDaysInFirstWeek(locale);
+        int minDays = weekData.minimalDaysInFirstWeek;
+        return WeekFields.of(dow, minDays);
     }
+
+    // BEGIN Android-added: Extra method needed to support "fw" the Unicode extension.
+    // A modified version of the upstream CalendarDataUtility.retrieveFirstDayOfWeek() but with
+    // ICU provider.
+    private static int retrieveFirstDayOfWeek(Locale locale, Calendar.WeekData icuWeekData) {
+        // Look for the Unicode Extension in the locale parameter
+        if (locale.hasExtensions()) {
+            String fw = locale.getUnicodeLocaleType("fw");
+            if (fw != null) {
+                switch (fw.toLowerCase(Locale.ROOT)) {
+                    case "mon":
+                        return Calendar.MONDAY;
+                    case "tue":
+                        return Calendar.TUESDAY;
+                    case "wed":
+                        return Calendar.WEDNESDAY;
+                    case "thu":
+                        return Calendar.THURSDAY;
+                    case "fri":
+                        return Calendar.FRIDAY;
+                    case "sat":
+                        return Calendar.SATURDAY;
+                    case "sun":
+                        return Calendar.SUNDAY;
+                }
+            }
+        }
+
+        return icuWeekData.firstDayOfWeek;
+    }
+    // END Android-added: Extra method needed to support "fw" the Unicode extension.
 
     /**
      * Obtains an instance of {@code WeekFields} from the first day-of-week and minimal days.

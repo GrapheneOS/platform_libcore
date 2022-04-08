@@ -198,14 +198,11 @@ public final class DateTimeFormatterBuilder {
      */
     private int valueParserIndex = -1;
 
+    // Android-changed: Remove "rg" extension support in the javadoc. See http://b/228322300.
     /**
      * Gets the formatting pattern for date and time styles for a locale and chronology.
      * The locale and chronology are used to lookup the locale specific format
      * for the requested dateStyle and/or timeStyle.
-     * <p>
-     * If the locale contains the "rg" (region override)
-     * <a href="../../util/Locale.html#def_locale_extension">Unicode extensions</a>,
-     * the formatting pattern is overridden with the one appropriate for the region.
      *
      * @param dateStyle  the FormatStyle for the date, null for time-only pattern
      * @param timeStyle  the FormatStyle for the time, null for date-only pattern
