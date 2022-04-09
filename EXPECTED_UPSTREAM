@@ -1805,6 +1805,7 @@ ojluni/src/main/native/net_util_md.c,jdk7u/jdk7u40-b60,jdk/src/solaris/native/ja
 # socket_tagger_util.cpp doesn’t come from the upstream OpenJDK.
 ojluni/src/main/native/zip_util.c,jdk8u/jdk8u121-b13,jdk/src/share/native/java/util/zip/zip_util.c
 ojluni/src/main/resources/calendars.properties,jdk8u/jdk8u212-b01,jdk/src/share/lib/calendars.properties
+ojluni/src/main/resources/java/time/chrono/hijrah-config-islamic-umalqura.properties,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/time/chrono/hijrah-config-islamic-umalqura.properties
 ojluni/src/test/java/io/Reader/NullReader.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/io/Reader/NullReader.java
 ojluni/src/test/java/io/Reader/TransferTo.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/io/Reader/TransferTo.java
 ojluni/src/test/java/io/Writer/NullWriter.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/io/Writer/NullWriter.java
