@@ -54,7 +54,6 @@ public class DdmVmInternalTest {
 
         File before = new File(beforePath);
         File after = new File(afterPath);
-        assertNotEquals(before.length(), after.length());
         before.delete();
         after.delete();
     }

@@ -296,6 +296,7 @@ public final class System {
     @CriticalNative
     public static native long currentTimeMillis();
 
+    // Android-added: Note on elapse time and deep sleep.
     /**
      * Returns the current value of the running Java Virtual Machine's
      * high-resolution time source, in nanoseconds.
@@ -335,6 +336,10 @@ public final class System {
      *
      * one should use {@code t1 - t0 < 0}, not {@code t1 < t0},
      * because of the possibility of numerical overflow.
+     *
+     * <p>The value returned by this method does not account for elapsed
+     * time during deep sleep. For timekeeping facilities available on
+     * Android see {@link android.os.SystemClock}.
      *
      * @return the current value of the running Java Virtual Machine's
      *         high-resolution time source, in nanoseconds
