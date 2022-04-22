@@ -698,10 +698,15 @@ public class HypotTests {
 
     // Initialize shared random number generator
     private static final java.util.Random random = new Random();
+    // BEGIN Android-added: Shard testAgainstTranslit() to make tests run faster.
+    private static double X = Tests.createRandomDouble(random);
+    private static double Y = Tests.createRandomDouble(random);
+    // END Android-added: Shard testAgainstTranslit() to make tests run faster.
 
+    // BEGIN Android-changed: Shard testAgainstTranslit() to make tests run faster.
     /**
      * Test StrictMath.hypot against transliteration port of hypot.
-     */
+     *
     @Test
     public void testAgainstTranslit() {
         double x = Tests.createRandomDouble(random);
@@ -720,4 +725,40 @@ public class HypotTests {
             }
         }
     }
+    */
+    @Test
+    public void testAgainstTranslit_shard1() {
+        testAgainstTranslit(0, 50);
+    }
+
+    @Test
+    public void testAgainstTranslit_shard2() {
+        testAgainstTranslit(50, 100);
+    }
+
+    @Test
+    public void testAgainstTranslit_shard3() {
+        testAgainstTranslit(100, 150);
+    }
+
+    @Test
+    public void testAgainstTranslit_shard4() {
+        testAgainstTranslit(150, 200);
+    }
+
+    private void testAgainstTranslit(int fromI, int toI) {
+        // Make the increment twice the ulp value in case the random
+        // value is near an exponent threshold.
+        double increment_x = 2.0 * Math.ulp(X);
+        double increment_y = 2.0 * Math.ulp(Y);
+
+        // Don't worry about x or y overflowing to infinity if their
+        // exponent is MAX_EXPONENT.
+        for (int i = fromI; i < toI; i++, X += increment_x) {
+            for (int j = 0; j < 200; j++, Y += increment_y) {
+                testHypotCase(X, Y, FdlibmTranslit.hypot(X, Y));
+            }
+        }
+    }
+    // END Android-changed: Shard testAgainstTranslit() to make tests run faster.
 }
