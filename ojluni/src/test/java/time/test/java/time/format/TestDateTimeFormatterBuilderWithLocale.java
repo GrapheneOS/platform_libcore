@@ -64,6 +64,7 @@
  */
 package test.java.time.format;
 
+import android.icu.util.VersionInfo;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.Chronology;
 import java.time.chrono.IsoChronology;
@@ -220,6 +221,10 @@ public class TestDateTimeFormatterBuilderWithLocale {
     @Test(dataProvider="localePatterns")
     public void test_getLocalizedDateTimePattern(FormatStyle dateStyle, FormatStyle timeStyle,
             Chronology chrono, Locale locale, String expected) {
+        // Android-added: The ICU data is different before ICU version 70. http://b/229960530
+        if (VersionInfo.ICU_VERSION.getMajor() < 70) {
+            return;
+        }
         String actual = DateTimeFormatterBuilder.getLocalizedDateTimePattern(dateStyle, timeStyle, chrono, locale);
         assertEquals(actual, expected, "Pattern " + convertNonAscii(actual));
     }

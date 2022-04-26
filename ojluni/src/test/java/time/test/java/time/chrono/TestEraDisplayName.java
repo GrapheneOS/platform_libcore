@@ -25,6 +25,7 @@
 
 package test.java.time.chrono;
 
+import android.icu.util.VersionInfo;
 import java.time.*;
 import java.time.chrono.*;
 import java.time.format.*;
@@ -166,6 +167,10 @@ public class TestEraDisplayName {
 
     @Test(dataProvider="eraDisplayName")
     public void test_eraDisplayName(Era era, TextStyle style, Locale locale, String expected) {
+        // Android-added: The ICU data is different before ICU version 70. http://b/229960530
+        if (VersionInfo.ICU_VERSION.getMajor() < 70) {
+            return;
+        }
         assertEquals(era.getDisplayName(style, locale), expected);
     }
 }
