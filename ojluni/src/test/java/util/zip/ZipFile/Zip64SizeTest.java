@@ -75,7 +75,9 @@ public class Zip64SizeTest {
      * correct size is returned from the ZIP64 Extended information.
      * @throws IOException
      */
-    @Test
+    // Android-changed: Disabled the test as it's long-running for CTS. http://b/227925195
+    // TODO: Enable this test on host or non-CTS device environment.
+    // @Test
     // Android-changed: The test method needs to be public.
     // private static void validateZipEntrySizes() throws IOException {
     public void validateZipEntrySizes() throws IOException {
