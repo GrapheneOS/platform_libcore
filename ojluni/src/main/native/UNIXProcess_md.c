@@ -457,13 +457,6 @@ closeDescriptors(void)
     long available_bytes;
     int from_fd = FAIL_FILENO + 1;
 
-    // __NR_close_range may not be available on the host glibc.
-#ifdef __NR_close_range
-    // On kernel v5.9+ we can close all file descriptors with a single syscall.
-    if (syscall(__NR_close_range, from_fd, ~0, 0) == 0)
-        return 1;
-#endif
-
     // Close one file descriptor to guarantee that we have enough free FDs to
     // open FD_DIR.
     closeInChild(from_fd);
