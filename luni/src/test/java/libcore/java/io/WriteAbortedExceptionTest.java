@@ -14,29 +14,22 @@
  * limitations under the License.
  */
 
-package libcore.java.net;
+package libcore.java.io;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
-import java.net.PortUnreachableException;
+import java.io.WriteAbortedException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class PortUnreachableExceptionTest {
+public class WriteAbortedExceptionTest {
 
     @Test
-    public void testEmptyConstructor() {
-        PortUnreachableException e = new PortUnreachableException();
-        assertNull(e.getMessage());
-    }
-
-    @Test
-    public void testConstructor_withMsg() {
-        String msg = "test message";
-        PortUnreachableException e = new PortUnreachableException(msg);
-        assertEquals(msg, e.getMessage());
+    public void testGetCause() {
+        RuntimeException cause = new RuntimeException("test msg");
+        WriteAbortedException e = new WriteAbortedException("parent msg", cause);
+        assertEquals(cause, e.getCause());
     }
 }

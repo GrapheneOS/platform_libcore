@@ -73,11 +73,16 @@ public final class AuthenticatorTest {
         public String getScheme() {
             return getRequestingScheme();
         }
+
+        public String getHost() {
+            return getRequestingHost();
+        }
     }
 
     @Test
     public void testRequestPasswordAuthentication() throws Exception {
         final InetAddress addr = InetAddress.getByName("localhost");
+        final String host = "www.example.com";
         final int port = 42;
         final String protocol = "HTTP";
         final String prompt = "Please enter your password";
@@ -102,10 +107,26 @@ public final class AuthenticatorTest {
         assertEquals(protocol, auth.getProtocol());
         assertEquals(prompt, auth.getPrompt());
         assertEquals(scheme, auth.getScheme());
+
+        passAuth = Authenticator.requestPasswordAuthentication(
+                host, addr, port, protocol, prompt, scheme);
+
+        assertNotNull(passAuth);
+        assertEquals(userName, passAuth.getUserName());
+        assertEquals(password, String.valueOf(passAuth.getPassword()));
+
+        assertEquals(host, auth.getHost());
+        assertEquals(2, auth.getRequests());
+        assertEquals(addr, auth.getAddr());
+        assertEquals(port, auth.getPort());
+        assertEquals(protocol, auth.getProtocol());
+        assertEquals(prompt, auth.getPrompt());
+        assertEquals(scheme, auth.getScheme());
     }
 
     @Test
     public void testRequestPasswordAuthenticationWithNullAuthenticator() throws Exception {
+        final String host = "www.example.com";
         final InetAddress addr = InetAddress.getByName("localhost");
         final int port = 42;
         final String protocol = "HTTP";
@@ -115,5 +136,8 @@ public final class AuthenticatorTest {
         Authenticator.setDefault(null);
         assertNull(Authenticator.requestPasswordAuthentication(
                 addr, port, protocol, prompt, scheme));
+
+        assertNull(Authenticator.requestPasswordAuthentication(
+                host, addr, port, protocol, prompt, scheme));
     }
 }

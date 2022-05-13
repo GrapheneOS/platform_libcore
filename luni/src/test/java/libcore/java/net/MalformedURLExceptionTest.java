@@ -16,27 +16,25 @@
 
 package libcore.java.net;
 
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.net.PortUnreachableException;
+import java.net.MalformedURLException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class PortUnreachableExceptionTest {
+public class MalformedURLExceptionTest {
 
     @Test
-    public void testEmptyConstructor() {
-        PortUnreachableException e = new PortUnreachableException();
+    public void testConstructor() {
+        MalformedURLException e = new MalformedURLException();
         assertNull(e.getMessage());
-    }
 
-    @Test
-    public void testConstructor_withMsg() {
-        String msg = "test message";
-        PortUnreachableException e = new PortUnreachableException(msg);
+        String msg = "x:yyy is not valid URL";
+        e = new MalformedURLException(msg);
         assertEquals(msg, e.getMessage());
     }
 }

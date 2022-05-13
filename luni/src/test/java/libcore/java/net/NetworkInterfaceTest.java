@@ -115,6 +115,16 @@ public class NetworkInterfaceTest extends TestCase {
         }
     }
 
+    public void testGetByIndex() throws Exception {
+        for (NetworkInterface nif : Collections.list(getNetworkInterfaces())) {
+            int nifIndex = nif.getIndex();
+            if (nifIndex == -1) { // -1 means unknown interface
+                continue;
+            }
+            assertEquals(nif, NetworkInterface.getByIndex(nifIndex));
+        }
+    }
+
     public void testLoopback() throws Exception {
         NetworkInterface lo = NetworkInterface.getByName("lo");
         assertNull(lo.getHardwareAddress());

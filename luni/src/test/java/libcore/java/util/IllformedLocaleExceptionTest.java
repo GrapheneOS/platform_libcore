@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-package libcore.java.net;
+package libcore.java.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.net.PortUnreachableException;
+import java.util.IllformedLocaleException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class PortUnreachableExceptionTest {
+public class IllformedLocaleExceptionTest {
 
     @Test
-    public void testEmptyConstructor() {
-        PortUnreachableException e = new PortUnreachableException();
-        assertNull(e.getMessage());
+    public void testConstructor() {
+        IllformedLocaleException exception = new IllformedLocaleException();
+        assertNull(exception.getMessage());
+        assertEquals(-1, exception.getErrorIndex());
     }
 
     @Test
-    public void testConstructor_withMsg() {
-        String msg = "test message";
-        PortUnreachableException e = new PortUnreachableException(msg);
-        assertEquals(msg, e.getMessage());
+    public void testGetErrorIndex() {
+        IllformedLocaleException exception = new IllformedLocaleException("message", 6);
+        assertEquals(6, exception.getErrorIndex());
     }
 }

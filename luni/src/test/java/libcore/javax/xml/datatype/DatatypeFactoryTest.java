@@ -71,15 +71,36 @@ public class DatatypeFactoryTest extends TestCase {
         assertEquals(4, duration.getHours());
         assertEquals(5, duration.getMinutes());
         assertEquals(6, duration.getSeconds());
+
+        duration = factory.newDurationDayTime(true,
+            BigInteger.valueOf(3), BigInteger.valueOf(4), BigInteger.valueOf(5),
+            BigInteger.valueOf(6));
+        assertEquals(0, duration.getYears());
+        assertEquals(0, duration.getMonths());
+        assertEquals(3, duration.getDays());
+        assertEquals(4, duration.getHours());
+        assertEquals(5, duration.getMinutes());
+        assertEquals(6, duration.getSeconds());
     }
 
     public void testNewDurationDayTime_String() {
         Duration duration = factory.newDuration("");
         assertNull(duration);
+
+        duration = factory.newDurationDayTime("");
+        assertNull(duration);
     }
 
     public void testNewDurationDayTime_long() {
         Duration duration = factory.newDuration(1000L);
+        assertEquals(0, duration.getYears());
+        assertEquals(0, duration.getMonths());
+        assertEquals(0, duration.getDays());
+        assertEquals(0, duration.getHours());
+        assertEquals(0, duration.getMinutes());
+        assertEquals(1, duration.getSeconds());
+
+        duration = factory.newDurationDayTime(1000L);
         assertEquals(0, duration.getYears());
         assertEquals(0, duration.getMonths());
         assertEquals(0, duration.getDays());

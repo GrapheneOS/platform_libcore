@@ -14,29 +14,22 @@
  * limitations under the License.
  */
 
-package libcore.java.net;
+package libcore.java.sql;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
-import java.net.PortUnreachableException;
+import java.sql.SQLPermission;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class PortUnreachableExceptionTest {
+public class SQLPermissionTest {
 
     @Test
-    public void testEmptyConstructor() {
-        PortUnreachableException e = new PortUnreachableException();
-        assertNull(e.getMessage());
-    }
-
-    @Test
-    public void testConstructor_withMsg() {
-        String msg = "test message";
-        PortUnreachableException e = new PortUnreachableException(msg);
-        assertEquals(msg, e.getMessage());
+    public void testConstructor() {
+        SQLPermission permission = new SQLPermission("name", "action");
+        assertEquals("", permission.getName());
+        assertEquals("", permission.getActions());
     }
 }

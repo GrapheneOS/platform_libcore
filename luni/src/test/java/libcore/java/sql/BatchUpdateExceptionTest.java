@@ -14,29 +14,28 @@
  * limitations under the License.
  */
 
-package libcore.java.net;
+package libcore.java.sql;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
-import java.net.PortUnreachableException;
+import java.sql.BatchUpdateException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class PortUnreachableExceptionTest {
+public class BatchUpdateExceptionTest {
 
     @Test
-    public void testEmptyConstructor() {
-        PortUnreachableException e = new PortUnreachableException();
-        assertNull(e.getMessage());
-    }
-
-    @Test
-    public void testConstructor_withMsg() {
-        String msg = "test message";
-        PortUnreachableException e = new PortUnreachableException(msg);
-        assertEquals(msg, e.getMessage());
+    public void testConstructor() {
+        String reason = "exception reason";
+        Throwable cause = new RuntimeException();
+        int[] updateCounts = {9, 5, 6};
+        BatchUpdateException exception = new BatchUpdateException(reason, updateCounts, cause);
+        assertEquals(reason, exception.getMessage());
+        assertArrayEquals(updateCounts, exception.getUpdateCounts());
+        assertSame(cause, exception.getCause());
     }
 }

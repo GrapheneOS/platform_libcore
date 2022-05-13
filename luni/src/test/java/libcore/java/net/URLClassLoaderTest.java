@@ -16,27 +16,20 @@
 
 package libcore.java.net;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
-import java.net.PortUnreachableException;
+import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
-public class PortUnreachableExceptionTest {
+public class URLClassLoaderTest {
 
     @Test
-    public void testEmptyConstructor() {
-        PortUnreachableException e = new PortUnreachableException();
-        assertNull(e.getMessage());
-    }
-
-    @Test
-    public void testConstructor_withMsg() {
-        String msg = "test message";
-        PortUnreachableException e = new PortUnreachableException(msg);
-        assertEquals(msg, e.getMessage());
+    public void testClose() throws IOException {
+        URL[] urls = new URL[] { new URL("http://www.example.com.") };
+        URLClassLoader classLoader = new URLClassLoader(urls);
+        classLoader.close();
     }
 }

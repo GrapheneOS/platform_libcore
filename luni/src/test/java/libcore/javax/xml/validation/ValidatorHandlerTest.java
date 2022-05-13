@@ -58,9 +58,9 @@ public class ValidatorHandlerTest {
 
     @Test
     public void getProperty() {
-        assertThrows(NullPointerException.class, () -> handler.getFeature(null));
-        assertThrows(SAXNotRecognizedException.class, () -> handler.getFeature("hello"));
-        assertThrows(SAXNotRecognizedException.class, () -> handler.getFeature(""));
+        assertThrows(NullPointerException.class, () -> handler.getProperty(null));
+        assertThrows(SAXNotRecognizedException.class, () -> handler.getProperty("hello"));
+        assertThrows(SAXNotRecognizedException.class, () -> handler.getProperty(""));
     }
 
     @Test

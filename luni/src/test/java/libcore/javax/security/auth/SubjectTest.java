@@ -27,6 +27,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import sun.security.x509.X500Name;
 
 /**
  * Android does not support {@link java.lang.SecurityManager} and has its implementations stubbed.
@@ -49,16 +50,31 @@ public class SubjectTest {
     @Test
     public void getPrincipals() {
         assertEquals(set, subject.getPrincipals());
+
+        assertEquals(set, subject.getPrincipals(PrincipalImpl.class));
+        assertEquals(set, subject.getPrincipals(Principal.class));
+        // PrincipalImpl is not a subclass of X500Name.
+        assertEquals(0, subject.getPrincipals(X500Name.class).size());
     }
 
     @Test
     public void getPrivateCredentials() {
         assertEquals(set, subject.getPrivateCredentials());
+
+        assertEquals(set, subject.getPrivateCredentials(PrincipalImpl.class));
+        assertEquals(set, subject.getPrivateCredentials(Principal.class));
+        // PrincipalImpl is not a subclass of X500Name.
+        assertEquals(0, subject.getPrivateCredentials(X500Name.class).size());
     }
 
     @Test
     public void getPublicCredentials() {
         assertEquals(set, subject.getPublicCredentials());
+
+        assertEquals(set, subject.getPublicCredentials(PrincipalImpl.class));
+        assertEquals(set, subject.getPublicCredentials(Principal.class));
+        // PrincipalImpl is not a subclass of X500Name.
+        assertEquals(0, subject.getPublicCredentials(X500Name.class).size());
     }
 
     @Test

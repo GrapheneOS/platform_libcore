@@ -15,6 +15,8 @@
  */
 package libcore.xml;
 
+import static org.junit.Assert.assertThrows;
+
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -91,6 +93,23 @@ public class XmlToSax2DriverTest extends TestCase {
 
     public void testGetColumnNumber() {
         assertEquals(driver.getColumnNumber(), 1);
+    }
+
+    public void testSetProperty() throws Exception {
+        assertThrows(SAXNotSupportedException.class , () -> driver.setProperty(
+                "http://xml.org/sax/properties/declaration-handler", // DECLARATION_HANDLER_PROPERTY
+                ""));
+
+        assertThrows(SAXNotSupportedException.class ,() -> driver.setProperty(
+                "http://xml.org/sax/properties/lexical-handler", // LEXICAL_HANDLER_PROPERTY
+                ""));
+
+        // This may be the only key accpeted by the KXmlParser.
+        String key = "http://xmlpull.org/v1/doc/properties.html#location";
+        driver.setProperty(key, "123");
+        assertEquals("123", driver.getProperty(key));
+
+        assertThrows(SAXNotSupportedException.class ,() -> driver.setProperty("abc", ""));
     }
 
     public void testGetSetContentHandler() throws XmlPullParserException {

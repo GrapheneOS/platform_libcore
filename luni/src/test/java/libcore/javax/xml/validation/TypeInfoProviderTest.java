@@ -14,29 +14,46 @@
  * limitations under the License.
  */
 
-package libcore.java.net;
+package libcore.javax.xml.validation;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.net.PortUnreachableException;
+import javax.xml.validation.TypeInfoProvider;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.w3c.dom.TypeInfo;
 
 @RunWith(JUnit4.class)
-public class PortUnreachableExceptionTest {
-
+public class TypeInfoProviderTest {
     @Test
-    public void testEmptyConstructor() {
-        PortUnreachableException e = new PortUnreachableException();
-        assertNull(e.getMessage());
+    public void testConstructor() {
+        TypeInfoProvider p = new TestTypeInfoProvider();
+        assertNull(p.getElementTypeInfo() );
+
     }
 
-    @Test
-    public void testConstructor_withMsg() {
-        String msg = "test message";
-        PortUnreachableException e = new PortUnreachableException(msg);
-        assertEquals(msg, e.getMessage());
+    private static class TestTypeInfoProvider extends TypeInfoProvider {
+
+        @Override
+        public TypeInfo getElementTypeInfo() {
+            return null;
+        }
+
+        @Override
+        public TypeInfo getAttributeTypeInfo(int index) {
+            return null;
+        }
+
+        @Override
+        public boolean isIdAttribute(int index) {
+            return false;
+        }
+
+        @Override
+        public boolean isSpecified(int index) {
+            return false;
+        }
     }
+
 }
