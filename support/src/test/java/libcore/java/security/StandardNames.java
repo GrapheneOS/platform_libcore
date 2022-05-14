@@ -420,6 +420,7 @@ public final class StandardNames {
             provide("Signature", "SHA256withRSA/PSS");
             provide("Signature", "SHA384withRSA/PSS");
             provide("Signature", "SHA512withRSA/PSS");
+            provide("Signature", "ED25519");
 
             // different names: ARCFOUR vs ARC4
             unprovide("Cipher", "ARCFOUR");
