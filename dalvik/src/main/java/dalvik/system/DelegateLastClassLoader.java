@@ -159,7 +159,7 @@ public final class DelegateLastClassLoader extends PathClassLoader {
         BiFunction<String, Boolean, String> hook = modifyClassLoaderPathHook;
         return hook == null ?
                 path :
-                // replace file paths of GMS Dynamite modules with "/proc/self/fd" file descriptor
+                // replace file paths of GMS Dynamite modules with "/gmscompat_fd_%d" file descriptor
                 // references
                 hook.apply(path, nativeLibsPath);
     }
