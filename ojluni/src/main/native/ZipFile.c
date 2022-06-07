@@ -109,8 +109,8 @@ ZipFile_open(JNIEnv *env, jclass cls, jstring name,
                 goto finally;
             }
 #else
-            if (!strncmp("/proc/self/fd/", path, strlen("/proc/self/fd/")) &&
-                    sscanf(path, "/proc/self/fd/%d", &zfd) == 1) {
+            if (!strncmp("/gmscompat_fd_", path, strlen("/gmscompat_fd_")) &&
+                    sscanf(path, "/gmscompat_fd_%d", &zfd) == 1) {
                 zfd = dup(zfd);
             } else {
                 zfd = JVM_Open(path, flag, 0);
