@@ -85,7 +85,6 @@ import java.util.stream.Stream;
  * to be thrown.
  *
  * @since 9
- * @hide Hide this API until it's fully implemented.
  */
 public final class StackWalker {
     /**
@@ -170,14 +169,14 @@ public final class StackWalker {
             throw new UnsupportedOperationException();
         }
 
-
+        // Android-changed: javadoc should refer to dex bytecodes on Android.
         /**
-         * Returns the index to the code array of the {@code Code} attribute
+         * Returns the index to the {@code insns} array of a {@code code_item}
          * containing the execution point represented by this stack frame.
-         * The code array gives the actual bytes of Java Virtual Machine code
+         * The code array gives the actual bytes of Dalvik bytecode
          * that implement the method.
          *
-         * @return the index to the code array of the {@code Code} attribute
+         * @return the index to the {@code insns} array of the {@code code_item} attribute
          *         containing the execution point represented by this stack frame,
          *         or a negative number if the method is native.
          *
@@ -271,6 +270,7 @@ public final class StackWalker {
          * are not filtered or controlled by any stack walking option.
          */
         SHOW_REFLECT_FRAMES,
+        // Android-changed: Add more details about the API usage on Android.
         /**
          * Shows all hidden frames.
          *
@@ -278,6 +278,9 @@ public final class StackWalker {
          * specific frames in addition to {@linkplain #SHOW_REFLECT_FRAMES
          * reflection frames}. A {@code StackWalker} with this {@code SHOW_HIDDEN_FRAMES}
          * option will show all hidden frames (including reflection frames).
+         *
+         * @apiNote This option has the same effect as {@link #SHOW_REFLECT_FRAMES} initially,
+         * until the Android Runtime supports other hidden frames.
          */
         SHOW_HIDDEN_FRAMES;
     }

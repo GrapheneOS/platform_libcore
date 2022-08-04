@@ -3718,6 +3718,35 @@ package java.lang {
     method public boolean isNativeMethod();
   }
 
+  public final class StackWalker {
+    method public void forEach(java.util.function.Consumer<? super java.lang.StackWalker.StackFrame>);
+    method public Class<?> getCallerClass();
+    method public static StackWalker getInstance();
+    method public static StackWalker getInstance(java.lang.StackWalker.Option);
+    method public static StackWalker getInstance(java.util.Set<java.lang.StackWalker.Option>);
+    method public static StackWalker getInstance(java.util.Set<java.lang.StackWalker.Option>, int);
+    method public <T> T walk(java.util.function.Function<? super java.util.stream.Stream<java.lang.StackWalker.StackFrame>,? extends T>);
+  }
+
+  public enum StackWalker.Option {
+    enum_constant public static final java.lang.StackWalker.Option RETAIN_CLASS_REFERENCE;
+    enum_constant public static final java.lang.StackWalker.Option SHOW_HIDDEN_FRAMES;
+    enum_constant public static final java.lang.StackWalker.Option SHOW_REFLECT_FRAMES;
+  }
+
+  public static interface StackWalker.StackFrame {
+    method public int getByteCodeIndex();
+    method public String getClassName();
+    method public Class<?> getDeclaringClass();
+    method public default String getDescriptor();
+    method public String getFileName();
+    method public int getLineNumber();
+    method public String getMethodName();
+    method public default java.lang.invoke.MethodType getMethodType();
+    method public boolean isNativeMethod();
+    method public StackTraceElement toStackTraceElement();
+  }
+
   public final class StrictMath {
     method public static double IEEEremainder(double, double);
     method public static int abs(int);

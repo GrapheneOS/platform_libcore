@@ -1494,4 +1494,100 @@
             column="39"/>
     </issue>
 
+    <issue
+            id="NewApi"
+            message="Class requires API level Tiramisu (current min is 31): `java.lang.StackWalker.StackFrame`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/LiveStackFrame.java"
+                line="44"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Class requires API level Tiramisu (current min is 31): `java.lang.StackWalker.Option`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/LiveStackFrame.java"
+                line="159"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Class requires API level Tiramisu (current min is 31): `java.lang.StackWalker.StackFrame`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackFrameInfo.java"
+                line="31"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Field requires API level Tiramisu (current min is 31): `java.lang.StackWalker.Option#SHOW_HIDDEN_FRAMES`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackStreamFactory.java"
+                line="146"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Field requires API level Tiramisu (current min is 31): `java.lang.StackWalker.Option#SHOW_REFLECT_FRAMES`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackStreamFactory.java"
+                line="258"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Field requires API level Tiramisu (current min is 31): `java.lang.StackWalker.Option#SHOW_HIDDEN_FRAMES`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackStreamFactory.java"
+                line="259"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Class requires API level Tiramisu (current min is 31): `java.lang.StackWalker`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackStreamFactory.java"
+                line="1055"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Class requires API level Tiramisu (current min is 31): `java.lang.StackWalker.Option`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackWalker.java"
+                line="295"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Cast from `Option` to `Enum` requires API level 33 (current min is 31)">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackWalker.java"
+                line="340"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Field requires API level Tiramisu (current min is 31): `java.lang.StackWalker.Option#RETAIN_CLASS_REFERENCE`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackWalker.java"
+                line="420"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Field requires API level Tiramisu (current min is 31): `java.lang.StackWalker.Option#RETAIN_CLASS_REFERENCE`">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackWalker.java"
+                line="428"/>
+    </issue>
+
+    <issue
+            id="NewApi"
+            message="Cast from `Option` to `Enum` requires API level 34 (current min is 31)">
+        <location
+                file="libcore/ojluni/src/main/java/java/lang/StackWalker.java"
+                line="340"/>
+    </issue>
+
 </issues>

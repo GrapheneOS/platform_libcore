@@ -23,15 +23,19 @@ import org.junit.runners.JUnit4;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.StackWalker.Option;
 import java.lang.StackWalker.StackFrame;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.List;
 import libcore.io.Streams;
 
 import dalvik.system.InMemoryDexClassLoader;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(JUnit4.class)
 public class StackWalkerTest {
@@ -73,6 +77,36 @@ public class StackWalkerTest {
             return new InMemoryDexClassLoader(ByteBuffer.wrap(data),
                     ThreadTest.class.getClassLoader());
         }
+    }
+
+    @Test
+    public void testOptionValueOf() {
+        assertSame(Option.RETAIN_CLASS_REFERENCE, Option.valueOf("RETAIN_CLASS_REFERENCE"));
+        assertSame(Option.SHOW_REFLECT_FRAMES, Option.valueOf("SHOW_REFLECT_FRAMES"));
+        assertSame(Option.SHOW_HIDDEN_FRAMES, Option.valueOf("SHOW_HIDDEN_FRAMES"));
+    }
+
+    @Test
+    public void testOptionValues() {
+        Option[] options = Option.values();
+        Option[] expected = new Option[] {
+                Option.RETAIN_CLASS_REFERENCE,
+                Option.SHOW_REFLECT_FRAMES,
+                Option.SHOW_HIDDEN_FRAMES,
+        };
+        for (Option e : expected) {
+            assertHasOption(options, e);
+        }
+        assertEquals(expected.length, options.length);
+    }
+
+    private void assertHasOption(Option[] options, Option expected) {
+        for (Option option : options) {
+            if (option == expected) {
+                return;
+            }
+        }
+        fail("fail to find " + expected + " in " + Arrays.toString(options));
     }
 
 }
