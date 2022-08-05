@@ -267,6 +267,7 @@ public class DumpStackTest {
         "com.android.cts",
         "org.junit",
         "org.testng",
+        "vogar.target",
     };
     private static final boolean isAndroidTestInfra(String classname) {
         for (String pkg : ANDROID_INFRA_PACKAGES) {

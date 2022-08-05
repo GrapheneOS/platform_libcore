@@ -426,9 +426,7 @@ final class StackStreamFactory {
         private R callStackWalk(long mode, int skipframes,
                                        int batchSize, int startIndex,
                                        T[] frames) {
-            // TODO: Use mode
-            // TODO: Accept any StackFrames in addition to StackFrameInfo
-            checkFrameType(frames);
+            checkFrameType(mode, frames);
             Object nativeAnchor = nativeGetStackAnchor();
             if (nativeAnchor == null) {
                 return null;
@@ -457,11 +455,16 @@ final class StackStreamFactory {
             }
         }
 
-        private void checkFrameType(T[] frames) {
-            if (!(frames instanceof StackFrameInfo[]) && !(frames instanceof Class[])) {
-                throw new UnsupportedOperationException("Frame array type isn't supported yet:" +
-                    frames.getClass().getName());
+        private void checkFrameType(long mode, T[] frames) {
+            if (frames instanceof StackFrameInfo[]) {
+                return;
             }
+
+            if ((mode & FILL_CLASS_REFS_ONLY) != 0 && frames instanceof Class[]) {
+                return;
+            }
+            throw new UnsupportedOperationException("Frame array type isn't supported yet:" +
+                    frames.getClass().getName());
         }
         // END Android-added: Add a LibcoreAnchor class to track the extra states.
 
@@ -484,31 +487,12 @@ final class StackStreamFactory {
         //                                     T[] frames) {
         private int fetchStackFrames(long mode, @NonNull Object anchor, int batchSize,
                                      int startIndex, T[] frames) {
-            // TODO: use mode
             Objects.requireNonNull(anchor, "internal anchor can't be null");
-            checkFrameType(frames);
-            // TODO: Optimize the performance when frames are Class[]
-            // Currently, to simplify the implementation, we can retrieve the calling classes from
-            // StackFrameInfo, but we need to create extra intermediate StackFrameInfo objects.
-            final StackFrameInfo[] internalFrames;
-            if (frames instanceof StackFrameInfo[]) {
-                internalFrames = (StackFrameInfo[]) frames;
-            } else {
-                internalFrames = new StackFrameInfo[frames.length];
-                for (int i = 0; i < frames.length; i++) {
-                    internalFrames[i] = new StackFrameInfo(/* retainClassRef= */true);
-                }
-            }
+            checkFrameType(mode, frames);
             LibcoreAnchor stacks = (LibcoreAnchor) anchor;
             int startTraceIndex = stacks.stackLevel;
             int endIndex = nativeFetchStackFrameInfo(mode, stacks.nativeAnchor, startTraceIndex,
-                batchSize, startIndex, internalFrames);
-            if (frames instanceof Class[]) {
-                Class[] classes = (Class[]) frames;
-                for (int i = startIndex; i < endIndex; i++) {
-                    classes[i] = internalFrames[i].getDeclaringClass();
-                }
-            }
+                batchSize, startIndex, frames);
             // Store the index of the trace.
             stacks.stackLevel += endIndex - startIndex;
             return endIndex;
@@ -1085,7 +1069,7 @@ final class StackStreamFactory {
 
     @FastNative
     private static native int nativeFetchStackFrameInfo(long mode, Object anchor,
-        int startLevel, int batchSize, int startBufferIndex, StackFrameInfo[] buffer);
+        int startLevel, int batchSize, int startBufferIndex, Object[] buffer);
     // END Android-added: Add methods to retrieve StackFrameInfo from ART.
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1997, 2006, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1997, 2019, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -66,10 +66,10 @@ public class BitArray {
 
     /**
      * Creates a BitArray of the specified size, initialized from the
-     * specified byte array.  The most significant bit of a[0] gets
+     * specified byte array.  The most significant bit of {@code a[0]} gets
      * index zero in the BitArray.  The array a must be large enough
      * to specify a value for every bit in the BitArray.  In other words,
-     * 8*a.length <= length.
+     * {@code 8*a.length <= length}.
      */
     public BitArray(int length, byte[] a) throws IllegalArgumentException {
 
@@ -241,6 +241,10 @@ public class BitArray {
      *  Returns a string representation of this BitArray.
      */
     public String toString() {
+        if (length == 0) {
+            return "";
+        }
+
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         for (int i = 0; i < repn.length - 1; i++) {

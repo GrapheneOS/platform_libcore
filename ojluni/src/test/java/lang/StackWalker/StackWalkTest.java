@@ -145,6 +145,7 @@ public class StackWalkTest {
                 "com.android.cts",
                 "org.junit",
                 "org.testng",
+                "vogar.target",
             };
             for (String pkg : androidInfraPackages) {
                 if (sf.getClassName().startsWith(pkg)) {
