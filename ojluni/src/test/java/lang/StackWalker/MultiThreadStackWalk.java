@@ -331,7 +331,9 @@ public class MultiThreadStackWalk {
 
         public void run() {
             try {
-                Env env = runTest(test, 1000, 10);
+                // Android-changed: Avoid StackOverflowError for too many recursions.
+                // Env env = runTest(test, 1000, 10);
+                Env env = runTest(test, 200, 10);
                 //waitWalkers(env);
                 checkTest(env, test);
             } catch(Throwable t) {
