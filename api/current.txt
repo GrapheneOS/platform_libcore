@@ -3858,11 +3858,13 @@ package java.lang {
     method public boolean equalsIgnoreCase(@Nullable String);
     method @NonNull public static String format(@NonNull String, @NonNull java.lang.Object...);
     method @NonNull public static String format(@NonNull java.util.Locale, @NonNull String, @NonNull java.lang.Object...);
+    method @NonNull public String formatted(@NonNull java.lang.Object...);
     method @Deprecated public void getBytes(int, int, byte[], int);
     method public byte[] getBytes(@NonNull String) throws java.io.UnsupportedEncodingException;
     method public byte[] getBytes(@NonNull java.nio.charset.Charset);
     method public byte[] getBytes();
     method public void getChars(int, int, char[], int);
+    method @NonNull public String indent(int);
     method public int indexOf(int);
     method public int indexOf(int, int);
     method public int indexOf(@NonNull String);
@@ -3892,6 +3894,7 @@ package java.lang {
     method public boolean startsWith(@NonNull String, int);
     method public boolean startsWith(@NonNull String);
     method @NonNull public String strip();
+    method @NonNull public String stripIndent();
     method @NonNull public String stripLeading();
     method @NonNull public String stripTrailing();
     method @NonNull public CharSequence subSequence(int, int);
@@ -3902,6 +3905,7 @@ package java.lang {
     method @NonNull public String toLowerCase();
     method @NonNull public String toUpperCase(@NonNull java.util.Locale);
     method @NonNull public String toUpperCase();
+    method @NonNull public String translateEscapes();
     method @NonNull public String trim();
     method @NonNull public static String valueOf(@Nullable Object);
     method @NonNull public static String valueOf(char[]);
