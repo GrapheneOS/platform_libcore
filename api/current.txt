@@ -13761,13 +13761,18 @@ package java.util {
 
   public class NoSuchElementException extends java.lang.RuntimeException {
     ctor public NoSuchElementException();
+    ctor public NoSuchElementException(String, Throwable);
+    ctor public NoSuchElementException(Throwable);
     ctor public NoSuchElementException(String);
   }
 
   public final class Objects {
     method public static int checkFromIndexSize(int, int, int);
+    method public static long checkFromIndexSize(long, long, long);
     method public static int checkFromToIndex(int, int, int);
+    method public static long checkFromToIndex(long, long, long);
     method public static int checkIndex(int, int);
+    method public static long checkIndex(long, long);
     method public static <T> int compare(T, T, @NonNull java.util.Comparator<? super T>);
     method public static boolean deepEquals(@Nullable Object, @Nullable Object);
     method public static boolean equals(@Nullable Object, @Nullable Object);

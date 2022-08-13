@@ -46,7 +46,7 @@ public class NoSuchElementExceptionTest extends junit.framework.TestCase {
         // Test for method java.util.NoSuchElementException(java.lang.String)
 
         assertNotNull(new NoSuchElementException("String"));
-        assertNotNull(new NoSuchElementException(null));
+        assertNotNull(new NoSuchElementException((String)null));
 
         try {
             Vector v = new Vector();

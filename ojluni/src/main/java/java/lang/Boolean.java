@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1994, 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1994, 2020, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -32,8 +32,8 @@ import jdk.internal.HotSpotIntrinsicCandidate;
  * {@code boolean} in an object. An object of type
  * {@code Boolean} contains a single field whose type is
  * {@code boolean}.
- * <p>
- * In addition, this class provides many methods for
+ *
+ * <p>In addition, this class provides many methods for
  * converting a {@code boolean} to a {@code String} and a
  * {@code String} to a {@code boolean}, as well as other
  * constants and methods useful when dealing with a
@@ -73,6 +73,7 @@ public final class Boolean implements java.io.Serializable,
     private final boolean value;
 
     /** use serialVersionUID from JDK 1.0.2 for interoperability */
+    @java.io.Serial
     private static final long serialVersionUID = -3665804199014368530L;
 
     /**
@@ -88,7 +89,7 @@ public final class Boolean implements java.io.Serializable,
      * Also consider using the final fields {@link #TRUE} and {@link #FALSE}
      * if possible.
      */
-    @Deprecated(since="9")
+    @Deprecated(since="9", forRemoval = true)
     public Boolean(boolean value) {
         this.value = value;
     }
@@ -108,7 +109,7 @@ public final class Boolean implements java.io.Serializable,
      * {@code boolean} primitive, or use {@link #valueOf(String)}
      * to convert a string to a {@code Boolean} object.
      */
-    @Deprecated(since="9")
+    @Deprecated(since="9", forRemoval = true)
     public Boolean(String s) {
         this(parseBoolean(s));
     }
@@ -227,7 +228,7 @@ public final class Boolean implements java.io.Serializable,
         return value ? 1231 : 1237;
     }
 
-   /**
+    /**
      * Returns {@code true} if and only if the argument is not
      * {@code null} and is a {@code Boolean} object that
      * represents the same {@code boolean} value as this object.
@@ -343,4 +344,21 @@ public final class Boolean implements java.io.Serializable,
     public static boolean logicalXor(boolean a, boolean b) {
         return a ^ b;
     }
+
+    // BEGIN Android-removed: dynamic constants not supported on Android.
+    /*
+    /**
+     * Returns an {@link Optional} containing the nominal descriptor for this
+     * instance.
+     *
+     * @return an {@link Optional} describing the {@linkplain Boolean} instance
+     * @since 15
+     *
+    @Override
+    public Optional<DynamicConstantDesc<Boolean>> describeConstable() {
+        return Optional.of(value ? ConstantDescs.TRUE : ConstantDescs.FALSE);
+    }
+    */
+    // END Android-removed: dynamic constants not supported on Android.
+
 }
