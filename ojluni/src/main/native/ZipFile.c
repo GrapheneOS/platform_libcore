@@ -393,7 +393,7 @@ JarFile_getMetaInfEntryNames(JNIEnv *env, jobject obj)
     return result;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(ZipFile, getFileDescriptor, "(J)I"),
   NATIVE_METHOD(ZipFile, getEntry, "(J[BZ)J"),
   NATIVE_METHOD(ZipFile, freeEntry, "(JJ)V"),
