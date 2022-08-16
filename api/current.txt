@@ -4283,6 +4283,7 @@ package java.lang.annotation {
     enum_constant public static final java.lang.annotation.ElementType MODULE;
     enum_constant public static final java.lang.annotation.ElementType PACKAGE;
     enum_constant public static final java.lang.annotation.ElementType PARAMETER;
+    enum_constant public static final java.lang.annotation.ElementType RECORD_COMPONENT;
     enum_constant public static final java.lang.annotation.ElementType TYPE;
     enum_constant public static final java.lang.annotation.ElementType TYPE_PARAMETER;
     enum_constant public static final java.lang.annotation.ElementType TYPE_USE;
