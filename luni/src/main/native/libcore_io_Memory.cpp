@@ -242,7 +242,7 @@ static void Memory_unsafeBulkPut(JNIEnv* env, jclass, jbyteArray dstArray, jint 
 }
 
 // The remaining Memory methods are contained in art/runtime/native/libcore_io_Memory.cc
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(Memory, memmove, "(Ljava/lang/Object;ILjava/lang/Object;IJ)V"),
     FAST_NATIVE_METHOD(Memory, peekByte, "(J)B"),
     FAST_NATIVE_METHOD(Memory, peekIntNative, "(J)I"),
