@@ -80,7 +80,7 @@ Runtime_nativeLoad(JNIEnv* env, jclass ignored, jstring javaFilename,
     return JVM_NativeLoad(env, javaFilename, javaLoader, caller);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   FAST_NATIVE_METHOD(Runtime, freeMemory, "()J"),
   FAST_NATIVE_METHOD(Runtime, totalMemory, "()J"),
   FAST_NATIVE_METHOD(Runtime, maxMemory, "()J"),
