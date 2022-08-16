@@ -2758,7 +2758,7 @@ static jint Linux_writev(JNIEnv* env, jobject, jobject javaFd, jobjectArray buff
 #define NATIVE_METHOD_OVERLOAD(className, functionName, signature, variant) \
     { #functionName, signature, reinterpret_cast<void*>(className ## _ ## functionName ## variant) }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(Linux, accept, "(Ljava/io/FileDescriptor;Ljava/net/SocketAddress;)Ljava/io/FileDescriptor;"),
     NATIVE_METHOD(Linux, access, "(Ljava/lang/String;I)Z"),
     NATIVE_METHOD(Linux, android_fdsan_exchange_owner_tag, "(Ljava/io/FileDescriptor;JJ)V"),
