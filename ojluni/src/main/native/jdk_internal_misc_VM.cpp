@@ -29,7 +29,7 @@ JNIEXPORT jlong JNICALL VM_getNanoTimeAdjustment(jlong offsetInSeconds) {
     return JVM_GetNanoTimeAdjustment(nullptr, nullptr, offsetInSeconds);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   CRITICAL_NATIVE_METHOD(VM, getNanoTimeAdjustment, "(J)J"),
 };
 
