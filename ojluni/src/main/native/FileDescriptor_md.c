@@ -70,7 +70,7 @@ JNIEXPORT jboolean JNICALL FileDescriptor_isSocket(JNIEnv *env, jclass ignored, 
     // END Android-changed: isSocket - do not clear socket error code
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(FileDescriptor, sync, "()V"),
   NATIVE_METHOD(FileDescriptor, isSocket, "(I)Z"),
 };
