@@ -3136,7 +3136,7 @@ public final class URLConnectionTest {
     }
 
     @Test public void noSslFallback_specifiedProtocols() throws Exception {
-        String[] enabledProtocols = { "TLSv1.2", "TLSv1.1" };
+        String[] enabledProtocols = { "TLSv1.3", "TLSv1.2", "TLSv1.1" };
         TestSSLContext testSSLContext = createDefaultTestSSLContext();
         SSLSocketFactory serverSocketFactory =
                 new LimitedProtocolsSocketFactory(

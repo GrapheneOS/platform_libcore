@@ -3183,6 +3183,7 @@ package java.lang {
     ctor public IndexOutOfBoundsException();
     ctor public IndexOutOfBoundsException(String);
     ctor public IndexOutOfBoundsException(int);
+    ctor public IndexOutOfBoundsException(long);
   }
 
   public class InheritableThreadLocal<T> extends java.lang.ThreadLocal<T> {
