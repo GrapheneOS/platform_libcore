@@ -3338,6 +3338,8 @@ package java.lang {
     method public static long abs(long);
     method public static float abs(float);
     method public static double abs(double);
+    method public static int absExact(int);
+    method public static long absExact(long);
     method public static double acos(double);
     method public static int addExact(int, int);
     method public static long addExact(long, long);
@@ -3754,6 +3756,8 @@ package java.lang {
     method public static long abs(long);
     method public static float abs(float);
     method public static double abs(double);
+    method public static int absExact(int);
+    method public static long absExact(long);
     method public static double acos(double);
     method public static int addExact(int, int);
     method public static long addExact(long, long);
@@ -3766,6 +3770,8 @@ package java.lang {
     method public static float copySign(float, float);
     method public static double cos(double);
     method public static double cosh(double);
+    method public static int decrementExact(int);
+    method public static long decrementExact(long);
     method public static double exp(double);
     method public static double expm1(double);
     method public static double floor(double);
@@ -3780,6 +3786,8 @@ package java.lang {
     method public static int getExponent(float);
     method public static int getExponent(double);
     method public static double hypot(double, double);
+    method public static int incrementExact(int);
+    method public static long incrementExact(long);
     method public static double log(double);
     method public static double log10(double);
     method public static double log1p(double);
@@ -3796,6 +3804,8 @@ package java.lang {
     method public static long multiplyExact(long, long);
     method public static long multiplyFull(int, int);
     method public static long multiplyHigh(long, long);
+    method public static int negateExact(int);
+    method public static long negateExact(long);
     method public static double nextAfter(double, double);
     method public static float nextAfter(float, double);
     method public static double nextDown(double);
