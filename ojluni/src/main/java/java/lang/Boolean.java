@@ -25,7 +25,7 @@
 
 package java.lang;
 
-import jdk.internal.HotSpotIntrinsicCandidate;
+import jdk.internal.vm.annotation.IntrinsicCandidate;
 
 /**
  * The Boolean class wraps a value of the primitive type
@@ -139,7 +139,7 @@ public final class Boolean implements java.io.Serializable,
      *
      * @return  the primitive {@code boolean} value of this object.
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public boolean booleanValue() {
         return value;
     }
@@ -158,7 +158,7 @@ public final class Boolean implements java.io.Serializable,
      * @return a {@code Boolean} instance representing {@code b}.
      * @since  1.4
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static Boolean valueOf(boolean b) {
         return (b ? TRUE : FALSE);
     }

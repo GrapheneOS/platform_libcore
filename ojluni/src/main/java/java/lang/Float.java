@@ -26,7 +26,7 @@
 package java.lang;
 
 import jdk.internal.math.FloatingDecimal;
-import jdk.internal.HotSpotIntrinsicCandidate;
+import jdk.internal.vm.annotation.IntrinsicCandidate;
 
 /**
  * The {@code Float} class wraps a value of primitive type
@@ -432,7 +432,7 @@ public final class Float extends Number implements Comparable<Float> {
      * @return a {@code Float} instance representing {@code f}.
      * @since  1.5
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static Float valueOf(float f) {
         return new Float(f);
     }
@@ -644,7 +644,7 @@ public final class Float extends Number implements Comparable<Float> {
      *
      * @return the {@code float} value represented by this object
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public float floatValue() {
         return value;
     }
@@ -763,7 +763,7 @@ public final class Float extends Number implements Comparable<Float> {
      * @param   value   a floating-point number.
      * @return the bits that represent the floating-point number.
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static int floatToIntBits(float value) {
         if (!isNaN(value)) {
             return floatToRawIntBits(value);
@@ -806,7 +806,7 @@ public final class Float extends Number implements Comparable<Float> {
      * @return the bits that represent the floating-point number.
      * @since 1.3
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static native int floatToRawIntBits(float value);
 
     /**
@@ -868,7 +868,7 @@ public final class Float extends Number implements Comparable<Float> {
      * @return  the {@code float} floating-point value with the same bit
      *          pattern.
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static native float intBitsToFloat(int bits);
 
     /**

@@ -28,7 +28,7 @@ package java.lang;
 
 import java.lang.annotation.Native;
 import java.util.Objects;
-import jdk.internal.HotSpotIntrinsicCandidate;
+import jdk.internal.vm.annotation.IntrinsicCandidate;
 import jdk.internal.misc.VM;
 
 /**
@@ -459,7 +459,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * @param   i   an integer to be converted.
      * @return  a string representation of the argument in base&nbsp;10.
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static String toString(int i) {
         // BEGIN Android-changed: Cache the String for small values.
         boolean negative = i < 0;
@@ -1148,7 +1148,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * @return an {@code Integer} instance representing {@code i}.
      * @since  1.5
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static Integer valueOf(int i) {
         if (i >= IntegerCache.low && i <= IntegerCache.high)
             return IntegerCache.cache[i + (-IntegerCache.low)];
@@ -1223,7 +1223,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      * Returns the value of this {@code Integer} as an
      * {@code int}.
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public int intValue() {
         return value;
     }
@@ -1721,7 +1721,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      *     is equal to zero.
      * @since 1.5
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static int numberOfLeadingZeros(int i) {
         // HD, Count leading 0's
         if (i <= 0)
@@ -1748,7 +1748,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      *     to zero.
      * @since 1.5
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static int numberOfTrailingZeros(int i) {
         // HD, Figure 5-14
         int y;
@@ -1771,7 +1771,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      *     representation of the specified {@code int} value.
      * @since 1.5
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static int bitCount(int i) {
         // HD, Figure 5-2
         i = i - ((i >>> 1) & 0x55555555);
@@ -1872,7 +1872,7 @@ public final class Integer extends Number implements Comparable<Integer> {
      *     {@code int} value.
      * @since 1.5
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     public static int reverseBytes(int i) {
         return (i << 24)            |
                ((i & 0xff00) << 8)  |

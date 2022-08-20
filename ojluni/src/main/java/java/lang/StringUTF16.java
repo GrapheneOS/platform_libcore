@@ -30,7 +30,7 @@ import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-import jdk.internal.HotSpotIntrinsicCandidate;
+import jdk.internal.vm.annotation.IntrinsicCandidate;
 
 // BEGIN Android-added: Clarification for usage of StringUTF16 and not StringLatin1.
 /**
@@ -52,7 +52,7 @@ import jdk.internal.HotSpotIntrinsicCandidate;
 final class StringUTF16 {
 
     // BEGIN Android-changed: Pass String instead of byte[]; implement in terms of charAt().
-    // @HotSpotIntrinsicCandidate
+    // @IntrinsicCandidate
     // intrinsic performs no bounds checks
     /*
     static char getChar(byte[] val, int index) {
@@ -61,7 +61,7 @@ final class StringUTF16 {
         return (char)(((val[index++] & 0xff) << HI_BYTE_SHIFT) |
                       ((val[index]   & 0xff) << LO_BYTE_SHIFT));
      */
-    @HotSpotIntrinsicCandidate
+    @IntrinsicCandidate
     static char getChar(String val, int index) {
         return val.charAt(index);
     }

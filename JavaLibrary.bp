@@ -162,7 +162,10 @@ java_defaults {
         ],
     },
     lint: {
-        warning_checks: ["SuspiciousIndentation"],
+        warning_checks: [
+            "SuspiciousIndentation",
+            "NewApi",
+        ],
     },
     min_sdk_version: "31",
 }
