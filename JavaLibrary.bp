@@ -534,6 +534,8 @@ java_library_static {
     srcs: ["support/src/test/java/**/*.java"],
 
     sdk_version: "core_platform",
+    // Make sure that this will be added to the sdk snapshot for S.
+    min_sdk_version: "S",
     libs: ["junit"],
     static_libs: [
         "bouncycastle-unbundled",
@@ -1140,4 +1142,6 @@ java_library {
         ":api_surface_annotation_files",
     ],
     sdk_version: "core_current",
+    // Make sure that this will be added to the sdk snapshot for S.
+    min_sdk_version: "S",
 }
