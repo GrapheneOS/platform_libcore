@@ -691,6 +691,7 @@ java_test {
             "-Xep:TryFailThrowable:ERROR",
             "-Xep:ComparisonOutOfRange:ERROR",
             "-Xep:DoNotCall:OFF",
+            "-Xep:ArrayToString:WARN",
         ],
     },
 
@@ -728,6 +729,12 @@ java_test {
         "junit-params",
         "mockito-target",
     ],
+
+    errorprone: {
+        javacflags: [
+            "-Xep:ArrayToString:WARN",
+        ],
+    },
 }
 
 // Builds the core-ojtests library that contains test code from OpenJDK.
@@ -782,6 +789,7 @@ java_test {
         javacflags: [
             "-Xep:AlwaysThrows:OFF",
             "-Xep:DoNotCall:OFF",
+            "-Xep:ArrayToString:WARN",
         ],
     },
 }
@@ -834,6 +842,7 @@ java_test {
         javacflags: [
             "-Xep:AlwaysThrows:OFF",
             "-Xep:DoNotCall:OFF",
+            "-Xep:ArrayToString:WARN",
         ],
     },
 }
