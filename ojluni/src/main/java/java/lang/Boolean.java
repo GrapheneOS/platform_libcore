@@ -27,6 +27,19 @@ package java.lang;
 
 import jdk.internal.vm.annotation.IntrinsicCandidate;
 
+// BEGIN Android-removed: dynamic constants not supported on Android.
+/*
+import java.lang.constant.Constable;
+import java.lang.constant.ConstantDesc;
+import java.lang.constant.ConstantDescs;
+import java.lang.constant.DynamicConstantDesc;
+import java.util.Optional;
+
+import static java.lang.constant.ConstantDescs.BSM_GET_STATIC_FINAL;
+import static java.lang.constant.ConstantDescs.CD_Boolean;
+*/
+// END Android-removed: dynamic constants not supported on Android.
+
 /**
  * The Boolean class wraps a value of the primitive type
  * {@code boolean} in an object. An object of type
@@ -39,11 +52,23 @@ import jdk.internal.vm.annotation.IntrinsicCandidate;
  * constants and methods useful when dealing with a
  * {@code boolean}.
  *
+ * <!-- Android-removed: paragraph on ValueBased
+ * <p>This is a <a href="{@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
+ * class; programmers should treat instances that are
+ * {@linkplain #equals(Object) equal} as interchangeable and should not
+ * use instances for synchronization, or unpredictable behavior may
+ * occur. For example, in a future release, synchronization may fail.
+ * -->
+ *
  * @author  Arthur van Hoff
  * @since   1.0
  */
+// Android-removed: ValueBased
+// @jdk.internal.ValueBased
 public final class Boolean implements java.io.Serializable,
                                       Comparable<Boolean>
+// Android-removed: no Constable support.
+// , Constable
 {
     /**
      * The {@code Boolean} object corresponding to the primitive
@@ -346,7 +371,6 @@ public final class Boolean implements java.io.Serializable,
     }
 
     // BEGIN Android-removed: dynamic constants not supported on Android.
-    /*
     /**
      * Returns an {@link Optional} containing the nominal descriptor for this
      * instance.
@@ -360,5 +384,4 @@ public final class Boolean implements java.io.Serializable,
     }
     */
     // END Android-removed: dynamic constants not supported on Android.
-
 }

@@ -61,8 +61,6 @@ public class DateFormatTest extends TestCase {
     public void testGetTimeInstance_withLocaleExtension() {
         Locale locale = Locale.forLanguageTag("en-u-tz-usden");
         DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT, locale);
-        // Note: when Calendar class supports "tz" extension, it should return "America/Denver".
-        assertEquals(TimeZone.getDefault().getID(), df.getCalendar().getTimeZone().getID());
-        // assertEquals("America/Denver", df.getCalendar().getTimeZone().getID());
+        assertEquals("America/Denver", df.getCalendar().getTimeZone().getID());
     }
 }

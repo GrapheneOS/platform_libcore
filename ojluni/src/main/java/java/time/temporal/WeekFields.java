@@ -91,6 +91,8 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import sun.util.locale.provider.CalendarDataUtility;
+
 /**
  * Localized definitions of the day-of-week, week-of-month and week-of-year fields.
  * <p>
@@ -283,7 +285,7 @@ public final class WeekFields implements Serializable {
 
     //-----------------------------------------------------------------------
     // Android-changed: Remove "rg" support in the javadoc. See http://b/228322300.
-    // Android-changed: Support the "fw" extension since Android 13. See http://b/228322300.
+    // Android-changed: Support the "fw" extension since Android 13.
     /**
      * Obtains an instance of {@code WeekFields} appropriate for a locale.
      * <p>
@@ -303,44 +305,13 @@ public final class WeekFields implements Serializable {
         // int calDow = CalendarDataUtility.retrieveFirstDayOfWeek(locale);
         Calendar calendar = Calendar.getInstance(locale);
         Calendar.WeekData weekData = calendar.getWeekData();
-        int calDow = retrieveFirstDayOfWeek(locale, weekData);
+        int calDow = CalendarDataUtility.retrieveFirstDayOfWeek(locale, weekData.firstDayOfWeek);
         DayOfWeek dow = DayOfWeek.SUNDAY.plus(calDow - 1);
         // Android-changed: Obtain minimal days from ICU4J.
         // int minDays = CalendarDataUtility.retrieveMinimalDaysInFirstWeek(locale);
         int minDays = weekData.minimalDaysInFirstWeek;
         return WeekFields.of(dow, minDays);
     }
-
-    // BEGIN Android-added: Extra method needed to support "fw" the Unicode extension.
-    // A modified version of the upstream CalendarDataUtility.retrieveFirstDayOfWeek() but with
-    // ICU provider.
-    private static int retrieveFirstDayOfWeek(Locale locale, Calendar.WeekData icuWeekData) {
-        // Look for the Unicode Extension in the locale parameter
-        if (locale.hasExtensions()) {
-            String fw = locale.getUnicodeLocaleType("fw");
-            if (fw != null) {
-                switch (fw.toLowerCase(Locale.ROOT)) {
-                    case "mon":
-                        return Calendar.MONDAY;
-                    case "tue":
-                        return Calendar.TUESDAY;
-                    case "wed":
-                        return Calendar.WEDNESDAY;
-                    case "thu":
-                        return Calendar.THURSDAY;
-                    case "fri":
-                        return Calendar.FRIDAY;
-                    case "sat":
-                        return Calendar.SATURDAY;
-                    case "sun":
-                        return Calendar.SUNDAY;
-                }
-            }
-        }
-
-        return icuWeekData.firstDayOfWeek;
-    }
-    // END Android-added: Extra method needed to support "fw" the Unicode extension.
 
     /**
      * Obtains an instance of {@code WeekFields} from the first day-of-week and minimal days.

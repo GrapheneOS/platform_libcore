@@ -27,7 +27,6 @@ package jdk.internal.vm.annotation;
 
 import java.lang.annotation.*;
 
-// Android-note: HotSpot-specific implementation notes not relevant for Android.
 /**
  * The {@code @IntrinsicCandidate} annotation is specific to the
  * HotSpot Virtual Machine. It indicates that an annotated method
@@ -121,8 +120,6 @@ import java.lang.annotation.*;
  * @since 16
  */
 @Target({ElementType.METHOD, ElementType.CONSTRUCTOR})
-// Android-changed: RetentionPolicy.SOURCE is sufficient as this is no-op on Android.
-// @Retention(RetentionPolicy.RUNTIME)
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface IntrinsicCandidate {
 }
