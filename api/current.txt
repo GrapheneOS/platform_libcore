@@ -2003,6 +2003,7 @@ package java.io {
     method protected void setError();
     method public void write(int);
     method public void write(byte[], int, int);
+    method public void writeBytes(byte[]);
   }
 
   public class PrintWriter extends java.io.Writer {
@@ -13529,6 +13530,42 @@ package java.util {
     method public V remove(Object);
     method public int size();
     method public java.util.Collection<V> values();
+  }
+
+  public final class HexFormat {
+    method public String delimiter();
+    method public String formatHex(byte[]);
+    method public String formatHex(byte[], int, int);
+    method public <A extends java.lang.Appendable> A formatHex(A, byte[]);
+    method public <A extends java.lang.Appendable> A formatHex(A, byte[], int, int);
+    method public static int fromHexDigit(int);
+    method public static int fromHexDigits(CharSequence);
+    method public static int fromHexDigits(CharSequence, int, int);
+    method public static long fromHexDigitsToLong(CharSequence);
+    method public static long fromHexDigitsToLong(CharSequence, int, int);
+    method public static boolean isHexDigit(int);
+    method public boolean isUpperCase();
+    method public static java.util.HexFormat of();
+    method public static java.util.HexFormat ofDelimiter(String);
+    method public byte[] parseHex(CharSequence);
+    method public byte[] parseHex(CharSequence, int, int);
+    method public byte[] parseHex(char[], int, int);
+    method public String prefix();
+    method public String suffix();
+    method public <A extends java.lang.Appendable> A toHexDigits(A, byte);
+    method public String toHexDigits(byte);
+    method public String toHexDigits(char);
+    method public String toHexDigits(short);
+    method public String toHexDigits(int);
+    method public String toHexDigits(long);
+    method public String toHexDigits(long, int);
+    method public char toHighHexDigit(int);
+    method public char toLowHexDigit(int);
+    method public java.util.HexFormat withDelimiter(String);
+    method public java.util.HexFormat withLowerCase();
+    method public java.util.HexFormat withPrefix(String);
+    method public java.util.HexFormat withSuffix(String);
+    method public java.util.HexFormat withUpperCase();
   }
 
   public class IdentityHashMap<K, V> extends java.util.AbstractMap<K,V> implements java.lang.Cloneable java.util.Map<K,V> java.io.Serializable {
