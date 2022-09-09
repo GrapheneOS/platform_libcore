@@ -330,7 +330,7 @@ ojluni/src/main/java/java/net/InetAddressImpl.java,jdk11u/jdk-11.0.13-ga,src/jav
 ojluni/src/main/java/java/net/InetSocketAddress.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/net/InetSocketAddress.java
 ojluni/src/main/java/java/net/InterfaceAddress.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/net/InterfaceAddress.java
 ojluni/src/main/java/java/net/JarURLConnection.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/net/JarURLConnection.java
-ojluni/src/main/java/java/net/MalformedURLException.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/net/MalformedURLException.java
+ojluni/src/main/java/java/net/MalformedURLException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/net/MalformedURLException.java
 ojluni/src/main/java/java/net/MulticastSocket.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/net/MulticastSocket.java
 ojluni/src/main/java/java/net/NetPermission.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/net/NetPermission.java
 ojluni/src/main/java/java/net/NetworkInterface.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/net/NetworkInterface.java
@@ -1559,7 +1559,7 @@ ojluni/src/main/java/sun/nio/fs/UnixChannelFactory.java,jdk8u/jdk8u121-b13,jdk/s
 # ojluni/src/main/java/sun/nio/fs/UnixConstants.java,jdk11u/jdk-11.0.13-ga,src/java.base/unix/classes/sun/nio/fs/UnixConstants.java.template
 ojluni/src/main/java/sun/nio/fs/UnixCopyFile.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/sun/nio/fs/UnixCopyFile.java
 ojluni/src/main/java/sun/nio/fs/UnixDirectoryStream.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/sun/nio/fs/UnixDirectoryStream.java
-ojluni/src/main/java/sun/nio/fs/UnixException.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/sun/nio/fs/UnixException.java
+ojluni/src/main/java/sun/nio/fs/UnixException.java,jdk11u/jdk-11.0.13-ga,src/java.base/unix/classes/sun/nio/fs/UnixException.java
 ojluni/src/main/java/sun/nio/fs/UnixFileAttributeViews.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/sun/nio/fs/UnixFileAttributeViews.java
 ojluni/src/main/java/sun/nio/fs/UnixFileAttributes.java,jdk11u/jdk-11.0.13-ga,src/java.base/unix/classes/sun/nio/fs/UnixFileAttributes.java
 ojluni/src/main/java/sun/nio/fs/UnixFileKey.java,jdk11u/jdk-11.0.13-ga,src/java.base/unix/classes/sun/nio/fs/UnixFileKey.java
