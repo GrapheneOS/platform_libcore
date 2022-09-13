@@ -73,7 +73,7 @@ public class CountedCompleterTest {
             }
 
             public Integer getRawResult() {
-                return new Integer(ai.intValue());
+                return Integer.valueOf(ai.intValue());
             }
 
             protected void setRawResult(Integer val) {

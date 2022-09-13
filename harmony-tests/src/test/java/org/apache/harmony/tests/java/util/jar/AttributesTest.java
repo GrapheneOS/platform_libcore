@@ -64,7 +64,7 @@ public class AttributesTest extends TestCase {
      * java.util.jar.Attributes#containsKey(java.lang.Object)
      */
     public void test_containsKeyLjava_lang_Object() {
-        assertTrue("a) Should have returned false", !a.containsKey(new Integer(1)));
+        assertTrue("a) Should have returned false", !a.containsKey(Integer.valueOf(1)));
         assertTrue("b) Should have returned false", !a.containsKey("0"));
         assertTrue("Should have returned true", a.containsKey(new Attributes.Name("1")));
     }

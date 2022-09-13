@@ -266,13 +266,13 @@ class SerializableObject implements Serializable {
 
     public SerializableObject() {
         d = new Date();
-        i = new Integer(1);
+        i = Integer.valueOf(1);
         e = new Exception("e");
     }
 
     private void writeObject(ObjectOutputStream o) throws IOException {
         o.putFields().put("d", new Date());
-        o.putFields().put("i", new Integer(11));
+        o.putFields().put("i", Integer.valueOf(11));
         o.writeFields();
     }
 
@@ -334,7 +334,7 @@ class SerializableObject2 implements Serializable {
 
     private void writeObject(ObjectOutputStream o) throws IOException {
         ObjectOutputStream.PutField putField = o.putFields();
-        putField.put("i", new Integer(1000));
+        putField.put("i", Integer.valueOf(1000));
         putField.put("d", today);
         putField.put("s", "Richard");
         o.writeFields();

@@ -81,7 +81,7 @@ public class MatcherTest extends TestCase {
         StringBuffer sb = new StringBuffer();
 
         for (int i = 0; m.find(); i++) {
-            m.appendReplacement(sb, new Integer(i * 10 + i).toString());
+            m.appendReplacement(sb, Integer.valueOf(i * 10 + i).toString());
         }
         m.appendTail(sb);
         assertEquals("Today is 0-11-22 ...", sb.toString());
@@ -92,7 +92,7 @@ public class MatcherTest extends TestCase {
         Matcher m = p.matcher("xx $ equals to xx rur.");
         StringBuffer sb = new StringBuffer();
         for (int i = 1; m.find(); i *= 30) {
-            String rep = new Integer(i).toString() + " $1";
+            String rep = Integer.valueOf(i).toString() + " $1";
             m.appendReplacement(sb, rep);
         }
         m.appendTail(sb);

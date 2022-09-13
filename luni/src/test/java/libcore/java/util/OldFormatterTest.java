@@ -52,7 +52,7 @@ public final class OldFormatterTest extends TestCase {
     }
 
     public void test_formatLjava_util_LocaleLjava_lang_StringLjava_lang_Object() {
-        Double val = new Double(3.14);
+        Double val = Double.valueOf(3.14);
         Calendar cal = Calendar.getInstance();
         Formatter fLoc = null;
         Formatter fNoL = null;

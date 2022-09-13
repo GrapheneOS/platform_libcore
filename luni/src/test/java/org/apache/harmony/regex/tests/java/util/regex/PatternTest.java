@@ -781,16 +781,16 @@ public class PatternTest extends TestCaseWithRules {
     }
 
     public void testBug197() {
-        Object[] vals = { ":", new Integer(2),
-                new String[] { "boo", "and:foo" }, ":", new Integer(5),
-                new String[] { "boo", "and", "foo" }, ":", new Integer(-2),
-                new String[] { "boo", "and", "foo" }, ":", new Integer(3),
-                new String[] { "boo", "and", "foo" }, ":", new Integer(1),
-                new String[] { "boo:and:foo" }, "o", new Integer(5),
+        Object[] vals = { ":", Integer.valueOf(2),
+                new String[] { "boo", "and:foo" }, ":", Integer.valueOf(5),
+                new String[] { "boo", "and", "foo" }, ":", Integer.valueOf(-2),
+                new String[] { "boo", "and", "foo" }, ":", Integer.valueOf(3),
+                new String[] { "boo", "and", "foo" }, ":", Integer.valueOf(1),
+                new String[] { "boo:and:foo" }, "o", Integer.valueOf(5),
                 new String[] { "b", "", ":and:f", "", "" }, "o",
-                new Integer(4), new String[] { "b", "", ":and:f", "o" }, "o",
-                new Integer(-2), new String[] { "b", "", ":and:f", "", "" },
-                "o", new Integer(0), new String[] { "b", "", ":and:f" } };
+                Integer.valueOf(4), new String[] { "b", "", ":and:f", "o" }, "o",
+                Integer.valueOf(-2), new String[] { "b", "", ":and:f", "", "" },
+                "o", Integer.valueOf(0), new String[] { "b", "", ":and:f" } };
 
         for (int i = 0; i < vals.length / 3;) {
             String[] res = Pattern.compile(vals[i++].toString()).split(

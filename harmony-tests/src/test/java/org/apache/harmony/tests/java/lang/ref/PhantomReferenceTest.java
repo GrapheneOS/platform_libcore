@@ -37,7 +37,7 @@ public class PhantomReferenceTest extends junit.framework.TestCase {
      */
     public void test_get() {
         ReferenceQueue rq = new ReferenceQueue();
-        bool = new Boolean(false);
+        bool = Boolean.valueOf(false);
         PhantomReference pr = new PhantomReference(bool, rq);
         assertNull("get() should return null.", pr.get());
         pr.enqueue();
@@ -129,7 +129,7 @@ public class PhantomReferenceTest extends junit.framework.TestCase {
      */
     public void test_ConstructorLjava_lang_ObjectLjava_lang_ref_ReferenceQueue() {
         ReferenceQueue rq = new ReferenceQueue();
-        bool = new Boolean(true);
+        bool = Boolean.valueOf(true);
         try {
             PhantomReference pr = new PhantomReference(bool, rq);
             // Allow the finalizer to run to potentially enqueue

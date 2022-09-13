@@ -462,7 +462,7 @@ public class ObjectOutputStreamTest extends TestCase implements Serializable {
         }
 
         protected Object writeReplace() throws ObjectStreamException {
-            return new Integer(42);
+            return Integer.valueOf(42);
         }
     }
 
@@ -491,7 +491,7 @@ public class ObjectOutputStreamTest extends TestCase implements Serializable {
         }
 
         protected Object writeReplace() throws ObjectStreamException {
-            return new Integer(42);
+            return Integer.valueOf(42);
         }
 
         public void writeExternal(ObjectOutput out) {
@@ -511,10 +511,10 @@ public class ObjectOutputStreamTest extends TestCase implements Serializable {
 
         protected Object replaceObject(Object obj) throws IOException {
             if (obj instanceof NotSerializable) {
-                return new Long(10);
+                return Long.valueOf(10);
             }
             if (obj instanceof Integer) {
-                return new Long(((Integer) obj).longValue());
+                return Long.valueOf(((Integer) obj).longValue());
             }
             return super.replaceObject(obj);
         }
@@ -529,7 +529,7 @@ public class ObjectOutputStreamTest extends TestCase implements Serializable {
         }
 
         protected Object replaceObject(Object obj) throws IOException {
-            return new Long(10);
+            return Long.valueOf(10);
         }
     }
 
@@ -1280,7 +1280,7 @@ public class ObjectOutputStreamTest extends TestCase implements Serializable {
         baos = new ByteArrayOutputStream();
         oos = new ObjectOutputStreamWithReplace(baos);
 
-        oos.writeObject(new Integer(99));
+        oos.writeObject(Integer.valueOf(99));
         oos.writeObject(Integer.class);
         oos.writeObject(ObjectStreamClass.lookup(Integer.class));
         oos.flush();

@@ -122,7 +122,7 @@ public class ProxyTest extends junit.framework.TestCase {
             public Object invoke(Object proxy, Method method, Object[] args)
                     throws Throwable {
                 if (method.getName().equals("equals"))
-                    return new Boolean(proxy == args[0]);
+                    return Boolean.valueOf(proxy == args[0]);
                 if (method.getName().equals("array"))
                     return new int[] { (int) ((long[]) args[0])[1], -1 };
                 if (method.getName().equals("string")) {

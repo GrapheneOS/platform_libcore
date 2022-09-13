@@ -1115,7 +1115,7 @@ public class ObjectInputStreamTest extends TestCase implements
      */
     public void test_resolveObjectLjava_lang_Object() throws Exception {
         // Write an Integer object into memory
-        Integer original = new Integer(10);
+        Integer original = Integer.valueOf(10);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(original);

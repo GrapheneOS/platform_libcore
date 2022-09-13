@@ -477,7 +477,7 @@ public class SignatureTest extends TestCase {
 
         try {
             Signature sig = getTestSignature();
-            sig.setParameter("TestParam", new Integer(42));
+            sig.setParameter("TestParam", Integer.valueOf(42));
             fail("expected InvalidParameterException");
         } catch (InvalidParameterException e) {
             // expected

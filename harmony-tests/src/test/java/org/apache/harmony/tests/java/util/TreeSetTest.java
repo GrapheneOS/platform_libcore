@@ -75,14 +75,14 @@ public class TreeSetTest extends junit.framework.TestCase {
         // Test for method java.util.TreeSet(java.util.Comparator)
         TreeSet myTreeSet = new TreeSet(new ReversedIntegerComparator());
         assertTrue("Did not construct correct TreeSet", myTreeSet.isEmpty());
-        myTreeSet.add(new Integer(1));
-        myTreeSet.add(new Integer(2));
+        myTreeSet.add(Integer.valueOf(1));
+        myTreeSet.add(Integer.valueOf(2));
         assertTrue(
                 "Answered incorrect first element--did not use custom comparator ",
-                myTreeSet.first().equals(new Integer(2)));
+                myTreeSet.first().equals(Integer.valueOf(2)));
         assertTrue(
                 "Answered incorrect last element--did not use custom comparator ",
-                myTreeSet.last().equals(new Integer(1)));
+                myTreeSet.last().equals(Integer.valueOf(1)));
     }
 
     /**
@@ -111,8 +111,8 @@ public class TreeSetTest extends junit.framework.TestCase {
      */
     public void test_addLjava_lang_Object() {
         // Test for method boolean java.util.TreeSet.add(java.lang.Object)
-        ts.add(new Integer(-8));
-        assertTrue("Failed to add Object", ts.contains(new Integer(-8)));
+        ts.add(Integer.valueOf(-8));
+        assertTrue("Failed to add Object", ts.contains(Integer.valueOf(-8)));
         ts.add(objArray[0]);
         assertTrue("Added existing element", ts.size() == objArray.length + 1);
 
@@ -174,7 +174,7 @@ public class TreeSetTest extends junit.framework.TestCase {
         assertTrue("Returned false for valid Object", ts
                 .contains(objArray[objArray.length / 2]));
         assertTrue("Returned true for invalid Object", !ts
-                .contains(new Integer(-9)));
+                .contains(Integer.valueOf(-9)));
         try {
             ts.contains(new Object());
         } catch (ClassCastException e) {
@@ -200,7 +200,7 @@ public class TreeSetTest extends junit.framework.TestCase {
     public void test_headSetLjava_lang_Object() {
         // Test for method java.util.SortedSet
         // java.util.TreeSet.headSet(java.lang.Object)
-        Set s = ts.headSet(new Integer(100));
+        Set s = ts.headSet(Integer.valueOf(100));
         assertEquals("Returned set of incorrect size", 100, s.size());
         for (int i = 0; i < 100; i++)
             assertTrue("Returned incorrect set", s.contains(objArray[i]));
@@ -296,7 +296,7 @@ public class TreeSetTest extends junit.framework.TestCase {
     public void test_tailSetLjava_lang_Object() {
         // Test for method java.util.SortedSet
         // java.util.TreeSet.tailSet(java.lang.Object)
-        Set s = ts.tailSet(new Integer(900));
+        Set s = ts.tailSet(Integer.valueOf(900));
         assertEquals("Returned set of incorrect size", 100, s.size());
         for (int i = 900; i < objArray.length; i++)
             assertTrue("Returned incorrect set", s.contains(objArray[i]));
@@ -313,8 +313,8 @@ public class TreeSetTest extends junit.framework.TestCase {
         Set s2 = new TreeSet();
         s1.add("key1");
         s1.add("key2");
-        s2.add(new Integer(1));
-        s2.add(new Integer(2));
+        s2.add(Integer.valueOf(1));
+        s2.add(Integer.valueOf(2));
         assertFalse("Sets should not be equal 1", s1.equals(s2));
         assertFalse("Sets should not be equal 2", s2.equals(s1));
 
@@ -354,7 +354,7 @@ public class TreeSetTest extends junit.framework.TestCase {
     protected void setUp() {
         ts = new TreeSet();
         for (int i = 0; i < objArray.length; i++) {
-            Object x = objArray[i] = new Integer(i);
+            Object x = objArray[i] = Integer.valueOf(i);
             ts.add(x);
         }
     }

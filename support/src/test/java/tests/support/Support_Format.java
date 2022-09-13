@@ -117,7 +117,7 @@ public class Support_Format extends TestCase {
 
         // called from support_messageformat tests
         public FieldContainer(int start, int end, Attribute attribute, int value) {
-            this(start, end, attribute, new Integer(value));
+            this(start, end, attribute, Integer.valueOf(value));
         }
 
         // called from support_messageformat tests

@@ -33,7 +33,7 @@ public class WeakReferenceTest extends junit.framework.TestCase {
      */
     public void test_ConstructorLjava_lang_ObjectLjava_lang_ref_ReferenceQueue() {
         ReferenceQueue rq = new ReferenceQueue();
-        bool = new Boolean(true);
+        bool = Boolean.valueOf(true);
         try {
             // Allow the finalizer to run to potentially enqueue
             WeakReference wr = new WeakReference(bool, rq);
@@ -58,7 +58,7 @@ public class WeakReferenceTest extends junit.framework.TestCase {
      * java.lang.ref.WeakReference#WeakReference(java.lang.Object)
      */
     public void test_ConstructorLjava_lang_Object() {
-        bool = new Boolean(true);
+        bool = Boolean.valueOf(true);
         try {
             WeakReference wr = new WeakReference(bool);
             // Allow the finalizer to run to potentially enqueue

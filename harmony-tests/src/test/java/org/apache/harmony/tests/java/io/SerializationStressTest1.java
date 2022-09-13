@@ -307,7 +307,7 @@ public class SerializationStressTest1 extends SerializationStressTest {
 
         ;
 
-        public Integer anInstanceVar = new Integer(0xA1);
+        public Integer anInstanceVar = Integer.valueOf(0xA1);
 
         public MyExceptionWhenDumping2() {
             super();

@@ -65,7 +65,7 @@ public class IdentityTest extends TestCase {
         };
 
         for (int k=0; k<value.length; k+=2) {
-            assertEquals(value[k+1], new Boolean(i1.equals(value[k])));
+            assertEquals(value[k+1], Boolean.valueOf(i1.equals(value[k])));
             if (Boolean.TRUE.equals(value[k+1])) assertEquals(i1.hashCode(), value[k].hashCode());
         }
         // check other cases
@@ -228,7 +228,7 @@ public class IdentityTest extends TestCase {
                 new IdentityStub(name, pk), Boolean.TRUE
         };
         for (int k=0; k<value.length; k+=2){
-            assertEquals(value[k+1], new Boolean(i.identityEquals((Identity)value[k])));
+            assertEquals(value[k+1], Boolean.valueOf(i.identityEquals((Identity)value[k])));
             if (Boolean.TRUE.equals(value[k+1])) assertEquals(i.hashCode(), value[k].hashCode());
         }
         Identity i2 = identityScope.getIdentity(name);

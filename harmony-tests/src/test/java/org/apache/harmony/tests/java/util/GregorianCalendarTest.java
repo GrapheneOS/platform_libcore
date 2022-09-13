@@ -438,7 +438,7 @@ public class GregorianCalendarTest extends junit.framework.TestCase {
         for (int i = 0; i < max.length; i++) {
             if (gc.getLeastMaximum(i) != max[i]) {
                 result.set(i);
-                values.add(new Integer(gc.getLeastMaximum(i)));
+                values.add(Integer.valueOf(gc.getLeastMaximum(i)));
             }
         }
         assertTrue("Wrong least max for " + result + " = " + values, result
@@ -467,7 +467,7 @@ public class GregorianCalendarTest extends junit.framework.TestCase {
         for (int i = 0; i < max.length; i++) {
             if (gc.getMaximum(i) != max[i]) {
                 result.set(i);
-                values.add(new Integer(gc.getMaximum(i)));
+                values.add(Integer.valueOf(gc.getMaximum(i)));
             }
         }
         assertTrue("Wrong max for " + result + " = " + values,

@@ -633,7 +633,7 @@ public class SerializationStressTest extends junit.framework.TestCase implements
 
     public void test_resolveClass() {
         try {
-            oos.writeObject(new Object[] { Integer.class, new Integer(1) });
+            oos.writeObject(new Object[] { Integer.class, Integer.valueOf(1) });
             oos.close();
 
             ois = new ObjectInputStreamSubclass(loadStream());

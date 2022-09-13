@@ -36,13 +36,13 @@ public class Support_SetTest extends junit.framework.TestCase {
     public void runTest() {
         // add
         assertTrue("Set Test - Adding a duplicate element changed the set",
-                !set.add(new Integer(50)));
+                !set.add(Integer.valueOf(50)));
         assertTrue("Set Test - Removing an element did not change the set", set
-                .remove(new Integer(50)));
+                .remove(Integer.valueOf(50)));
         assertTrue(
                 "Set Test - Adding and removing a duplicate element failed to remove it",
-                !set.contains(new Integer(50)));
-        set.add(new Integer(50));
+                !set.contains(Integer.valueOf(50)));
+        set.add(Integer.valueOf(50));
         new Support_CollectionTest("", set).runTest();
     }
 }

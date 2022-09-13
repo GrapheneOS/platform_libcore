@@ -244,9 +244,9 @@ public class ObjectInputStream2Test extends TestCase {
         int v = 123;
         for(Field f : clazz.getFields()) {
             if (f.getType() == Integer.class) {
-                f.set(o1, new Integer(v++));
+                f.set(o1, Integer.valueOf(v++));
             } else if (f.getType() == Long.class) {
-                f.set(o1, new Long(v++));
+                f.set(o1, Long.valueOf(v++));
             }
         }
 

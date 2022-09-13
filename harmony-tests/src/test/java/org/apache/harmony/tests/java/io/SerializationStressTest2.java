@@ -1199,7 +1199,7 @@ public class SerializationStressTest2 extends SerializationStressTest {
 
         try {
             Object[] threeObjects = new Object[3];
-            threeObjects[0] = new Integer(2);
+            threeObjects[0] = Integer.valueOf(2);
             threeObjects[1] = Date.class;
             threeObjects[2] = threeObjects[0]; // has to be the same
             objToSave = threeObjects;

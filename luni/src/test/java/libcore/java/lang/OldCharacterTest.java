@@ -141,9 +141,9 @@ public class OldCharacterTest extends TestCase {
     }
 
     public void test_toString() {
-        assertEquals("Incorrect String returned", "T", new Character('T').toString());
-        assertEquals("Incorrect String returned", "1", new Character('1').toString());
-        assertEquals("Incorrect String returned", "$", new Character('$').toString());
+        assertEquals("Incorrect String returned", "T", Character.valueOf('T').toString());
+        assertEquals("Incorrect String returned", "1", Character.valueOf('1').toString());
+        assertEquals("Incorrect String returned", "$", Character.valueOf('$').toString());
     }
 
     public void test_toString_char() {

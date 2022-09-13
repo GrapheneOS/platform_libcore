@@ -51,8 +51,8 @@ public class Support_MessageFormat extends Support_Format {
 		MessageFormat format = new MessageFormat(pattern, Locale.US);
 
 		Date date = new GregorianCalendar(2005, 1, 28, 14, 20, 16).getTime();
-		Integer hamburgers = new Integer(8);
-		Object[] objects = new Object[] { hamburgers, new Double(3.5),
+		Integer hamburgers = Integer.valueOf(8);
+		Object[] objects = new Object[] { hamburgers, Double.valueOf(3.5),
 				hamburgers, date, date };
 
 		super.text = "On Feb 28, 2005 at 2:20:16 PM, he ate 8 hamburgers and drank 3.5 liters of coke. That was more than enough food!";
@@ -80,8 +80,8 @@ public class Support_MessageFormat extends Support_Format {
 		MessageFormat format = new MessageFormat(pattern, Locale.US);
 
 		Date date = new GregorianCalendar(2005, 1, 28, 14, 20, 16).getTime();
-		Integer hamburgers = new Integer(8);
-		Object[] objects = new Object[] { hamburgers, new Double(3.5), hamburgers, date, date };
+		Integer hamburgers = Integer.valueOf(8);
+		Object[] objects = new Object[] { hamburgers, Double.valueOf(3.5), hamburgers, date, date };
 
 		t_Format(1, objects, format, getMessageVector1());
 	}

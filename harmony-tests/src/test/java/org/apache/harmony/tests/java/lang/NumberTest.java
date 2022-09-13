@@ -25,19 +25,19 @@ public class NumberTest extends junit.framework.TestCase {
     public void test_byteValue() {
         int number = 1231243;
         assertTrue("Incorrect byte returned for: " + number,
-                ((byte) new Integer(number).intValue()) == new Integer(number)
+                ((byte) Integer.valueOf(number).intValue()) == Integer.valueOf(number)
                         .byteValue());
         number = 0;
         assertTrue("Incorrect byte returned for: " + number,
-                ((byte) new Integer(number).intValue()) == new Integer(number)
+                ((byte) Integer.valueOf(number).intValue()) == Integer.valueOf(number)
                         .byteValue());
         number = -1;
         assertTrue("Incorrect byte returned for: " + number,
-                ((byte) new Integer(number).intValue()) == new Integer(number)
+                ((byte) Integer.valueOf(number).intValue()) == Integer.valueOf(number)
                         .byteValue());
         number = -84109328;
         assertTrue("Incorrect byte returned for: " + number,
-                ((byte) new Integer(number).intValue()) == new Integer(number)
+                ((byte) Integer.valueOf(number).intValue()) == Integer.valueOf(number)
                         .byteValue());
     }
 
@@ -47,19 +47,19 @@ public class NumberTest extends junit.framework.TestCase {
     public void test_shortValue() {
         int number = 1231243;
         assertTrue("Incorrect byte returned for: " + number,
-                ((short) new Integer(number).intValue()) == new Integer(number)
+                ((short) Integer.valueOf(number).intValue()) == Integer.valueOf(number)
                         .shortValue());
         number = 0;
         assertTrue("Incorrect byte returned for: " + number,
-                ((short) new Integer(number).intValue()) == new Integer(number)
+                ((short) Integer.valueOf(number).intValue()) == Integer.valueOf(number)
                         .shortValue());
         number = -1;
         assertTrue("Incorrect byte returned for: " + number,
-                ((short) new Integer(number).intValue()) == new Integer(number)
+                ((short) Integer.valueOf(number).intValue()) == Integer.valueOf(number)
                         .shortValue());
         number = -84109328;
         assertTrue("Incorrect byte returned for: " + number,
-                ((short) new Integer(number).intValue()) == new Integer(number)
+                ((short) Integer.valueOf(number).intValue()) == Integer.valueOf(number)
                         .shortValue());
 
     }

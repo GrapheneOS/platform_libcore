@@ -1370,7 +1370,7 @@ public class MethodHandlesTest extends TestCase {
             return result;
         }
         public static Long sumToReference(int... ints) {
-            return new Long(sumToPrimitive(ints));
+            return Long.valueOf(sumToPrimitive(ints));
         }
         public static MethodHandles.Lookup lookup() {
             return MethodHandles.lookup();
@@ -1590,10 +1590,10 @@ public class MethodHandlesTest extends TestCase {
         assertEquals("x, []", (String) mh.invoke(vat, 'x'));
         assertEquals("x, [3.141]", (String) mh.invoke(vat, 'x', 3.141));
         assertEquals("x, [null, 3.131, 37]",
-                (String) mh.invoke(vat, 'x', null, 3.131, new Integer(37)));
+                (String) mh.invoke(vat, 'x', null, 3.131, Integer.valueOf(37)));
         try {
             assertEquals("x, [null, 3.131, bad, 37]",
-                    (String) mh.invoke(vat, 'x', null, 3.131, "bad", new Integer(37)));
+                    (String) mh.invoke(vat, 'x', null, 3.131, "bad", Integer.valueOf(37)));
             assertTrue(false);
             fail();
         } catch (ClassCastException e) {
@@ -1601,7 +1601,7 @@ public class MethodHandlesTest extends TestCase {
         try {
             assertEquals("x, [null, 3.131, bad, 37]",
                     (String) mh.invoke(
-                            vat, 'x', (Process) null, 3.131, "bad", new Integer(37)));
+                            vat, 'x', (Process) null, 3.131, "bad", Integer.valueOf(37)));
             assertTrue(false);
             fail();
         } catch (ClassCastException e) {
@@ -1619,13 +1619,13 @@ public class MethodHandlesTest extends TestCase {
         assertFalse(mh.isVarargsCollector());
         mh.invoke(vat, new Object[]{"123"});
         try {
-            assertEquals("-", mh.invoke(vat, new Float(3), new Float(4)));
+            assertEquals("-", mh.invoke(vat, Float.valueOf(3), Float.valueOf(4)));
             fail();
         } catch (WrongMethodTypeException e) {
         }
         mh = mh.asVarargsCollector(Object[].class);
         assertTrue(mh.isVarargsCollector());
-        assertEquals("[3.0, 4.0]", (String) mh.invoke(vat, new Float(3), new Float(4)));
+        assertEquals("[3.0, 4.0]", (String) mh.invoke(vat, Float.valueOf(3), Float.valueOf(4)));
     }
 
     public void testVariableArity_booleanConstructors() throws Throwable {
@@ -1705,18 +1705,18 @@ public class MethodHandlesTest extends TestCase {
         assertEquals("x, []", ((VariableArityTester) mh.invoke('x')).lastResult());
         assertEquals("x, [3.141]", ((VariableArityTester) mh.invoke('x', 3.141)).lastResult());
         assertEquals("x, [null, 3.131, 37]",
-                ((VariableArityTester) mh.invoke('x', null, 3.131, new Integer(37))).lastResult());
+                ((VariableArityTester) mh.invoke('x', null, 3.131, Integer.valueOf(37))).lastResult());
         try {
             assertEquals("x, [null, 3.131, bad, 37]",
                     ((VariableArityTester) mh.invoke(
-                            'x', null, 3.131, "bad", new Integer(37))).lastResult());
+                            'x', null, 3.131, "bad", Integer.valueOf(37))).lastResult());
             fail();
         } catch (ClassCastException expected) {
         }
         try {
             assertEquals("x, [null, 3.131, bad, 37]",
                     ((VariableArityTester) mh.invoke(
-                            'x', (Process) null, 3.131, "bad", new Integer(37))).lastResult());
+                            'x', (Process) null, 3.131, "bad", Integer.valueOf(37))).lastResult());
             fail();
         } catch (ClassCastException expected) {
         }

@@ -153,7 +153,10 @@ java_defaults {
         //"-Xlint:all",
         //"-Xlint:-serial,-deprecation,-unchecked",
     ],
-    dxflags: ["--core-library"],
+    dxflags: [
+        "--android-platform-build",
+        "--core-library",
+    ],
     errorprone: {
         javacflags: [
             "-Xep:MissingOverride:OFF", // Ignore missing @Override.

@@ -560,7 +560,7 @@ public class AbstractSequentialListTest extends TestCase {
         }
 
         try {
-            asl.set(1, new Double(1));
+            asl.set(1, Double.valueOf(1));
             fail("ClassCastException expected");
         } catch (ClassCastException e) {
             //

@@ -276,7 +276,7 @@ public class UpdateFunctionalityTest2 extends TestCase {
                 + DatabaseCreator.TEST_TABLE5
                 + " WHERE testID < 3 ORDER BY testID");
         while (r.next()) {
-            assertEquals("Incorrect value was returned", new Integer(r
+            assertEquals("Incorrect value was returned", Integer.valueOf(r
                     .getInt(1)).toString(), r.getString(2));
         }
         r.close();

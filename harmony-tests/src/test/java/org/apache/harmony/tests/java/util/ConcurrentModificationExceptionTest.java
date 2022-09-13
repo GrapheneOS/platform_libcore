@@ -39,7 +39,7 @@ public class ConcurrentModificationExceptionTest extends
         }
 
         public void run() {
-            Object someItem = new Integer(-1);
+            Object someItem = Integer.valueOf(-1);
             while (keepGoing) {
                 col.add(someItem);
                 col.remove(someItem);
@@ -55,7 +55,7 @@ public class ConcurrentModificationExceptionTest extends
         Collection myCollection = new LinkedList();
         Iterator myIterator = myCollection.iterator();
         for (int counter = 0; counter < 50; counter++)
-            myCollection.add(new Integer(counter));
+            myCollection.add(Integer.valueOf(counter));
         CollectionModifier cm = new CollectionModifier(myCollection);
         Thread collectionSlapper = new Thread(cm);
         try {

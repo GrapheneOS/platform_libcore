@@ -46,7 +46,7 @@ public class ReferenceQueueTest extends junit.framework.TestCase {
             } catch (Exception e) {}
             // store in a static so it won't be gc'ed because the jit
             // optimized it out
-            integer = new Integer(667);
+            integer = Integer.valueOf(667);
             SoftReference sr = new SoftReference(integer, rq);
             sr.enqueue();
         }
@@ -60,7 +60,7 @@ public class ReferenceQueueTest extends junit.framework.TestCase {
     public void test_poll() {
         // store in a static so it won't be gc'ed because the jit
         // optimized it out
-        b = new Boolean(true);
+        b = Boolean.valueOf(true);
         Object obj = new Object();
         String str = "Test";
 
@@ -107,7 +107,7 @@ public class ReferenceQueueTest extends junit.framework.TestCase {
     public void test_remove() {
         // store in a static so it won't be gc'ed because the jit
         // optimized it out
-        b = new Boolean(true);
+        b = Boolean.valueOf(true);
 
         SoftReference sr = new SoftReference(b, rq);
         sr.enqueue();
@@ -169,7 +169,7 @@ public class ReferenceQueueTest extends junit.framework.TestCase {
 
         Object obj = new Object();
         WeakReference wr = new WeakReference(obj, rq);
-        Boolean b = new Boolean(true);
+        Boolean b = Boolean.valueOf(true);
         SoftReference sr = new SoftReference(b, rq);
         String str = "Test";
         PhantomReference pr = new PhantomReference(str, rq);

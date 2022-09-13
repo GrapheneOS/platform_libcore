@@ -947,11 +947,11 @@ public class ArrayDequeTest extends TestCase {
      * java.util.ArrayDeque#Serialization()
      */
     public void test_serialization() throws Exception {
-        assertTrue(testQue.add(new Integer(1)));
-        assertTrue(testQue.add(new Integer(2)));
-        assertTrue(testQue.add(new Integer(3)));
-        assertTrue(testQue.add(new Integer(4)));
-        assertTrue(testQue.add(new Integer(5)));
+        assertTrue(testQue.add(Integer.valueOf(1)));
+        assertTrue(testQue.add(Integer.valueOf(2)));
+        assertTrue(testQue.add(Integer.valueOf(3)));
+        assertTrue(testQue.add(Integer.valueOf(4)));
+        assertTrue(testQue.add(Integer.valueOf(5)));
         SerializationTest.verifySelf(testQue, new SerializableAssert() {
             public void assertDeserialized(Serializable initial,
                     Serializable deserialized) {
@@ -967,11 +967,11 @@ public class ArrayDequeTest extends TestCase {
      */
     @SuppressWarnings({ "unchecked", "boxing" })
     public void testSerializationCompatibility() throws Exception {
-        assertTrue(testQue.add(new Integer(1)));
-        assertTrue(testQue.add(new Integer(2)));
-        assertTrue(testQue.add(new Integer(3)));
-        assertTrue(testQue.add(new Integer(4)));
-        assertTrue(testQue.add(new Integer(5)));
+        assertTrue(testQue.add(Integer.valueOf(1)));
+        assertTrue(testQue.add(Integer.valueOf(2)));
+        assertTrue(testQue.add(Integer.valueOf(3)));
+        assertTrue(testQue.add(Integer.valueOf(4)));
+        assertTrue(testQue.add(Integer.valueOf(5)));
         SerializationTest.verifyGolden(this, testQue, new SerializableAssert() {
             public void assertDeserialized(Serializable initial,
                     Serializable deserialized) {

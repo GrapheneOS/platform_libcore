@@ -53,12 +53,12 @@ public class VectorTest extends junit.framework.TestCase {
 
         Vector tv = new Vector(100);
         for (int i = 0; i < 100; i++)
-            tv.addElement(new Integer(i));
+            tv.addElement(Integer.valueOf(i));
         new Support_ListTest("", tv).runTest();
 
         tv = new Vector(200);
         for (int i = -50; i < 150; i++)
-            tv.addElement(new Integer(i));
+            tv.addElement(Integer.valueOf(i));
         new Support_ListTest("", tv.subList(50, 150)).runTest();
 
         Vector v = new Vector();

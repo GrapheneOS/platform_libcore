@@ -26,7 +26,7 @@ public class OldCharacterSubsetTest extends TestCase {
       assertTrue(subset1.equals(subset1));
       assertFalse(subset1.equals(new Character.Subset("name") {}));
       assertFalse(subset1.equals(new Character.Subset("name1") {}));
-      assertFalse(subset1.equals(new Integer(0)));
+      assertFalse(subset1.equals(Integer.valueOf(0)));
     }
 
     public void test_hashCode() {

@@ -569,7 +569,7 @@ public class ArrayTest extends junit.framework.TestCase {
         int[] x = { 0 };
         boolean thrown = false;
         try {
-            Array.set(x, 0, new Integer(1));
+            Array.set(x, 0, Integer.valueOf(1));
         } catch (Exception e) {
             fail("Exception during get test : " + e.getMessage());
         }
@@ -586,7 +586,7 @@ public class ArrayTest extends junit.framework.TestCase {
         }
         thrown = false;
         try {
-            Array.set(x, 4, new Integer(1));
+            Array.set(x, 4, Integer.valueOf(1));
         } catch (ArrayIndexOutOfBoundsException e) {
             // Correct behaviour
             thrown = true;

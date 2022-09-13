@@ -144,7 +144,7 @@ public class AbstractQueueTest extends TestCase {
         for (int i = 0; i < LAST_INDEX; i++) {
             queue.add(o);
         }
-        Integer I = new Integer(123456);
+        Integer I = Integer.valueOf(123456);
         queue.add(I);
         assertTrue(queue.contains(I));
         Iterator iter = queue.iterator();
@@ -170,7 +170,7 @@ public class AbstractQueueTest extends TestCase {
      * java.util.AbstractQueue#addAll(E)
      */
     public void test_addAllLE_with_null() {
-        List list = Arrays.asList("MYTESTSTRING", null, new Float(123.456));
+        List list = Arrays.asList("MYTESTSTRING", null, Float.valueOf(123.456f));
         try {
             queue.addAll(list);
             fail("should throw NullPointerException");

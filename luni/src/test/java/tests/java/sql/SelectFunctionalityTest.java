@@ -407,8 +407,8 @@ public class SelectFunctionalityTest extends TestCase {
             assertTrue("Wrong value of rating field", values
                     .containsKey(rating));
             assertEquals("Wrong value of sum field", values.get(rating),
-                    new Integer(sum));
-            assertEquals(new Integer(sum), values.remove(rating));
+                    Integer.valueOf(sum));
+            assertEquals(Integer.valueOf(sum), values.remove(rating));
         }
         result.close();
         assertTrue("Result set has wrong size", values.isEmpty());

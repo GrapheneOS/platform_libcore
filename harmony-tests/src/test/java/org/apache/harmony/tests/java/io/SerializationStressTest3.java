@@ -1518,7 +1518,7 @@ public class SerializationStressTest3 extends SerializationStressTest {
         Object objLoaded;
 
         try {
-            objToSave = new Object[] { Integer.class, new Integer(1) };
+            objToSave = new Object[] { Integer.class, Integer.valueOf(1) };
             if (DEBUG)
                 System.out.println("Obj = " + objToSave);
             objLoaded = dumpAndReload(objToSave);

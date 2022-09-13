@@ -127,8 +127,8 @@ public class StackTest extends junit.framework.TestCase {
      * java.util.Stack#push(java.lang.Object)
      */
     public void test_pushLjava_lang_Object() {
-        Object [] array = {new Integer(0), new Object(),
-                           new Float(0), new String()};
+        Object [] array = {Integer.valueOf(0), new Object(),
+                           Float.valueOf(0), new String()};
 
         Stack<Object> stack = new Stack<Object>();
         for(int i = 0; i < array.length; i++) {

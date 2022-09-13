@@ -45,7 +45,7 @@ public class EmptyStackExceptionTest extends junit.framework.TestCase {
      */
     protected void setUp() {
         for (int counter = 0; counter < objArray.length; counter++) {
-            objArray[counter] = new Integer(counter);
+            objArray[counter] = Integer.valueOf(counter);
         }
 
         s = new Stack();

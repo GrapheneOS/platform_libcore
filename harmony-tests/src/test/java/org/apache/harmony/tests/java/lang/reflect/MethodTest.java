@@ -743,7 +743,7 @@ public class MethodTest extends junit.framework.TestCase {
 
                 try {
                     methods[i].invoke(testMethod,
-                            new Object[] { new Integer(1) });
+                            new Object[] { Integer.valueOf(1) });
                     assertTrue("invalid invoke with Integer: " + methods[i],
                             param == Integer.TYPE || param == Long.TYPE
                                     || param == Float.TYPE
@@ -758,7 +758,7 @@ public class MethodTest extends junit.framework.TestCase {
                 }
 
                 try {
-                    methods[i].invoke(testMethod, new Object[] { new Long(1) });
+                    methods[i].invoke(testMethod, new Object[] { Long.valueOf(1) });
                     assertTrue("invalid invoke with Long: " + methods[i],
                             param == Long.TYPE || param == Float.TYPE
                                     || param == Double.TYPE);
@@ -790,7 +790,7 @@ public class MethodTest extends junit.framework.TestCase {
 
                 try {
                     methods[i]
-                            .invoke(testMethod, new Object[] { new Float(1) });
+                            .invoke(testMethod, new Object[] { Float.valueOf(1) });
                     assertTrue("invalid invoke with Float: " + methods[i],
                             param == Float.TYPE || param == Double.TYPE);
                 } catch (Exception e) {
@@ -806,7 +806,7 @@ public class MethodTest extends junit.framework.TestCase {
 
                 try {
                     methods[i].invoke(testMethod,
-                            new Object[] { new Double(1) });
+                            new Object[] { Double.valueOf(1) });
                     assertTrue("invalid invoke with Double: " + methods[i],
                             param == Double.TYPE);
                 } catch (Exception e) {
