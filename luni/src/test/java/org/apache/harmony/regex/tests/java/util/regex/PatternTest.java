@@ -2192,18 +2192,28 @@ public class PatternTest extends TestCaseWithRules {
 
         pat = Pattern.compile("b");
         s = pat.splitAsStream("abccbadfebb").toArray(String[]::new);
-        assertEquals(s.length, 3);
+        assertEquals(3, s.length);
+        assertEquals(s[0], "a");
+        assertEquals(s[1], "cc");
+        assertEquals(s[2], "adfe");
 
         pat = Pattern.compile("b");
         s = pat.splitAsStream("").toArray(String[]::new);
-        assertEquals(s.length, 0);
+        // The length is 1 because the javadoc says "If this pattern does not match any subsequence
+        // of the input then the resulting stream has just one element, namely the input sequence
+        // in string form.
+        assertEquals(1, s.length);
+        assertEquals(s[0], "");
 
         pat = Pattern.compile("");
         s = pat.splitAsStream("").toArray(String[]::new);
-        assertEquals(s.length, 0);
+        assertEquals(1, s.length);
+        assertEquals(s[0], "");
 
         pat = Pattern.compile("");
         s = pat.splitAsStream("abccbadfe").toArray(String[]::new);
-        assertEquals(s.length, 9);
+        assertEquals(9, s.length);
+        assertEquals(s[0], "a");
+        assertEquals(s[8], "e");
     }
 }

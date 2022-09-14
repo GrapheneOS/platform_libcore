@@ -44,7 +44,7 @@ public class OldMatcherTest extends TestCase {
         Throwable t = null;
         m.find();
         try {
-            m.appendReplacement(null, "dog");
+            m.appendReplacement((StringBuffer) null, "dog");
         } catch (NullPointerException e) {
             t = e;
         }
@@ -101,7 +101,7 @@ public class OldMatcherTest extends TestCase {
         }
         Throwable t = null;
         try {
-            m.appendTail(null);
+            m.appendTail((StringBuffer) null);
         } catch (NullPointerException e) {
             t = e;
         }

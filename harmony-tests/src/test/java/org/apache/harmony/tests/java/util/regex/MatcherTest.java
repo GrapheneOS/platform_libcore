@@ -146,7 +146,7 @@ public class MatcherTest extends TestCase {
     public void testReplaceFirst_null_match() {
         Matcher matcher = Pattern.compile("Hello").matcher("Hello, world!");
         try {
-            matcher.replaceFirst(null);
+            matcher.replaceFirst((String) null);
             fail();
         } catch (NullPointerException expected) {
         }
@@ -155,7 +155,7 @@ public class MatcherTest extends TestCase {
     public void testReplaceFirst_null_nomatch() {
         Matcher matcher = Pattern.compile("not found").matcher("Hello, world!");
         try {
-            matcher.replaceFirst(null);
+            matcher.replaceFirst((String) null);
             fail();
         } catch (NullPointerException expected) {
         }
