@@ -231,15 +231,85 @@ public final class Matcher implements MatchResult {
     }
 
     private MatchResult toMatchResult(String text) {
-        // Android-changed: Keep Android's OffsetBasedMatchResult until needing ImmutableMatchResult
-        /*
-        return new ImmutableMatchResult(this.first,
-                                        this.last,
+        // Android-changed: Replace first and end field usages with our implementation.
+        return new ImmutableMatchResult(matchFound ? start() : -1, // this.first,
+                                        matchFound ? end() : -1, // this.last,
                                          groupCount(),
                                          this.groups.clone(),
                                          text);
-        */
-        return new OffsetBasedMatchResult(text, groups);
+    }
+
+    private static class ImmutableMatchResult implements MatchResult {
+        private final int first;
+        private final int last;
+        private final int[] groups;
+        private final int groupCount;
+        private final String text;
+
+        ImmutableMatchResult(int first, int last, int groupCount,
+                int groups[], String text)
+        {
+            this.first = first;
+            this.last = last;
+            this.groupCount = groupCount;
+            this.groups = groups;
+            this.text = text;
+        }
+
+        @Override
+        public int start() {
+            checkMatch();
+            return first;
+        }
+
+        @Override
+        public int start(int group) {
+            checkMatch();
+            if (group < 0 || group > groupCount)
+                throw new IndexOutOfBoundsException("No group " + group);
+            return groups[group * 2];
+        }
+
+        @Override
+        public int end() {
+            checkMatch();
+            return last;
+        }
+
+        @Override
+        public int end(int group) {
+            checkMatch();
+            if (group < 0 || group > groupCount)
+                throw new IndexOutOfBoundsException("No group " + group);
+            return groups[group * 2 + 1];
+        }
+
+        @Override
+        public int groupCount() {
+            return groupCount;
+        }
+
+        @Override
+        public String group() {
+            checkMatch();
+            return group(0);
+        }
+
+        @Override
+        public String group(int group) {
+            checkMatch();
+            if (group < 0 || group > groupCount)
+                throw new IndexOutOfBoundsException("No group " + group);
+            if ((groups[group*2] == -1) || (groups[group*2+1] == -1))
+                return null;
+            return text.subSequence(groups[group * 2], groups[group * 2 + 1]).toString();
+        }
+
+        private void checkMatch() {
+            if (first < 0)
+                throw new IllegalStateException("No match found");
+
+        }
     }
 
     /**
@@ -1750,60 +1820,4 @@ public final class Matcher implements MatchResult {
         return result;
     }
 
-    /**
-     * A trivial match result implementation that's based on an array of integers
-     * representing match offsets. The array is of the form
-     * {@code { start1, end1, start2, end2 ....}) where each consecutive pair of elements represents
-     * the start and end of a match respectively.
-     */
-    static final class OffsetBasedMatchResult implements MatchResult {
-        private final String input;
-        private final int[] offsets;
-
-        OffsetBasedMatchResult(String input, int[] offsets) {
-            this.input = input;
-            this.offsets = offsets.clone();
-        }
-
-        @Override
-        public int start() {
-            return start(0);
-        }
-
-        @Override
-        public int start(int group) {
-            return offsets[2 * group];
-        }
-
-        @Override
-        public int end() {
-            return end(0);
-        }
-
-        @Override
-        public int end(int group) {
-            return offsets[2 * group + 1];
-        }
-
-        @Override
-        public String group() {
-            return group(0);
-        }
-
-        @Override
-        public String group(int group) {
-            final int start = start(group);
-            final int end = end(group);
-            if (start == -1 || end == -1) {
-                return null;
-            }
-
-            return input.substring(start, end);
-        }
-
-        @Override
-        public int groupCount() {
-            return (offsets.length / 2) - 1;
-        }
-    }
 }

@@ -361,7 +361,8 @@ public final class Byte extends Number implements Comparable<Byte>
      * {@link #valueOf(byte)} is generally a better choice, as it is
      * likely to yield significantly better space and time performance.
      */
-    @Deprecated(since="9", forRemoval = true)
+    // Android-changed: not yet forRemoval on Android.
+    @Deprecated(since="9"/*, forRemoval = true*/)
     public Byte(byte value) {
         this.value = value;
     }
@@ -384,7 +385,8 @@ public final class Byte extends Number implements Comparable<Byte>
      * {@code byte} primitive, or use {@link #valueOf(String)}
      * to convert a string to a {@code Byte} object.
      */
-    @Deprecated(since="9", forRemoval = true)
+    // Android-changed: not yet forRemoval on Android.
+    @Deprecated(since="9"/*, forRemoval = true*/)
     public Byte(String s) throws NumberFormatException {
         this.value = parseByte(s, 10);
     }

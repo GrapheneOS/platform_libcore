@@ -8606,7 +8606,8 @@ class Character implements java.io.Serializable, Comparable<Character> {
      * {@link #valueOf(char)} is generally a better choice, as it is
      * likely to yield significantly better space and time performance.
      */
-    @Deprecated(since="9", forRemoval = true)
+    // Android-changed: not yet forRemoval on Android.
+    @Deprecated(since="9"/*, forRemoval = true*/)
     public Character(char value) {
         this.value = value;
     }

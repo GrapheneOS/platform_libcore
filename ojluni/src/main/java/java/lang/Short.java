@@ -363,7 +363,8 @@ public final class Short extends Number implements Comparable<Short> {
      * {@link #valueOf(short)} is generally a better choice, as it is
      * likely to yield significantly better space and time performance.
      */
-    @Deprecated(since="9", forRemoval = true)
+    // Android-changed: not yet forRemoval on Android.
+    @Deprecated(since="9"/*, forRemoval = true*/)
     public Short(short value) {
         this.value = value;
     }
@@ -386,7 +387,8 @@ public final class Short extends Number implements Comparable<Short> {
      * {@code short} primitive, or use {@link #valueOf(String)}
      * to convert a string to a {@code Short} object.
      */
-    @Deprecated(since="9", forRemoval = true)
+    // Android-changed: not yet forRemoval on Android.
+    @Deprecated(since="9"/*, forRemoval = true*/)
     public Short(String s) throws NumberFormatException {
         this.value = parseShort(s, 10);
     }

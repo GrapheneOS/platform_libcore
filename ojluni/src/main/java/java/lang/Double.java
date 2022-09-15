@@ -717,7 +717,8 @@ public final class Double extends Number
      * {@link #valueOf(double)} is generally a better choice, as it is
      * likely to yield significantly better space and time performance.
      */
-    @Deprecated(since="9", forRemoval = true)
+    // Android-changed: not yet forRemoval on Android.
+    @Deprecated(since="9"/*, forRemoval = true*/)
     public Double(double value) {
         this.value = value;
     }
@@ -738,7 +739,8 @@ public final class Double extends Number
      * {@code double} primitive, or use {@link #valueOf(String)}
      * to convert a string to a {@code Double} object.
      */
-    @Deprecated(since="9", forRemoval = true)
+    // Android-changed: not yet forRemoval on Android.
+    @Deprecated(since="9"/*, forRemoval = true */)
     public Double(String s) throws NumberFormatException {
         value = parseDouble(s);
     }
