@@ -175,6 +175,30 @@ class OjluniFinder:
     self.existing_paths = existing_paths
 
   @staticmethod
+  def translate_ojluni_path_to_class_name(path: str) -> str:
+    r"""Translate an Ojluni file path to full class name.
+
+    Args:
+      path: ojluni path
+
+    Returns:
+      class name or None if class name isn't found.
+    """
+
+    if not path.endswith('.java'):
+      return None
+
+    if path.startswith(OJLUNI_JAVA_BASE_PATH):
+      base_path = OJLUNI_JAVA_BASE_PATH
+    elif path.startswith(OJLUNI_TEST_PATH):
+      base_path = OJLUNI_TEST_PATH
+    else:
+      return None
+
+    base_len = len(base_path)
+    return path[base_len:-5].replace('/', '.')
+
+  @staticmethod
   def translate_from_class_name_to_ojluni_path(class_or_path: str) -> str:
     """Returns a ojluni path from a class name."""
     # if it contains '/', then it's a path

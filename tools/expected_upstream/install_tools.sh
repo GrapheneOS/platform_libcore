@@ -5,6 +5,7 @@ THIS_DIR=$(realpath $(dirname ${BASH_SOURCE[0]:-$0}))
 # See go/pip-install-remediation how to regenerate the requirements.txt file.
 pip3 install --require-hashes -r ${THIS_DIR}/requirements.txt
 
+git fetch aosp expected_upstream
 git fetch aosp upstream-openjdk7u
 git fetch aosp upstream-openjdk8u
 git fetch aosp upstream-openjdk9

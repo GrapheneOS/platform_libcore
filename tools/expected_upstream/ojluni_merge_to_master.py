@@ -19,6 +19,7 @@ import argparse
 import datetime
 import logging
 # pylint: disable=g-importing-member
+import os.path
 from pathlib import Path
 import random
 import re
@@ -33,6 +34,7 @@ from common_util import (
     ExpectedUpstreamFile,
     has_file_in_tree,
     LIBCORE_DIR,
+    OjluniFinder,
 )
 
 from git import (
@@ -125,6 +127,68 @@ def create_commit_staging_diff(repo: Repo) -> None:
       f"  git checkout {commit.hexsha} -- EXPECTED_UPSTREAM")
 
 
+def create_commit_summary(diff_entries: List[ExpectedUpstreamEntry]) -> str:
+  r"""Create a commit summary message.
+
+  Args:
+    diff_entries: list of new / modified entries
+
+  Returns:
+    a string message
+  """
+
+  default_msg = "files"
+  entries_and_names = []
+  for e in diff_entries:
+    t = (e, OjluniFinder.translate_ojluni_path_to_class_name(e.dst_path))
+    entries_and_names.append(t)
+
+  # Non-test entries
+  important_entries: List[tuple[ExpectedUpstreamEntry, str]] = [
+      t for t in entries_and_names
+      if t[1] is not None and not t[1].startswith("test.")]
+  if not important_entries:
+    # Test entries
+    important_entries = [t for t in entries_and_names if t[1] is not None and
+                         t[1].startswith("test.")]
+    # no path is under OJLUNI_JAVA_BASE_PATH or OJLUNI_TEST_PATH
+    if not important_entries:
+      return default_msg
+
+  # Get ref if all entries come from the same OpenJDK revision
+  git_ref = important_entries[0][0].git_ref
+  for e in important_entries:
+    if e[0].git_ref != git_ref:
+      git_ref = None
+      break
+
+  if len(important_entries) == 1:
+    classes_summary = important_entries[0][1].split(".")[-1]
+  else:
+    common_prefix = os.path.commonprefix(list(map(
+        lambda t: t[1], important_entries)))
+    prefix_split = common_prefix.split(".")
+
+    # short java package, e.g. javax. or java.n, doesn't provide meaningful
+    # commit summary.
+    if len(prefix_split) <= 2:
+      classes_summary = default_msg
+    else:
+      # Assume that package name isn't title-case.
+      is_package = (not prefix_split[-1] or prefix_split[-1][0].islower())
+      if is_package:
+        # Discard the prefix after the last "."
+        classes_summary = ".".join(prefix_split[:-1])
+      else:
+        classes_summary = common_prefix + "*"
+
+  if git_ref is None:
+    return classes_summary
+  else:
+    abbv_ref = git_ref.split("/", 1)[-1]
+    return f"{classes_summary} from {abbv_ref}"
+
+
 def create_commit_at_expected_upstream(
     repo: Repo, head: Head, new_entries: List[ExpectedUpstreamEntry],
     bug_id: str, last_expected_change_id: str) -> Head:
@@ -167,11 +231,9 @@ def create_commit_at_expected_upstream(
   for entry in new_entries:
     index.add(entry.dst_path)
 
-  summary_msg = "files"
-  if len(new_entries) == 1:
-    summary_msg = Path(new_entries[0].dst_path).stem
+  summary_msg = create_commit_summary(new_entries)
   str_bug = "" if bug_id is None else f"Bug: {bug_id}"
-  change_id_str = None
+  change_id_str = ""
   if last_expected_change_id:
     change_id_str = f"\nChange-Id: {last_expected_change_id}"
   msg = MSG_FIRST_COMMIT.format(summary=summary_msg, files=str_dst_paths,
@@ -395,11 +457,9 @@ def main_run(
 
   dst_paths = [e.dst_path for e in diff_entries]
   str_dst_paths = "\n  ".join(dst_paths)
-  summary_msg = "files"
-  if len(diff_entries) == 1:
-    summary_msg = Path(diff_entries[0].dst_path).stem
+  summary_msg = create_commit_summary(diff_entries)
   str_bug = "" if bug_id is None else f"Bug: {bug_id}"
-  change_id_str = None
+  change_id_str = ""
   if last_master_change_id:
     change_id_str = f"\nChange-Id: {last_master_change_id}"
   msg = MSG_SECOND_COMMIT.format(

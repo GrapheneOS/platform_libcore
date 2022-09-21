@@ -1130,6 +1130,7 @@ filegroup {
         "ojluni/src/main/java/java/util/stream/TerminalOp.java",
         "ojluni/src/main/java/java/util/stream/TerminalSink.java",
         "ojluni/src/main/java/java/util/stream/Tripwire.java",
+        "ojluni/src/main/java/java/util/stream/WhileOps.java",
         "ojluni/src/main/java/java/util/stream/package-info.java",
         "ojluni/src/main/java/java/util/JumboEnumSet.java",
         "ojluni/src/main/java/java/util/LinkedHashMap.java",

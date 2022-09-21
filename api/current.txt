@@ -7819,7 +7819,7 @@ package java.security {
     method public String getAlgorithm();
     method public byte[] getEncoded();
     method public String getFormat();
-    field public static final long serialVersionUID = 6603384152749567654L; // 0x5ba3eee69414eea6L
+    field @Deprecated @java.io.Serial public static final long serialVersionUID = 6603384152749567654L; // 0x5ba3eee69414eea6L
   }
 
   public class KeyException extends java.security.GeneralSecurityException {
@@ -8133,7 +8133,7 @@ package java.security {
   }
 
   public interface PrivateKey extends java.security.Key javax.security.auth.Destroyable {
-    field public static final long serialVersionUID = 6034044314589513430L; // 0x53bd3b559a12c6d6L
+    field @Deprecated @java.io.Serial public static final long serialVersionUID = 6034044314589513430L; // 0x53bd3b559a12c6d6L
   }
 
   public interface PrivilegedAction<T> {
@@ -8208,7 +8208,7 @@ package java.security {
   }
 
   public interface PublicKey extends java.security.Key {
-    field public static final long serialVersionUID = 7187392471159151072L; // 0x63bebf5f40c219e0L
+    field @Deprecated @java.io.Serial public static final long serialVersionUID = 7187392471159151072L; // 0x63bebf5f40c219e0L
   }
 
   public class SecureClassLoader extends java.lang.ClassLoader {
@@ -17608,6 +17608,7 @@ package java.util.stream {
     method public static <T> java.util.stream.Stream<T> concat(java.util.stream.Stream<? extends T>, java.util.stream.Stream<? extends T>);
     method public long count();
     method public java.util.stream.Stream<T> distinct();
+    method public default java.util.stream.Stream<T> dropWhile(java.util.function.Predicate<? super T>);
     method public static <T> java.util.stream.Stream<T> empty();
     method public java.util.stream.Stream<T> filter(java.util.function.Predicate<? super T>);
     method public java.util.Optional<T> findAny();
@@ -17618,10 +17619,15 @@ package java.util.stream {
     method public java.util.stream.LongStream flatMapToLong(java.util.function.Function<? super T,? extends java.util.stream.LongStream>);
     method public void forEach(java.util.function.Consumer<? super T>);
     method public void forEachOrdered(java.util.function.Consumer<? super T>);
-    method public static <T> java.util.stream.Stream<T> generate(java.util.function.Supplier<T>);
+    method public static <T> java.util.stream.Stream<T> generate(java.util.function.Supplier<? extends T>);
     method public static <T> java.util.stream.Stream<T> iterate(T, java.util.function.UnaryOperator<T>);
+    method public static <T> java.util.stream.Stream<T> iterate(T, java.util.function.Predicate<? super T>, java.util.function.UnaryOperator<T>);
     method public java.util.stream.Stream<T> limit(long);
     method public <R> java.util.stream.Stream<R> map(java.util.function.Function<? super T,? extends R>);
+    method public default <R> java.util.stream.Stream<R> mapMulti(java.util.function.BiConsumer<? super T,? super java.util.function.Consumer<R>>);
+    method public default java.util.stream.DoubleStream mapMultiToDouble(java.util.function.BiConsumer<? super T,? super java.util.function.DoubleConsumer>);
+    method public default java.util.stream.IntStream mapMultiToInt(java.util.function.BiConsumer<? super T,? super java.util.function.IntConsumer>);
+    method public default java.util.stream.LongStream mapMultiToLong(java.util.function.BiConsumer<? super T,? super java.util.function.LongConsumer>);
     method public java.util.stream.DoubleStream mapToDouble(java.util.function.ToDoubleFunction<? super T>);
     method public java.util.stream.IntStream mapToInt(java.util.function.ToIntFunction<? super T>);
     method public java.util.stream.LongStream mapToLong(java.util.function.ToLongFunction<? super T>);
@@ -17630,6 +17636,7 @@ package java.util.stream {
     method public boolean noneMatch(java.util.function.Predicate<? super T>);
     method public static <T> java.util.stream.Stream<T> of(T);
     method @java.lang.SafeVarargs public static <T> java.util.stream.Stream<T> of(T...);
+    method public static <T> java.util.stream.Stream<T> ofNullable(T);
     method public java.util.stream.Stream<T> peek(java.util.function.Consumer<? super T>);
     method public T reduce(T, java.util.function.BinaryOperator<T>);
     method public java.util.Optional<T> reduce(java.util.function.BinaryOperator<T>);
@@ -17637,8 +17644,10 @@ package java.util.stream {
     method public java.util.stream.Stream<T> skip(long);
     method public java.util.stream.Stream<T> sorted();
     method public java.util.stream.Stream<T> sorted(java.util.Comparator<? super T>);
+    method public default java.util.stream.Stream<T> takeWhile(java.util.function.Predicate<? super T>);
     method public Object[] toArray();
     method public <A> A[] toArray(java.util.function.IntFunction<A[]>);
+    method public default java.util.List<T> toList();
   }
 
   public static interface Stream.Builder<T> extends java.util.function.Consumer<T> {
