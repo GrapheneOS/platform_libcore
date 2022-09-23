@@ -399,6 +399,38 @@ public final class VMRuntime {
         setDisabledCompatChangesNative(this.disabledCompatChanges);
     }
 
+    @FastNative
+    private static native int getSdkVersionNative(int default_sdk_value);
+
+    /**
+     * A container to avoid initialized by the unstarted runtime.
+     *
+     * {@link #sdkVersion} needs a separate container because {@link VMRuntime} could be initialized
+     * in the unstarted runtime where the values of the system properties could be misleading.
+     */
+    private static class SdkVersionContainer {
+        // Similar to android.os.Build.VERSION.SDK_INT in the boot classpath, the default sdk is 0.
+        private static final int sdkVersion = getSdkVersionNative(/*default_sdk_value=*/0);
+    }
+
+    /**
+     * Gets the SDK version of the software currently running on this hardware
+     * device. This value never changes while a device is booted, but it may
+     * increase when the hardware manufacturer provides an OTA update.
+     * <p>
+     * Possible values are defined in {@link VersionCodes}.
+     *
+     * It's expected to use by the ART module. Please use android.os.Build.VERSION.SDK_INT if
+     * the usage is not in the ART module.
+     *
+     * @implNote This returns {@code "ro.build.version.sdk"} system property on Android
+     *
+     * @hide
+     */
+    public static int getSdkVersion() {
+        return SdkVersionContainer.sdkVersion;
+    }
+
     /**
      * Gets the target SDK version. See {@link #setTargetSdkVersion} for
      * special values.

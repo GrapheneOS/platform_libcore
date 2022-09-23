@@ -89,7 +89,7 @@ public class OldAndroidStrictMathTest extends TestCase {
                 && answer >= 9.9999999999999983E-1);
     }
 
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void testCbrtD() {
         // Test for special situations
         assertTrue("Should return Double.NaN", Double.isNaN(StrictMath

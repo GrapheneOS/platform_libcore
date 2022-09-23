@@ -100,7 +100,7 @@ ojluni/src/main/java/java/io/PushbackReader.java,jdk11u/jdk-11.0.13-ga,src/java.
 ojluni/src/main/java/java/io/RandomAccessFile.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/io/RandomAccessFile.java
 ojluni/src/main/java/java/io/Reader.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/Reader.java
 ojluni/src/main/java/java/io/SequenceInputStream.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/io/SequenceInputStream.java
-ojluni/src/main/java/java/io/Serial.java,jdk17u/jdk-17.0.2-ga,jdk/src/java.base/share/classes/java/io/Serial.java
+ojluni/src/main/java/java/io/Serial.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/io/Serial.java
 ojluni/src/main/java/java/io/SerialCallbackContext.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/io/SerialCallbackContext.java
 ojluni/src/main/java/java/io/Serializable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/Serializable.java
 ojluni/src/main/java/java/io/SerializablePermission.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/SerializablePermission.java
@@ -179,7 +179,7 @@ ojluni/src/main/java/java/lang/NoSuchMethodException.java,jdk11u/jdk-11.0.13-ga,
 ojluni/src/main/java/java/lang/NullPointerException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/NullPointerException.java
 ojluni/src/main/java/java/lang/Number.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/Number.java
 ojluni/src/main/java/java/lang/NumberFormatException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/NumberFormatException.java
-ojluni/src/main/java/java/lang/Object.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/Object.java
+ojluni/src/main/java/java/lang/Object.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Object.java
 ojluni/src/main/java/java/lang/OutOfMemoryError.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/OutOfMemoryError.java
 ojluni/src/main/java/java/lang/Override.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Override.java
 ojluni/src/main/java/java/lang/Package.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/Package.java
@@ -871,7 +871,7 @@ ojluni/src/main/java/java/util/Base64.java,jdk8u/jdk8u121-b13,jdk/src/share/clas
 ojluni/src/main/java/java/util/BitSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/BitSet.java
 ojluni/src/main/java/java/util/Calendar.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Calendar.java
 ojluni/src/main/java/java/util/Collection.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Collection.java
-ojluni/src/main/java/java/util/Collections.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Collections.java
+ojluni/src/main/java/java/util/Collections.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/util/Collections.java
 ojluni/src/main/java/java/util/ComparableTimSort.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ComparableTimSort.java
 ojluni/src/main/java/java/util/Comparator.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Comparator.java
 ojluni/src/main/java/java/util/Comparators.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Comparators.java
@@ -899,7 +899,7 @@ ojluni/src/main/java/java/util/GregorianCalendar.java,jdk11u/jdk-11.0.13-ga,src/
 ojluni/src/main/java/java/util/HashMap.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/HashMap.java
 ojluni/src/main/java/java/util/HashSet.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/HashSet.java
 ojluni/src/main/java/java/util/Hashtable.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Hashtable.java
-ojluni/src/main/java/java/util/IdentityHashMap.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/IdentityHashMap.java
+ojluni/src/main/java/java/util/IdentityHashMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IdentityHashMap.java
 ojluni/src/main/java/java/util/IllegalFormatCodePointException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatCodePointException.java
 ojluni/src/main/java/java/util/IllegalFormatConversionException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatConversionException.java
 ojluni/src/main/java/java/util/IllegalFormatException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatException.java
@@ -1371,7 +1371,7 @@ ojluni/src/main/java/jdk/internal/reflect/CallerSensitive.java,jdk11u/jdk-11.0.1
 ojluni/src/main/java/jdk/internal/reflect/Reflection.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/reflect/Reflection.java
 ojluni/src/main/java/jdk/internal/util/ArraysSupport.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/util/ArraysSupport.java
 ojluni/src/main/java/jdk/internal/util/Preconditions.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/util/Preconditions.java
-ojluni/src/main/java/jdk/internal/util/StaticProperty.java,dk17u/jdk-17.0.2-ga,src/java.base/share/classes/jdk/internal/util/StaticProperty.java
+ojluni/src/main/java/jdk/internal/util/StaticProperty.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/jdk/internal/util/StaticProperty.java
 ojluni/src/main/java/jdk/internal/vm/annotation/Contended.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/vm/annotation/Contended.java
 ojluni/src/main/java/jdk/internal/vm/annotation/IntrinsicCandidate.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/jdk/internal/vm/annotation/IntrinsicCandidate.java
 ojluni/src/main/java/jdk/internal/vm/annotation/ReservedStackAccess.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/vm/annotation/ReservedStackAccess.java
@@ -1520,7 +1520,7 @@ ojluni/src/main/java/sun/nio/ch/ThreadPool.java,jdk8u/jdk8u121-b13,jdk/src/share
 ojluni/src/main/java/sun/nio/ch/UnixAsynchronousServerSocketChannelImpl.java,jdk11u/jdk-11.0.13-ga,src/java.base/unix/classes/sun/nio/ch/UnixAsynchronousServerSocketChannelImpl.java
 ojluni/src/main/java/sun/nio/ch/UnixAsynchronousSocketChannelImpl.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/sun/nio/ch/UnixAsynchronousSocketChannelImpl.java
 ojluni/src/main/java/sun/nio/ch/UnixDomainSockets.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/sun/nio/ch/UnixDomainSockets.java
-ojluni/src/main/java/sun/nio/ch/UnixDomainSocketsUtil.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/sun/nio/ch/UnixDomainSocketsUtil.java
+ojluni/src/main/java/sun/nio/ch/UnixDomainSocketsUtil.java,jdk17u/jdk-17.0.2-ga,src/java.base/unix/classes/sun/nio/ch/UnixDomainSocketsUtil.java
 ojluni/src/main/java/sun/nio/ch/Util.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/nio/ch/Util.java
 ojluni/src/main/java/sun/nio/cs/ArrayDecoder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/nio/cs/ArrayDecoder.java
 ojluni/src/main/java/sun/nio/cs/ArrayEncoder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/nio/cs/ArrayEncoder.java
@@ -1529,7 +1529,7 @@ ojluni/src/main/java/sun/nio/cs/StreamDecoder.java,jdk8u/jdk8u121-b13,jdk/src/sh
 ojluni/src/main/java/sun/nio/cs/StreamEncoder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/nio/cs/StreamEncoder.java
 ojluni/src/main/java/sun/nio/cs/ThreadLocalCoders.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/nio/cs/ThreadLocalCoders.java
 ojluni/src/main/java/sun/nio/fs/AbstractBasicFileAttributeView.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/sun/nio/fs/AbstractBasicFileAttributeView.java
-ojluni/src/main/java/sun/nio/fs/AbstractFileSystemProvider.java,jdk17u/jdk-17.0.2-ga,jdk/src/share/classes/sun/nio/fs/AbstractFileSystemProvider.java
+ojluni/src/main/java/sun/nio/fs/AbstractFileSystemProvider.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/sun/nio/fs/AbstractFileSystemProvider.java
 ojluni/src/main/java/sun/nio/fs/AbstractFileTypeDetector.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/nio/fs/AbstractFileTypeDetector.java
 ojluni/src/main/java/sun/nio/fs/AbstractPath.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/nio/fs/AbstractPath.java
 ojluni/src/main/java/sun/nio/fs/AbstractPoller.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/nio/fs/AbstractPoller.java
@@ -1806,7 +1806,7 @@ ojluni/src/main/native/UNIXProcess_md.c,jdk7u/jdk7u40-b60,jdk/src/solaris/native
 ojluni/src/main/native/UnixAsynchronousServerSocketChannelImpl.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/UnixAsynchronousServerSocketChannelImpl.c
 ojluni/src/main/native/UnixAsynchronousSocketChannelImpl.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/UnixAsynchronousSocketChannelImpl.c
 ojluni/src/main/native/UnixCopyFile.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/fs/UnixCopyFile.c
-ojluni/src/main/native/UnixDomainSockets.c,jdk17u/jdk-17.0.2-ga,jdk/src/java.base/unix/native/libnio/ch/UnixDomainSockets.c
+ojluni/src/main/native/UnixDomainSockets.c,jdk17u/jdk-17.0.2-ga,src/java.base/unix/native/libnio/ch/UnixDomainSockets.c
 ojluni/src/main/native/UnixFileSystem_md.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/java/io/UnixFileSystem_md.c
 ojluni/src/main/native/UnixNativeDispatcher.c,jdk8u/jdk8u60-b31,jdk/src/solaris/native/sun/nio/fs/UnixNativeDispatcher.c
 ojluni/src/main/native/ZipFile.c,jdk8u/jdk8u60-b31,jdk/src/share/native/java/util/zip/ZipFile.c
@@ -2135,6 +2135,12 @@ ojluni/src/test/java/time/test/java/time/temporal/TestJulianFields.java,jdk11u/j
 ojluni/src/test/java/time/test/java/time/zone/TestFixedZoneRules.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/time/test/java/time/zone/TestFixedZoneRules.java
 ojluni/src/test/java/time/test/java/time/zone/TestZoneRules.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/time/test/java/time/zone/TestZoneRules.java
 ojluni/src/test/java/time/test/java/util/TestFormatter.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/time/test/java/util/TestFormatter.java
+ojluni/src/test/java/util/Collections/NCopies.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/Collections/NCopies.java
+ojluni/src/test/java/util/IdentityHashMap/Capacity.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/Capacity.java
+ojluni/src/test/java/util/IdentityHashMap/DistinctEntrySetElements.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/DistinctEntrySetElements.java
+ojluni/src/test/java/util/IdentityHashMap/EntrySetIteratorRemoveInvalidatesEntry.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/EntrySetIteratorRemoveInvalidatesEntry.java
+ojluni/src/test/java/util/IdentityHashMap/ToArray.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/ToArray.java
+ojluni/src/test/java/util/IdentityHashMap/ToString.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/ToString.java
 ojluni/src/test/java/util/regex/BMPTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/BMPTestCases.txt
 ojluni/src/test/java/util/regex/GraphemeTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/GraphemeTestCases.txt
 ojluni/src/test/java/util/regex/POSIX_ASCII.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/POSIX_ASCII.java

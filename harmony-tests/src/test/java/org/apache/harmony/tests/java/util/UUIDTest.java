@@ -304,6 +304,7 @@ public class UUIDTest extends TestCase {
     /**
      * @see UUID#fromString(String)
      */
+    @SuppressWarnings("AlwaysThrows")
     public void test_fromString() {
         UUID actual = UUID.fromString("f81d4fae-7dec-11d0-a765-00a0c91e6bf6");
         UUID expected = new UUID(0xf81d4fae7dec11d0L, 0xa76500a0c91e6bf6L);
@@ -359,6 +360,7 @@ public class UUIDTest extends TestCase {
 	/**
 	 * @tests java.util.UUID#fromString(String)
 	 */
+    @SuppressWarnings("AlwaysThrows")
 	public void test_fromString_LString_Exception() {
 
 		UUID uuid = UUID.fromString("0-0-0-0-0");

@@ -23,6 +23,7 @@ import junit.framework.TestCase;
 // harmony-tests/src/test/java/org/apache/harmony/tests/java/util/UUIDTest.java
 public class UUIDTest extends TestCase {
 
+  @SuppressWarnings("AlwaysThrows")
   public void testFromStringInvalidValues() {
     try {
       UUID.fromString("+f81d4fae-7dec-11d0-a765-00a0c91e6bf6");

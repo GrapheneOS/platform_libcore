@@ -124,7 +124,7 @@ public class StrictMathTest extends junit.framework.TestCase {
     /**
      * java.lang.StrictMath#cbrt(double)
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_cbrt_D() {
         // Test for special situations
         assertTrue("Should return Double.NaN", Double.isNaN(StrictMath
@@ -179,7 +179,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#copySign(double, double)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_copySign_DD() {
         for (int i = 0; i < COPYSIGN_DD_CASES.length; i++) {
             final double magnitude = COPYSIGN_DD_CASES[i];
@@ -244,7 +244,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#copySign(float, float)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_copySign_FF() {
         for (int i = 0; i < COPYSIGN_FF_CASES.length; i++) {
             final float magnitude = COPYSIGN_FF_CASES[i];
@@ -407,7 +407,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#getExponent(double)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_getExponent_D() {
         for (int i = 0; i < GETEXPONENT_D_CASES.length; i++) {
             final double number = GETEXPONENT_D_CASES[i];
@@ -428,7 +428,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#getExponent(float)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_getExponent_F() {
         for (int i = 0; i < GETEXPONENT_F_CASES.length; i++) {
             final float number = GETEXPONENT_F_CASES[i];
@@ -688,7 +688,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#nextAfter(double, double)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_nextAfter_DD() {
         // test for most cases without exception
         for (int i = 0; i < NEXTAFTER_DD_START_CASES.length; i++) {
@@ -753,7 +753,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#nextAfter(float, double)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_nextAfter_FD() {
         // test for most cases without exception
         for (int i = 0; i < NEXTAFTER_FD_START_CASES.length; i++) {
@@ -820,7 +820,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#nextUp(double)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_nextUp_D() {
         // This method is semantically equivalent to nextAfter(d,
         // Double.POSITIVE_INFINITY),
@@ -852,7 +852,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#nextUp(float)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_nextUp_F() {
         // This method is semantically equivalent to nextAfter(f,
         // Float.POSITIVE_INFINITY),
@@ -884,7 +884,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#nextDown(double)}
      * @since 1.8
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_nextDown_D() {
         // This method is semantically equivalent to nextAfter(d,
         // Double.NEGATIVE_INFINITY),
@@ -916,7 +916,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#nextDown(float)}
      * @since 1.8
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_nextDown_F() {
         // This method is semantically equivalent to nextAfter(f,
         // Float.NEGATIVE_INFINITY),
@@ -992,7 +992,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#scalb(double, int)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_scalb_DI() {
         // result is normal
         assertEquals(4.1422946304E7, StrictMath.scalb(1.2345, 25));
@@ -1146,7 +1146,7 @@ public class StrictMathTest extends junit.framework.TestCase {
      * {@link java.lang.StrictMath#scalb(float, int)}
      * @since 1.6
      */
-    @SuppressWarnings("boxing")
+    @SuppressWarnings({"boxing", "NullArgumentForNonNullParameter"})
     public void test_scalb_FI() {
         // result is normal
         assertEquals(4.1422946304E7f, StrictMath.scalb(1.2345f, 25));

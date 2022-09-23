@@ -26,7 +26,12 @@
 
 package java.util.regex;
 
+import android.compat.Compatibility;
+import android.compat.annotation.ChangeId;
+import android.compat.annotation.EnabledSince;
 import com.android.icu.util.regex.MatcherNative;
+import dalvik.annotation.compat.VersionCodes;
+import dalvik.system.VMRuntime;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -850,7 +855,7 @@ public final class Matcher implements MatchResult {
         StringBuilder result = new StringBuilder();
         // Android-changed: Use Android's appendEvaluated due to app compat.
         // appendExpandedReplacement(replacement, result);
-        appendEvaluated(result, replacement);
+        appendReplacementInternal(result, replacement);
         // Append the intervening text
         // Android-changed: Android has no lastAppendPosition.
         // sb.append(text, lastAppendPosition, first);
@@ -864,6 +869,28 @@ public final class Matcher implements MatchResult {
         return this;
     }
 
+    // BEGIN Android-added: Backward-compatible codes for appendReplacement().
+    /**
+     * Since Android 14, {@link Matcher} becomes stricter for the replacement syntax and
+     * group references used by its methods, e.g. {@link #appendReplacement(StringBuffer, String)}.
+     *
+     * This flag is enabled for apps targeting Android 14+.
+     *
+     * @hide
+     */
+    @ChangeId
+    @EnabledSince(targetSdkVersion = VersionCodes.UPSIDE_DOWN_CAKE)
+    public static final long DISALLOW_INVALID_GROUP_REFERENCE = 247079863L;
+
+    private void appendReplacementInternal(StringBuilder sb, String replacement) {
+        if (VMRuntime.getSdkVersion() >= VersionCodes.UPSIDE_DOWN_CAKE
+                && Compatibility.isChangeEnabled(DISALLOW_INVALID_GROUP_REFERENCE)) {
+            appendExpandedReplacement(replacement, sb);
+        } else {
+            appendEvaluated(sb, replacement);
+        }
+    }
+
     /**
      * Internal helper method to append a given string to a given string buffer.
      * If the string contains any references to groups, these are replaced by
@@ -871,8 +898,10 @@ public final class Matcher implements MatchResult {
      *
      * @param buffer the string builder.
      * @param s the string to append.
+     *
+     * @hide
      */
-    private void appendEvaluated(StringBuilder buffer, String s) {
+    public void appendEvaluated(StringBuilder buffer, String s) {
         boolean escape = false;
         boolean dollar = false;
         boolean escapeNamedGroup = false;
@@ -922,6 +951,7 @@ public final class Matcher implements MatchResult {
             throw new IllegalArgumentException("Missing ending brace '}' from replacement string");
         }
     }
+    // END Android-added: Backward-compatible codes for appendReplacement().
 
     /**
      * Implements a non-terminal append-and-replace step.
@@ -1007,7 +1037,7 @@ public final class Matcher implements MatchResult {
         StringBuilder result = new StringBuilder();
         // Android-changed: Use Android's appendEvaluated due to app compat.
         // appendExpandedReplacement(replacement, result);
-        appendEvaluated(result, replacement);
+        appendReplacementInternal(result, replacement);
         // Append the intervening text
         // Android-changed: Android has no lastAppendPosition.
         // sb.append(text, lastAppendPosition, first);
@@ -1021,12 +1051,14 @@ public final class Matcher implements MatchResult {
         return this;
     }
 
-    // BEGIN Android-removed: Remove unused appendExpandedReplacement().
+    // Android-changed: Make public for testing.
     /**
      * Processes replacement string to replace group references with
      * groups.
      *
-    private StringBuilder appendExpandedReplacement(
+     * @hide
+     */
+    public StringBuilder appendExpandedReplacement(
             String replacement, StringBuilder result) {
         int cursor = 0;
         while (cursor < replacement.length()) {
@@ -1053,9 +1085,10 @@ public final class Matcher implements MatchResult {
                     StringBuilder gsb = new StringBuilder();
                     while (cursor < replacement.length()) {
                         nextChar = replacement.charAt(cursor);
-                        if (ASCII.isLower(nextChar) ||
-                                ASCII.isUpper(nextChar) ||
-                                ASCII.isDigit(nextChar)) {
+                        // if (ASCII.isLower(nextChar) ||
+                        //         ASCII.isUpper(nextChar) ||
+                        //         ASCII.isDigit(nextChar)) {
+                        if (isLower(nextChar) || isUpper(nextChar) || isDigit(nextChar)) {
                             gsb.append(nextChar);
                             cursor++;
                         } else {
@@ -1069,14 +1102,18 @@ public final class Matcher implements MatchResult {
                         throw new IllegalArgumentException(
                                 "named capturing group is missing trailing '}'");
                     String gname = gsb.toString();
-                    if (ASCII.isDigit(gname.charAt(0)))
+                    // if (ASCII.isDigit(gname.charAt(0)))
+                    if (isDigit(gname.charAt(0)))
                         throw new IllegalArgumentException(
                                 "capturing group name {" + gname +
                                         "} starts with digit character");
-                    if (!parentPattern.namedGroups().containsKey(gname))
+                    // Android-changed:
+                    // if (!parentPattern.namedGroups().containsKey(gname))
+                    int groupIndex = nativeMatcher.getMatchedGroupIndex(gname);
+                    if (groupIndex < 0)
                         throw new IllegalArgumentException(
                                 "No group with name {" + gname + "}");
-                    refNum = parentPattern.namedGroups().get(gname);
+                    refNum = groupIndex;
                     cursor++;
                 } else {
                     // The first number is always a group
@@ -1114,8 +1151,19 @@ public final class Matcher implements MatchResult {
         }
         return result;
     }
-    */
-    // END Android-removed: Remove unused appendExpandedReplacement().
+
+    // TEMP Android-added:
+    static boolean isLower(int ch) {
+        return ((ch-'a')|('z'-ch)) >= 0;
+    }
+
+    static boolean isUpper(int ch) {
+        return ((ch-'A')|('Z'-ch)) >= 0;
+    }
+    static boolean isDigit(int ch) {
+        return ((ch-'0')|('9'-ch)) >= 0;
+    }
+    // TEMP Android-added:
 
     /**
      * Implements a terminal append-and-replace step.
