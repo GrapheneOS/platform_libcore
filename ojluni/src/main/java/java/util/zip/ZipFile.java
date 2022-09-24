@@ -47,6 +47,7 @@ import java.util.WeakHashMap;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+import dalvik.system.BlockGuard;
 import dalvik.system.CloseGuard;
 
 import static java.util.zip.ZipConstants64.*;
@@ -613,6 +614,17 @@ class ZipFile implements ZipConstants, Closeable {
                         Spliterator.IMMUTABLE | Spliterator.NONNULL), false);
     }
 
+    // Android-added: Hook to validate zip entry name by strict mode.
+    private void onZipEntryAccess(byte[] bname, int flag) throws ZipException {
+        String name;
+        if (!zc.isUTF8() && (flag & USE_UTF8) != 0) {
+            name = zc.toStringUTF8(bname, bname.length);
+        } else {
+            name = zc.toString(bname, bname.length);
+        }
+        BlockGuard.getVmPolicy().onZipEntryAccess(name);
+    }
+
     private ZipEntry getZipEntry(String name, long jzentry) {
         ZipEntry e = new ZipEntry();
         e.flag = getEntryFlag(jzentry);  // get the flag first
@@ -906,7 +918,8 @@ class ZipFile implements ZipConstants, Closeable {
     private static native int getFileDescriptor(long jzfile);
     // END Android-added: Provide access to underlying file descriptor for testing.
 
-    private static native long open(String name, int mode, long lastModified,
+    // Android-changed: Make it as a non-static method, so it can access charset config.
+    private native long open(String name, int mode, long lastModified,
                                     boolean usemmap) throws IOException;
     private static native int getTotal(long jzfile);
     private static native boolean startsWithLOC(long jzfile);

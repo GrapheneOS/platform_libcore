@@ -253,19 +253,19 @@ jzentry * JNICALL
 ZIP_GetNextEntry(jzfile *zip, jint n);
 
 jzfile * JNICALL
-ZIP_Open(const char *name, char **pmsg);
+ZIP_Open(JNIEnv *env, jobject thiz, const char *name, char **pmsg);
 
 jzfile *
-ZIP_Open_Generic(const char *name, char **pmsg, int mode, jlong lastModified);
+ZIP_Open_Generic(JNIEnv *env, jobject thiz, const char *name, char **pmsg, int mode, jlong lastModified);
 
 jzfile *
 ZIP_Get_From_Cache(const char *name, char **pmsg, jlong lastModified);
 
 jzfile *
-ZIP_Put_In_Cache(const char *name, ZFILE zfd, char **pmsg, jlong lastModified);
+ZIP_Put_In_Cache(JNIEnv *env, jobject thiz, const char *name, ZFILE zfd, char **pmsg, jlong lastModified);
 
 jzfile *
-ZIP_Put_In_Cache0(const char *name, ZFILE zfd, char **pmsg, jlong lastModified, jboolean usemmap);
+ZIP_Put_In_Cache0(JNIEnv *env, jobject thiz, const char *name, ZFILE zfd, char **pmsg, jlong lastModified, jboolean usemmap);
 
 void JNICALL
 ZIP_Close(jzfile *zip);
@@ -277,5 +277,6 @@ jint ZIP_Read(jzfile *zip, jzentry *entry, jlong pos, void *buf, jint len);
 void ZIP_FreeEntry(jzfile *zip, jzentry *ze);
 jlong ZIP_GetEntryDataOffset(jzfile *zip, jzentry *entry);
 jzentry * ZIP_GetEntry2(jzfile *zip, char *name, jint ulen, jboolean addSlash);
+jboolean ZIP_OnZipEntryAccess(JNIEnv *env, jobject thiz, const char* entryName, int len);
 
 #endif /* !_ZIP_H_ */

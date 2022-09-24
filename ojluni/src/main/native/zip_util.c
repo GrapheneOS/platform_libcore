@@ -47,6 +47,8 @@
 #include "zip_util.h"
 #include <zlib.h>
 
+extern jmethodID jzOnZipEntryAccessID;
+
 // Android-changed: Fuchsia: Alias *64 on Fuchsia builds. http://b/119496969
 // #ifdef _ALLBSD_SOURCE
 #if defined(_ALLBSD_SOURCE) || defined(__Fuchsia__)
@@ -545,7 +547,8 @@ if (1) { zip->msg = message; goto Catch; } else ((void)0)
  * Always pass in -1 for knownTotal; it's used for a recursive call.
  */
 static jlong
-readCEN(jzfile *zip, jint knownTotal)
+// Android changed: Pass jni env and thiz object into the method.
+readCEN(JNIEnv *env, jobject thiz, jzfile *zip, jint knownTotal)
 {
     /* Following are unsigned 32-bit */
     jlong endpos, end64pos, cenpos, cenlen, cenoff;
@@ -682,7 +685,8 @@ readCEN(jzfile *zip, jint knownTotal)
             /* This will only happen if the zip file has an incorrect
              * ENDTOT field, which usually means it contains more than
              * 65535 entries. */
-            cenpos = readCEN(zip, countCENHeaders(cenbuf, cenend));
+            // Android changed: Pass jni env and thiz object into the method.
+            cenpos = readCEN(env, thiz, zip, countCENHeaders(cenbuf, cenend));
             goto Finally;
         }
 
@@ -705,6 +709,11 @@ readCEN(jzfile *zip, jint knownTotal)
         const char* entryName = (const char *)cp + CENHDR;
         if (!isValidEntryName(entryName, nlen)) {
             ZIP_FORMAT_ERROR("invalid CEN header (invalid entry name)");
+        }
+        // BEGIN Android-changed: Use strict mode to validate zip entry name,
+        // and throw exception if policy throws exception.
+        if (ZIP_OnZipEntryAccess(env, thiz, entryName, nlen)) {
+            ZIP_FORMAT_ERROR("restricted zip entry name");
         }
 
         /* if the entry is metadata add it to our metadata names */
@@ -770,7 +779,8 @@ readCEN(jzfile *zip, jint knownTotal)
  * set to NULL. Caller is responsible to free the error message.
  */
 jzfile *
-ZIP_Open_Generic(const char *name, char **pmsg, int mode, jlong lastModified)
+// Android changed: Pass jni env and thiz object into the method.
+ZIP_Open_Generic(JNIEnv *env, jobject thiz, const char *name, char **pmsg, int mode, jlong lastModified)
 {
     jzfile *zip = NULL;
 
@@ -798,7 +808,8 @@ ZIP_Open_Generic(const char *name, char **pmsg, int mode, jlong lastModified)
 
     if (zip == NULL && localPmsg == NULL) {
         ZFILE zfd = ZFILE_Open(name, mode);
-        zip = ZIP_Put_In_Cache(name, zfd, &localPmsg, lastModified);
+        // Android changed: Pass jni env and thiz object into the method.
+        zip = ZIP_Put_In_Cache(env, thiz, name, zfd, &localPmsg, lastModified);
     }
 
     if (pmsg == NULL) {
@@ -864,13 +875,16 @@ ZIP_Get_From_Cache(const char *name, char **pmsg, jlong lastModified)
  */
 
 jzfile *
-ZIP_Put_In_Cache(const char *name, ZFILE zfd, char **pmsg, jlong lastModified)
+// Android changed: Pass jni env and thiz object into the method.
+ZIP_Put_In_Cache(JNIEnv *env, jobject thiz, const char *name, ZFILE zfd, char **pmsg, jlong lastModified)
 {
-    return ZIP_Put_In_Cache0(name, zfd, pmsg, lastModified, JNI_TRUE);
+    // Android changed: Pass jni env and thiz object into the method.
+    return ZIP_Put_In_Cache0(env, thiz, name, zfd, pmsg, lastModified, JNI_TRUE);
 }
 
 jzfile *
-ZIP_Put_In_Cache0(const char *name, ZFILE zfd, char **pmsg, jlong lastModified,
+// Android changed: Pass jni env and thiz object into the method.
+ZIP_Put_In_Cache0(JNIEnv *env, jobject thiz, const char *name, ZFILE zfd, char **pmsg, jlong lastModified,
                  jboolean usemmap)
 {
     char errbuf[256];
@@ -921,7 +935,8 @@ ZIP_Put_In_Cache0(const char *name, ZFILE zfd, char **pmsg, jlong lastModified,
     }
 
     zip->zfd = zfd;
-    if (readCEN(zip, -1) < 0) {
+    // Android changed: Pass jni env and thiz object into the method.
+    if (readCEN(env, thiz, zip, -1) < 0) {
         /* An error occurred while trying to read the zip file */
         if (pmsg != 0) {
             /* Set the zip error message */
@@ -946,9 +961,11 @@ ZIP_Put_In_Cache0(const char *name, ZFILE zfd, char **pmsg, jlong lastModified,
  * set to NULL. Caller doesn't need to free the error message.
  */
 jzfile * JNICALL
-ZIP_Open(const char *name, char **pmsg)
+// Android changed: Pass jni env and thiz object into the method.
+ZIP_Open(JNIEnv *env, jobject thiz, const char *name, char **pmsg)
 {
-    jzfile *file = ZIP_Open_Generic(name, pmsg, O_RDONLY, 0);
+    // Android changed: Pass jni env and thiz object into the method.
+    jzfile *file = ZIP_Open_Generic(env, thiz, name, pmsg, O_RDONLY, 0);
     if (file == NULL && pmsg != NULL && *pmsg != NULL) {
         free(*pmsg);
         *pmsg = "Zip file open error";
@@ -1577,3 +1594,16 @@ ZIP_ReadEntry(jzfile *zip, jzentry *entry, unsigned char *buf, char *entryname)
 
     return JNI_TRUE;
 }
+
+// BEGIN Android-added: Use strict mode to validate zip entry name.
+jboolean ZIP_OnZipEntryAccess(JNIEnv *env, jobject thiz, const char* entryName, int len) {
+    jbyteArray array = (*env)->NewByteArray(env, len);
+    (*env)->SetByteArrayRegion(env, array, 0, len, (jbyte*) entryName);
+    (*env)->CallVoidMethod(env, thiz, jzOnZipEntryAccessID, array, (jint) len);
+    if ((*env)->ExceptionCheck(env)) {
+        (*env)->ExceptionClear(env);
+        return true;
+    }
+    return false;
+}
+// END Android-added:  Use strict mode to validate zip entry name.
