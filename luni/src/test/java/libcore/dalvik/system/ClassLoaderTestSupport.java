@@ -16,6 +16,9 @@
 
 package libcore.dalvik.system;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import libcore.io.Streams;
 
 import java.io.File;
@@ -25,8 +28,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static org.junit.Assert.*;
 
 class ClassLoaderTestSupport {
     private static final String PACKAGE_PATH = "dalvik/system/";
@@ -89,6 +90,7 @@ class ClassLoaderTestSupport {
         } finally {
             in.close();
         }
+        assertTrue(destination.setReadOnly());
     }
 
 }

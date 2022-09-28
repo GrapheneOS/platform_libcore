@@ -16,6 +16,16 @@
 
 package libcore.java.nio.file;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import dalvik.system.PathClassLoader;
+
+import libcore.io.Streams;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,15 +45,7 @@ import java.nio.file.ProviderNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
-import libcore.io.Streams;
-
-import dalvik.system.PathClassLoader;
 import junitparams.JUnitParamsRunner;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.fail;
 
 @RunWith(JUnitParamsRunner.class)
 public class FileSystemsTest {
@@ -184,6 +186,7 @@ public class FileSystemsTest {
         try (InputStream in = getClass().getResource("/filesystemstest.jar").openStream();
              OutputStream out = new FileOutputStream(jarFile))
         {
+            assertTrue(jarFile.setReadOnly());
             Streams.copy(in, out);
         }
 

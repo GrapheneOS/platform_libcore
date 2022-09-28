@@ -129,7 +129,7 @@ ojluni/src/main/java/java/lang/BootstrapMethodError.java,jdk17u/jdk-17.0.3-ga,sr
 ojluni/src/main/java/java/lang/Byte.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/Byte.java
 ojluni/src/main/java/java/lang/CharSequence.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/CharSequence.java
 ojluni/src/main/java/java/lang/Character.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/Character.java
-ojluni/src/main/java/java/lang/Class.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/Class.java
+ojluni/src/main/java/java/lang/Class.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Class.java
 ojluni/src/main/java/java/lang/ClassCastException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/ClassCastException.java
 ojluni/src/main/java/java/lang/ClassCircularityError.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/ClassCircularityError.java
 ojluni/src/main/java/java/lang/ClassFormatError.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/ClassFormatError.java
@@ -863,7 +863,7 @@ ojluni/src/main/java/java/util/AbstractQueue.java,jdk11u/jdk-11.0.13-ga,src/java
 ojluni/src/main/java/java/util/AbstractSequentialList.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractSequentialList.java
 ojluni/src/main/java/java/util/AbstractSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractSet.java
 ojluni/src/main/java/java/util/ArrayDeque.java,jdk9/jdk-9+113,jdk/src/java.base/share/classes/java/util/ArrayDeque.java
-ojluni/src/main/java/java/util/ArrayList.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/ArrayList.java
+ojluni/src/main/java/java/util/ArrayList.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArrayList.java
 ojluni/src/main/java/java/util/ArrayPrefixHelpers.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArrayPrefixHelpers.java
 ojluni/src/main/java/java/util/Arrays.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/util/Arrays.java
 ojluni/src/main/java/java/util/ArraysParallelSortHelpers.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArraysParallelSortHelpers.java
@@ -970,7 +970,7 @@ ojluni/src/main/java/java/util/TooManyListenersException.java,jdk11u/jdk-11.0.13
 ojluni/src/main/java/java/util/TreeMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/TreeMap.java
 ojluni/src/main/java/java/util/TreeSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/TreeSet.java
 ojluni/src/main/java/java/util/Tripwire.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Tripwire.java
-ojluni/src/main/java/java/util/UUID.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/UUID.java
+ojluni/src/main/java/java/util/UUID.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/UUID.java
 ojluni/src/main/java/java/util/UnknownFormatConversionException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/UnknownFormatConversionException.java
 ojluni/src/main/java/java/util/UnknownFormatFlagsException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/UnknownFormatFlagsException.java
 ojluni/src/main/java/java/util/Vector.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Vector.java
@@ -2136,12 +2136,20 @@ ojluni/src/test/java/time/test/java/time/temporal/TestJulianFields.java,jdk11u/j
 ojluni/src/test/java/time/test/java/time/zone/TestFixedZoneRules.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/time/test/java/time/zone/TestFixedZoneRules.java
 ojluni/src/test/java/time/test/java/time/zone/TestZoneRules.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/time/test/java/time/zone/TestZoneRules.java
 ojluni/src/test/java/time/test/java/util/TestFormatter.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/time/test/java/util/TestFormatter.java
+ojluni/src/test/java/util/ArrayList/AddAll.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/AddAll.java
+ojluni/src/test/java/util/ArrayList/ArrayManagement.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/ArrayManagement.java
+ojluni/src/test/java/util/ArrayList/Bug6533203.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/Bug6533203.java
+ojluni/src/test/java/util/ArrayList/Bug8146568.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/Bug8146568.java
+ojluni/src/test/java/util/ArrayList/EnsureCapacity.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/EnsureCapacity.java
+ojluni/src/test/java/util/ArrayList/SubListModCount.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/SubListModCount.java
 ojluni/src/test/java/util/Collections/NCopies.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/Collections/NCopies.java
 ojluni/src/test/java/util/IdentityHashMap/Capacity.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/Capacity.java
 ojluni/src/test/java/util/IdentityHashMap/DistinctEntrySetElements.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/DistinctEntrySetElements.java
 ojluni/src/test/java/util/IdentityHashMap/EntrySetIteratorRemoveInvalidatesEntry.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/EntrySetIteratorRemoveInvalidatesEntry.java
 ojluni/src/test/java/util/IdentityHashMap/ToArray.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/ToArray.java
 ojluni/src/test/java/util/IdentityHashMap/ToString.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/ToString.java
+ojluni/src/test/java/util/UUID/Serial.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/UUID/Serial.java
+ojluni/src/test/java/util/UUID/UUIDTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/UUID/UUIDTest.java
 ojluni/src/test/java/util/regex/BMPTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/BMPTestCases.txt
 ojluni/src/test/java/util/regex/GraphemeTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/GraphemeTestCases.txt
 ojluni/src/test/java/util/regex/POSIX_ASCII.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/POSIX_ASCII.java

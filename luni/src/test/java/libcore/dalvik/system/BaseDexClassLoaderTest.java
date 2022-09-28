@@ -18,26 +18,12 @@ package libcore.dalvik.system;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import dalvik.system.BaseDexClassLoader;
 import dalvik.system.DelegateLastClassLoader;
 import dalvik.system.PathClassLoader;
-import java.lang.reflect.Method;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import libcore.io.Streams;
 
@@ -46,6 +32,19 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RunWith(JUnit4.class)
 public final class BaseDexClassLoaderTest {
@@ -96,6 +95,8 @@ public final class BaseDexClassLoaderTest {
              FileOutputStream out = new FileOutputStream(jar2)) {
           Streams.copy(in, out);
         }
+        jar.setReadOnly();
+        jar2.setReadOnly();
     }
 
     @Before

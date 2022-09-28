@@ -19,8 +19,17 @@ package dalvik.system;
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 
 import android.annotation.SystemApi;
+import android.compat.annotation.ChangeId;
+import android.compat.annotation.EnabledAfter;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.system.ErrnoException;
+
+import dalvik.annotation.compat.VersionCodes;
+import dalvik.annotation.optimization.ReachabilitySensitive;
+
+import libcore.io.Libcore;
+import libcore.util.NonNull;
+import libcore.util.Nullable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,11 +38,6 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
-import libcore.io.Libcore;
-import libcore.util.NonNull;
-import libcore.util.Nullable;
-
-import dalvik.annotation.optimization.ReachabilitySensitive;
 
 /**
  * Loads DEX files. This class is meant for internal use and should not be used
@@ -59,6 +63,16 @@ public final class DexFile {
     private Object mInternalCookie;
     @UnsupportedAppUsage
     private final String mFileName;
+
+    /**
+     * Enforce the file passed to open DexFile to be set as read-only for apps targeting U+. This
+     * is to prevent files to be dynamically loaded being unexpectedly overwritten by
+     * malicious actors.
+     */
+    // TODO (topjohnwu@): change to @EnabledSince with U API version
+    @ChangeId
+    @EnabledAfter(targetSdkVersion = VersionCodes.TIRAMISU)
+    private static final long ENFORCE_READ_ONLY_JAVA_DCL = 218865702;
 
     /**
      * Opens a DEX file from a given File object.

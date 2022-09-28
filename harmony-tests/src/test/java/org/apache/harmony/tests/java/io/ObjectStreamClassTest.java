@@ -18,6 +18,14 @@
 package org.apache.harmony.tests.java.io;
 
 import dalvik.system.DexFile;
+
+import libcore.junit.junit3.TestCaseWithRules;
+import libcore.junit.util.SwitchTargetSdkVersionRule;
+import libcore.junit.util.SwitchTargetSdkVersionRule.TargetSdkVersion;
+
+import org.junit.Rule;
+import org.junit.rules.TestRule;
+
 import java.io.Externalizable;
 import java.io.File;
 import java.io.IOException;
@@ -32,11 +40,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import libcore.junit.junit3.TestCaseWithRules;
-import libcore.junit.util.SwitchTargetSdkVersionRule;
-import libcore.junit.util.SwitchTargetSdkVersionRule.TargetSdkVersion;
-import org.junit.Rule;
-import org.junit.rules.TestRule;
 
 public class ObjectStreamClassTest extends TestCaseWithRules {
 
@@ -295,6 +298,7 @@ public class ObjectStreamClassTest extends TestCaseWithRules {
 
         try {
             Files.copy(dexIs, sameFieldNames.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            assertTrue(sameFieldNames.setReadOnly());
             DexFile dexFile = new DexFile(sameFieldNames);
             Class<?> clazz = dexFile.loadClass("sameFieldNames", getClass().getClassLoader());
             ObjectStreamClass osc = ObjectStreamClass.lookup(clazz);

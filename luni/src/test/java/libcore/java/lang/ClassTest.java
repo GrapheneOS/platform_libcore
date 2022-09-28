@@ -24,31 +24,30 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import dalvik.system.InMemoryDexClassLoader;
 import dalvik.system.PathClassLoader;
-
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.nio.ByteBuffer;
-import java.util.stream.Stream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.TreeMap;
-import java.util.function.Function;
 
 import libcore.io.Streams;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 @RunWith(JUnit4.class)
 public class ClassTest {
@@ -99,6 +98,7 @@ public class ClassTest {
                 os.write(buffer, 0, bytesRead);
             }
         }
+        assertTrue(f.setReadOnly());
 
         PathClassLoader pcl = new PathClassLoader(f.getAbsolutePath(), null);
         Class<?> cl = pcl.loadClass(
@@ -366,9 +366,9 @@ public class ClassTest {
         final String packageProtectedClassName = PackageProtectedClass.class.getName();
 
         assertToGenericString("int", int.class);
-        assertToGenericString("public abstract final class [I", int[].class);
+        assertToGenericString("int[]", int[].class);
         assertToGenericString("public class java.lang.Object", Object.class);
-        assertToGenericString("public abstract final class [Ljava.lang.Object;", Object[].class);
+        assertToGenericString("java.lang.Object[]", Object[].class);
         assertToGenericString("public final class java.lang.Integer", Integer.class);
         assertToGenericString(
                 "public abstract interface java.util.function.Function<T,R>",
@@ -419,24 +419,31 @@ public class ClassTest {
             Class selfClass = classLoader.loadClass("libcore.java.lang.nestgroup.NestGroupSelf");
 
             assertEquals(int.class, int.class.getNestHost());
+            assertTrue(int.class.isNestmateOf(int.class));
             assertArrayEquals(new Class[] { int.class }, int.class.getNestMembers());
 
             assertEquals(Integer[].class, Integer[].class.getNestHost());
+            assertTrue(Integer[].class.isNestmateOf(Integer[].class));
             assertArrayEquals(new Class[] { Integer[].class }, Integer[].class.getNestMembers());
 
             assertEquals(hostClass, hostClass.getNestHost());
+            assertTrue(hostClass.isNestmateOf(hostClass));
             assertArrayEquals(new Class[] { hostClass, innerAClass }, hostClass.getNestMembers());
 
             assertEquals(hostClass, innerAClass.getNestHost());
+            assertTrue(hostClass.isNestmateOf(innerAClass));
             assertArrayEquals(new Class[] { hostClass, innerAClass }, innerAClass.getNestMembers());
 
             assertEquals(innerFakeClass, innerFakeClass.getNestHost());
+            assertTrue(innerFakeClass.isNestmateOf(innerFakeClass));
             assertArrayEquals(new Class[] { innerFakeClass }, innerFakeClass.getNestMembers());
 
             assertEquals(bClass, bClass.getNestHost());
+            assertTrue(bClass.isNestmateOf(bClass));
             assertArrayEquals(new Class[] { bClass }, bClass.getNestMembers());
 
             assertEquals(selfClass, selfClass.getNestHost());
+            assertTrue(selfClass.isNestmateOf(selfClass));
             assertArrayEquals(new Class[] { selfClass }, selfClass.getNestMembers());
         } catch (Throwable t) {
             throw new RuntimeException(t);

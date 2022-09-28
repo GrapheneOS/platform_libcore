@@ -164,6 +164,8 @@ public boolean isAnnotationPresent(@libcore.util.NonNull java.lang.Class<? exten
 
 public <A extends java.lang.annotation.Annotation> @libcore.util.NonNull A @libcore.util.NonNull [] getAnnotationsByType(@libcore.util.NonNull java.lang.Class<A> annotationClass) { throw new RuntimeException("Stub!"); }
 
+public <A extends java.lang.annotation.Annotation> @libcore.util.NonNull A @libcore.util.NonNull [] getDeclaredAnnotationsByType(@libcore.util.NonNull java.lang.Class<A> annotationClass) { throw new RuntimeException("Stub!"); }
+
 public java.lang.annotation.@libcore.util.NonNull Annotation @libcore.util.NonNull [] getAnnotations() { throw new RuntimeException("Stub!"); }
 
 public native <A extends java.lang.annotation.Annotation> @libcore.util.Nullable A getDeclaredAnnotation(@libcore.util.NonNull java.lang.Class<A> annotationClass);
@@ -171,6 +173,8 @@ public native <A extends java.lang.annotation.Annotation> @libcore.util.Nullable
 public native java.lang.annotation.@libcore.util.NonNull Annotation @libcore.util.NonNull [] getDeclaredAnnotations();
 
 public @libcore.util.NonNull Class<?> getNestHost();
+
+public boolean isNestmateOf(@libcore.util.NonNull Class<?> c);
 
 public @libcore.util.NonNull Class<?> @libcore.util.NonNull [] getNestMembers();
 

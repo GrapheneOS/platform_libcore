@@ -414,6 +414,21 @@ public class UUIDTest extends TestCase {
 			// expected
 		}
 
+        try {
+            uuid = UUID
+                    .fromString("7fffffffffffffff-7fffffffffffffff-7fffffffffffffff-0-0");
+            fail("should throw IAE, input is too long");
+        } catch (IllegalArgumentException ignored) {
+            // expected
+        }
+
+        try {
+            uuid = UUID.fromString("0-0-0-7fffffffffffffff-7fffffffffffffff");
+            fail("should throw IAE, input is too long");
+        } catch (IllegalArgumentException ignored) {
+            // expected
+        }
+
 		uuid = UUID.fromString("123456789-0-0-0-0");
 		assertEquals(0x2345678900000000L, uuid.getMostSignificantBits());
 		assertEquals(0x0L, uuid.getLeastSignificantBits());
@@ -432,15 +447,6 @@ public class UUIDTest extends TestCase {
 		} catch (NumberFormatException e) {
 			// expected
 		}
-
-		uuid = UUID
-				.fromString("7fffffffffffffff-7fffffffffffffff-7fffffffffffffff-0-0");
-		assertEquals(0xffffffffffffffffL, uuid.getMostSignificantBits());
-		assertEquals(0x0L, uuid.getLeastSignificantBits());
-
-		uuid = UUID.fromString("0-0-0-7fffffffffffffff-7fffffffffffffff");
-		assertEquals(0x0L, uuid.getMostSignificantBits());
-		assertEquals(0xffffffffffffffffL, uuid.getLeastSignificantBits());
 
 		try {
 			uuid = UUID.fromString("0-0-0-8000000000000000-0");

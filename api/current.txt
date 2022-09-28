@@ -3026,6 +3026,7 @@ package java.lang {
     method @NonNull public java.lang.reflect.Constructor<?>[] getConstructors() throws java.lang.SecurityException;
     method @Nullable public <A extends java.lang.annotation.Annotation> A getDeclaredAnnotation(@NonNull Class<A>);
     method @NonNull public java.lang.annotation.Annotation[] getDeclaredAnnotations();
+    method @NonNull public <A extends java.lang.annotation.Annotation> A[] getDeclaredAnnotationsByType(@NonNull Class<A>);
     method @NonNull public Class<?>[] getDeclaredClasses();
     method @NonNull public java.lang.reflect.Constructor<T> getDeclaredConstructor(@Nullable Class<?>...) throws java.lang.NoSuchMethodException, java.lang.SecurityException;
     method @NonNull public java.lang.reflect.Constructor<?>[] getDeclaredConstructors() throws java.lang.SecurityException;
@@ -3068,10 +3069,11 @@ package java.lang {
     method public boolean isInterface();
     method public boolean isLocalClass();
     method public boolean isMemberClass();
+    method public boolean isNestmateOf(@NonNull Class<?>);
     method public boolean isPrimitive();
     method public boolean isSealed();
     method public boolean isSynthetic();
-    method @NonNull public T newInstance() throws java.lang.IllegalAccessException, java.lang.InstantiationException;
+    method @Deprecated @NonNull public T newInstance() throws java.lang.IllegalAccessException, java.lang.InstantiationException;
     method @NonNull public String toGenericString();
   }
 
