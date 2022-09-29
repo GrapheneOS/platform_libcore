@@ -623,8 +623,10 @@ filegroup {
     name: "core-ojtests-java-resources",
     // Set path to keep the resources and .class files in the same directory in the jar file.
     path: "ojluni/src",
-    // Only test.java.util.regex is needed right now.
-    srcs: ["ojluni/src/test/java/util/regex/**/*"],
+    srcs: [
+        "ojluni/src/test/java/util/regex/**/*",
+        "ojluni/src/test/java/util/Base64/**/*",
+    ],
     exclude_srcs: ["ojluni/src/test/java/**/*.java"],
 }
 

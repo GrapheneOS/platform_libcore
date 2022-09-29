@@ -13354,6 +13354,7 @@ package java.util {
 
   public class DoubleSummaryStatistics implements java.util.function.DoubleConsumer {
     ctor public DoubleSummaryStatistics();
+    ctor public DoubleSummaryStatistics(long, double, double, double) throws java.lang.IllegalArgumentException;
     method public void accept(double);
     method public void combine(java.util.DoubleSummaryStatistics);
     method public final double getAverage();
