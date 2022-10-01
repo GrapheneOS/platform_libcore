@@ -608,12 +608,7 @@ public class ArrayDequeTest extends TestCase {
             // expected
         }
         assertTrue(testQue.add(testObjThree));
-        try {
-            result.next();
-            fail("should throw ConcurrentModificationException");
-        } catch (ConcurrentModificationException e) {
-            // expected
-        }
+
         result = testQue.iterator();
         assertEquals(testObjOne, result.next());
         assertEquals(testObjTwo, result.next());
@@ -907,9 +902,12 @@ public class ArrayDequeTest extends TestCase {
         ArrayDeque<String> adq = new ArrayDeque<>();
         adq.add("foo");
 
-        // The ArrayDeque forEachRemaining implementation doesn't use a precise check
-        // for concurrent modifications.
-        adq.iterator().forEachRemaining(s -> adq.add(s));
+        try {
+            adq.iterator().forEachRemaining(s -> adq.add(s));
+            fail("should throw CME");
+        } catch (ConcurrentModificationException ignored) {
+            // expected
+        }
     }
 
     public void test_spliterator() throws Exception {

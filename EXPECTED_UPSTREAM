@@ -862,7 +862,7 @@ ojluni/src/main/java/java/util/AbstractMap.java,jdk11u/jdk-11.0.13-ga,src/java.b
 ojluni/src/main/java/java/util/AbstractQueue.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractQueue.java
 ojluni/src/main/java/java/util/AbstractSequentialList.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractSequentialList.java
 ojluni/src/main/java/java/util/AbstractSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractSet.java
-ojluni/src/main/java/java/util/ArrayDeque.java,jdk9/jdk-9+113,jdk/src/java.base/share/classes/java/util/ArrayDeque.java
+ojluni/src/main/java/java/util/ArrayDeque.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArrayDeque.java
 ojluni/src/main/java/java/util/ArrayList.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArrayList.java
 ojluni/src/main/java/java/util/ArrayPrefixHelpers.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArrayPrefixHelpers.java
 ojluni/src/main/java/java/util/Arrays.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/util/Arrays.java
@@ -940,7 +940,7 @@ ojluni/src/main/java/java/util/OptionalDouble.java,jdk11u/jdk-11.0.13-ga,src/jav
 ojluni/src/main/java/java/util/OptionalInt.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/OptionalInt.java
 ojluni/src/main/java/java/util/OptionalLong.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/OptionalLong.java
 ojluni/src/main/java/java/util/PrimitiveIterator.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/PrimitiveIterator.java
-ojluni/src/main/java/java/util/PriorityQueue.java,jdk9/jdk-9+113,jdk/src/java.base/share/classes/java/util/PriorityQueue.java
+ojluni/src/main/java/java/util/PriorityQueue.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/PriorityQueue.java
 ojluni/src/main/java/java/util/Properties.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Properties.java
 ojluni/src/main/java/java/util/PropertyPermission.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/PropertyPermission.java
 ojluni/src/main/java/java/util/PropertyResourceBundle.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/PropertyResourceBundle.java
@@ -952,7 +952,7 @@ ojluni/src/main/java/java/util/ResourceBundle.java,jdk8u/jdk8u121-b13,jdk/src/sh
 ojluni/src/main/java/java/util/Scanner.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Scanner.java
 ojluni/src/main/java/java/util/ServiceConfigurationError.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ServiceConfigurationError.java
 ojluni/src/main/java/java/util/ServiceLoader.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/ServiceLoader.java
-ojluni/src/main/java/java/util/Set.java,jdk9/jdk-9+181,jdk/src/java.base/share/classes/java/util/Set.java
+ojluni/src/main/java/java/util/Set.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Set.java
 ojluni/src/main/java/java/util/SimpleTimeZone.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/util/SimpleTimeZone.java
 ojluni/src/main/java/java/util/SortedMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/SortedMap.java
 ojluni/src/main/java/java/util/SortedSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/SortedSet.java
@@ -2139,7 +2139,6 @@ ojluni/src/test/java/time/test/java/util/TestFormatter.java,jdk11u/jdk-11.0.13-g
 ojluni/src/test/java/util/ArrayList/AddAll.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/AddAll.java
 ojluni/src/test/java/util/ArrayList/ArrayManagement.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/ArrayManagement.java
 ojluni/src/test/java/util/ArrayList/Bug6533203.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/Bug6533203.java
-ojluni/src/test/java/util/ArrayList/Bug8146568.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/Bug8146568.java
 ojluni/src/test/java/util/ArrayList/EnsureCapacity.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/EnsureCapacity.java
 ojluni/src/test/java/util/ArrayList/SubListModCount.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/ArrayList/SubListModCount.java
 ojluni/src/test/java/util/Base64/Base64GetEncoderTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Base64/Base64GetEncoderTest.java
@@ -2156,6 +2155,11 @@ ojluni/src/test/java/util/IdentityHashMap/DistinctEntrySetElements.java,jdk11u/j
 ojluni/src/test/java/util/IdentityHashMap/EntrySetIteratorRemoveInvalidatesEntry.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/EntrySetIteratorRemoveInvalidatesEntry.java
 ojluni/src/test/java/util/IdentityHashMap/ToArray.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/ToArray.java
 ojluni/src/test/java/util/IdentityHashMap/ToString.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/IdentityHashMap/ToString.java
+ojluni/src/test/java/util/PriorityQueue/AddNonComparable.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/PriorityQueue/AddNonComparable.java
+ojluni/src/test/java/util/PriorityQueue/ForgetMeNot.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/PriorityQueue/ForgetMeNot.java
+ojluni/src/test/java/util/PriorityQueue/NoNulls.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/PriorityQueue/NoNulls.java
+ojluni/src/test/java/util/PriorityQueue/PriorityQueueSort.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/PriorityQueue/PriorityQueueSort.java
+ojluni/src/test/java/util/PriorityQueue/RemoveContains.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/PriorityQueue/RemoveContains.java
 ojluni/src/test/java/util/UUID/Serial.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/UUID/Serial.java
 ojluni/src/test/java/util/UUID/UUIDTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/UUID/UUIDTest.java
 ojluni/src/test/java/util/regex/BMPTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/BMPTestCases.txt

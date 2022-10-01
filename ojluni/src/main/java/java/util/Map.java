@@ -30,7 +30,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.io.Serializable;
 
-// Android-changed: removed link to collections framework docs
 /**
  * An object that maps keys to values.  A map cannot contain duplicate keys;
  * each key can map to at most one value.
@@ -120,9 +119,9 @@ import java.io.Serializable;
  * instances created by these methods have the following characteristics:
  *
  * <ul>
- * <li>They are <em>structurally immutable</em>. Keys and values cannot be added,
- * removed, or updated. Calling any mutator method will always cause
- * {@code UnsupportedOperationException} to be thrown.
+ * <li>They are <a href="Collection.html#unmodifiable"><i>unmodifiable</i></a>. Keys and values
+ * cannot be added, removed, or updated. Calling any mutator method on the Map
+ * will always cause {@code UnsupportedOperationException} to be thrown.
  * However, if the contained keys or values are themselves mutable, this may cause the
  * Map to behave inconsistently or its contents to appear to change.
  * <li>They disallow {@code null} keys and values. Attempts to create them with
@@ -141,6 +140,10 @@ import java.io.Serializable;
  * page.
  * </ul>
  *
+ * <p>This interface is a member of the
+ * <a href="{@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+ * Java Collections Framework</a>.
+ *
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
  *
@@ -153,7 +156,6 @@ import java.io.Serializable;
  * @see Set
  * @since 1.2
  */
-// Android-changed: fix doc links to Collection#optional-restrictions
 public interface Map<K, V> {
     // Query Operations
 
@@ -185,10 +187,10 @@ public interface Map<K, V> {
      *         key
      * @throws ClassCastException if the key is of an inappropriate type for
      *         this map
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified key is null and this map
      *         does not permit null keys
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      */
     boolean containsKey(Object key);
 
@@ -205,10 +207,10 @@ public interface Map<K, V> {
      *         specified value
      * @throws ClassCastException if the value is of an inappropriate type for
      *         this map
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified value is null and this
      *         map does not permit null values
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      */
     boolean containsValue(Object value);
 
@@ -233,10 +235,10 @@ public interface Map<K, V> {
      *         {@code null} if this map contains no mapping for the key
      * @throws ClassCastException if the key is of an inappropriate type for
      *         this map
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified key is null and this map
      *         does not permit null keys
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      */
     V get(Object key);
 
@@ -293,10 +295,10 @@ public interface Map<K, V> {
      *         is not supported by this map
      * @throws ClassCastException if the key is of an inappropriate type for
      *         this map
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified key is null and this
      *         map does not permit null keys
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      */
     V remove(Object key);
 
@@ -606,10 +608,10 @@ public interface Map<K, V> {
      * {@code defaultValue} if this map contains no mapping for the key
      * @throws ClassCastException if the key is of an inappropriate type for
      * this map
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified key is null and this map
      * does not permit null keys
-     * (<a href="Collection.html#optional-restrictions">optional</a>)
+     * (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @since 1.8
      */
     default V getOrDefault(Object key, V defaultValue) {
@@ -688,13 +690,13 @@ public interface Map<K, V> {
      * values
      * @throws ClassCastException if a replacement value is of an inappropriate
      *         type for this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if function or a replacement value is null,
      *         and this map does not permit null keys or values
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws IllegalArgumentException if some property of a replacement value
      *         prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ConcurrentModificationException if an entry is found to be
      * removed during iteration
      * @since 1.8
@@ -755,16 +757,16 @@ public interface Map<K, V> {
      *         if the implementation supports null values.)
      * @throws UnsupportedOperationException if the {@code put} operation
      *         is not supported by this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ClassCastException if the key or value is of an inappropriate
      *         type for this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified key or value is null,
      *         and this map does not permit null keys or values
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws IllegalArgumentException if some property of the specified key
      *         or value prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @since 1.8
      */
     default V putIfAbsent(K key, V value) {
@@ -801,13 +803,13 @@ public interface Map<K, V> {
      * @return {@code true} if the value was removed
      * @throws UnsupportedOperationException if the {@code remove} operation
      *         is not supported by this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ClassCastException if the key or value is of an inappropriate
      *         type for this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified key or value is null,
      *         and this map does not permit null keys or values
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @since 1.8
      */
     default boolean remove(Object key, Object value) {
@@ -850,14 +852,14 @@ public interface Map<K, V> {
      * @return {@code true} if the value was replaced
      * @throws UnsupportedOperationException if the {@code put} operation
      *         is not supported by this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ClassCastException if the class of a specified key or value
      *         prevents it from being stored in this map
      * @throws NullPointerException if a specified key or newValue is null,
      *         and this map does not permit null keys or values
      * @throws NullPointerException if oldValue is null and this map does not
      *         permit null values
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws IllegalArgumentException if some property of a specified key
      *         or value prevents it from being stored in this map
      * @since 1.8
@@ -900,10 +902,10 @@ public interface Map<K, V> {
      *         if the implementation supports null values.)
      * @throws UnsupportedOperationException if the {@code put} operation
      *         is not supported by this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ClassCastException if the class of the specified key or value
      *         prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified key or value is null,
      *         and this map does not permit null keys or values
      * @throws IllegalArgumentException if some property of the specified key
@@ -983,13 +985,13 @@ public interface Map<K, V> {
      *         is null
      * @throws UnsupportedOperationException if the {@code put} operation
      *         is not supported by this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ClassCastException if the class of the specified key or value
      *         prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws IllegalArgumentException if some property of the specified key
      *         or value prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @since 1.8
      */
     default V computeIfAbsent(K key,
@@ -1060,13 +1062,13 @@ public interface Map<K, V> {
      *         remappingFunction is null
      * @throws UnsupportedOperationException if the {@code put} operation
      *         is not supported by this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ClassCastException if the class of the specified key or value
      *         prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws IllegalArgumentException if some property of the specified key
      *         or value prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @since 1.8
      */
     default V computeIfPresent(K key,
@@ -1152,13 +1154,13 @@ public interface Map<K, V> {
      *         remappingFunction is null
      * @throws UnsupportedOperationException if the {@code put} operation
      *         is not supported by this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ClassCastException if the class of the specified key or value
      *         prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws IllegalArgumentException if some property of the specified key
      *         or value prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @since 1.8
      */
     default V compute(K key,
@@ -1247,13 +1249,13 @@ public interface Map<K, V> {
      *         value is associated with the key
      * @throws UnsupportedOperationException if the {@code put} operation
      *         is not supported by this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws ClassCastException if the class of the specified key or value
      *         prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws IllegalArgumentException if some property of the specified key
      *         or value prevents it from being stored in this map
-     *         (<a href="Collection.html#optional-restrictions">optional</a>)
+     *         (<a href="{@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified key is null and this map
      *         does not support null keys or the value or remappingFunction is
      *         null
@@ -1285,7 +1287,7 @@ public interface Map<K, V> {
      * @since 9
      */
     static <K, V> Map<K, V> of() {
-        return ImmutableCollections.Map0.instance();
+        return ImmutableCollections.emptyMap();
     }
 
     /**
@@ -1601,15 +1603,17 @@ public interface Map<K, V> {
     @SafeVarargs
     @SuppressWarnings("varargs")
     static <K, V> Map<K, V> ofEntries(Entry<? extends K, ? extends V>... entries) {
-        if (entries.length == 0) { // implicit null check of entries
-            return ImmutableCollections.Map0.instance();
+        if (entries.length == 0) { // implicit null check of entries array
+            return ImmutableCollections.emptyMap();
         } else if (entries.length == 1) {
+            // implicit null check of the array slot
             return new ImmutableCollections.Map1<>(entries[0].getKey(),
-                                                   entries[0].getValue());
+                    entries[0].getValue());
         } else {
             Object[] kva = new Object[entries.length << 1];
             int a = 0;
             for (Entry<? extends K, ? extends V> entry : entries) {
+                // implicit null checks of each array slot
                 kva[a++] = entry.getKey();
                 kva[a++] = entry.getValue();
             }

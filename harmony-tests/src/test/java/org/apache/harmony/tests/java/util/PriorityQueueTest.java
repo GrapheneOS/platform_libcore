@@ -805,25 +805,6 @@ public class PriorityQueueTest extends TestCase {
         SpliteratorTester.assertSupportsTrySplit(list);
     }
 
-    public void test_spliterator_CME() throws Exception {
-        PriorityQueue<Integer> list = new PriorityQueue<>();
-        list.add(52);
-
-        Spliterator<Integer> sp = list.spliterator();
-        try {
-            sp.tryAdvance(value -> list.add(value));
-            fail();
-        } catch (ConcurrentModificationException expected) {
-        }
-
-        try {
-            sp.forEachRemaining(value -> list.add(value));
-            fail();
-        } catch (ConcurrentModificationException expected) {
-        }
-    }
-
-
     private static class MockComparator<E> implements Comparator<E> {
 
         public int compare(E object1, E object2) {

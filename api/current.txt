@@ -12705,6 +12705,7 @@ package java.util {
     method @NonNull public java.util.ArrayDeque<E> clone();
     method @NonNull public java.util.Iterator<E> descendingIterator();
     method public E element();
+    method public void forEach(@NonNull java.util.function.Consumer<? super E>);
     method public E getFirst();
     method public E getLast();
     method @NonNull public java.util.Iterator<E> iterator();
@@ -14116,6 +14117,7 @@ package java.util {
     ctor public PriorityQueue(java.util.PriorityQueue<? extends E>);
     ctor public PriorityQueue(java.util.SortedSet<? extends E>);
     method public java.util.Comparator<? super E> comparator();
+    method public void forEach(java.util.function.Consumer<? super E>);
     method public java.util.Iterator<E> iterator();
     method public boolean offer(E);
     method public E peek();
