@@ -76,9 +76,7 @@ public final class StringFactory {
         if (canonicalCharsetName.equals("UTF-8")) {
             return newStringFromUtf8Bytes(data, offset, byteCount);
         } else if (canonicalCharsetName.equals("ISO-8859-1")) {
-            value = new char[byteCount];
-            length = byteCount;
-            CharsetUtils.isoLatin1BytesToChars(data, offset, byteCount, value);
+            return newStringFromBytes(data, /*high=*/ 0, offset, byteCount);
         } else if (canonicalCharsetName.equals("US-ASCII")) {
             value = new char[byteCount];
             length = byteCount;
