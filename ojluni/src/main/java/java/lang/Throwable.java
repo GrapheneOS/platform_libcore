@@ -27,6 +27,7 @@
 package java.lang;
 
 import dalvik.annotation.optimization.FastNative;
+import dalvik.annotation.optimization.NeverInline;
 
 import java.io.*;
 import java.util.*;
@@ -808,6 +809,7 @@ public class Throwable implements Serializable {
      * @return  a reference to this {@code Throwable} instance.
      * @see     java.lang.Throwable#printStackTrace()
      */
+    @NeverInline
     public synchronized Throwable fillInStackTrace() {
         if (stackTrace != null ||
             backtrace != null /* Out of protocol state */ ) {

@@ -33,6 +33,7 @@ filegroup {
         "dalvik/src/main/java/dalvik/annotation/optimization/DeadReferenceSafe.java",
         "dalvik/src/main/java/dalvik/annotation/optimization/FastNative.java",
         "dalvik/src/main/java/dalvik/annotation/optimization/NeverCompile.java",
+        "dalvik/src/main/java/dalvik/annotation/optimization/NeverInline.java",
         "dalvik/src/main/java/dalvik/annotation/optimization/ReachabilitySensitive.java",
         "dalvik/src/main/java/dalvik/bytecode/OpcodeInfo.java",
         "dalvik/src/main/java/dalvik/bytecode/Opcodes.java",
