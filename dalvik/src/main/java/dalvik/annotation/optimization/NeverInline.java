@@ -45,5 +45,5 @@ import java.lang.annotation.Target;
  */
 @SystemApi(client = MODULE_LIBRARIES)
 @Retention(RetentionPolicy.CLASS)
-@Target(ElementType.METHOD)
+@Target({ElementType.CONSTRUCTOR, ElementType.METHOD})
 public @interface NeverInline {}
