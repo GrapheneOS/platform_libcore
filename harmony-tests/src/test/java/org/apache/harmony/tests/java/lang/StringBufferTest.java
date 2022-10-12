@@ -176,8 +176,8 @@ public class StringBufferTest extends TestCase {
         StringBuffer obj = new StringBuffer();
         try {
             obj.append(new char[0], -1, -1);
-            fail("ArrayIndexOutOfBoundsException expected");
-        } catch (ArrayIndexOutOfBoundsException e) {
+            fail("IndexOutOfBoundsException expected");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
     }
@@ -326,8 +326,8 @@ public class StringBufferTest extends TestCase {
         StringBuffer obj = new StringBuffer();
         try {
             obj.insert(-1, ' ');
-            fail("ArrayIndexOutOfBoundsException expected");
-        } catch (ArrayIndexOutOfBoundsException e) {
+            fail("IndexOutOfBoundsException expected");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
     }
@@ -457,8 +457,8 @@ public class StringBufferTest extends TestCase {
         StringBuffer obj = new StringBuffer();
         try {
             obj.getChars(0, 0, new char[0], -1);
-            fail("ArrayIndexOutOfBoundsException expected");
-        } catch (ArrayIndexOutOfBoundsException e) {
+            fail("IndexOutOfBoundsException expected");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
     }

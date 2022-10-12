@@ -852,8 +852,8 @@ public class StringBuilderTest extends TestCase {
         StringBuilder obj = new StringBuilder();
         try {
             obj.insert(-1, '?');
-            fail("ArrayIndexOutOfBoundsException expected");
-        } catch (ArrayIndexOutOfBoundsException e) {
+            fail("IndexOutOfBoundsException expected");
+        } catch (IndexOutOfBoundsException e) {
             // expected
         }
     }

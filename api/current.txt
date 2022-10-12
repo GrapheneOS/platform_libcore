@@ -2363,6 +2363,7 @@ package java.lang {
     method public char charAt(int);
     method @NonNull public default java.util.stream.IntStream chars();
     method @NonNull public default java.util.stream.IntStream codePoints();
+    method public static int compare(@NonNull CharSequence, @NonNull CharSequence);
     method public int length();
     method @NonNull public CharSequence subSequence(int, int);
     method @NonNull public String toString();
@@ -4080,7 +4081,7 @@ package java.lang {
     field public static final java.util.Comparator<java.lang.String> CASE_INSENSITIVE_ORDER;
   }
 
-  public final class StringBuffer implements java.lang.Appendable java.lang.CharSequence java.io.Serializable {
+  public final class StringBuffer implements java.lang.Appendable java.lang.CharSequence java.lang.Comparable<java.lang.StringBuffer> java.io.Serializable {
     ctor public StringBuffer();
     ctor public StringBuffer(int);
     ctor public StringBuffer(@NonNull String);
@@ -4104,6 +4105,7 @@ package java.lang {
     method public int codePointAt(int);
     method public int codePointBefore(int);
     method public int codePointCount(int, int);
+    method public int compareTo(@NonNull StringBuffer);
     method @NonNull public StringBuffer delete(int, int);
     method @NonNull public StringBuffer deleteCharAt(int);
     method public void ensureCapacity(int);
@@ -4136,7 +4138,7 @@ package java.lang {
     method public void trimToSize();
   }
 
-  public final class StringBuilder implements java.lang.Appendable java.lang.CharSequence java.io.Serializable {
+  public final class StringBuilder implements java.lang.Appendable java.lang.CharSequence java.lang.Comparable<java.lang.StringBuilder> java.io.Serializable {
     ctor public StringBuilder();
     ctor public StringBuilder(int);
     ctor public StringBuilder(@NonNull String);
@@ -4160,6 +4162,7 @@ package java.lang {
     method public int codePointAt(int);
     method public int codePointBefore(int);
     method public int codePointCount(int, int);
+    method public int compareTo(@NonNull StringBuilder);
     method @NonNull public StringBuilder delete(int, int);
     method @NonNull public StringBuilder deleteCharAt(int);
     method public void ensureCapacity(int);

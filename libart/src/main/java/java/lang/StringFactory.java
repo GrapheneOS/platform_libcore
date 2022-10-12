@@ -23,6 +23,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Comparator;
 import libcore.util.CharsetUtils;
@@ -42,6 +43,22 @@ public final class StringFactory {
     public static String newStringFromBytes(byte[] data) {
         return newStringFromBytes(data, 0, data.length);
     }
+
+    public static String newStringFromBytes(byte[] data, byte coder) {
+        if (coder == String.LATIN1) {
+            return newStringFromBytes(data, /*high=*/ 0);
+        } else {
+            return newStringFromUtf16Bytes(data, 0, data.length >>> 1);
+        }
+    }
+
+    /**
+     * This method doesn't validate any UTF-16 sequence, but simply convert each byte pair
+     * into 2-byte char. To produce valid UTF-16 sequence, please use
+     * {@link StandardCharsets#UTF_16} instead.
+     */
+    @FastNative
+    public static native String newStringFromUtf16Bytes(byte[] data, int offset, int charCount);
 
     public static String newStringFromBytes(byte[] data, int high) {
         return newStringFromBytes(data, high, 0, data.length);
@@ -119,7 +136,13 @@ public final class StringFactory {
 
     public static String newStringFromStringBuffer(StringBuffer stringBuffer) {
         synchronized (stringBuffer) {
-            return newStringFromChars(stringBuffer.getValue(), 0, stringBuffer.length());
+            byte[] value = stringBuffer.getValue();
+            int length = stringBuffer.length();
+            if (stringBuffer.isLatin1()) {
+                return newStringFromBytes(value, /*high=*/ 0, /*offset=*/ 0, length);
+            } else {
+                return newStringFromUtf16Bytes(value, 0, length);
+            }
         }
     }
 
@@ -141,6 +164,12 @@ public final class StringFactory {
     }
 
     public static String newStringFromStringBuilder(StringBuilder stringBuilder) {
-        return newStringFromChars(stringBuilder.getValue(), 0, stringBuilder.length());
+        byte[] value = stringBuilder.getValue();
+        int length = stringBuilder.length();
+        if (stringBuilder.isLatin1()) {
+            return newStringFromBytes(value, /*high=*/ 0, /*offset=*/ 0, length);
+        } else {
+            return newStringFromUtf16Bytes(value, 0, length);
+        }
     }
 }

@@ -809,6 +809,7 @@ public class Throwable implements Serializable {
      * @return  a reference to this {@code Throwable} instance.
      * @see     java.lang.Throwable#printStackTrace()
      */
+    // Android-changed: Add @NeverInline to keep code size low.
     @NeverInline
     public synchronized Throwable fillInStackTrace() {
         if (stackTrace != null ||

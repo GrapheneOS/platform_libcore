@@ -117,7 +117,7 @@ ojluni/src/main/java/java/io/UnsupportedEncodingException.java,jdk17u/jdk-17.0.3
 ojluni/src/main/java/java/io/WriteAbortedException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/io/WriteAbortedException.java
 ojluni/src/main/java/java/io/Writer.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/Writer.java
 ojluni/src/main/java/java/lang/AbstractMethodError.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/AbstractMethodError.java
-ojluni/src/main/java/java/lang/AbstractStringBuilder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/AbstractStringBuilder.java
+ojluni/src/main/java/java/lang/AbstractStringBuilder.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/AbstractStringBuilder.java
 ojluni/src/main/java/java/lang/Appendable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Appendable.java
 ojluni/src/main/java/java/lang/ArithmeticException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/ArithmeticException.java
 ojluni/src/main/java/java/lang/ArrayIndexOutOfBoundsException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/ArrayIndexOutOfBoundsException.java
@@ -127,7 +127,7 @@ ojluni/src/main/java/java/lang/AutoCloseable.java,jdk11u/jdk-11.0.13-ga,src/java
 ojluni/src/main/java/java/lang/Boolean.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/Boolean.java
 ojluni/src/main/java/java/lang/BootstrapMethodError.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/BootstrapMethodError.java
 ojluni/src/main/java/java/lang/Byte.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/Byte.java
-ojluni/src/main/java/java/lang/CharSequence.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/CharSequence.java
+ojluni/src/main/java/java/lang/CharSequence.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/CharSequence.java
 ojluni/src/main/java/java/lang/Character.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/Character.java
 ojluni/src/main/java/java/lang/Class.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Class.java
 ojluni/src/main/java/java/lang/ClassCastException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/ClassCastException.java
@@ -204,9 +204,10 @@ ojluni/src/main/java/java/lang/StackTraceElement.java,jdk8u/jdk8u121-b13,jdk/src
 ojluni/src/main/java/java/lang/StackWalker.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/StackWalker.java
 ojluni/src/main/java/java/lang/StrictMath.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/StrictMath.java
 ojluni/src/main/java/java/lang/String.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/String.java
-ojluni/src/main/java/java/lang/StringBuffer.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/StringBuffer.java
-ojluni/src/main/java/java/lang/StringBuilder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/StringBuilder.java
+ojluni/src/main/java/java/lang/StringBuffer.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/StringBuffer.java
+ojluni/src/main/java/java/lang/StringBuilder.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/StringBuilder.java
 ojluni/src/main/java/java/lang/StringIndexOutOfBoundsException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/StringIndexOutOfBoundsException.java
+ojluni/src/main/java/java/lang/StringLatin1.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/StringLatin1.java
 ojluni/src/main/java/java/lang/StringUTF16.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/StringUTF16.java
 ojluni/src/main/java/java/lang/SuppressWarnings.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/SuppressWarnings.java
 ojluni/src/main/java/java/lang/System.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/System.java

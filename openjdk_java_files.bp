@@ -235,6 +235,7 @@ filegroup {
         "ojluni/src/main/java/java/lang/StringBuilder.java",
         "ojluni/src/main/java/java/lang/StringIndexOutOfBoundsException.java",
         "ojluni/src/main/java/java/lang/String.java",
+        "ojluni/src/main/java/java/lang/StringLatin1.java",
         "ojluni/src/main/java/java/lang/StringUTF16.java",
         "ojluni/src/main/java/java/lang/SuppressWarnings.java",
         "ojluni/src/main/java/java/lang/System.java",

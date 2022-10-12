@@ -29,6 +29,7 @@ package java.lang;
 import dalvik.annotation.optimization.FastNative;
 import java.io.ObjectStreamField;
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Native;
 import java.nio.charset.Charset;
 import java.nio.ByteBuffer;
 import java.util.Comparator;
@@ -165,6 +166,45 @@ public final class String
 
     /** use serialVersionUID from JDK 1.0.2 for interoperability */
     private static final long serialVersionUID = -6849794470754667710L;
+
+    // Android-changed: Modified the javadoc for the ART environment.
+    // Note that this COMPACT_STRINGS value is mainly used by the StringBuilder, not by String.
+    /**
+     * If String compaction is disabled, the bytes in {@code value} are
+     * always encoded in UTF16.
+     *
+     * For methods with several possible implementation paths, when String
+     * compaction is disabled, only one code path is taken.
+     *
+     * The instance field value is generally opaque to optimizing JIT
+     * compilers. Therefore, in performance-sensitive place, an explicit
+     * check of the static boolean {@code COMPACT_STRINGS} is done first
+     * before checking the {@code coder} field since the static boolean
+     * {@code COMPACT_STRINGS} would be constant folded away by an
+     * optimizing JIT compiler. The idioms for these cases are as follows.
+     *
+     * For code such as:
+     *
+     *    if (coder == LATIN1) { ... }
+     *
+     * can be written more optimally as
+     *
+     *    if (coder() == LATIN1) { ... }
+     *
+     * or:
+     *
+     *    if (COMPACT_STRINGS && coder == LATIN1) { ... }
+     *
+     * An optimizing JIT compiler can fold the above conditional as:
+     *
+     *    COMPACT_STRINGS == true  => if (coder == LATIN1) { ... }
+     *    COMPACT_STRINGS == false => if (false)           { ... }
+     */
+    // Android-changed: Inline the constant on ART.
+    static final boolean COMPACT_STRINGS = true;
+
+    @Native static final byte LATIN1 = 0;
+    @Native static final byte UTF16  = 1;
 
     /**
      * Class String is special cased within the Serialization Stream Protocol.
@@ -1282,9 +1322,8 @@ public final class String
             return StringUTF16.contentEquals(v1, v2, len);
         }
          */
-        char[] v2 = sb.getValue();
         for (int i = 0; i < len; i++) {
-            if (charAt(i) != v2[i]) {
+            if (charAt(i) != sb.charAt(i)) {
                 return false;
             }
         }
@@ -2163,68 +2202,44 @@ public final class String
      * source is the character array being searched, and the target
      * is the string being searched for.
      *
-     * @param   source       the characters being searched.
-     * @param   sourceOffset offset of the source string.
-     * @param   sourceCount  count of the source string.
-     * @param   target       the characters being searched for.
-     * @param   fromIndex    the index to begin searching from.
+     * @param   src       the characters being searched.
+     * @param   srcCoder  the coder of the source string.
+     * @param   srcCount  length of the source string.
+     * @param   tgtStr    the characters being searched for.
+     * @param   fromIndex the index to begin searching from.
      */
-    static int indexOf(char[] source, int sourceOffset, int sourceCount,
-            String target, int fromIndex) {
-        return indexOf(source, sourceOffset, sourceCount,
-                       target.toCharArray(), 0, target.length(),
-                       fromIndex);
-    }
+    static int indexOf(byte[] src, byte srcCoder, int srcCount,
+        String tgtStr, int fromIndex) {
+        // byte[] tgt    = tgtStr.value;
+        byte tgtCoder = tgtStr.coder();
+        int tgtCount  = tgtStr.length();
 
-    /**
-     * Code shared by String and StringBuffer to do searches. The
-     * source is the character array being searched, and the target
-     * is the string being searched for.
-     *
-     * @param   source       the characters being searched.
-     * @param   sourceOffset offset of the source string.
-     * @param   sourceCount  count of the source string.
-     * @param   target       the characters being searched for.
-     * @param   targetOffset offset of the target string.
-     * @param   targetCount  count of the target string.
-     * @param   fromIndex    the index to begin searching from.
-     */
-    static int indexOf(char[] source, int sourceOffset, int sourceCount,
-            char[] target, int targetOffset, int targetCount,
-            int fromIndex) {
-        if (fromIndex >= sourceCount) {
-            return (targetCount == 0 ? sourceCount : -1);
+        if (fromIndex >= srcCount) {
+            return (tgtCount == 0 ? srcCount : -1);
         }
         if (fromIndex < 0) {
             fromIndex = 0;
         }
-        if (targetCount == 0) {
+        if (tgtCount == 0) {
             return fromIndex;
         }
-
-        char first = target[targetOffset];
-        int max = sourceOffset + (sourceCount - targetCount);
-
-        for (int i = sourceOffset + fromIndex; i <= max; i++) {
-            /* Look for first character. */
-            if (source[i] != first) {
-                while (++i <= max && source[i] != first);
-            }
-
-            /* Found first character, now look at the rest of v2 */
-            if (i <= max) {
-                int j = i + 1;
-                int end = j + targetCount - 1;
-                for (int k = targetOffset + 1; j < end && source[j]
-                        == target[k]; j++, k++);
-
-                if (j == end) {
-                    /* Found whole string. */
-                    return i - sourceOffset;
-                }
-            }
+        if (tgtCount > srcCount) {
+            return -1;
         }
-        return -1;
+        if (srcCoder == tgtCoder) {
+            return srcCoder == LATIN1
+                // Android-changed: libcore doesn't store String as Latin1 or UTF16 byte[] field.
+                // ? StringLatin1.indexOf(src, srcCount, tgt, tgtCount, fromIndex)
+                // : StringUTF16.indexOf(src, srcCount, tgt, tgtCount, fromIndex);
+                ? StringLatin1.indexOf(src, srcCount, tgtStr, tgtCount, fromIndex)
+                : StringUTF16.indexOf(src, srcCount, tgtStr, tgtCount, fromIndex);
+        }
+        if (srcCoder == LATIN1) {    //  && tgtCoder == UTF16
+            return -1;
+        }
+        // srcCoder == UTF16 && tgtCoder == LATIN1) {
+        // return StringUTF16.indexOfLatin1(src, srcCount, tgt, tgtCount, fromIndex);
+        return StringUTF16.indexOfLatin1(src, srcCount, tgtStr, tgtCount, fromIndex);
     }
 
     /**
@@ -2333,17 +2348,46 @@ public final class String
      * source is the character array being searched, and the target
      * is the string being searched for.
      *
-     * @param   source       the characters being searched.
-     * @param   sourceOffset offset of the source string.
-     * @param   sourceCount  count of the source string.
-     * @param   target       the characters being searched for.
-     * @param   fromIndex    the index to begin searching from.
+     * @param   src         the characters being searched.
+     * @param   srcCoder    coder handles the mapping between bytes/chars
+     * @param   srcCount    count of the source string.
+     * @param   tgtStr      the characters being searched for.
+     * @param   fromIndex   the index to begin searching from.
      */
-    static int lastIndexOf(char[] source, int sourceOffset, int sourceCount,
-            String target, int fromIndex) {
-        return lastIndexOf(source, sourceOffset, sourceCount,
-                       target.toCharArray(), 0, target.length(),
-                       fromIndex);
+    static int lastIndexOf(byte[] src, byte srcCoder, int srcCount,
+        String tgtStr, int fromIndex) {
+        // byte[] tgt = tgtStr.value;
+        byte tgtCoder = tgtStr.coder();
+        int tgtCount = tgtStr.length();
+        /*
+         * Check arguments; return immediately where possible. For
+         * consistency, don't check for null str.
+         */
+        int rightIndex = srcCount - tgtCount;
+        if (fromIndex > rightIndex) {
+            fromIndex = rightIndex;
+        }
+        if (fromIndex < 0) {
+            return -1;
+        }
+        /* Empty string always matches. */
+        if (tgtCount == 0) {
+            return fromIndex;
+        }
+        if (srcCoder == tgtCoder) {
+            return srcCoder == LATIN1
+                // Android-changed: libcore doesn't store String as Latin1 or UTF16 byte[] field.
+                // ? StringLatin1.lastIndexOf(src, srcCount, tgt, tgtCount, fromIndex)
+                // : StringUTF16.lastIndexOf(src, srcCount, tgt, tgtCount, fromIndex);
+                ? StringLatin1.lastIndexOf(src, srcCount, tgtStr, tgtCount, fromIndex)
+                : StringUTF16.lastIndexOf(src, srcCount, tgtStr, tgtCount, fromIndex);
+        }
+        if (srcCoder == LATIN1) {    // && tgtCoder == UTF16
+            return -1;
+        }
+        // srcCoder == UTF16 && tgtCoder == LATIN1
+        // return StringUTF16.lastIndexOfLatin1(src, srcCount, tgt, tgtCount, fromIndex);
+        return StringUTF16.lastIndexOfLatin1(src, srcCount, tgtStr, tgtCount, fromIndex);
     }
 
     /**
@@ -3862,7 +3906,7 @@ public final class String
             isLatin1() ? new StringLatin1.CharsSpliterator(value, Spliterator.IMMUTABLE)
                        : new StringUTF16.CharsSpliterator(value, Spliterator.IMMUTABLE),
              */
-            new StringUTF16.CharsSpliterator(this, Spliterator.IMMUTABLE),
+            new StringUTF16.CharsSpliteratorForString(this, Spliterator.IMMUTABLE),
             // END Android-removed: Delegate to StringUTF16.
             false);
     }
@@ -3887,7 +3931,7 @@ public final class String
             isLatin1() ? new StringLatin1.CharsSpliterator(value, Spliterator.IMMUTABLE)
                        : new StringUTF16.CodePointsSpliterator(value, Spliterator.IMMUTABLE),
              */
-            new StringUTF16.CodePointsSpliterator(this, Spliterator.IMMUTABLE),
+            new StringUTF16.CodePointsSpliteratorForString(this, Spliterator.IMMUTABLE),
             // END Android-removed: Delegate to StringUTF16.
             false);
     }
@@ -4273,6 +4317,84 @@ public final class String
     @FastNative
     private native String doRepeat(int count);
 
+    ////////////////////////////////////////////////////////////////
+
+    /**
+     * Copy character bytes from this string into dst starting at dstBegin.
+     * This method doesn't perform any range checking.
+     *
+     * Invoker guarantees: dst is in UTF16 (inflate itself for asb), if two
+     * coders are different, and dst is big enough (range check)
+     *
+     * @param dstBegin  the char index, not offset of byte[]
+     * @param coder     the coder of dst[]
+     */
+    void getBytes(byte dst[], int dstBegin, byte coder) {
+        // Android-changed: libcore doesn't store String as Latin1 or UTF16 byte[] field.
+        /*
+        if (coder() == coder) {
+            System.arraycopy(value, 0, dst, dstBegin << coder, value.length);
+        } else {    // this.coder == LATIN && coder == UTF16
+            StringLatin1.inflate(value, 0, dst, dstBegin, value.length);
+        }
+        */
+        // We do bound check here before the native calls, because the upstream implementation does
+        // the bound check in System.arraycopy and StringLatin1.inflate or throws an exception.
+        if (coder == UTF16) {
+            int fromIndex = dstBegin << 1;
+            Objects.checkFromIndexSize(fromIndex, length() << 1, dst.length);
+            fillBytesUTF16(dst, fromIndex);
+        } else {
+            if (coder() != LATIN1) {
+                // Do not concat String in the error message.
+                throw new StringIndexOutOfBoundsException("Expect Latin-1 coder.");
+            }
+            Objects.checkFromIndexSize(dstBegin, length(), dst.length);
+            fillBytesLatin1(dst, dstBegin);
+        }
+    }
+
+    // BEGIN Android-added: Implement fillBytes*() method natively.
+
+    /**
+     * Fill the underlying characters into the byte buffer. No range check.
+     * The caller should guarantee that dst is big enough for this operation.
+     */
+    @FastNative
+    private native void fillBytesLatin1(byte[] dst, int byteIndex);
+
+    /**
+     * Fill the underlying characters into the byte buffer. No range check.
+     * The caller should guarantee that dst is big enough for this operation.
+     */
+    @FastNative
+    private native void fillBytesUTF16(byte[] dst, int byteIndex);
+    // END Android-added: Implement fillBytes*() method natively.
+
+    /*
+     * Package private constructor which shares value array for speed.
+     */
+    String(byte[] value, byte coder) {
+        // BEGIN Android-changed: Implemented as compiler and runtime intrinsics.
+        // this.value = value;
+        // this.coder = coder;
+        throw new UnsupportedOperationException("Use StringFactory instead.");
+        // END Android-changed: Implemented as compiler and runtime intrinsics.
+    }
+
+    /**
+     * Android note: It returns UTF16 if the string has any 0x00 char.
+     * See the difference between {@link StringLatin1#canEncode(int)} and
+     * art::mirror::String::IsASCII(uint16_t) in string.h.
+     */
+    byte coder() {
+        // Android-changed: ART stores the flag in the count field.
+        // return COMPACT_STRINGS ? coder : UTF16;
+        // We assume that STRING_COMPRESSION_ENABLED is enabled here.
+        // The flag has been true for 6+ years.
+        return COMPACT_STRINGS ? ((byte) (count & 1)) : UTF16;
+    }
+
     /*
      * StringIndexOutOfBoundsException  if {@code index} is
      * negative or greater than or equal to {@code length}.
@@ -4281,6 +4403,17 @@ public final class String
         if (index < 0 || index >= length) {
             throw new StringIndexOutOfBoundsException("index " + index +
                                                       ",length " + length);
+        }
+    }
+
+    /*
+     * StringIndexOutOfBoundsException  if {@code offset}
+     * is negative or greater than {@code length}.
+     */
+    static void checkOffset(int offset, int length) {
+        if (offset < 0 || offset > length) {
+            throw new StringIndexOutOfBoundsException("offset " + offset +
+                ",length " + length);
         }
     }
 
