@@ -4342,14 +4342,14 @@ public final class String
         // the bound check in System.arraycopy and StringLatin1.inflate or throws an exception.
         if (coder == UTF16) {
             int fromIndex = dstBegin << 1;
-            Objects.checkFromIndexSize(fromIndex, length() << 1, dst.length);
+            checkBoundsOffCount(fromIndex, length() << 1, dst.length);
             fillBytesUTF16(dst, fromIndex);
         } else {
             if (coder() != LATIN1) {
                 // Do not concat String in the error message.
                 throw new StringIndexOutOfBoundsException("Expect Latin-1 coder.");
             }
-            Objects.checkFromIndexSize(dstBegin, length(), dst.length);
+            checkBoundsOffCount(dstBegin, length(), dst.length);
             fillBytesLatin1(dst, dstBegin);
         }
     }

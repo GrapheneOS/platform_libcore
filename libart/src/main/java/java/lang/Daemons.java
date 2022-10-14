@@ -278,7 +278,7 @@ public final class Daemons {
             // potentially extended period.  This prevents the device from waking up regularly
             // during idle times.
 
-            // Local copy of progressCounter; saves a fence per increment on ARM and MIPS.
+            // Local copy of progressCounter; saves a fence per increment on ARM.
             int localProgressCounter = progressCounter.get();
 
             FinalizerWatchdogDaemon.INSTANCE.monitoringNeeded(
