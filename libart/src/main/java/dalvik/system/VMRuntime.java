@@ -1052,4 +1052,12 @@ public final class VMRuntime {
      */
     @SystemApi(client = MODULE_LIBRARIES)
     public static native boolean isValidClassLoaderContext(String encodedClassLoaderContext);
+
+    /**
+     * Returns the optimization status of the base APK loaded in this process. If called in a
+     * process without an APK, returns
+     *
+     * @hide
+     */
+    public static native DexFile.OptimizationInfo getBaseApkOptimizationInfo();
 }

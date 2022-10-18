@@ -157,10 +157,7 @@ class StackFrameInfo implements StackFrame {
             synchronized (this) {
                 s = ste;
                 if (s == null) {
-                    // Android-changed: patch needed until StackTraceElement.of is implemented.
-                    // ste = s = StackTraceElement.of(this);
-                    ste = s = new StackTraceElement(getClassName(), methodName, fileName,
-                        lineNumber);
+                    ste = s = StackTraceElement.of(this);
                 }
             }
         }

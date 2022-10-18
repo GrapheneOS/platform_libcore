@@ -230,20 +230,22 @@ package dalvik.system {
     ctor public DelegateLastClassLoader(String, String, ClassLoader, ClassLoader[], ClassLoader[]);
   }
 
-  @Deprecated public final class DexFile {
+  public final class DexFile {
     method @Deprecated @NonNull public static dalvik.system.DexFile.OptimizationInfo getDexFileOptimizationInfo(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
-    method @Deprecated @Nullable public static String[] getDexFileOutputPaths(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
+    method @Nullable public static String[] getDexFileOutputPaths(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
     method @Deprecated public static int getDexOptNeeded(@NonNull String, @NonNull String, @NonNull String, @Nullable String, boolean, boolean) throws java.io.FileNotFoundException, java.io.IOException;
-    method @Deprecated @NonNull public static String getSafeModeCompilerFilter(@NonNull String);
-    method @Deprecated public static boolean isProfileGuidedCompilerFilter(@NonNull String);
-    method @Deprecated public static boolean isValidCompilerFilter(@NonNull String);
+    method @NonNull public static String getSafeModeCompilerFilter(@NonNull String);
+    method public static boolean isOptimizedCompilerFilter(@NonNull String);
+    method public static boolean isProfileGuidedCompilerFilter(@NonNull String);
+    method public static boolean isValidCompilerFilter(@NonNull String);
+    method public static boolean isVerifiedCompilerFilter(@NonNull String);
     field @Deprecated public static final int DEX2OAT_FOR_FILTER = 3; // 0x3
     field @Deprecated public static final int NO_DEXOPT_NEEDED = 0; // 0x0
   }
 
-  @Deprecated public static final class DexFile.OptimizationInfo {
-    method @Deprecated @NonNull public String getReason();
-    method @Deprecated @NonNull public String getStatus();
+  public static final class DexFile.OptimizationInfo {
+    method @NonNull public String getReason();
+    method @NonNull public String getStatus();
   }
 
   public class PathClassLoader extends dalvik.system.BaseDexClassLoader {

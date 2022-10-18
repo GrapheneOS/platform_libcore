@@ -200,7 +200,7 @@ ojluni/src/main/java/java/lang/Short.java,jdk17u/jdk-17.0.2-ga,src/java.base/sha
 ojluni/src/main/java/java/lang/StackFrameInfo.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/StackFrameInfo.java
 ojluni/src/main/java/java/lang/StackOverflowError.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/StackOverflowError.java
 ojluni/src/main/java/java/lang/StackStreamFactory.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/StackStreamFactory.java
-ojluni/src/main/java/java/lang/StackTraceElement.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/StackTraceElement.java
+ojluni/src/main/java/java/lang/StackTraceElement.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/StackTraceElement.java
 ojluni/src/main/java/java/lang/StackWalker.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/lang/StackWalker.java
 ojluni/src/main/java/java/lang/StrictMath.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/StrictMath.java
 ojluni/src/main/java/java/lang/String.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/String.java

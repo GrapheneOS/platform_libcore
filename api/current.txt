@@ -1048,6 +1048,10 @@ package dalvik.bytecode {
 
 package dalvik.system {
 
+  public final class ApplicationRuntime {
+    method @NonNull public static dalvik.system.DexFile.OptimizationInfo getBaseApkOptimizationInfo();
+  }
+
   public class BaseDexClassLoader extends java.lang.ClassLoader {
     ctor public BaseDexClassLoader(String, java.io.File, String, ClassLoader);
     method public String findLibrary(String);
@@ -1064,7 +1068,7 @@ package dalvik.system {
     ctor public DexClassLoader(String, String, String, ClassLoader);
   }
 
-  @Deprecated public final class DexFile {
+  public final class DexFile {
     ctor @Deprecated public DexFile(java.io.File) throws java.io.IOException;
     ctor @Deprecated public DexFile(String) throws java.io.IOException;
     method @Deprecated public void close() throws java.io.IOException;
@@ -1073,6 +1077,11 @@ package dalvik.system {
     method @Deprecated public static boolean isDexOptNeeded(String) throws java.io.FileNotFoundException, java.io.IOException;
     method @Deprecated public Class loadClass(String, ClassLoader);
     method @Deprecated public static dalvik.system.DexFile loadDex(String, String, int) throws java.io.IOException;
+  }
+
+  public static final class DexFile.OptimizationInfo {
+    method public boolean isOptimized();
+    method public boolean isVerified();
   }
 
   public final class InMemoryDexClassLoader extends dalvik.system.BaseDexClassLoader {
