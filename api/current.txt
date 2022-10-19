@@ -1080,6 +1080,7 @@ package dalvik.system {
   }
 
   public static final class DexFile.OptimizationInfo {
+    method public boolean isFullyCompiled();
     method public boolean isOptimized();
     method public boolean isVerified();
   }
@@ -3766,8 +3767,8 @@ package java.lang {
     method public void runFinalization();
     method @Deprecated public static void runFinalizersOnExit(boolean);
     method public long totalMemory();
-    method public void traceInstructions(boolean);
-    method public void traceMethodCalls(boolean);
+    method @Deprecated public void traceInstructions(boolean);
+    method @Deprecated public void traceMethodCalls(boolean);
   }
 
   public class RuntimeException extends java.lang.Exception {

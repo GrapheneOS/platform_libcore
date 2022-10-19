@@ -648,10 +648,18 @@ public final class DexFile {
         }
 
         /**
-         * Returns whether the dex file is AOT compiled.
+         * Returns whether the dex file is in an optimal state. Currently, this means the dex file
+         * is either ahead-of-time compiled with a profile or fully ahead-of-time compiled.
          */
         public boolean isOptimized() {
             return isOptimizedCompilerFilter(status);
+        }
+
+        /**
+         * Returns whether the dex file is fully ahead-of-time compiled.
+         */
+        public boolean isFullyCompiled() {
+            return isOptimizedCompilerFilter(status) && !isProfileGuidedCompilerFilter(status);
         }
     }
 

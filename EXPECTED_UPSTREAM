@@ -190,7 +190,7 @@ ojluni/src/main/java/java/lang/ProcessImpl.java,jdk8u/jdk8u121-b13,jdk/src/solar
 ojluni/src/main/java/java/lang/Readable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Readable.java
 ojluni/src/main/java/java/lang/ReflectiveOperationException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/ReflectiveOperationException.java
 ojluni/src/main/java/java/lang/Runnable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Runnable.java
-ojluni/src/main/java/java/lang/Runtime.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/Runtime.java
+ojluni/src/main/java/java/lang/Runtime.java,jdk11u/jdk-11.0.2-ga,src/java.base/share/classes/java/lang/Runtime.java
 ojluni/src/main/java/java/lang/RuntimeException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/RuntimeException.java
 ojluni/src/main/java/java/lang/RuntimePermission.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/RuntimePermission.java
 ojluni/src/main/java/java/lang/SafeVarargs.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/SafeVarargs.java
@@ -213,8 +213,8 @@ ojluni/src/main/java/java/lang/SuppressWarnings.java,jdk11u/jdk-11.0.13-ga,src/j
 ojluni/src/main/java/java/lang/System.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/System.java
 ojluni/src/main/java/java/lang/Thread.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Thread.java
 ojluni/src/main/java/java/lang/ThreadDeath.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/ThreadDeath.java
-ojluni/src/main/java/java/lang/ThreadGroup.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/ThreadGroup.java
-ojluni/src/main/java/java/lang/ThreadLocal.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/ThreadLocal.java
+ojluni/src/main/java/java/lang/ThreadGroup.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/ThreadGroup.java
+ojluni/src/main/java/java/lang/ThreadLocal.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/ThreadLocal.java
 ojluni/src/main/java/java/lang/Throwable.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/Throwable.java
 ojluni/src/main/java/java/lang/TypeNotPresentException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/TypeNotPresentException.java
 ojluni/src/main/java/java/lang/UNIXProcess.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/java/lang/UNIXProcess.java
@@ -1363,6 +1363,7 @@ ojluni/src/main/java/jdk/internal/misc/InnocuousThread.java,jdk11u/jdk-11.0.13-g
 ojluni/src/main/java/jdk/internal/misc/JavaIOFileDescriptorAccess.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/JavaIOFileDescriptorAccess.java
 ojluni/src/main/java/jdk/internal/misc/JavaObjectInputStreamAccess.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/JavaObjectInputStreamAccess.java
 ojluni/src/main/java/jdk/internal/misc/SharedSecrets.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/SharedSecrets.java
+ojluni/src/main/java/jdk/internal/misc/TerminatingThreadLocal.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/TerminatingThreadLocal.java
 ojluni/src/main/java/jdk/internal/misc/Unsafe.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/Unsafe.java
 ojluni/src/main/java/jdk/internal/misc/VM.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/VM.java
 ojluni/src/main/java/jdk/internal/ref/Cleaner.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/ref/Cleaner.java

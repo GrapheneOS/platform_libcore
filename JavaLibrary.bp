@@ -162,6 +162,15 @@ java_defaults {
             "-Xep:MissingOverride:OFF", // Ignore missing @Override.
             "-Xep:ConstantOverflow:WARN", // Known constant overflow in SplittableRandom
             "-Xep:UnicodeInCode:WARN", // XML parser uses line feeds in whitespace
+            "-Xep:ReturnValueIgnored:WARN",
+            "-Xep:HashtableContains:WARN",
+            "-Xep:ComparableType:WARN",
+            "-Xep:IdentityBinaryExpression:WARN",
+            "-Xep:BoxedPrimitiveEquality:WARN",
+            "-Xep:EmptyTopLevelDeclaration:WARN",
+            "-Xep:GetClassOnClass:WARN",
+            "-Xep:NullableOnContainingClass:WARN",
+            "-Xep:GetClassOnAnnotation:WARN",
         ],
     },
     lint: {
@@ -301,6 +310,18 @@ java_library {
     hiddenapi_additional_annotations: [
         "core-oj-hiddenapi-annotations",
     ],
+
+    errorprone: {
+        javacflags: [
+            "-Xep:ReturnValueIgnored:WARN",
+            "-Xep:HashtableContains:WARN",
+            "-Xep:ComparableType:WARN",
+            "-Xep:IdentityBinaryExpression:WARN",
+            "-Xep:BoxedPrimitiveEquality:WARN",
+            "-Xep:EmptyTopLevelDeclaration:WARN",
+            "-Xep:GetClassOnClass:WARN",
+        ],
+    },
 }
 
 // Contains parts of core library not associated with OpenJDK. Contains not
@@ -353,6 +374,14 @@ java_library {
             enabled: false,
         },
     },
+
+    errorprone: {
+        javacflags: [
+            "-Xep:EmptyTopLevelDeclaration:WARN",
+            "-Xep:GetClassOnAnnotation:WARN",
+            "-Xep:NullableOnContainingClass:WARN",
+        ],
+    },
 }
 
 // Java library for use on host, e.g. by robolectric or layoutlib.
@@ -396,6 +425,12 @@ java_library {
     system_modules: "core-all-system-modules",
     patch_module: "java.base",
     plugins: ["unsupportedappusage-annotation-processor"],
+
+    errorprone: {
+        javacflags: [
+            "-Xep:ComparableType:WARN",
+        ],
+    },
 }
 
 java_defaults {
@@ -513,6 +548,13 @@ java_library_static {
     // This builds classes that are in the java.base Java module:
     patch_module: "java.base",
     hostdex: true,
+
+    errorprone: {
+        javacflags: [
+            "-Xep:EmptyTopLevelDeclaration:WARN",
+            "-Xep:GetClassOnAnnotation:WARN",
+        ],
+    },
 }
 
 // Builds the core-tests-support library used by various tests.
@@ -545,6 +587,11 @@ java_library_static {
         "bouncycastle-bcpkix-unbundled",
         "bouncycastle-ocsp-unbundled",
     ],
+    errorprone: {
+        javacflags: [
+            "-Xep:BoxedPrimitiveEquality:WARN",
+        ],
+    },
 }
 
 // Used to generate the prebuilt file luni/src/test/resources/prebuilt-dex-from-java.dex.
@@ -583,6 +630,9 @@ java_test {
     errorprone: {
         javacflags: [
             "-Xep:DoNotCall:OFF",
+            "-Xep:ModifyingCollectionWithItself:WARN",
+            "-Xep:ReturnValueIgnored:WARN",
+            "-Xep:HashtableContains:WARN",
         ],
     },
 }
@@ -706,6 +756,21 @@ java_test {
             "-Xep:ComparisonOutOfRange:ERROR",
             "-Xep:DoNotCall:OFF",
             "-Xep:ArrayToString:WARN",
+            "-Xep:SelfEquals:WARN",
+            "-Xep:SelfComparison:WARN",
+            "-Xep:ReturnValueIgnored:WARN",
+            "-Xep:BoxedPrimitiveEquality:WARN",
+            "-Xep:SizeGreaterThanOrEqualsZero:WARN",
+            "-Xep:MisusedDayOfYear:WARN",
+            "-Xep:InvalidTimeZoneID:WARN",
+            "-Xep:CollectionToArraySafeParameter:WARN",
+            "-Xep:ModifyingCollectionWithItself:WARN",
+            "-Xep:ComparableType:WARN",
+            "-Xep:UnusedCollectionModifiedInPlace:WARN",
+            "-Xep:HashtableContains:WARN",
+            "-Xep:DoubleBraceInitialization:WARN",
+            "-Xep:RandomModInteger:WARN",
+            "-Xep:IdentityBinaryExpression:WARN",
         ],
     },
 
@@ -747,6 +812,7 @@ java_test {
     errorprone: {
         javacflags: [
             "-Xep:ArrayToString:WARN",
+            "-Xep:ReturnValueIgnored:WARN",
         ],
     },
 }
@@ -804,6 +870,24 @@ java_test {
             "-Xep:AlwaysThrows:OFF",
             "-Xep:DoNotCall:OFF",
             "-Xep:ArrayToString:WARN",
+            "-Xep:ReturnValueIgnored:WARN",
+            "-Xep:MathRoundIntLong:WARN",
+            "-Xep:FormatString:WARN",
+            "-Xep:IdentityBinaryExpression:WARN",
+            "-Xep:RandomModInteger:WARN",
+            "-Xep:SelfEquals:WARN",
+            "-Xep:DurationTemporalUnit:WARN",
+            "-Xep:DurationFrom:WARN",
+            "-Xep:InstantTemporalUnit:WARN",
+            "-Xep:SelfComparison:WARN",
+            "-Xep:PeriodFrom:WARN",
+            "-Xep:BoxedPrimitiveEquality:WARN",
+            "-Xep:IdentityHashMapBoxing:WARN",
+            "-Xep:DoubleBraceInitialization:WARN",
+            "-Xep:ComparableType:WARN",
+            "-Xep:ModifyingCollectionWithItself:WARN",
+            "-Xep:InvalidZoneId:WARN",
+            "-Xep:HashtableContains:WARN",
         ],
     },
 }
@@ -857,6 +941,24 @@ java_test {
             "-Xep:AlwaysThrows:OFF",
             "-Xep:DoNotCall:OFF",
             "-Xep:ArrayToString:WARN",
+            "-Xep:ReturnValueIgnored:WARN",
+            "-Xep:MathRoundIntLong:WARN",
+            "-Xep:FormatString:WARN",
+            "-Xep:IdentityBinaryExpression:WARN",
+            "-Xep:RandomModInteger:WARN",
+            "-Xep:SelfEquals:WARN",
+            "-Xep:DurationTemporalUnit:WARN",
+            "-Xep:DurationFrom:WARN",
+            "-Xep:InstantTemporalUnit:WARN",
+            "-Xep:SelfComparison:WARN",
+            "-Xep:PeriodFrom:WARN",
+            "-Xep:BoxedPrimitiveEquality:WARN",
+            "-Xep:IdentityHashMapBoxing:WARN",
+            "-Xep:DoubleBraceInitialization:WARN",
+            "-Xep:ComparableType:WARN",
+            "-Xep:ModifyingCollectionWithItself:WARN",
+            "-Xep:InvalidZoneId:WARN",
+            "-Xep:HashtableContains:WARN",
         ],
     },
 }
