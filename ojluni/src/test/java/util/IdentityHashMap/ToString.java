@@ -37,8 +37,12 @@ import java.util.Set;
 
 public class ToString {
 
-    // Android-change: annotation added so runner can run the test
+    // Android-change: method added so runner can run the test
     @org.testng.annotations.Test
+    public static void main() {
+        main(null);
+    }
+
     public static void main(String[] args) {
         Map<String, String> m = new IdentityHashMap<>();
         Set<Map.Entry<String, String>> es = m.entrySet();

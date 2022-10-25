@@ -139,6 +139,10 @@ public class NCopies {
 
     // Android-changed: run as TestNG test case
     @org.testng.annotations.Test
+    public static void main() {
+        main(null);
+    }
+
     public static void main(String[] args) {
         try {
             List<String> empty = Collections.nCopies(0, "foo");
