@@ -1226,6 +1226,7 @@ filegroup {
         "ojluni/src/main/java/java/util/zip/CheckedOutputStream.java",
         "ojluni/src/main/java/java/util/zip/Checksum.java",
         "ojluni/src/main/java/java/util/zip/CRC32.java",
+        "ojluni/src/main/java/java/util/zip/CRC32C.java",
         "ojluni/src/main/java/java/util/zip/DataFormatException.java",
         "ojluni/src/main/java/java/util/zip/DeflaterInputStream.java",
         "ojluni/src/main/java/java/util/zip/Deflater.java",

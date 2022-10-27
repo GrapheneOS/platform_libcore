@@ -25,8 +25,6 @@
 extern "C" void register_java_util_zip_ZipFile(JNIEnv* env);
 extern "C" void register_java_util_zip_Inflater(JNIEnv* env);
 extern "C" void register_java_util_zip_Deflater(JNIEnv* env);
-extern "C" void register_java_util_zip_CRC32(JNIEnv* env);
-extern "C" void register_java_util_zip_Adler32(JNIEnv* env);
 extern "C" void register_java_io_FileDescriptor(JNIEnv* env);
 extern "C" void register_sun_nio_ch_DatagramChannelImpl(JNIEnv* env);
 extern "C" void register_sun_nio_ch_DatagramDispatcher(JNIEnv* env);
@@ -94,8 +92,6 @@ extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   register_java_util_zip_ZipFile(env);
   register_java_util_zip_Inflater(env);
   register_java_util_zip_Deflater(env);
-  register_java_util_zip_CRC32(env);
-  register_java_util_zip_Adler32(env);
   register_java_io_FileDescriptor(env);
   register_sun_nio_ch_DatagramChannelImpl(env);
   register_sun_nio_ch_DatagramDispatcher(env);

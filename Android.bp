@@ -13,7 +13,7 @@
 // limitations under the License.
 
 package {
-    default_visibility: ["//visibility:private"],
+    default_visibility: [":__subpackages__"],
     default_applicable_licenses: ["libcore_license"],
 }
 
@@ -42,9 +42,7 @@ license {
     license_kinds: [
         "SPDX-license-identifier-Apache-2.0",
         "SPDX-license-identifier-BSD",
-        "SPDX-license-identifier-GPL",
-        "SPDX-license-identifier-GPL-2.0",
-        "SPDX-license-identifier-LGPL",
+        "SPDX-license-identifier-GPL-2.0-with-classpath-exception",
         "SPDX-license-identifier-MIT",
         "SPDX-license-identifier-OpenSSL",
         "SPDX-license-identifier-Unicode-DFS",

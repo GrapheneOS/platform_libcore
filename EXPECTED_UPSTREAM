@@ -1194,11 +1194,12 @@ ojluni/src/main/java/java/util/stream/TerminalOp.java,jdk11u/jdk-11.0.13-ga,src/
 ojluni/src/main/java/java/util/stream/TerminalSink.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/stream/TerminalSink.java
 ojluni/src/main/java/java/util/stream/Tripwire.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/stream/Tripwire.java
 ojluni/src/main/java/java/util/stream/package-info.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/stream/package-info.java
-ojluni/src/main/java/java/util/zip/Adler32.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/Adler32.java
-ojluni/src/main/java/java/util/zip/CRC32.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/CRC32.java
+ojluni/src/main/java/java/util/zip/Adler32.java,jdk17u/jdk-17.0.4-ga,src/java.base/share/classes/java/util/zip/Adler32.java
+ojluni/src/main/java/java/util/zip/CRC32.java,jdk17u/jdk-17.0.4-ga,src/java.base/share/classes/java/util/zip/CRC32.java
+ojluni/src/main/java/java/util/zip/CRC32C.java,jdk17u/jdk-17.0.4-ga,src/java.base/share/classes/java/util/zip/CRC32C.java
 ojluni/src/main/java/java/util/zip/CheckedInputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/CheckedInputStream.java
 ojluni/src/main/java/java/util/zip/CheckedOutputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/CheckedOutputStream.java
-ojluni/src/main/java/java/util/zip/Checksum.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/Checksum.java
+ojluni/src/main/java/java/util/zip/Checksum.java,jdk17u/jdk-17.0.4-ga,src/java.base/share/classes/java/util/zip/Checksum.java
 ojluni/src/main/java/java/util/zip/DataFormatException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/DataFormatException.java
 ojluni/src/main/java/java/util/zip/Deflater.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/Deflater.java
 ojluni/src/main/java/java/util/zip/DeflaterInputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/DeflaterInputStream.java
@@ -1763,8 +1764,8 @@ ojluni/src/main/java/sun/util/logging/LoggingProxy.java,jdk8u/jdk8u121-b13,jdk/s
 ojluni/src/main/java/sun/util/logging/LoggingSupport.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/util/logging/LoggingSupport.java
 ojluni/src/main/java/sun/util/logging/PlatformLogger.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/util/logging/PlatformLogger.java
 ojluni/src/main/java/sun/util/resources/OpenListResourceBundle.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/sun/util/resources/OpenListResourceBundle.java
-ojluni/src/main/native/Adler32.c,jdk8u/jdk8u121-b13,jdk/src/share/native/java/util/zip/Adler32.c
-ojluni/src/main/native/CRC32.c,jdk8u/jdk8u121-b13,jdk/src/share/native/java/util/zip/CRC32.c
+ojluni/src/main/native/Adler32.c,jdk17u/jdk-17.0.4-ga,src/java.base/share/native/libzip/Adler32.c
+ojluni/src/main/native/CRC32.c,jdk17u/jdk-17.0.4-ga,src/java.base/share/native/libzip/CRC32.c
 # Character.cpp doesn’t come from the upstream OpenJDK.
 ojluni/src/main/native/Console_md.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/java/io/Console_md.c
 ojluni/src/main/native/DatagramChannelImpl.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/DatagramChannelImpl.c
@@ -1816,6 +1817,8 @@ ojluni/src/main/native/ZipFile.c,jdk8u/jdk8u60-b31,jdk/src/share/native/java/uti
 ojluni/src/main/native/canonicalize_md.c,jdk7u/jdk7u40-b60,jdk/src/solaris/native/java/io/canonicalize_md.c
 ojluni/src/main/native/io_util.c,jdk7u/jdk7u40-b60,jdk/src/share/native/java/io/io_util.c
 ojluni/src/main/native/io_util_md.c,jdk7u/jdk7u40-b60,jdk/src/solaris/native/java/io/io_util_md.c
+ojluni/src/main/native/jlong.h,jdk17u/jdk-17.0.4-ga,src/java.base/share/native/libjava/jlong.h
+ojluni/src/main/native/jlong_md.h,jdk17u/jdk-17.0.4-ga,src/java.base/unix/native/libjava/jlong_md.h
 ojluni/src/main/native/jni_util.c,jdk8u/jdk8u60-b31,jdk/src/share/native/common/jni_util.c
 ojluni/src/main/native/jni_util_md.c,jdk8u/jdk8u60-b31,jdk/src/solaris/native/common/jni_util_md.c
 ojluni/src/main/native/linux_close.cpp,jdk7u/jdk7u40-b60,jdk/src/solaris/native/java/net/linux_close.c
@@ -2196,4 +2199,8 @@ ojluni/src/test/java/util/regex/PatternStreamTest.java,jdk17u/jdk-17.0.2-ga,test
 ojluni/src/test/java/util/regex/RegExTest.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/RegExTest.java
 ojluni/src/test/java/util/regex/SupplementaryTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/SupplementaryTestCases.txt
 ojluni/src/test/java/util/regex/TestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/TestCases.txt
+ojluni/src/test/java/util/zip/ChecksumBase.java,jdk17u/jdk-17.0.4-ga,test/jdk/java/util/zip/ChecksumBase.java
+ojluni/src/test/java/util/zip/TestCRC32.java,jdk17u/jdk-17.0.4-ga,test/jdk/java/util/zip/TestCRC32.java
+ojluni/src/test/java/util/zip/TestCRC32C.java,jdk17u/jdk-17.0.4-ga,test/jdk/java/util/zip/TestCRC32C.java
+ojluni/src/test/java/util/zip/TestChecksum.java,jdk17u/jdk-17.0.4-ga,test/jdk/java/util/zip/TestChecksum.java
 ojluni/src/test/java/util/zip/ZipFile/Zip64SizeTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/zip/ZipFile/Zip64SizeTest.java
