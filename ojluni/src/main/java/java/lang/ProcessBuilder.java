@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003, 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2003, 2017, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -26,6 +26,7 @@
 package java.lang;
 
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -33,6 +34,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import sun.security.action.GetPropertyAction;
 
 /**
  * This class is used to create operating system processes.
@@ -64,7 +66,7 @@ import java.util.Map;
  * working directory of the current process, usually the directory
  * named by the system property {@code user.dir}.
  *
- * <li><a name="redirect-input">a source of <i>standard input</i></a>.
+ * <li><a id="redirect-input">a source of <i>standard input</i></a>.
  * By default, the subprocess reads input from a pipe.  Java code
  * can access this pipe via the output stream returned by
  * {@link Process#getOutputStream()}.  However, standard input may
@@ -79,10 +81,10 @@ import java.util.Map;
  * <li>the {@link OutputStream#close() close} method does nothing
  * </ul>
  *
- * <li><a name="redirect-output">a destination for <i>standard output</i>
+ * <li><a id="redirect-output">a destination for <i>standard output</i>
  * and <i>standard error</i></a>.  By default, the subprocess writes standard
  * output and standard error to pipes.  Java code can access these pipes
- * via the input streams returned by {@link Process#getInputStream()} and
+ * via the input streams returned by {@link Process#getOutputStream()} and
  * {@link Process#getErrorStream()}.  However, standard output and
  * standard error may be redirected to other destinations using
  * {@link #redirectOutput(Redirect) redirectOutput} and
@@ -171,6 +173,11 @@ import java.util.Map;
  * variables, first call {@link java.util.Map#clear() Map.clear()}
  * before adding environment variables.
  *
+ * <p>
+ * Unless otherwise noted, passing a {@code null} argument to a constructor
+ * or method in this class will cause a {@link NullPointerException} to be
+ * thrown.
+ *
  * @author Martin Buchholz
  * @since 1.5
  */
@@ -193,7 +200,6 @@ public final class ProcessBuilder
      * command.
      *
      * @param  command the list containing the program and its arguments
-     * @throws NullPointerException if the argument is null
      */
     public ProcessBuilder(List<String> command) {
         if (command == null)
@@ -228,8 +234,6 @@ public final class ProcessBuilder
      *
      * @param  command the list containing the program and its arguments
      * @return this process builder
-     *
-     * @throws NullPointerException if the argument is null
      */
     public ProcessBuilder command(List<String> command) {
         if (command == null)
@@ -456,7 +460,12 @@ public final class ProcessBuilder
      *
      * @since 1.7
      */
-    public static abstract class Redirect {
+    public abstract static class Redirect {
+        private static final File NULL_FILE = new File(
+                (GetPropertyAction.privilegedGetProperty("os.name")
+                        .startsWith("Windows") ? "NUL" : "/dev/null")
+        );
+
         /**
          * The type of a {@link Redirect}.
          */
@@ -527,6 +536,27 @@ public final class ProcessBuilder
                 public Type type() { return Type.INHERIT; }
                 public String toString() { return type().toString(); }};
 
+
+        /**
+         * Indicates that subprocess output will be discarded.
+         * A typical implementation discards the output by writing to
+         * an operating system specific "null file".
+         *
+         * <p>It will always be true that
+         * <pre> {@code
+         * Redirect.DISCARD.file() is the filename appropriate for the operating system
+         * and may be null &&
+         * Redirect.DISCARD.type() == Redirect.Type.WRITE
+         * }</pre>
+         * @since 9
+         */
+        public static final Redirect DISCARD = new Redirect() {
+                public Type type() { return Type.WRITE; }
+                public String toString() { return type().toString(); }
+                public File file() { return NULL_FILE; }
+                boolean append() { return false; }
+        };
+
         /**
          * Returns the {@link File} source or destination associated
          * with this redirect, or {@code null} if there is no such file.
@@ -554,7 +584,6 @@ public final class ProcessBuilder
          * }</pre>
          *
          * @param file The {@code File} for the {@code Redirect}.
-         * @throws NullPointerException if the specified file is null
          * @return a redirect to read from the specified file
          */
         public static Redirect from(final File file) {
@@ -581,7 +610,6 @@ public final class ProcessBuilder
          * }</pre>
          *
          * @param file The {@code File} for the {@code Redirect}.
-         * @throws NullPointerException if the specified file is null
          * @return a redirect to write to the specified file
          */
         public static Redirect to(final File file) {
@@ -612,7 +640,6 @@ public final class ProcessBuilder
          * }</pre>
          *
          * @param file The {@code File} for the {@code Redirect}.
-         * @throws NullPointerException if the specified file is null
          * @return a redirect to append to the specified file
          */
         public static Redirect appendTo(final File file) {
@@ -666,11 +693,37 @@ public final class ProcessBuilder
         private Redirect() {}
     }
 
+    /**
+     * Private implementation subclass of Redirect that holds a FileDescriptor for the
+     * output of a previously started Process.
+     * The FileDescriptor is used as the standard input of the next Process
+     * to be started.
+     */
+    static class RedirectPipeImpl extends Redirect {
+        final FileDescriptor fd;
+
+        RedirectPipeImpl() {
+            this.fd = new FileDescriptor();
+        }
+        @Override
+        public Type type() { return Type.PIPE; }
+
+        @Override
+        public String toString() { return type().toString();}
+
+        FileDescriptor getFd() { return fd; }
+    }
+
+    /**
+     * Return the array of redirects, creating the default as needed.
+     * @return the array of redirects
+     */
     private Redirect[] redirects() {
-        if (redirects == null)
+        if (redirects == null) {
             redirects = new Redirect[] {
-                Redirect.PIPE, Redirect.PIPE, Redirect.PIPE
+                    Redirect.PIPE, Redirect.PIPE, Redirect.PIPE
             };
+        }
         return redirects;
     }
 
@@ -750,7 +803,7 @@ public final class ProcessBuilder
      * {@link Process#getErrorStream()} will return a
      * <a href="#redirect-output">null input stream</a>.
      *
-     * <p>If the {@link #redirectErrorStream redirectErrorStream}
+     * <p>If the {@link #redirectErrorStream() redirectErrorStream}
      * attribute has been set {@code true}, then the redirection set
      * by this method has no effect.
      *
@@ -957,11 +1010,15 @@ public final class ProcessBuilder
      * <li>The operating system program file was not found.
      * <li>Access to the program file was denied.
      * <li>The working directory does not exist.
+     * <li>Invalid character in command argument, such as NUL.
      * </ul>
      *
      * <p>In such cases an exception will be thrown.  The exact nature
      * of the exception is system-dependent, but it will always be a
      * subclass of {@link IOException}.
+     *
+     * <p>If the operating system does not support the creation of
+     * processes, an {@link UnsupportedOperationException} will be thrown.
      *
      * <p>Subsequent modifications to this process builder will not
      * affect the returned {@link Process}.
@@ -985,23 +1042,38 @@ public final class ProcessBuilder
      *         <li>the standard input to the subprocess was
      *         {@linkplain #redirectInput redirected from a file}
      *         and the security manager's
-     *         {@link SecurityManager#checkRead checkRead} method
+     *         {@link SecurityManager#checkRead(String) checkRead} method
      *         denies read access to the file, or
      *
      *         <li>the standard output or standard error of the
      *         subprocess was
      *         {@linkplain #redirectOutput redirected to a file}
      *         and the security manager's
-     *         {@link SecurityManager#checkWrite checkWrite} method
+     *         {@link SecurityManager#checkWrite(String) checkWrite} method
      *         denies write access to the file
      *
      *         </ul>
+     *
+     * @throws  UnsupportedOperationException
+     *          If the operating system does not support the creation of processes.
      *
      * @throws IOException if an I/O error occurs
      *
      * @see Runtime#exec(String[], String[], java.io.File)
      */
     public Process start() throws IOException {
+        return start(redirects);
+    }
+
+    /**
+     * Start a new Process using an explicit array of redirects.
+     * See {@link #start} for details of starting each Process.
+     *
+     * @param redirect array of redirects for stdin, stdout, stderr
+     * @return the new Process
+     * @throws IOException if an I/O error occurs
+     */
+    private Process start(Redirect[] redirects) throws IOException {
         // Must convert to array first -- a malicious user-supplied
         // list might try to circumvent the security check.
         String[] cmdarray = command.toArray(new String[command.size()]);
@@ -1051,5 +1123,173 @@ public final class ProcessBuilder
                 + exceptionInfo,
                 cause);
         }
+    }
+
+    /**
+     * Starts a Process for each ProcessBuilder, creating a pipeline of
+     * processes linked by their standard output and standard input streams.
+     * The attributes of each ProcessBuilder are used to start the respective
+     * process except that as each process is started, its standard output
+     * is directed to the standard input of the next.  The redirects for standard
+     * input of the first process and standard output of the last process are
+     * initialized using the redirect settings of the respective ProcessBuilder.
+     * All other {@code ProcessBuilder} redirects should be
+     * {@link Redirect#PIPE Redirect.PIPE}.
+     * <p>
+     * All input and output streams between the intermediate processes are
+     * not accessible.
+     * The {@link Process#getOutputStream standard input} of all processes
+     * except the first process are <i>null output streams</i>
+     * The {@link Process#getInputStream standard output} of all processes
+     * except the last process are <i>null input streams</i>.
+     * <p>
+     * The {@link #redirectErrorStream()} of each ProcessBuilder applies to the
+     * respective process.  If set to {@code true}, the error stream is written
+     * to the same stream as standard output.
+     * <p>
+     * If starting any of the processes throws an Exception, all processes
+     * are forcibly destroyed.
+     * <p>
+     * The {@code startPipeline} method performs the same checks on
+     * each ProcessBuilder as does the {@link #start} method. The new process
+     * will invoke the command and arguments given by {@link #command()},
+     * in a working directory as given by {@link #directory()},
+     * with a process environment as given by {@link #environment()}.
+     * <p>
+     * This method checks that the command is a valid operating
+     * system command.  Which commands are valid is system-dependent,
+     * but at the very least the command must be a non-empty list of
+     * non-null strings.
+     * <p>
+     * A minimal set of system dependent environment variables may
+     * be required to start a process on some operating systems.
+     * As a result, the subprocess may inherit additional environment variable
+     * settings beyond those in the process builder's {@link #environment()}.
+     * <p>
+     * If there is a security manager, its
+     * {@link SecurityManager#checkExec checkExec}
+     * method is called with the first component of this object's
+     * {@code command} array as its argument. This may result in
+     * a {@link SecurityException} being thrown.
+     * <p>
+     * Starting an operating system process is highly system-dependent.
+     * Among the many things that can go wrong are:
+     * <ul>
+     * <li>The operating system program file was not found.
+     * <li>Access to the program file was denied.
+     * <li>The working directory does not exist.
+     * <li>Invalid character in command argument, such as NUL.
+     * </ul>
+     * <p>
+     * In such cases an exception will be thrown.  The exact nature
+     * of the exception is system-dependent, but it will always be a
+     * subclass of {@link IOException}.
+     * <p>
+     * If the operating system does not support the creation of
+     * processes, an {@link UnsupportedOperationException} will be thrown.
+     * <p>
+     * Subsequent modifications to this process builder will not
+     * affect the returned {@link Process}.
+     * @apiNote
+     * For example to count the unique imports for all the files in a file hierarchy
+     * on a Unix compatible platform:
+     * <pre>{@code
+     * String directory = "/home/duke/src";
+     * ProcessBuilder[] builders = {
+     *              new ProcessBuilder("find", directory, "-type", "f"),
+                    new ProcessBuilder("xargs", "grep", "-h", "^import "),
+                    new ProcessBuilder("awk", "{print $2;}"),
+                    new ProcessBuilder("sort", "-u")};
+     * List<Process> processes = ProcessBuilder.startPipeline(
+     *         Arrays.asList(builders));
+     * Process last = processes.get(processes.size()-1);
+     * try (InputStream is = last.getInputStream();
+     *         Reader isr = new InputStreamReader(is);
+     *         BufferedReader r = new BufferedReader(isr)) {
+     *     long count = r.lines().count();
+     * }
+     * }</pre>
+     *
+     * @param builders a List of ProcessBuilders
+     * @return a {@code List<Process>}es started from the corresponding
+     *         ProcessBuilder
+     * @throws IllegalArgumentException any of the redirects except the
+     *          standard input of the first builder and the standard output of
+     *          the last builder are not {@link Redirect#PIPE}.
+     * @throws NullPointerException
+     *         if an element of the command list is null or
+     *         if an element of the ProcessBuilder list is null or
+     *         the builders argument is null
+     * @throws IndexOutOfBoundsException
+     *         if the command is an empty list (has size {@code 0})
+     * @throws SecurityException
+     *         if a security manager exists and
+     *         <ul>
+     *         <li>its
+     *         {@link SecurityManager#checkExec checkExec}
+     *         method doesn't allow creation of the subprocess, or
+     *         <li>the standard input to the subprocess was
+     *         {@linkplain #redirectInput redirected from a file}
+     *         and the security manager's
+     *         {@link SecurityManager#checkRead(String) checkRead} method
+     *         denies read access to the file, or
+     *         <li>the standard output or standard error of the
+     *         subprocess was
+     *         {@linkplain #redirectOutput redirected to a file}
+     *         and the security manager's
+     *         {@link SecurityManager#checkWrite(String) checkWrite} method
+     *         denies write access to the file
+     *         </ul>
+     *
+     * @throws  UnsupportedOperationException
+     *          If the operating system does not support the creation of processes
+     *
+     * @throws IOException if an I/O error occurs
+     * @since 9
+     */
+    public static List<Process> startPipeline(List<ProcessBuilder> builders) throws IOException {
+        // Accumulate and check the builders
+        final int numBuilders = builders.size();
+        List<Process> processes = new ArrayList<>(numBuilders);
+        try {
+            Redirect prevOutput = null;
+            for (int index = 0; index < builders.size(); index++) {
+                ProcessBuilder builder = builders.get(index);
+                Redirect[] redirects = builder.redirects();
+                if (index > 0) {
+                    // check the current Builder to see if it can take input from the previous
+                    if (builder.redirectInput() != Redirect.PIPE) {
+                        throw new IllegalArgumentException("builder redirectInput()" +
+                                " must be PIPE except for the first builder: "
+                                + builder.redirectInput());
+                    }
+                    redirects[0] = prevOutput;
+                }
+                if (index < numBuilders - 1) {
+                    // check all but the last stage has output = PIPE
+                    if (builder.redirectOutput() != Redirect.PIPE) {
+                        throw new IllegalArgumentException("builder redirectOutput()" +
+                                " must be PIPE except for the last builder: "
+                                + builder.redirectOutput());
+                    }
+                    redirects[1] = new RedirectPipeImpl();  // placeholder for new output
+                }
+                processes.add(builder.start(redirects));
+                prevOutput = redirects[1];
+            }
+        } catch (Exception ex) {
+            // Cleanup processes already started
+            processes.forEach(Process::destroyForcibly);
+            processes.forEach(p -> {
+                try {
+                    p.waitFor();        // Wait for it to exit
+                } catch (InterruptedException ie) {
+                    // If interrupted; continue with next Process
+                    Thread.currentThread().interrupt();
+                }
+            });
+            throw ex;
+        }
+        return processes;
     }
 }

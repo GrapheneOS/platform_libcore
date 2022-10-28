@@ -64,6 +64,7 @@ final class UNIXProcess extends Process {
     /* this is for the reaping thread */
     private native int waitForProcessExit(int pid);
 
+    // Android-changed: Make the forkAndExec method static.
     /**
      * Create a process using fork(2) and exec(2).
      *
@@ -78,7 +79,7 @@ final class UNIXProcess extends Process {
      *        output.
      * @return the pid of the subprocess
      */
-    private native int forkAndExec(byte[] prog,
+    static native int forkAndExec(byte[] prog,
                                    byte[] argBlock, int argc,
                                    byte[] envBlock, int envc,
                                    byte[] dir,

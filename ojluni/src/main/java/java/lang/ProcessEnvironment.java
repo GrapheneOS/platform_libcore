@@ -124,7 +124,7 @@ final class ProcessEnvironment
 
     /* Only for use by Runtime.exec(...String[]envp...) */
     static Map<String,String> emptyEnvironment(int capacity) {
-        return new StringEnvironment(new HashMap<Variable,Value>(capacity));
+        return new StringEnvironment(new HashMap<>(capacity));
     }
 
     private static native byte[][] environ();
@@ -149,7 +149,7 @@ final class ProcessEnvironment
 
     // A class hiding the byteArray-String duality of
     // text data on Unixoid operating systems.
-    private static abstract class ExternalData {
+    private abstract static class ExternalData {
         protected final String str;
         protected final byte[] bytes;
 

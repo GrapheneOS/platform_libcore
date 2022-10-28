@@ -28,25 +28,6 @@ license {
     ],
 }
 
-filegroup {
-    name: "core-ojtests-javax-resources",
-    // Set path to keep the resources and .class files in the same directory in the jar file.
-    path: ".",
-    srcs: ["javax/**/*"],
-    exclude_srcs: ["javax/**/*.java"],
-}
-
-filegroup {
-    name: "core-ojtests-java-resources",
-    // Set path to keep the resources and .class files in the same directory in the jar file.
-    path: ".",
-    srcs: [
-        "java/util/regex/**/*",
-        "java/util/Base64/**/*",
-    ],
-    exclude_srcs: ["java/**/*.java"],
-}
-
 // Builds the core-ojtests library that contains test code from OpenJDK.
 java_test {
     name: "core-ojtests",

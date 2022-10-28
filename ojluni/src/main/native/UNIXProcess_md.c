@@ -920,7 +920,9 @@ startChild(ChildStuff *c) {
 
 JNIEXPORT jint JNICALL
 UNIXProcess_forkAndExec(JNIEnv *env,
-                                       jobject process,
+                                       // Android-changed: Make forkAndExec static method.
+                                       // jobject process,
+                                       jclass ATTRIBUTE_UNUSED,
                                        jbyteArray prog,
                                        jbyteArray argBlock, jint argc,
                                        jbyteArray envBlock, jint envc,

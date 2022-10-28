@@ -665,6 +665,25 @@ genrule {
     tools: ["smali"],
 }
 
+filegroup {
+    name: "core-ojtests-javax-resources",
+    // Set path to keep the resources and .class files in the same directory in the jar file.
+    path: "ojluni/src",
+    srcs: ["ojluni/src/test/javax/**/*"],
+    exclude_srcs: ["ojluni/src/test/javax/**/*.java"],
+}
+
+filegroup {
+    name: "core-ojtests-java-resources",
+    // Set path to keep the resources and .class files in the same directory in the jar file.
+    path: "ojluni/src",
+    srcs: [
+        "ojluni/src/test/java/util/regex/**/*",
+        "ojluni/src/test/java/util/Base64/**/*",
+    ],
+    exclude_srcs: ["ojluni/src/test/java/**/*.java"],
+}
+
 // Builds the core-tests library.
 java_test {
     name: "core-tests",

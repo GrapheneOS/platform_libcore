@@ -183,10 +183,12 @@ ojluni/src/main/java/java/lang/Object.java,jdk11u/jdk-11.0.13-ga,src/java.base/s
 ojluni/src/main/java/java/lang/OutOfMemoryError.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/OutOfMemoryError.java
 ojluni/src/main/java/java/lang/Override.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Override.java
 ojluni/src/main/java/java/lang/Package.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/Package.java
-ojluni/src/main/java/java/lang/Process.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/Process.java
-ojluni/src/main/java/java/lang/ProcessBuilder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/ProcessBuilder.java
-ojluni/src/main/java/java/lang/ProcessEnvironment.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/java/lang/ProcessEnvironment.java
-ojluni/src/main/java/java/lang/ProcessImpl.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/java/lang/ProcessImpl.java
+ojluni/src/main/java/java/lang/Process.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Process.java
+ojluni/src/main/java/java/lang/ProcessBuilder.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/ProcessBuilder.java
+ojluni/src/main/java/java/lang/ProcessEnvironment.java,jdk11u/jdk-11.0.13-ga,src/java.base/unix/classes/java/lang/ProcessEnvironment.java
+ojluni/src/main/java/java/lang/ProcessHandle.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/ProcessHandle.java
+ojluni/src/main/java/java/lang/ProcessHandleImpl.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/ProcessHandleImpl.java
+ojluni/src/main/java/java/lang/ProcessImpl.java,jdk11u/jdk-11.0.13-ga,src/java.base/unix/classes/java/lang/ProcessImpl.java
 ojluni/src/main/java/java/lang/Readable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Readable.java
 ojluni/src/main/java/java/lang/ReflectiveOperationException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/ReflectiveOperationException.java
 ojluni/src/main/java/java/lang/Runnable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/Runnable.java
@@ -899,7 +901,7 @@ ojluni/src/main/java/java/util/FormatterClosedException.java,jdk11u/jdk-11.0.13-
 ojluni/src/main/java/java/util/GregorianCalendar.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/GregorianCalendar.java
 ojluni/src/main/java/java/util/HashMap.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/util/HashMap.java
 ojluni/src/main/java/java/util/HashSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/HashSet.java
-ojluni/src/main/java/java/util/Hashtable.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Hashtable.java
+ojluni/src/main/java/java/util/Hashtable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Hashtable.java
 ojluni/src/main/java/java/util/HexFormat.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/util/HexFormat.java
 ojluni/src/main/java/java/util/IdentityHashMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IdentityHashMap.java
 ojluni/src/main/java/java/util/IllegalFormatCodePointException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatCodePointException.java
@@ -1799,6 +1801,9 @@ ojluni/src/main/native/ObjectStreamClass.c,jdk8u/jdk8u121-b13,jdk/src/share/nati
 # OnLoad.cpp doesn’t come from the upstream OpenJDK.
 ojluni/src/main/native/PollArrayWrapper.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/PollArrayWrapper.c
 ojluni/src/main/native/ProcessEnvironment_md.c,jdk7u/jdk7u40-b60,jdk/src/solaris/native/java/lang/ProcessEnvironment_md.c
+ojluni/src/main/native/ProcessHandleImpl_linux.c,jdk11u/jdk-11.0.13-ga,src/java.base/linux/native/libjava/ProcessHandleImpl_linux.c
+ojluni/src/main/native/ProcessHandleImpl_unix.c,jdk11u/jdk-11.0.13-ga,src/java.base/unix/native/libjava/ProcessHandleImpl_unix.c
+ojluni/src/main/native/ProcessHandleImpl_unix.h,jdk11u/jdk-11.0.13-ga,src/java.base/unix/native/libjava/ProcessHandleImpl_unix.h
 ojluni/src/main/native/Runtime.c,jdk8u/jdk8u121-b13,jdk/src/share/native/java/lang/Runtime.c
 ojluni/src/main/native/ServerSocketChannelImpl.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/ServerSocketChannelImpl.c
 ojluni/src/main/native/SocketChannelImpl.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/SocketChannelImpl.c
