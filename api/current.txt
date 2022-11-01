@@ -3756,8 +3756,6 @@ package java.lang {
     method public void exit(int);
     method public long freeMemory();
     method public void gc();
-    method @Deprecated public java.io.InputStream getLocalizedInputStream(java.io.InputStream);
-    method @Deprecated public java.io.OutputStream getLocalizedOutputStream(java.io.OutputStream);
     method public static Runtime getRuntime();
     method public void halt(int);
     method public void load(String);

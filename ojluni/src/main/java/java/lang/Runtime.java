@@ -1146,7 +1146,7 @@ public class Runtime {
      * @see        java.io.InputStream
      * @see        java.io.BufferedReader#BufferedReader(java.io.Reader)
      * @see        java.io.InputStreamReader#InputStreamReader(java.io.InputStream)
-     * @deprecated As of JDK&nbsp;1.1, the preferred way to translate a byte
+     * @removed As of JDK&nbsp;1.1, the preferred way to translate a byte
      * stream in the local encoding into a character stream in Unicode is via
      * the <code>InputStreamReader</code> and <code>BufferedReader</code>
      * classes.
@@ -1167,7 +1167,7 @@ public class Runtime {
      * If the argument is already a localized stream, it may be returned
      * as the result.
      *
-     * @deprecated As of JDK&nbsp;1.1, the preferred way to translate a
+     * @removed As of JDK&nbsp;1.1, the preferred way to translate a
      * Unicode character stream into a byte stream in the local encoding is via
      * the <code>OutputStreamWriter</code>, <code>BufferedWriter</code>, and
      * <code>PrintWriter</code> classes.
