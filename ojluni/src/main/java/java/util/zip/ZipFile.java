@@ -47,8 +47,8 @@ import java.util.WeakHashMap;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
-import dalvik.system.BlockGuard;
 import dalvik.system.CloseGuard;
+import dalvik.system.ZipPathValidator;
 
 import static java.util.zip.ZipConstants64.*;
 
@@ -614,7 +614,7 @@ class ZipFile implements ZipConstants, Closeable {
                         Spliterator.IMMUTABLE | Spliterator.NONNULL), false);
     }
 
-    // Android-added: Hook to validate zip entry name by strict mode.
+    // Android-added: Hook to validate zip entry name by ZipPathValidator.
     private void onZipEntryAccess(byte[] bname, int flag) throws ZipException {
         String name;
         if (!zc.isUTF8() && (flag & USE_UTF8) != 0) {
@@ -622,7 +622,7 @@ class ZipFile implements ZipConstants, Closeable {
         } else {
             name = zc.toString(bname, bname.length);
         }
-        BlockGuard.getVmPolicy().onZipEntryAccess(name);
+        ZipPathValidator.getInstance().onZipEntryAccess(name);
     }
 
     private ZipEntry getZipEntry(String name, long jzentry) {

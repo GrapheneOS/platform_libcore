@@ -948,7 +948,7 @@ ojluni/src/main/java/java/util/Properties.java,jdk8u/jdk8u121-b13,jdk/src/share/
 ojluni/src/main/java/java/util/PropertyPermission.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/PropertyPermission.java
 ojluni/src/main/java/java/util/PropertyResourceBundle.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/PropertyResourceBundle.java
 ojluni/src/main/java/java/util/Queue.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Queue.java
-ojluni/src/main/java/java/util/Random.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Random.java
+ojluni/src/main/java/java/util/Random.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Random.java
 ojluni/src/main/java/java/util/RandomAccess.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/RandomAccess.java
 ojluni/src/main/java/java/util/RegularEnumSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/RegularEnumSet.java
 ojluni/src/main/java/java/util/ResourceBundle.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/ResourceBundle.java
@@ -963,7 +963,7 @@ ojluni/src/main/java/java/util/Spliterator.java,jdk11u/jdk-11.0.13-ga,src/java.b
 ojluni/src/main/java/java/util/Spliterators.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Spliterators.java
 ojluni/src/main/java/java/util/SplittableRandom.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/SplittableRandom.java
 ojluni/src/main/java/java/util/Stack.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Stack.java
-ojluni/src/main/java/java/util/StringJoiner.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/StringJoiner.java
+ojluni/src/main/java/java/util/StringJoiner.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/StringJoiner.java
 ojluni/src/main/java/java/util/StringTokenizer.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/StringTokenizer.java
 ojluni/src/main/java/java/util/TimSort.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/TimSort.java
 ojluni/src/main/java/java/util/TimeZone.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/util/TimeZone.java
@@ -2194,6 +2194,8 @@ ojluni/src/test/java/util/PriorityQueue/ForgetMeNot.java,jdk11u/jdk-11.0.13-ga,t
 ojluni/src/test/java/util/PriorityQueue/NoNulls.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/PriorityQueue/NoNulls.java
 ojluni/src/test/java/util/PriorityQueue/PriorityQueueSort.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/PriorityQueue/PriorityQueueSort.java
 ojluni/src/test/java/util/PriorityQueue/RemoveContains.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/PriorityQueue/RemoveContains.java
+ojluni/src/test/java/util/StringJoiner/MergeTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/StringJoiner/MergeTest.java
+ojluni/src/test/java/util/StringJoiner/StringJoinerTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/StringJoiner/StringJoinerTest.java
 ojluni/src/test/java/util/UUID/Serial.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/UUID/Serial.java
 ojluni/src/test/java/util/UUID/UUIDTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/UUID/UUIDTest.java
 ojluni/src/test/java/util/regex/BMPTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/BMPTestCases.txt

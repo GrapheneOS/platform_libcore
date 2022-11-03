@@ -1096,6 +1096,15 @@ package dalvik.system {
     ctor public PathClassLoader(String, String, ClassLoader);
   }
 
+  public final class ZipPathValidator {
+    method public static void clearCallback();
+    method public static void setCallback(@NonNull dalvik.system.ZipPathValidator.Callback);
+  }
+
+  public static interface ZipPathValidator.Callback {
+    method public default void onZipEntryAccess(@NonNull String) throws java.util.zip.ZipException;
+  }
+
 }
 
 package java.awt.font {

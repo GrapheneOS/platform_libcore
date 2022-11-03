@@ -41,32 +41,18 @@ import android.system.OsConstants;
 import android.system.StructAddrinfo;
 import android.system.UnixSocketAddress;
 
-import java.io.BufferedOutputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.FileDescriptor;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipOutputStream;
 
 import libcore.io.BlockGuardOs;
 import libcore.io.IoUtils;
@@ -111,77 +97,6 @@ public class BlockGuardOsTest {
     public void tearDown() {
         BlockGuard.setVmPolicy(savedVmPolicy);
         BlockGuard.setThreadPolicy(savedThreadPolicy);
-    }
-
-    @Test
-    public void test_blockguardZipFileOnZipEntryAccessCallback() throws Exception {
-        final String[] entryNames = {
-                "abc",
-                "abc/def.ghi",
-                "../foo.bar",
-                "foo/../bar.baz",
-                "foo/../../bar.baz",
-                "foo.bar/..",
-                "foo.bar/../",
-                "..",
-                "../",
-                "/foo",
-        };
-        for (String entryName : entryNames) {
-            final File tempFile = File.createTempFile("smdc", "zip");
-            try {
-                FileOutputStream tempFileStream = new FileOutputStream(tempFile);
-                ZipOutputStream zipOutputStream = new ZipOutputStream(tempFileStream);
-                zipOutputStream.putNextEntry(new ZipEntry(entryName));
-                zipOutputStream.write(new byte[2]);
-                zipOutputStream.closeEntry();
-                zipOutputStream.close();
-                tempFileStream.close();
-
-                ZipFile zipFile = new ZipFile(tempFile);
-                Enumeration<? extends ZipEntry> enumer = zipFile.entries();
-                int counter = 0;
-                while (enumer.hasMoreElements()) {
-                    enumer.nextElement();
-                    verify(mockVmPolicy).onZipEntryAccess(entryNames[counter]);
-                    counter++;
-                }
-            } finally {
-                tempFile.delete();
-            }
-        }
-    }
-
-    @Test
-    public void test_blockguardZipInputStreamOnZipEntryAccessCallback() throws Exception {
-        final String[] entryNames = {
-                "abc",
-                "abc/def.ghi",
-                "../foo.bar",
-                "foo/../bar.baz",
-                "foo/../../bar.baz",
-                "foo.bar/..",
-                "foo.bar/../",
-                "..",
-                "../",
-                "/foo",
-        };
-        int counter = 0;
-        for (String entryName : entryNames) {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ZipOutputStream zos = new ZipOutputStream(bos);
-            ZipEntry entry = new ZipEntry(entryName);
-            zos.putNextEntry(entry);
-            zos.write(new byte[2]);
-            zos.closeEntry();
-            zos.close();
-            byte[] badZipBytes = bos.toByteArray();
-            try (ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(badZipBytes))) {
-                zis.getNextEntry();
-                verify(mockVmPolicy).onZipEntryAccess(entryNames[counter]);
-                counter++;
-            }
-        }
     }
 
     @Test

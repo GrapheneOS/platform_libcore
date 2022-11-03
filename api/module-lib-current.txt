@@ -206,7 +206,6 @@ package dalvik.system {
 
   public static interface BlockGuard.VmPolicy {
     method public void onPathAccess(@NonNull String);
-    method public default void onZipEntryAccess(@NonNull String) throws java.util.zip.ZipException;
   }
 
   public final class CloseGuard {

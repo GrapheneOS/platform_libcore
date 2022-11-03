@@ -751,7 +751,6 @@ java_test {
         "nist-pkix-tests",
         "slf4j-jdk14",
         "sqlite-jdbc",
-        "truth-prebuilt-jar",
     ],
 
     errorprone: {

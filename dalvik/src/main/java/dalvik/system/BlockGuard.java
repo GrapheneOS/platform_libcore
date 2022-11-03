@@ -22,8 +22,6 @@ import android.annotation.SystemApi;
 import android.compat.annotation.UnsupportedAppUsage;
 
 import java.util.Objects;
-import java.util.zip.ZipException;
-
 import libcore.util.NonNull;
 
 /**
@@ -138,22 +136,6 @@ public final class BlockGuard {
          */
         @SystemApi(client = MODULE_LIBRARIES)
         void onPathAccess(@NonNull String path);
-
-        /**
-         * Called by core libraries code when a zip entry access is being detected. The default
-         * behavior is no-op and doesn't throw {@link java.util.zip.ZipException}, but
-         * framework could override the implementation like to do detect zip path traversal
-         * vulnerability zip entry and throws {@link java.util.zip.ZipException}.
-         *
-         * This method will be called by @link java.util.zip.ZipInputStream#getNextEntry} or
-         * {@link java.util.zip.ZipFile#ZipFile(String)}.
-         *
-         * @param name The name of the zip entry.
-         *
-         * @hide
-         */
-        @SystemApi(client = MODULE_LIBRARIES)
-        default void onZipEntryAccess(@NonNull String name) throws ZipException {}
     }
 
     /**
@@ -233,7 +215,6 @@ public final class BlockGuard {
     public static final VmPolicy LAX_VM_POLICY = new VmPolicy() {
         @Override public String toString() { return "LAX_VM_POLICY"; }
         @Override public void onPathAccess(String path) {}
-        @Override public void onZipEntryAccess(@NonNull String name) {}
     };
 
     @UnsupportedAppUsage
