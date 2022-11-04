@@ -179,8 +179,6 @@ filegroup {
         "ojluni/src/main/java/java/lang/Package.java",
         "ojluni/src/main/java/java/lang/ProcessBuilder.java",
         "ojluni/src/main/java/java/lang/ProcessEnvironment.java",
-        "ojluni/src/main/java/java/lang/ProcessHandle.java",
-        "ojluni/src/main/java/java/lang/ProcessHandleImpl.java",
         "ojluni/src/main/java/java/lang/ProcessImpl.java",
         "ojluni/src/main/java/java/lang/Process.java",
         "ojluni/src/main/java/java/lang/Readable.java",

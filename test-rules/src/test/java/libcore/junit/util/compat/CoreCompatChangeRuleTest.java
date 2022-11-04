@@ -15,7 +15,7 @@
  */
 package libcore.junit.util.compat;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import android.compat.testing.FakeApi;
 
@@ -40,38 +40,38 @@ public class CoreCompatChangeRuleTest {
     @Test
     @EnableCompatChanges({FakeApi.CHANGE_ID})
     public void testFakeGatingPositive() {
-        assertTrue(FakeApi.fakeFunc(). equals("A"));
+        assertEquals("A", FakeApi.fakeFunc());
     }
 
     @Test
     @DisableCompatChanges({FakeApi.CHANGE_ID})
     public void testFakeGatingNegative() {
-        assertTrue(FakeApi.fakeFunc().equals("B"));
+        assertEquals("B", FakeApi.fakeFunc());
     }
 
     @Test
     @DisableCompatChanges({FakeApi.CHANGE_ID_1, FakeApi.CHANGE_ID_2})
     public void testFakeGatingCombined0() {
-        assertTrue(FakeApi.fakeCombinedFunc().equals("0"));
+        assertEquals("0", FakeApi.fakeCombinedFunc());
     }
 
     @Test
     @DisableCompatChanges({FakeApi.CHANGE_ID_1})
     @EnableCompatChanges({FakeApi.CHANGE_ID_2})
     public void testFakeGatingCombined1() {
-        assertTrue(FakeApi.fakeCombinedFunc().equals("1"));
+        assertEquals("1", FakeApi.fakeCombinedFunc());
     }
 
     @Test
     @EnableCompatChanges({FakeApi.CHANGE_ID_1})
     @DisableCompatChanges({FakeApi.CHANGE_ID_2})
     public void testFakeGatingCombined2() {
-        assertTrue(FakeApi.fakeCombinedFunc().equals("2"));
+        assertEquals("2", FakeApi.fakeCombinedFunc());
     }
 
     @Test
     @EnableCompatChanges({FakeApi.CHANGE_ID_1, FakeApi.CHANGE_ID_2})
     public void testFakeGatingCombined3() {
-        assertTrue(FakeApi.fakeCombinedFunc().equals("3"));
+        assertEquals("3", FakeApi.fakeCombinedFunc());
     }
 }

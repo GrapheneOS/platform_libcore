@@ -290,22 +290,6 @@ JNU_NotifyAll(JNIEnv *env, jobject object);
         }                                       \
     } while (0)                                 \
 
-#define CHECK_NULL_THROW_NPE(env, x, msg)         \
-    do {                                        \
-        if ((x) == NULL) {                      \
-           JNU_ThrowNullPointerException((env), (msg));\
-           return;                              \
-        }                                       \
-    } while(0)                                  \
-
-#define CHECK_NULL_THROW_NPE_RETURN(env, x, msg, z)\
-    do {                                        \
-        if ((x) == NULL) {                      \
-           JNU_ThrowNullPointerException((env), (msg));\
-           return (z);                          \
-        }                                       \
-    } while(0)                                  \
-
 #define CHECK_NULL_RETURN(x, y)                 \
     do {                                        \
         if ((x) == NULL) {                      \
@@ -313,35 +297,7 @@ JNU_NotifyAll(JNIEnv *env, jobject object);
         }                                       \
     } while (0)                                 \
 
-#ifdef __cplusplus
-#define JNU_CHECK_EXCEPTION(env)                \
-    do {                                        \
-        if ((env)->ExceptionCheck()) {          \
-            return;                             \
-        }                                       \
-    } while (0)                                 \
 
-#define JNU_CHECK_EXCEPTION_RETURN(env, y)      \
-    do {                                        \
-        if ((env)->ExceptionCheck()) {          \
-            return (y);                         \
-        }                                       \
-    } while (0)
-#else
-#define JNU_CHECK_EXCEPTION(env)                \
-    do {                                        \
-        if ((*env)->ExceptionCheck(env)) {      \
-            return;                             \
-        }                                       \
-    } while (0)                                 \
-
-#define JNU_CHECK_EXCEPTION_RETURN(env, y)      \
-    do {                                        \
-        if ((*env)->ExceptionCheck(env)) {      \
-            return (y);                         \
-        }                                       \
-    } while (0)
-#endif /* __cplusplus */
 /************************************************************************
  * Debugging utilities
  */
