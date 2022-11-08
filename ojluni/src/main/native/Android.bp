@@ -13,10 +13,11 @@
 // limitations under the License.
 
 package {
-    // The native sources are GPLv2 with classpath exception.
-    // SPDX-license-identifier-GPL-2.0-with-classpath-exception
-    // For general tips, see http://go/android-license-faq
-    default_applicable_licenses: ["libcore_ojluni_src_main_license"],
+    // http://go/android-license-faq
+    // A large-scale-change added 'default_applicable_licenses' to import
+    // the below license kinds from "libcore_ojluni_license":
+    //   SPDX-license-identifier-GPL-2.0
+    default_applicable_licenses: ["libcore_ojluni_license"],
 }
 
 filegroup {

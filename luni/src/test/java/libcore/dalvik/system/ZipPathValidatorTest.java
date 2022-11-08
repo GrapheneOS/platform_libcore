@@ -42,12 +42,6 @@ public class ZipPathValidatorTest extends TestCase {
         ZipPathValidator.setCallback(mockZipCallback);
     }
 
-    public void testClearCallback() {
-        ZipPathValidator.clearCallback();
-        ZipPathValidator.Callback callbackFromGet = ZipPathValidator.getInstance();
-        assertEquals(ZipPathValidator.DEFAULT, callbackFromGet);
-    }
-
     public void testGetInstance() {
         ZipPathValidator.Callback callbackFromGet = ZipPathValidator.getInstance();
         assertEquals(mockZipCallback, callbackFromGet);
