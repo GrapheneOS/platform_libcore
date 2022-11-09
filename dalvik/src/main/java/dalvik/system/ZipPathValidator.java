@@ -37,8 +37,10 @@ public final class ZipPathValidator {
 
     /**
      * Default implementation of the {@link Callback} interface which accepts all paths.
+     *
+     * @hide
      */
-    private static final Callback DEFAULT = new Callback() {};
+    public static final Callback DEFAULT = new Callback() {};
 
     private static volatile Callback sInstance = DEFAULT;
 

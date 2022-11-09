@@ -52,7 +52,7 @@ license {
     license_text: [
         "LICENSE",
         "NOTICE",
-        "ojluni/NOTICE",
+        "ojluni/src/main/NOTICE",
     ],
 }
 
@@ -67,11 +67,11 @@ java_genrule {
     tools: ["soong_zip"],
     tool_files: [
         "NOTICE",
-        "ojluni/NOTICE",
+        "ojluni/src/main/NOTICE",
     ],
     cmd: "mkdir $(genDir)/NOTICES && " +
         "cp -f $(location NOTICE) $(genDir)/NOTICES/libcore-NOTICE && " +
-        "cp -f $(location ojluni/NOTICE) $(genDir)/NOTICES/ojluni-NOTICE && " +
+        "cp -f $(location ojluni/src/main/NOTICE) $(genDir)/NOTICES/ojluni-NOTICE && " +
         "$(location soong_zip) -o $(out) -C $(genDir) -D $(genDir)/NOTICES",
     out: ["notices-for-stubs.jar"],
 }
