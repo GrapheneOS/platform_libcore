@@ -62,16 +62,22 @@ build = [
     "Extras.bp",
 ]
 
+gen_notice {
+    name: "libcore-library-notices",
+    for: [
+        "core-oj",
+        "core-libart",
+    ],
+    stem: "libcore-NOTICES",
+    suffix: ".txt",
+}
+
 java_genrule {
     name: "notices-for-stubs-jar",
     tools: ["soong_zip"],
-    tool_files: [
-        "NOTICE",
-        "ojluni/src/main/NOTICE",
-    ],
+    srcs: [":libcore-library-notices"],
     cmd: "mkdir $(genDir)/NOTICES && " +
-        "cp -f $(location NOTICE) $(genDir)/NOTICES/libcore-NOTICE && " +
-        "cp -f $(location ojluni/src/main/NOTICE) $(genDir)/NOTICES/ojluni-NOTICE && " +
+        "cp -f $(in) $(genDir)/NOTICES && " +
         "$(location soong_zip) -o $(out) -C $(genDir) -D $(genDir)/NOTICES",
     out: ["notices-for-stubs.jar"],
 }

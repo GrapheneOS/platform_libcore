@@ -18,7 +18,6 @@ package libcore.dalvik.system;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -65,7 +64,6 @@ public final class BaseDexClassLoaderTest {
     private ClassLoader pcl;
     private File jar;
     private File jar2;
-    private File jar3;
     private Reporter reporter;
 
     // For resources that we will load in this test. We're re-using parent.jar and child.jar
@@ -97,14 +95,8 @@ public final class BaseDexClassLoaderTest {
              FileOutputStream out = new FileOutputStream(jar2)) {
           Streams.copy(in, out);
         }
-        jar3 = File.createTempFile("loading-test3", ".jar");
-        try (InputStream in = pcl.getResourceAsStream("dalvik/system/loading-test.jar");
-             FileOutputStream out = new FileOutputStream(jar3)) {
-            Streams.copy(in, out);
-        }
-        assertTrue(jar.setReadOnly());
-        assertTrue(jar2.setReadOnly());
-        assertTrue(jar3.setWritable(true));
+        jar.setReadOnly();
+        jar2.setReadOnly();
     }
 
     @Before
@@ -122,7 +114,6 @@ public final class BaseDexClassLoaderTest {
     public void deleteTestJars() throws Exception {
         assertTrue(jar.delete());
         assertTrue(jar2.delete());
-        assertTrue(jar3.delete());
     }
 
     @Test
@@ -781,13 +772,5 @@ public final class BaseDexClassLoaderTest {
         Method frotzMethod = target2Class.getMethod("frotz", (Class[]) null);
         String frotzResult = (String) frotzMethod.invoke(null, (Object[]) null);
         assertEquals("frotz", frotzResult);
-    }
-
-    @Test
-    public void testDclReadOnlyEnforcement() {
-        assertTrue(jar3.canWrite());
-        assertThrows("Writable jar files should not be allowed to load",
-                SecurityException.class,
-                () -> new PathClassLoader(jar3.getPath(), ClassLoader.getSystemClassLoader()));
     }
 }
