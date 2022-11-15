@@ -40,12 +40,6 @@ import static java.nio.charset.StandardCharsets.US_ASCII;
 
 public class Base64GetEncoderTest {
 
-    // Android-added: method is added to TestNG runner can pick up the test
-    @org.testng.annotations.Test
-    public static void runTests() throws Throwable {
-        main(null);
-    }
-
     public static void main(String args[]) throws Throwable {
 
         for (int maxlen = -4; maxlen < 4; maxlen++) {

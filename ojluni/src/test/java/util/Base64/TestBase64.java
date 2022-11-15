@@ -52,12 +52,6 @@ public class TestBase64 {
 
     private static final Random rnd = RandomFactory.getRandom();
 
-    // Android-added: method is added to TestNG runner can pick up the test
-    @org.testng.annotations.Test
-    public static void runTests() throws Throwable {
-        main(new String[]{});
-    }
-
     public static void main(String args[]) throws Throwable {
         int numRuns  = 10;
         int numBytes = 200;

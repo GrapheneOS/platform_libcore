@@ -52,12 +52,6 @@ import java.util.concurrent.PriorityBlockingQueue;
 
 public class NoNulls {
 
-    // Android-added: method is added so TestNG runner can pick up the test.
-    @org.testng.annotations.Test
-    public static void runTests() throws Throwable {
-        main(null);
-    }
-
     void test(String[] args) throws Throwable {
         final Comparator<String> nullTolerantComparator
             = new Comparator<>() {

@@ -81,12 +81,6 @@ public class Serialization {
         }
     }
 
-    // Android-added: method is added so TestNG runner can run the test.
-    @org.testng.annotations.Test
-    public static void runTests() {
-        main(null);
-    }
-
     public static void main(String[] args) {
         int failures = 0;
 

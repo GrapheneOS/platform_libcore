@@ -38,12 +38,6 @@ import java.util.Set;
 
 public class ToArray {
 
-    // Android-change: method added so runner can run the test
-    @org.testng.annotations.Test
-    public static void main() {
-        main(null);
-    }
-
     public static void main(String[] args) {
         //----------------------------------------------------------------
         // new ArrayList(IdentityHashMap.entrySet())

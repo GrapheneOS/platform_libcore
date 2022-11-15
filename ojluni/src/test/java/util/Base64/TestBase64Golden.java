@@ -47,12 +47,6 @@ import java.util.Random;
 
 public class TestBase64Golden {
 
-    // Android-added: method is added to TestNG runner can pick up the test
-    @org.testng.annotations.Test
-    public static void runTests() throws Throwable {
-        main(null);
-    }
-
     public static void main(String[] args) throws Exception {
         test0(Base64Type.BASIC, Base64.getEncoder(), Base64.getDecoder(),
               "plain.txt", "baseEncode.txt");

@@ -35,6 +35,7 @@ import java.util.StringJoiner;
 import java.util.Locale;
 import java.util.Formatter;
 import java.util.Comparator;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
 @SuppressWarnings({"unchecked", "deprecation", "all"})
@@ -187,6 +188,8 @@ public boolean isBlank() { throw new RuntimeException("Stub!"); }
 @libcore.util.NonNull public java.lang.String stripIndent() { throw new RuntimeException("Stub!"); }
 
 @libcore.util.NonNull public java.lang.String translateEscapes() { throw new RuntimeException("Stub!"); }
+
+@libcore.util.NullFromTypeParam public <R> R transform(@libcore.util.NonNull Function<? super java.lang.String, ? extends @libcore.util.NullFromTypeParam R> f) { throw new RuntimeException("Stub"); }
 
 @libcore.util.NonNull public java.lang.String toString() { throw new RuntimeException("Stub!"); }
 

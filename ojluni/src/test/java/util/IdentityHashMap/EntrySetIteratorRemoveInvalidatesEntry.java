@@ -40,12 +40,6 @@ import java.util.Map;
 
 public class EntrySetIteratorRemoveInvalidatesEntry {
 
-    // Android-change: method added so runner can run the test
-    @org.testng.annotations.Test
-    public static void main() throws Exception {
-        main(null);
-    }
-
     public static void main(String[] args) throws Exception {
         final IdentityHashMap<String, String> identityHashMap =
             new IdentityHashMap<>();

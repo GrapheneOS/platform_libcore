@@ -36,12 +36,6 @@ import java.util.ListIterator;
 @SuppressWarnings({"serial","unchecked"})
 public class Bug6533203 {
 
-    // Android-added: method added to actually run the test.
-    @org.testng.annotations.Test
-    public void runTest() throws Throwable {
-        test(null);
-    }
-
     void test(String[] args) throws Throwable {
         final List<Integer> superstitious = new ArrayList<>() {
             public void add(int index, Integer i) {

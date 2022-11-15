@@ -36,9 +36,7 @@ import java.util.zip.CRC32C;
 
 public class TestCRC32C {
 
-    // Android-changed: add annotation and drop args for atest TestNG runner to run the test.
-    @org.testng.annotations.Test
-    public static void main(/*String[] args*/) {
+    public static void main(String[] args) {
         ChecksumBase.testAll(new CRC32C(), 0xE3069283L);
     }
 }

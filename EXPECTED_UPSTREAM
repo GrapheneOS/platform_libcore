@@ -1852,6 +1852,7 @@ ojluni/src/test/java/lang/StackWalker/StackWalkTest.java,jdk17u/jdk-17.0.2-ga,te
 # ojluni/src/test/java/lang/StackWalker/TestBCI.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/lang/StackWalker/TestBCI.java
 ojluni/src/test/java/lang/StackWalker/VerifyStackTrace.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/lang/StackWalker/VerifyStackTrace.java
 ojluni/src/test/java/lang/StackWalker/WalkFunction.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/lang/StackWalker/WalkFunction.java
+ojluni/src/test/java/lang/String/Transform.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/lang/String/Transform.java
 ojluni/src/test/java/lang/StringBuffer/AppendCharSequence.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/lang/StringBuffer/AppendCharSequence.java
 ojluni/src/test/java/lang/StringBuffer/AppendSB.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/lang/StringBuffer/AppendSB.java
 ojluni/src/test/java/lang/StringBuffer/AppendStringBuilder.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/lang/StringBuffer/AppendStringBuilder.java

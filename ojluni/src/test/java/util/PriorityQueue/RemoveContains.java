@@ -45,12 +45,6 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class RemoveContains {
     static volatile int passed = 0, failed = 0;
 
-    // Android-added: method is added so TestNG runner can pick up the test.
-    @org.testng.annotations.Test
-    public static void runTests() throws Throwable {
-        main(new String[]{});
-    }
-
     static void fail(String msg) {
         failed++;
         new AssertionError(msg).printStackTrace();

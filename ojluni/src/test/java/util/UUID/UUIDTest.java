@@ -37,12 +37,6 @@ public class UUIDTest {
 
     static Random generator = new Random();
 
-    // Android-added: method added so the runner can run the test.
-    @org.testng.annotations.Test
-    public static void runTests() throws Exception {
-        main(null);
-    }
-
     public static void main(String[] args) throws Exception {
         containsTest();
         randomUUIDTest();

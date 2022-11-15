@@ -35,12 +35,6 @@ import java.util.Vector;
 
 public class EnsureCapacity {
 
-    // Android-added: method added so TestNG can run the test.
-    @org.testng.annotations.Test
-    public static void runTests() {
-        main(null);
-    }
-
     public static void main(String[] args) {
         testArrayList();
         testVector();

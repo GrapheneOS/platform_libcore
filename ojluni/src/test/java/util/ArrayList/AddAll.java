@@ -39,12 +39,6 @@ import java.util.WeakHashMap;
 
 public class AddAll {
 
-    // Android-added: method added so TestNG can run the test.
-    @org.testng.annotations.Test
-    public static void runTests() {
-        main(null);
-    }
-
     public static void main(String[] args) {
         for (int j = 0; j < 1; j++) {
             Map m = new WeakHashMap(100000);

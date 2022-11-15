@@ -38,12 +38,6 @@ import java.util.Queue;
 
 public class ForgetMeNot {
 
-    // Android-added: method is added so TestNG runner can pick up the test.
-    @org.testng.annotations.Test
-    public static void runTests() throws Throwable {
-        main(null);
-    }
-
     private static void checkQ(PriorityQueue<Integer> q, Integer...elts) {
         check(Arrays.equals(q.toArray(), elts));
     }

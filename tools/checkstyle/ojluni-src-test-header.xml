@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE module PUBLIC
-          "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
-          "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN" "https://checkstyle.org/dtds/configuration_1_3.dtd">
 <!-- Copyright (C) 2022 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,24 +15,35 @@
      limitations under the License.
 -->
 <module name="Checker">
-  <property name="fileExtensions" value="java"/>
+  <property name="fileExtensions" value="java" />
   <module name="RegexpHeader">
-    <property name="severity" value="error"/>
-    <property name="headerFile" value="tools/checkstyle/ojluni-src-test-header.pattern"/>
-    <property name="multiLines" value="1,2,3,9,10,26"/>
+    <property name="severity" value="error" />
+    <property name="headerFile" value="tools/checkstyle/openjdk-gplv2-copyright.pattern" />
+    <property name="multiLines" value="1,2,3,9,10" />
   </module>
+
   <!-- Google contributed OpenJDK tests -->
   <module name="BeforeExecutionExclusionFileFilter">
     <property name="fileNamePattern"
-      value="ojluni/src/test/java/lang/StringBuffer/Capacity.java"/>
+      value="ojluni/src/test/java/lang/StringBuffer/Capacity.java" />
   </module>
   <module name="BeforeExecutionExclusionFileFilter">
     <property name="fileNamePattern"
-      value="ojluni/src/test/java/util/ArrayList/ArrayManagement.java"/>
+      value="ojluni/src/test/java/util/ArrayList/ArrayManagement.java" />
   </module>
   <!-- One-off Android test that is present for MTS reasons (see https://r.android.com/1987987). -->
   <module name="BeforeExecutionExclusionFileFilter">
     <property name="fileNamePattern"
-      value="ojluni/src/test/java/security/Provider/ProvidersTest.java"/>
+      value="ojluni/src/test/java/security/Provider/ProvidersTest.java" />
+  </module>
+
+  <module name="TreeWalker">
+    <module name="RegexpSinglelineJava">
+      <property name="severity" value="error" />
+      <property name="format" value="^package [^;]*;$" />
+      <property name="message" value="Missing package declaration" />
+      <property name="maximum" value="1" />
+      <property name="minimum" value="1" />
+    </module>
   </module>
 </module>

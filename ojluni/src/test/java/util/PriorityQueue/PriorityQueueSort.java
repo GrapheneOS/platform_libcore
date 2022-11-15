@@ -49,12 +49,6 @@ import java.util.Queue;
 
 public class PriorityQueueSort {
 
-    // Android-added: method is added so TestNG runner can pick up the test.
-    @org.testng.annotations.Test
-    public static void runTests() throws Throwable {
-        main(new String[]{});
-    }
-
     static class MyComparator implements Comparator<Integer> {
         public int compare(Integer x, Integer y) {
             return Integer.compare(x.intValue(), y.intValue());

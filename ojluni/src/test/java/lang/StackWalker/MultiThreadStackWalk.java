@@ -342,10 +342,7 @@ public class MultiThreadStackWalk {
         }
     }
 
-    // Android-changed: Add @Test annotation.
-    // public static void main(String[] args) throws Throwable {
-    @org.testng.annotations.Test
-    public static void main() throws Throwable {
+    public static void main(String[] args) throws Throwable {
         WalkThread[] threads = new WalkThread[Call.WalkType.values().length*3];
         Throwable failed = null;
         for (int i=0; i<threads.length; i++) {

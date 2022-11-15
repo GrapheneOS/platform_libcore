@@ -20,7 +20,7 @@
   <property name="fileExtensions" value="java, c" />
   <module name="RegexpHeader">
     <property name="severity" value="error" />
-    <property name="headerFile" value="tools/checkstyle/ojluni-src-main-header.pattern" />
+    <property name="headerFile" value="tools/checkstyle/openjdk-gplv2-plus-classpath-copyright.pattern" />
     <property name="multiLines" value="2,3,4,5" />
   </module>
   <!-- The following files have Android GPL+classpath headers, not upstream.
@@ -41,5 +41,14 @@
   <module name="BeforeExecutionExclusionFileFilter">
     <property name="fileNamePattern"
       value="ojluni/src/main/java/sun/util/locale/UnicodeLocaleExtension.java" />
+  </module>
+  <!-- Deprecated AOSP sources in ojluni/annotations/hiddenapi. -->
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern"
+      value="ojluni/annotations/hiddenapi/sun/security/x509/AVA(Comparator|Keyword).java" />
+  </module>
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern"
+      value="ojluni/annotations/hiddenapi/sun/security/util/MemoryCache.java" />
   </module>
 </module>

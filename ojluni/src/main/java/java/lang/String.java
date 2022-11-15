@@ -39,6 +39,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Spliterator;
 import java.util.StringJoiner;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
@@ -3878,6 +3879,28 @@ public final class String
         }
 
         return new String(chars, 0, to);
+    }
+
+    /**
+     * This method allows the application of a function to {@code this}
+     * string. The function should expect a single String argument
+     * and produce an {@code R} result.
+     * <p>
+     * Any exception thrown by {@code f.apply()} will be propagated to the
+     * caller.
+     *
+     * @param f    a function to apply
+     *
+     * @param <R>  the type of the result
+     *
+     * @return     the result of applying the function to this string
+     *
+     * @see java.util.function.Function
+     *
+     * @since 12
+     */
+    public <R> R transform(Function<? super String, ? extends R> f) {
+        return f.apply(this);
     }
 
     /**

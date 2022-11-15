@@ -34,9 +34,7 @@ import java.util.zip.Checksum;
 
 public class TestChecksum {
 
-    // Android-changed: add annotation and drop args for atest TestNG runner to run the test.
-    @org.testng.annotations.Test
-    public static void main(/*String[] args*/) {
+    public static void main(String[] args) {
         ChecksumBase.testAll(new MyCRC32C(), 0xE3069283L);
     }
 
