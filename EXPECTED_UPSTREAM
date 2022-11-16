@@ -1200,7 +1200,7 @@ ojluni/src/main/java/java/util/zip/CRC32C.java,jdk17u/jdk-17.0.4-ga,src/java.bas
 ojluni/src/main/java/java/util/zip/CheckedInputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/CheckedInputStream.java
 ojluni/src/main/java/java/util/zip/CheckedOutputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/CheckedOutputStream.java
 ojluni/src/main/java/java/util/zip/Checksum.java,jdk17u/jdk-17.0.4-ga,src/java.base/share/classes/java/util/zip/Checksum.java
-ojluni/src/main/java/java/util/zip/DataFormatException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/DataFormatException.java
+ojluni/src/main/java/java/util/zip/DataFormatException.java,jdk17u/jdk-17.0.4-ga,src/java.base/share/classes/java/util/zip/DataFormatException.java
 ojluni/src/main/java/java/util/zip/Deflater.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/Deflater.java
 ojluni/src/main/java/java/util/zip/DeflaterInputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/DeflaterInputStream.java
 ojluni/src/main/java/java/util/zip/DeflaterOutputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/DeflaterOutputStream.java
@@ -1214,8 +1214,8 @@ ojluni/src/main/java/java/util/zip/ZipCoder.java,jdk8u/jdk8u121-b13,jdk/src/shar
 ojluni/src/main/java/java/util/zip/ZipConstants.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/ZipConstants.java
 ojluni/src/main/java/java/util/zip/ZipConstants64.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/ZipConstants64.java
 ojluni/src/main/java/java/util/zip/ZipEntry.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/ZipEntry.java
-ojluni/src/main/java/java/util/zip/ZipError.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/ZipError.java
-ojluni/src/main/java/java/util/zip/ZipException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/zip/ZipException.java
+ojluni/src/main/java/java/util/zip/ZipError.java,jdk17u/jdk-17.0.4-ga,src/java.base/share/classes/java/util/zip/ZipError.java
+ojluni/src/main/java/java/util/zip/ZipException.java,jdk17u/jdk-17.0.4-ga,src/java.base/share/classes/java/util/zip/ZipException.java
 ojluni/src/main/java/java/util/zip/ZipFile.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/ZipFile.java
 ojluni/src/main/java/java/util/zip/ZipInputStream.java,jdk11u/jdk-11+28,src/java.base/share/classes/java/util/zip/ZipInputStream.java
 ojluni/src/main/java/java/util/zip/ZipOutputStream.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/ZipOutputStream.java
