@@ -17,6 +17,8 @@
 
 package libcore.java.util;
 
+import android.icu.util.VersionInfo;
+
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -103,10 +105,14 @@ public class OldTimeZoneTest extends TestCase {
     }
 
     public void test_getDisplayNameZILjava_util_Locale() {
+        // Require min ICU version 72 to provide the expected locale data.
+        if (VersionInfo.ICU_VERSION.getMajor() < 72) {
+            return;
+        }
         TimeZone tz = TimeZone.getTimeZone("America/Los_Angeles");
         assertEquals("Pacific Daylight Time", tz.getDisplayName(true,  TimeZone.LONG, Locale.US));
         assertEquals("Pacific Standard Time", tz.getDisplayName(false, TimeZone.LONG, Locale.UK));
-        assertEquals("heure d’été du Pacifique",
+        assertEquals("heure d’été du Pacifique nord-américain",
                 tz.getDisplayName(true,  TimeZone.LONG, Locale.FRANCE));
         assertEquals("heure normale du Pacifique nord-américain",
                 tz.getDisplayName(false, TimeZone.LONG, Locale.FRANCE));

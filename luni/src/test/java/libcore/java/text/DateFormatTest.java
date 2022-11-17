@@ -16,6 +16,8 @@
 
 package libcore.java.text;
 
+import android.icu.util.VersionInfo;
+
 import java.util.TimeZone;
 import junit.framework.TestCase;
 
@@ -29,20 +31,22 @@ public class DateFormatTest extends TestCase {
     // Regression test for http://b/31762542. If this test fails it implies that changes to
     // DateFormat.is24Hour will not be effective.
     public void testIs24Hour_notCached() throws Exception {
+        char sep = VersionInfo.ICU_VERSION.getMajor() >= 72 ? '\u202f' : ' ';
+
         Boolean originalIs24Hour = DateFormat.is24Hour;
         try {
             // These tests hardcode expectations for Locale.US.
             DateFormat.is24Hour = null; // null == locale default (12 hour for US)
-            checkTimePattern(DateFormat.SHORT, "h:mm a");
-            checkTimePattern(DateFormat.MEDIUM, "h:mm:ss a");
+            checkTimePattern(DateFormat.SHORT, "h:mm" + sep + "a");
+            checkTimePattern(DateFormat.MEDIUM, "h:mm:ss" + sep + "a");
 
             DateFormat.is24Hour = true; // Explicit 24 hour.
             checkTimePattern(DateFormat.SHORT, "HH:mm");
             checkTimePattern(DateFormat.MEDIUM, "HH:mm:ss");
 
             DateFormat.is24Hour = false; // Explicit 12 hour.
-            checkTimePattern(DateFormat.SHORT, "h:mm a");
-            checkTimePattern(DateFormat.MEDIUM, "h:mm:ss a");
+            checkTimePattern(DateFormat.SHORT, "h:mm" + sep + "a");
+            checkTimePattern(DateFormat.MEDIUM, "h:mm:ss" + sep + "a");
         } finally {
             DateFormat.is24Hour = originalIs24Hour;
         }

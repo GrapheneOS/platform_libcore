@@ -16,6 +16,8 @@
  */
 package libcore.java.text;
 
+import android.icu.util.VersionInfo;
+
 import java.text.DateFormat;
 import java.text.FieldPosition;
 import java.text.ParseException;
@@ -92,12 +94,19 @@ public class OldDateFormatTest extends junit.framework.TestCase {
                     DateFormat.SHORT, DateFormat.SHORT, Locale.US);
             Date current = new Date();
             String dtf = format.format(current);
-            SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy h:mm a", Locale.US);
-            assertTrue("Incorrect date format", sdf.format(current).equals(dtf));
+            SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy h:mm" + AM_PM_SPACE_CHAR + "a",
+                    Locale.US);
+            assertEquals("Incorrect date format", sdf.format(current), dtf);
         } catch (Exception e) {
             fail("Unexpected exception " + e.toString());
         }
     }
+
+    /**
+     * ICU 72 started to use '\u202f' instead of ' ' before AM/PM.
+     */
+    public static final char AM_PM_SPACE_CHAR = VersionInfo.ICU_VERSION.getMajor() >= 72
+            ? '\u202f' : ' ';
 
     /**
      * java.text.DateFormat#format(Object, StringBuffer, FieldPosition)
@@ -114,13 +123,13 @@ public class OldDateFormatTest extends junit.framework.TestCase {
             StringBuffer toAppend = new StringBuffer();
             FieldPosition fp = new FieldPosition(DateFormat.YEAR_FIELD);
             StringBuffer sb = format.format(current, toAppend, fp);
-            SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy h:mm a", Locale.US);
-            assertTrue("Incorrect date format", sdf.format(current).equals(
-                    sb.toString()));
-            assertTrue("Incorrect beginIndex of filed position", fp
-                    .getBeginIndex() == sb.lastIndexOf("/") + 1);
-            assertTrue("Incorrect endIndex of filed position",
-                    fp.getEndIndex() == sb.lastIndexOf("/") + 3);
+            SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy h:mm" + AM_PM_SPACE_CHAR + "a",
+                    Locale.US);
+            assertEquals("Incorrect date format", sdf.format(current), sb.toString());
+            assertEquals("Incorrect beginIndex of filed position", fp.getBeginIndex(),
+                    sb.lastIndexOf("/") + 1);
+            assertEquals("Incorrect endIndex of filed position", fp.getEndIndex(),
+                    sb.lastIndexOf("/") + 3);
         } catch (Exception e) {
             fail("Unexpected exception " + e.toString());
         }

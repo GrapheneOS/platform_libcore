@@ -189,7 +189,8 @@ public class MessageFormatTest extends TestCase {
 
     String pattern = "A {3, number, currency} B {2, time} C {0, number, percent} D {4}  E {1,choice,0#off|1#on} F {0, date}";
     MessageFormat mf = new MessageFormat(pattern);
-    String sToParse = "A $12,345.00 B 9:56:07 AM C 3,200% D 1/15/70 9:56 AM  E on F Jan 1, 1970";
+    String sToParse = "A $12,345.00 B 9:56:07" + Support_MessageFormat.AM_PM_SPACE_CHAR
+            + "AM C 3,200% D 1/15/70 9:56 AM  E on F Jan 1, 1970";
     Object[] result = mf.parse(sToParse);
 
     assertTrue("No result: " + result.length, result.length == 5);

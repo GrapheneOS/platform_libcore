@@ -885,26 +885,26 @@ public class TestDateTimeFormatterBuilder {
     Object[][] localizedDateTimePatterns() {
         // Android-changed: Adapt for changes since old CLDR version this tests were written for.
         return new Object[][] {
-            {FormatStyle.FULL, FormatStyle.FULL, IsoChronology.INSTANCE, Locale.US, "EEEE, MMMM d, y 'at' h:mm:ss a zzzz"},
-            {FormatStyle.LONG, FormatStyle.LONG, IsoChronology.INSTANCE, Locale.US, "MMMM d, y 'at' h:mm:ss a z"},
-            {FormatStyle.MEDIUM, FormatStyle.MEDIUM, IsoChronology.INSTANCE, Locale.US, "MMM d, y, h:mm:ss a"},
-            {FormatStyle.SHORT, FormatStyle.SHORT, IsoChronology.INSTANCE, Locale.US, "M/d/yy, h:mm a"},
+            {FormatStyle.FULL, FormatStyle.FULL, IsoChronology.INSTANCE, Locale.US, "EEEE, MMMM d, y 'at' h:mm:ss\u202fa zzzz"},
+            {FormatStyle.LONG, FormatStyle.LONG, IsoChronology.INSTANCE, Locale.US, "MMMM d, y 'at' h:mm:ss\u202fa z"},
+            {FormatStyle.MEDIUM, FormatStyle.MEDIUM, IsoChronology.INSTANCE, Locale.US, "MMM d, y, h:mm:ss\u202fa"},
+            {FormatStyle.SHORT, FormatStyle.SHORT, IsoChronology.INSTANCE, Locale.US, "M/d/yy, h:mm\u202fa"},
             {FormatStyle.FULL, null, IsoChronology.INSTANCE, Locale.US, "EEEE, MMMM d, y"},
             {FormatStyle.LONG, null, IsoChronology.INSTANCE, Locale.US, "MMMM d, y"},
             {FormatStyle.MEDIUM, null, IsoChronology.INSTANCE, Locale.US, "MMM d, y"},
             {FormatStyle.SHORT, null, IsoChronology.INSTANCE, Locale.US, "M/d/yy"},
-            {null, FormatStyle.FULL, IsoChronology.INSTANCE, Locale.US, "h:mm:ss a zzzz"},
-            {null, FormatStyle.LONG, IsoChronology.INSTANCE, Locale.US, "h:mm:ss a z"},
-            {null, FormatStyle.MEDIUM, IsoChronology.INSTANCE, Locale.US, "h:mm:ss a"},
-            {null, FormatStyle.SHORT, IsoChronology.INSTANCE, Locale.US, "h:mm a"},
+            {null, FormatStyle.FULL, IsoChronology.INSTANCE, Locale.US, "h:mm:ss\u202fa zzzz"},
+            {null, FormatStyle.LONG, IsoChronology.INSTANCE, Locale.US, "h:mm:ss\u202fa z"},
+            {null, FormatStyle.MEDIUM, IsoChronology.INSTANCE, Locale.US, "h:mm:ss\u202fa"},
+            {null, FormatStyle.SHORT, IsoChronology.INSTANCE, Locale.US, "h:mm\u202fa"},
         };
     }
 
     @Test(dataProvider="localePatterns")
     public void test_getLocalizedDateTimePattern(FormatStyle dateStyle, FormatStyle timeStyle,
             Chronology chrono, Locale locale, String expected) {
-        // Android-changed: Require ICU 70 to pass the test due to CLDR data change
-        if (VersionInfo.ICU_VERSION.getMajor() < 70) {
+        // Android-changed: Require ICU 72 to pass the test due to CLDR data change
+        if (VersionInfo.ICU_VERSION.getMajor() < 72) {
             return;
         }
         String actual = DateTimeFormatterBuilder.getLocalizedDateTimePattern(dateStyle, timeStyle, chrono, locale);

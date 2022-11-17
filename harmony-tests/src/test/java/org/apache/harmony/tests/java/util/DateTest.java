@@ -17,6 +17,8 @@
 
 package org.apache.harmony.tests.java.util;
 
+import android.icu.util.VersionInfo;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -481,6 +483,13 @@ public class DateTest extends junit.framework.TestCase {
         assertTrue("Returned incorrect UTC value for epoch +1yr", Date.UTC(71,
                 0, 1, 0, 0, 0) == (long) 365 * 24 * 60 * 60 * 1000);
     }
+
+    /**
+     * ICU 72 started to use '\u202f' instead of ' ' before AM/PM.
+     */
+    private static final char AM_PM_SPACE_CHAR = VersionInfo.ICU_VERSION.getMajor() >= 72
+            ? '\u202f' : ' ';
+
     /**
      * java.util.Date#toLocaleString() Test for method java.lang.String
      *        java.util.Date.toGMTString()
@@ -493,10 +502,10 @@ public class DateTest extends junit.framework.TestCase {
         // This test assumes a default DateFormat.is24Hour setting.
         DateFormat.is24Hour = null;
         try {
-            assertEquals("Did not convert epoch to GMT string correctly", "Jan 1, 1970 12:00:00 AM",
-                    new Date(0).toLocaleString());
+            assertEquals("Did not convert epoch to GMT string correctly", "Jan 1, 1970 12:00:00"
+                            + AM_PM_SPACE_CHAR + "AM", new Date(0).toLocaleString());
             assertEquals("Did not convert epoch + 1yr to GMT string correctly",
-                    "Jan 1, 1971 12:00:00 AM",
+                    "Jan 1, 1971 12:00:00" + AM_PM_SPACE_CHAR + "AM",
                     new Date((long)365 * 24 * 60 * 60 * 1000).toLocaleString());
         } finally {
             Locale.setDefault(loc);

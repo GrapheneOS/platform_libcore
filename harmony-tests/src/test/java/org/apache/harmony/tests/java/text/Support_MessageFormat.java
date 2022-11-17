@@ -17,6 +17,8 @@
 
 package org.apache.harmony.tests.java.text;
 
+import android.icu.util.VersionInfo;
+
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
@@ -43,6 +45,12 @@ public class Support_MessageFormat extends Support_Format {
 		new Support_MessageFormat("").runTest();
 	}
 
+	/**
+	 * ICU 72 started to use '\u202f' instead of ' ' before AM/PM.
+	 */
+	public static final char AM_PM_SPACE_CHAR = VersionInfo.ICU_VERSION.getMajor() >= 72
+			? '\u202f' : ' ';
+
 	public void t_format_with_FieldPosition() {
 		// This test assumes a default DateFormat.is24Hour setting.
 		DateFormat.is24Hour = null;
@@ -55,7 +63,7 @@ public class Support_MessageFormat extends Support_Format {
 		Object[] objects = new Object[] { hamburgers, Double.valueOf(3.5),
 				hamburgers, date, date };
 
-		super.text = "On Feb 28, 2005 at 2:20:16 PM, he ate 8 hamburgers and drank 3.5 liters of coke. That was more than enough food!";
+		super.text = "On Feb 28, 2005 at 2:20:16" + AM_PM_SPACE_CHAR + "PM, he ate 8 hamburgers and drank 3.5 liters of coke. That was more than enough food!";
 
 		// test with MessageFormat.Field.ARGUMENT
 		t_FormatWithField(1, format, objects, null, Field.ARGUMENT, 3, 15);

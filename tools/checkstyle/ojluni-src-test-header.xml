@@ -31,6 +31,10 @@
     <property name="fileNamePattern"
       value="ojluni/src/test/java/util/ArrayList/ArrayManagement.java" />
   </module>
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern"
+      value="ojluni/src/test/java/util/Vector/ArrayManagement.java"/>
+  </module>
   <!-- One-off Android test that is present for MTS reasons (see https://r.android.com/1987987). -->
   <module name="BeforeExecutionExclusionFileFilter">
     <property name="fileNamePattern"

@@ -32,6 +32,8 @@ package test.java.time.format;
 
 import static org.testng.Assert.assertEquals;
 
+import android.icu.util.VersionInfo;
+
 import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 import java.time.ZoneId;
@@ -84,6 +86,11 @@ public class TestUnicodeExtension {
 
     private static final String PATTERN = "GGGG MMMM-dd-uu HH:mm:ss zzzz";
 
+    // Android-changed: ICU 72 started to use '\u202f' instead of ' ' before AM/PM.
+    public static final char AM_PM_SPACE_CHAR = VersionInfo.ICU_VERSION.getMajor() >= 72
+            ? '\u202f' : ' ';
+
+
     @BeforeTest
     public void beforeTest() {
         defaultTZ = TimeZone.getDefault();
@@ -111,47 +118,47 @@ public class TestUnicodeExtension {
             },
 
             {JCAL, null, null, JAPANESE, null,
-            "Thursday, August 10, 29 Heisei at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 29 Heisei at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             {JCAL, HIJRAH, null, JAPANESE, null,
-            "Thursday, August 10, 29 Heisei at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 29 Heisei at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             {HCAL, JAPANESE, null, HIJRAH, null,
-            "Thursday, Dhu\u02bbl-Qi\u02bbdah 18, 1438 AH at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, Dhu\u02bbl-Qi\u02bbdah 18, 1438 AH at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
 
 
             {JPTYO, null, null, null, ASIATOKYO,
-            "Friday, August 11, 2017 at 7:15:00 AM Japan Standard Time"
+            "Friday, August 11, 2017 at 7:15:00" + AM_PM_SPACE_CHAR + "AM Japan Standard Time"
             },
             {JPTYO, null, AMLA, null, ASIATOKYO,
-            "Friday, August 11, 2017 at 7:15:00 AM Japan Standard Time"
+            "Friday, August 11, 2017 at 7:15:00" + AM_PM_SPACE_CHAR + "AM Japan Standard Time"
             },
             // invalid tz
             {Locale.forLanguageTag("en-US-u-tz-jpzzz"), null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             {Locale.forLanguageTag("en-US-u-tz-jpzzz"), null, AMLA, null, AMLA,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
 
             {RG_GB, null, null, null, null,
             // Android-changed: Android doesn't support "rg" extension yet.
             // "Thursday, 10 August 2017 at 15:15:00 Pacific Daylight Time"
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
 
             // DecimalStyle
             {Locale.forLanguageTag("en-US-u-nu-thai"), null, null, null, null,
-            "Thursday, August \u0e51\u0e50, \u0e52\u0e50\u0e51\u0e57 at \u0e53:\u0e51\u0e55:\u0e50\u0e50 PM Pacific Daylight Time"
+            "Thursday, August \u0e51\u0e50, \u0e52\u0e50\u0e51\u0e57 at \u0e53:\u0e51\u0e55:\u0e50\u0e50" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             // DecimalStyle, "nu" vs "rg"
             {Locale.forLanguageTag("en-US-u-nu-thai-rg-uszzzz"), null, null, null, null,
-            "Thursday, August \u0e51\u0e50, \u0e52\u0e50\u0e51\u0e57 at \u0e53:\u0e51\u0e55:\u0e50\u0e50 PM Pacific Daylight Time"
+            "Thursday, August \u0e51\u0e50, \u0e52\u0e50\u0e51\u0e57 at \u0e53:\u0e51\u0e55:\u0e50\u0e50" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             // DecimalStyle, invalid
             {Locale.forLanguageTag("en-US-u-nu-foo"), null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
         };
     }
@@ -172,47 +179,47 @@ public class TestUnicodeExtension {
             },
 
             {JCAL, null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             {JCAL, HIJRAH, null, HIJRAH, null,
-            "Thursday, Dhu\u02bbl-Qi\u02bbdah 18, 1438 AH at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, Dhu\u02bbl-Qi\u02bbdah 18, 1438 AH at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             {HCAL, JAPANESE, null, JAPANESE, null,
-            "Thursday, August 10, 29 Heisei at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 29 Heisei at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
 
 
             {JPTYO, null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             {JPTYO, null, AMLA, null, AMLA,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             // invalid tz
             {Locale.forLanguageTag("en-US-u-tz-jpzzz"), null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             {Locale.forLanguageTag("en-US-u-tz-jpzzz"), null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
 
             {RG_GB, null, null, null, null,
             // Android-changed: Android doesn't support "rg" extension yet.
             // "Thursday, 10 August 2017 at 15:15:00 Pacific Daylight Time"
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
 
             // DecimalStyle
             {Locale.forLanguageTag("en-US-u-nu-thai"), null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             // DecimalStyle, "nu" vs "rg"
             {Locale.forLanguageTag("en-US-u-nu-thai-rg-uszzzz"), null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
             // DecimalStyle, invalid
             {Locale.forLanguageTag("en-US-u-nu-foo"), null, null, null, null,
-            "Thursday, August 10, 2017 at 3:15:00 PM Pacific Daylight Time"
+            "Thursday, August 10, 2017 at 3:15:00" + AM_PM_SPACE_CHAR + "PM Pacific Daylight Time"
             },
         };
     }

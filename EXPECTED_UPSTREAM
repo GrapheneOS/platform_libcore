@@ -974,7 +974,7 @@ ojluni/src/main/java/java/util/Tripwire.java,jdk11u/jdk-11.0.13-ga,src/java.base
 ojluni/src/main/java/java/util/UUID.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/UUID.java
 ojluni/src/main/java/java/util/UnknownFormatConversionException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/UnknownFormatConversionException.java
 ojluni/src/main/java/java/util/UnknownFormatFlagsException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/UnknownFormatFlagsException.java
-ojluni/src/main/java/java/util/Vector.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Vector.java
+ojluni/src/main/java/java/util/Vector.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Vector.java
 ojluni/src/main/java/java/util/WeakHashMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/WeakHashMap.java
 ojluni/src/main/java/java/util/XMLUtils.java,jdk7u/jdk7u40-b60,jdk/src/share/classes/java/util/XMLUtils.java
 ojluni/src/main/java/java/util/concurrent/AbstractExecutorService.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/concurrent/AbstractExecutorService.java
@@ -2194,6 +2194,14 @@ ojluni/src/test/java/util/StringJoiner/MergeTest.java,jdk11u/jdk-11.0.13-ga,test
 ojluni/src/test/java/util/StringJoiner/StringJoinerTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/StringJoiner/StringJoinerTest.java
 ojluni/src/test/java/util/UUID/Serial.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/UUID/Serial.java
 ojluni/src/test/java/util/UUID/UUIDTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/UUID/UUIDTest.java
+ojluni/src/test/java/util/Vector/ArrayManagement.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Vector/ArrayManagement.java
+ojluni/src/test/java/util/Vector/ComodifiedRemoveAllElements.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Vector/ComodifiedRemoveAllElements.java
+ojluni/src/test/java/util/Vector/CopyInto.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Vector/CopyInto.java
+ojluni/src/test/java/util/Vector/IllegalConstructorArgs.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Vector/IllegalConstructorArgs.java
+ojluni/src/test/java/util/Vector/LastIndexOf.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Vector/LastIndexOf.java
+ojluni/src/test/java/util/Vector/SerializationDeadlock.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Vector/SerializationDeadlock.java
+ojluni/src/test/java/util/Vector/SimpleSerialization.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Vector/SimpleSerialization.java
+ojluni/src/test/java/util/Vector/SyncLastIndexOf.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/Vector/SyncLastIndexOf.java
 ojluni/src/test/java/util/regex/BMPTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/BMPTestCases.txt
 ojluni/src/test/java/util/regex/GraphemeTestCases.txt,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/GraphemeTestCases.txt
 ojluni/src/test/java/util/regex/POSIX_ASCII.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/POSIX_ASCII.java
