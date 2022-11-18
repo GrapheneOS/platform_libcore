@@ -13463,13 +13463,16 @@ package java.util {
     ctor public Formatter(String) throws java.io.FileNotFoundException;
     ctor public Formatter(String, String) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException;
     ctor public Formatter(String, String, java.util.Locale) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException;
+    ctor public Formatter(String, java.nio.charset.Charset, java.util.Locale) throws java.io.IOException;
     ctor public Formatter(java.io.File) throws java.io.FileNotFoundException;
     ctor public Formatter(java.io.File, String) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException;
     ctor public Formatter(java.io.File, String, java.util.Locale) throws java.io.FileNotFoundException, java.io.UnsupportedEncodingException;
+    ctor public Formatter(java.io.File, java.nio.charset.Charset, java.util.Locale) throws java.io.IOException;
     ctor public Formatter(java.io.PrintStream);
     ctor public Formatter(java.io.OutputStream);
     ctor public Formatter(java.io.OutputStream, String) throws java.io.UnsupportedEncodingException;
     ctor public Formatter(java.io.OutputStream, String, java.util.Locale) throws java.io.UnsupportedEncodingException;
+    ctor public Formatter(java.io.OutputStream, java.nio.charset.Charset, java.util.Locale);
     method public void close();
     method public void flush();
     method public java.util.Formatter format(String, java.lang.Object...);

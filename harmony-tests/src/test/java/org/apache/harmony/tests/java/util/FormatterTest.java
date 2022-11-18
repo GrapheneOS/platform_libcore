@@ -311,7 +311,7 @@ public class FormatterTest extends TestCase {
         }
 
         try {
-            f = new Formatter(notExist.getPath(), null, Locale.KOREA);
+            f = new Formatter(notExist.getPath(), (String) null, Locale.KOREA);
             fail("should throw NullPointerException");
         } catch (NullPointerException e2) {
             // expected
@@ -452,7 +452,7 @@ public class FormatterTest extends TestCase {
         }
 
         try {
-            f = new Formatter(notExist, null, Locale.KOREA);
+            f = new Formatter(notExist, (String) null, Locale.KOREA);
             fail("should throw NullPointerException");
         } catch (NullPointerException e2) {
             // expected
@@ -584,7 +584,7 @@ public class FormatterTest extends TestCase {
         OutputStream os = null;
         try {
             os = new FileOutputStream(notExist);
-            f = new Formatter(os, null, Locale.getDefault());
+            f = new Formatter(os, (String) null, Locale.getDefault());
             fail("should throw NullPointerException");
         } catch (NullPointerException e2) {
             // expected
