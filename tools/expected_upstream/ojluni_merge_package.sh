@@ -16,11 +16,17 @@ Usage:
   ${SELF} [-b <bug_number>] [-t <upstream_tag>] <package_name> <package_name> ...
   For example:
     ${SELF} -b 123456 -t jdk17u/jdk-17.0.5.-ga java.util.concurrent java.util.concurrent.atomic
+    ${SELF} java.util.concurrent.atomic -c AtomicInteger,AtomicBoolean,AtomicLong
+    ${SELF} java.util.concurrent.atomic -c AtomicInteger -c AtomicBoolean -c AtomicLong
 
 Possible arguments:
   -h|--help - print help and exit
   -t|--tag - the upstream tag to merge to; default: ${DEFAULT_TAG} or
              OJLUNI_MERGE_TARGET (if defined)
+  -c|--classes - list of classes from the package to be processed; this is useful if only
+                 some classes from a package are to be merged; only a single
+                 package must be specified; can be provided as a comma-separated
+                 list, or repeated -c arguments
   -b|--bug - the bug number to use in the commit message; if not defined it will
              be picked up from the libcore branch name (for example
              "b-12345-oj-merge" -> "-b 12345")
@@ -42,8 +48,9 @@ EndOfHelp
 )
 
 BUG=""
-PACKAGES=""
+PACKAGES=()
 TAG="${OJLUNI_MERGE_TARGET:-"$DEFAULT_TAG"}"
+CLASSES=()
 
 function die()
 {
@@ -93,16 +100,27 @@ while [[ $# -gt 0 ]]; do
       TAG="${2}"
       shift
       ;;
+    -c|--classes)
+      classes=$(echo "${2}" | sed 's/,/ /g')
+      for class in $(echo "${2}" | sed 's/,/ /g')
+      do
+        CLASSES+=(${class})
+      done
+      shift
+      ;;
     *)
-      PACKAGES="${PACKAGES} ${1}"
+      PACKAGES+=(${1})
       ;;
   esac
   shift
 done
 
-if [[ -z "${PACKAGES}" ]]
+if [[ ${#PACKAGES[@]} -eq 0 ]]
 then
   die "You need to specify at least one package to merge." "y"
+elif [[ ${#CLASSES[@]} -gt 0 && ${#PACKAGES[@]} -gt 1 ]]
+then
+  die "The -c|--classes argument can only be provided with a single package" "y"
 fi
 
 setup_env
@@ -115,7 +133,7 @@ then
   popd
 fi
 
-function ojluni-merge-class
+function merge-class
 {
   local method="${1}"
   local name="${2}"
@@ -134,12 +152,41 @@ function ojluni-merge-class
     die "Failed to modify expectation file for ${name}"
 }
 
+function do-merge
+{
+  local package="${1}"
+  local bug="${2}"
+
+  if [[ -n "${bug}" ]]
+  then
+    echo ojluni_merge_to_master -b "${bug}"
+    ojluni_merge_to_master -b "${bug}" || die "Failed to merge ${package} to master"
+  else
+    echo ojluni_merge_to_master
+    ojluni_merge_to_master || die "Failed to merge ${package} to master"
+  fi
+}
+
+function is-class-in-expected-upstream
+{
+  local package_path="${1}"
+  local class_name="${2}"
+  local class_path="ojluni/src/main/java/${package_path}/${class_name}\.java"
+  grep "${class_path}" "${ANDROID_BUILD_TOP}/libcore/EXPECTED_UPSTREAM"
+}
+
+function get-package-path
+{
+  local package="${1}"
+  echo "${package}" | sed --sandbox 's/\./\//'g
+}
+
 function ojluni-merge-package
 {
   local package="${1}"
   local version="${2}"
   local bug="${3}"
-  local package_path=$(echo "${package}" | sed --sandbox 's/\./\//'g)
+  local package_path=$(get-package-path "${package}")
   local package_full_path="${ANDROID_BUILD_TOP}/libcore/ojluni/src/main/java/${package_path}"
 
   pushd "${ANDROID_BUILD_TOP}/libcore"
@@ -147,13 +194,12 @@ function ojluni-merge-package
   for f in $(ls "${package_full_path}"/*.java)
   do
     local class_name=$(basename -s .java ${f})
-    local class_path="ojluni/src/main/java/${package_path}/${class_name}\.java"
-    local in_expected_upstream=$(grep "${class_path}" "${ANDROID_BUILD_TOP}/libcore/EXPECTED_UPSTREAM")
+    local in_expected_upstream=$(is-class-in-expected-upstream "${package_path}" "${class_name}")
     if [[ -n "${in_expected_upstream}" ]]
     then
-      ojluni-merge-class modify "${package}.${class_name}" "${version}"
+      merge-class modify "${package}.${class_name}" "${version}"
     else
-      ojluni-merge-class add "${package}.${class_name}" "${version}"
+      merge-class add "${package}.${class_name}" "${version}"
     fi
   done
 
@@ -167,23 +213,43 @@ function ojluni-merge-package
   do
     local class_name=$(basename -s .java ${f})
     local class_path="ojluni/src/main/java/${package_path}/${class_name}\.java"
-    ojluni-merge-class add "${package}.${class_name}" "${version}"
+    merge-class add "${package}.${class_name}" "${version}"
   done
 
-  if [[ -n "${bug}" ]]
-  then
-    echo ojluni_merge_to_master -b "${bug}"
-    ojluni_merge_to_master -b "${bug}" || die "Failed to merge ${package} to master"
-  else
-    echo ojluni_merge_to_master
-    ojluni_merge_to_master || die "Failed to merge ${package} to master"
-  fi
+  do-merge "${package}" "${bug}"
 
   popd
 }
 
-for package in ${PACKAGES}
-do
-  echo "Merging '${package}' from ${TAG}"
-  ojluni-merge-package "${package}" "${TAG}" "${BUG}"
-done
+function ojluni-merge-class
+{
+  local package="${1}"
+  local class="${2}"
+  local version="${3}"
+  local package_path=$(get-package-path "${package}")
+  local in_expected_upstream=$(is-class-in-expected-upstream "${package_path}" "${class}")
+  if [[ -n "${in_expected_upstream}" ]]
+  then
+    merge-class modify "${package}.${class}" "${version}"
+  else
+    merge-class add "${package}.${class}" "${version}"
+  fi
+}
+
+if [[ ${#CLASSES[@]} -eq 0 ]]
+then
+  for package in ${PACKAGES[@]}
+  do
+    echo "Merging '${package}' from ${TAG}"
+    ojluni-merge-package "${package}" "${TAG}" "${BUG}"
+  done
+elif [[ ${#PACKAGES[@]} -eq 1 ]]
+then
+  package=${PACKAGES[0]}
+  for class in ${CLASSES[@]}
+  do
+    echo "Merging ${package}.${class}"
+    ojluni-merge-class "${package}" "${class}" "${TAG}"
+  done
+  do-merge "${package}" "${BUG}"
+fi
