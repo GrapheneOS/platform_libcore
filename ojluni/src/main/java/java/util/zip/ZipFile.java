@@ -137,6 +137,7 @@ class ZipFile implements ZipConstants, Closeable {
         usemmap = true;
     }
 
+    // Android-changed: Additional ZipException throw scenario with ZipPathValidator.
     /**
      * Opens a zip file for reading.
      *
@@ -148,7 +149,9 @@ class ZipFile implements ZipConstants, Closeable {
      * decode the entry names and comments.
      *
      * @param name the name of the zip file
-     * @throws ZipException if a ZIP format error has occurred
+     * @throws ZipException if a ZIP format error has occurred or
+     *         {@link dalvik.system.ZipPathValidator} considers the <code>name</code> argument an
+     *         invalid zip file entry path.
      * @throws IOException if an I/O error has occurred
      * @throws SecurityException if a security manager exists and its
      *         <code>checkRead</code> method doesn't allow read access to the file.

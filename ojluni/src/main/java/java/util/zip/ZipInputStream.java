@@ -110,11 +110,14 @@ class ZipInputStream extends InflaterInputStream implements ZipConstants {
         this.zc = ZipCoder.get(charset);
     }
 
+    // Android-changed: Additional ZipException throw scenario with ZipPathValidator.
     /**
      * Reads the next ZIP file entry and positions the stream at the
      * beginning of the entry data.
      * @return the next ZIP file entry, or null if there are no more entries
-     * @exception ZipException if a ZIP file error has occurred
+     * @exception ZipException if a ZIP file error has occurred or
+     *            {@link dalvik.system.ZipPathValidator} considers the <code>name</code> argument an
+     *            invalid zip file entry path.
      * @exception IOException if an I/O error has occurred
      */
     public ZipEntry getNextEntry() throws IOException {
