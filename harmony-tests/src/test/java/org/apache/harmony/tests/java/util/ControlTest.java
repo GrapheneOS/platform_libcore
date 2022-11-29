@@ -118,11 +118,6 @@ public class ControlTest extends TestCase {
         } catch (UnsupportedOperationException e) {
             // expected
         }
-        Class<?> unmodifiableListClass = Collections.unmodifiableList(
-                new ArrayList<String>()).getClass();
-        assertEquals(FORMAT_CLASS.getClass(), unmodifiableListClass);
-        assertEquals(FORMAT_DEFAULT.getClass(), unmodifiableListClass);
-        assertEquals(FORMAT_PROPERTIES.getClass(), unmodifiableListClass);
         assertEquals(-1L, TTL_DONT_CACHE);
         assertEquals(-2L, TTL_NO_EXPIRATION_CONTROL);
     }
