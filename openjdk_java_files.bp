@@ -1485,6 +1485,7 @@ filegroup {
         "ojluni/src/main/java/jdk/internal/misc/SharedSecrets.java",
         "ojluni/src/main/java/jdk/internal/misc/TerminatingThreadLocal.java",
         "ojluni/src/main/java/jdk/internal/misc/Unsafe.java",
+        "ojluni/src/main/java/jdk/internal/misc/UnsafeConstants.java",
         "ojluni/src/main/java/jdk/internal/misc/VM.java",
         "ojluni/src/main/java/jdk/internal/ref/Cleaner.java",
         "ojluni/src/main/java/jdk/internal/ref/CleanerFactory.java",

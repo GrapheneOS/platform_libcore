@@ -1365,7 +1365,8 @@ ojluni/src/main/java/jdk/internal/misc/JavaIOFileDescriptorAccess.java,jdk11u/jd
 ojluni/src/main/java/jdk/internal/misc/JavaObjectInputStreamAccess.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/JavaObjectInputStreamAccess.java
 ojluni/src/main/java/jdk/internal/misc/SharedSecrets.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/SharedSecrets.java
 ojluni/src/main/java/jdk/internal/misc/TerminatingThreadLocal.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/TerminatingThreadLocal.java
-ojluni/src/main/java/jdk/internal/misc/Unsafe.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/Unsafe.java
+ojluni/src/main/java/jdk/internal/misc/Unsafe.java,jdk17u/jdk-17.0.5-ga,src/java.base/share/classes/jdk/internal/misc/Unsafe.java
+ojluni/src/main/java/jdk/internal/misc/UnsafeConstants.java,jdk17u/jdk-17.0.5-ga,src/java.base/share/classes/jdk/internal/misc/UnsafeConstants.java
 ojluni/src/main/java/jdk/internal/misc/VM.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/misc/VM.java
 ojluni/src/main/java/jdk/internal/ref/Cleaner.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/ref/Cleaner.java
 ojluni/src/main/java/jdk/internal/ref/CleanerFactory.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/ref/CleanerFactory.java

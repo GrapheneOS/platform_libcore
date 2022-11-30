@@ -63,23 +63,11 @@ import java.security.PrivilegedExceptionAction;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.jar.JarEntry;
-// Android-removed: Support for ResourceBundleControlProvider.
-/*
-import java.util.spi.ResourceBundleControlProvider;
-import java.util.spi.ResourceBundleProvider;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import jdk.internal.loader.BootLoader;
-import jdk.internal.misc.JavaUtilResourceBundleAccess;
-import jdk.internal.misc.SharedSecrets;
-*/
 import jdk.internal.reflect.CallerSensitive;
 import jdk.internal.reflect.Reflection;
 import sun.security.action.GetPropertyAction;
 import sun.util.locale.BaseLocale;
 import sun.util.locale.LocaleObjectCache;
-// import static sun.security.util.SecurityConstants.GET_CLASSLOADER_PERMISSION;
 
 // Android-removed: Support for ResourceBundleControlProvider.
 // Removed references to ResourceBundleControlProvider from the documentation.
@@ -2340,12 +2328,7 @@ public abstract class ResourceBundle {
             }
         );
         */
-        Set<CacheKey> set = cacheList.keySet();
-        for (CacheKey key : set) {
-            if (key.getLoader() == loader) {
-                set.remove(key);
-            }
-        }
+        cacheList.keySet().removeIf(key -> key.getLoader() == loader);
     }
 
     /**

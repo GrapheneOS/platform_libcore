@@ -148,10 +148,14 @@ class ZipFile implements ZipConstants, Closeable {
      * <p>The UTF-8 {@link java.nio.charset.Charset charset} is used to
      * decode the entry names and comments.
      *
+     * <p>If the app targets Android U or above, zip file entry names containing
+     * ".." or starting with "/" passed here will throw a {@link ZipException}.
+     * For more details, see {@link dalvik.system.ZipPathValidator}.
+     *
      * @param name the name of the zip file
-     * @throws ZipException if a ZIP format error has occurred or
-     *         {@link dalvik.system.ZipPathValidator} considers the <code>name</code> argument an
-     *         invalid zip file entry path.
+     * @throws ZipException if (1) a ZIP format error has occurred or
+     *         (2) <code>targetSdkVersion >= BUILD.VERSION_CODES.UPSIDE_DOWN_CAKE</code>
+     *         and (the <code>name</code> argument contains ".." or starts with "/").
      * @throws IOException if an I/O error has occurred
      * @throws SecurityException if a security manager exists and its
      *         <code>checkRead</code> method doesn't allow read access to the file.
