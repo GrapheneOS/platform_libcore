@@ -18,6 +18,8 @@ package libcore.icu;
 
 import android.compat.annotation.UnsupportedAppUsage;
 
+import dalvik.annotation.compat.VersionCodes;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DateFormat;
@@ -47,7 +49,9 @@ public final class DateIntervalFormat {
      *
      * @return null if the corresponding frameworks' method is not found.
      */
-    @UnsupportedAppUsage
+    @UnsupportedAppUsage(maxTargetSdk = VersionCodes.TIRAMISU,
+            publicAlternatives = "Use {@code android.text.format.DateUtils#formatDateRange("
+                    + "Context, Formatter, long, long, int, String)} instead.")
     public static String formatDateRange(long startMs, long endMs, int flags, String olsonId) {
         // First, try the internal method in android.text.format.DateIntervalFormat, which
         // can be modified by the OEMs.

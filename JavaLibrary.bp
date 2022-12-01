@@ -680,6 +680,7 @@ filegroup {
     srcs: [
         "ojluni/src/test/java/util/regex/**/*",
         "ojluni/src/test/java/util/Base64/**/*",
+        "ojluni/src/test/java/util/Scanner/**/*",
     ],
     exclude_srcs: ["ojluni/src/test/java/**/*.java"],
 }
