@@ -6120,6 +6120,7 @@ package java.nio {
     method public abstract int arrayOffset();
     method public final int capacity();
     method public java.nio.Buffer clear();
+    method public abstract java.nio.Buffer duplicate();
     method public java.nio.Buffer flip();
     method public abstract boolean hasArray();
     method public final boolean hasRemaining();
@@ -6133,6 +6134,8 @@ package java.nio {
     method public final int remaining();
     method public java.nio.Buffer reset();
     method public java.nio.Buffer rewind();
+    method public abstract java.nio.Buffer slice();
+    method public abstract java.nio.Buffer slice(int, int);
   }
 
   public class BufferOverflowException extends java.lang.RuntimeException {
@@ -6177,6 +6180,7 @@ package java.nio {
     method public abstract short getShort();
     method public abstract short getShort(int);
     method public final boolean hasArray();
+    method public int mismatch(@NonNull java.nio.ByteBuffer);
     method @NonNull public final java.nio.ByteOrder order();
     method @NonNull public final java.nio.ByteBuffer order(@NonNull java.nio.ByteOrder);
     method @NonNull public abstract java.nio.ByteBuffer put(byte);
@@ -6197,6 +6201,7 @@ package java.nio {
     method @NonNull public abstract java.nio.ByteBuffer putShort(short);
     method @NonNull public abstract java.nio.ByteBuffer putShort(int, short);
     method @NonNull public abstract java.nio.ByteBuffer slice();
+    method @NonNull public abstract java.nio.ByteBuffer slice(int, int);
     method @NonNull public static java.nio.ByteBuffer wrap(@NonNull byte[], int, int);
     method @NonNull public static java.nio.ByteBuffer wrap(@NonNull byte[]);
   }
@@ -6224,7 +6229,9 @@ package java.nio {
     method public java.nio.CharBuffer get(char[], int, int);
     method public java.nio.CharBuffer get(char[]);
     method public final boolean hasArray();
+    method public final boolean isEmpty();
     method public final int length();
+    method public int mismatch(java.nio.CharBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.CharBuffer put(char);
     method public abstract java.nio.CharBuffer put(int, char);
@@ -6235,6 +6242,7 @@ package java.nio {
     method public final java.nio.CharBuffer put(String);
     method public int read(java.nio.CharBuffer) throws java.io.IOException;
     method public abstract java.nio.CharBuffer slice();
+    method public abstract java.nio.CharBuffer slice(int, int);
     method public abstract java.nio.CharBuffer subSequence(int, int);
     method public static java.nio.CharBuffer wrap(char[], int, int);
     method public static java.nio.CharBuffer wrap(char[]);
@@ -6255,6 +6263,7 @@ package java.nio {
     method public java.nio.DoubleBuffer get(double[], int, int);
     method public java.nio.DoubleBuffer get(double[]);
     method public final boolean hasArray();
+    method public int mismatch(java.nio.DoubleBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.DoubleBuffer put(double);
     method public abstract java.nio.DoubleBuffer put(int, double);
@@ -6262,6 +6271,7 @@ package java.nio {
     method public java.nio.DoubleBuffer put(double[], int, int);
     method public final java.nio.DoubleBuffer put(double[]);
     method public abstract java.nio.DoubleBuffer slice();
+    method public abstract java.nio.DoubleBuffer slice(int, int);
     method public static java.nio.DoubleBuffer wrap(double[], int, int);
     method public static java.nio.DoubleBuffer wrap(double[]);
   }
@@ -6279,6 +6289,7 @@ package java.nio {
     method public java.nio.FloatBuffer get(float[], int, int);
     method public java.nio.FloatBuffer get(float[]);
     method public final boolean hasArray();
+    method public int mismatch(java.nio.FloatBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.FloatBuffer put(float);
     method public abstract java.nio.FloatBuffer put(int, float);
@@ -6286,6 +6297,7 @@ package java.nio {
     method public java.nio.FloatBuffer put(float[], int, int);
     method public final java.nio.FloatBuffer put(float[]);
     method public abstract java.nio.FloatBuffer slice();
+    method public abstract java.nio.FloatBuffer slice(int, int);
     method public static java.nio.FloatBuffer wrap(float[], int, int);
     method public static java.nio.FloatBuffer wrap(float[]);
   }
@@ -6303,6 +6315,7 @@ package java.nio {
     method public java.nio.IntBuffer get(int[], int, int);
     method public java.nio.IntBuffer get(int[]);
     method public final boolean hasArray();
+    method public int mismatch(java.nio.IntBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.IntBuffer put(int);
     method public abstract java.nio.IntBuffer put(int, int);
@@ -6310,6 +6323,7 @@ package java.nio {
     method public java.nio.IntBuffer put(int[], int, int);
     method public final java.nio.IntBuffer put(int[]);
     method public abstract java.nio.IntBuffer slice();
+    method public abstract java.nio.IntBuffer slice(int, int);
     method public static java.nio.IntBuffer wrap(int[], int, int);
     method public static java.nio.IntBuffer wrap(int[]);
   }
@@ -6331,6 +6345,7 @@ package java.nio {
     method public java.nio.LongBuffer get(long[], int, int);
     method public java.nio.LongBuffer get(long[]);
     method public final boolean hasArray();
+    method public int mismatch(java.nio.LongBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.LongBuffer put(long);
     method public abstract java.nio.LongBuffer put(int, long);
@@ -6338,6 +6353,7 @@ package java.nio {
     method public java.nio.LongBuffer put(long[], int, int);
     method public final java.nio.LongBuffer put(long[]);
     method public abstract java.nio.LongBuffer slice();
+    method public abstract java.nio.LongBuffer slice(int, int);
     method public static java.nio.LongBuffer wrap(long[], int, int);
     method public static java.nio.LongBuffer wrap(long[]);
   }
@@ -6346,6 +6362,7 @@ package java.nio {
     method public final java.nio.MappedByteBuffer force();
     method public final boolean isLoaded();
     method public final java.nio.MappedByteBuffer load();
+    method public abstract java.nio.MappedByteBuffer slice(int, int);
   }
 
   public class ReadOnlyBufferException extends java.lang.UnsupportedOperationException {
@@ -6365,6 +6382,7 @@ package java.nio {
     method public java.nio.ShortBuffer get(short[], int, int);
     method public java.nio.ShortBuffer get(short[]);
     method public final boolean hasArray();
+    method public int mismatch(java.nio.ShortBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.ShortBuffer put(short);
     method public abstract java.nio.ShortBuffer put(int, short);
@@ -6372,6 +6390,7 @@ package java.nio {
     method public java.nio.ShortBuffer put(short[], int, int);
     method public final java.nio.ShortBuffer put(short[]);
     method public abstract java.nio.ShortBuffer slice();
+    method public abstract java.nio.ShortBuffer slice(int, int);
     method public static java.nio.ShortBuffer wrap(short[], int, int);
     method public static java.nio.ShortBuffer wrap(short[]);
   }
