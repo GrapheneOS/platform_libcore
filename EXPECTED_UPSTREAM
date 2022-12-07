@@ -418,15 +418,17 @@ ojluni/src/main/java/java/nio/channels/spi/AbstractSelectionKey.java,jdk11u/jdk-
 ojluni/src/main/java/java/nio/channels/spi/AbstractSelector.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/channels/spi/AbstractSelector.java
 ojluni/src/main/java/java/nio/channels/spi/AsynchronousChannelProvider.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/channels/spi/AsynchronousChannelProvider.java
 ojluni/src/main/java/java/nio/channels/spi/SelectorProvider.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/channels/spi/SelectorProvider.java
+ojluni/src/main/java/java/nio/charset/Charset-X-Coder.java.template,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/Charset-X-Coder.java.template
 ojluni/src/main/java/java/nio/charset/Charset.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/Charset.java
 ojluni/src/main/java/java/nio/charset/CoderMalfunctionError.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/CoderMalfunctionError.java
-ojluni/src/main/java/java/nio/charset/CoderResult.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/charset/CoderResult.java
+ojluni/src/main/java/java/nio/charset/CoderResult.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/CoderResult.java
 ojluni/src/main/java/java/nio/charset/CodingErrorAction.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/CodingErrorAction.java
 ojluni/src/main/java/java/nio/charset/MalformedInputException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/MalformedInputException.java
 ojluni/src/main/java/java/nio/charset/StandardCharsets.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/StandardCharsets.java
 ojluni/src/main/java/java/nio/charset/UnmappableCharacterException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/UnmappableCharacterException.java
+ojluni/src/main/java/java/nio/charset/exceptions,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/exceptions
 ojluni/src/main/java/java/nio/charset/package-info.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/package-info.java
-ojluni/src/main/java/java/nio/charset/spi/CharsetProvider.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/charset/spi/CharsetProvider.java
+ojluni/src/main/java/java/nio/charset/spi/CharsetProvider.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/spi/CharsetProvider.java
 ojluni/src/main/java/java/nio/file/AccessDeniedException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/file/AccessDeniedException.java
 ojluni/src/main/java/java/nio/file/AccessMode.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/file/AccessMode.java
 ojluni/src/main/java/java/nio/file/AtomicMoveNotSupportedException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/file/AtomicMoveNotSupportedException.java
@@ -2227,3 +2229,6 @@ ojluni/src/test/java/util/zip/TestCRC32.java,jdk17u/jdk-17.0.4-ga,test/jdk/java/
 ojluni/src/test/java/util/zip/TestCRC32C.java,jdk17u/jdk-17.0.4-ga,test/jdk/java/util/zip/TestCRC32C.java
 ojluni/src/test/java/util/zip/TestChecksum.java,jdk17u/jdk-17.0.4-ga,test/jdk/java/util/zip/TestChecksum.java
 ojluni/src/test/java/util/zip/ZipFile/Zip64SizeTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/zip/ZipFile/Zip64SizeTest.java
+ojluni/src/tools/make/gensrc/GensrcCharsetCoder.gmk,jdk11u/jdk-11.0.13-ga,make/gensrc/GensrcCharsetCoder.gmk
+ojluni/src/tools/scripts/addNotices.sh,jdk11u/jdk-11.0.13-ga,make/scripts/addNotices.sh
+ojluni/src/tools/scripts/genExceptions.sh,jdk11u/jdk-11.0.13-ga,make/scripts/genExceptions.sh
