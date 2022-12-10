@@ -644,7 +644,7 @@ public abstract class Charset
             });
     }
 
-    private static Charset defaultCharset;
+    private static volatile Charset defaultCharset;
 
     /**
      * Returns the default charset of this Java virtual machine.
@@ -670,12 +670,12 @@ public abstract class Charset
             }
         }
         */
-        synchronized (Charset.class) {
-            if (defaultCharset == null) {
+        if (defaultCharset == null) {
+            synchronized (Charset.class) {
                 defaultCharset = java.nio.charset.StandardCharsets.UTF_8;
             }
-            return defaultCharset;
         }
+        return defaultCharset;
     }
 
 

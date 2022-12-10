@@ -16339,6 +16339,7 @@ package java.util.concurrent.locks {
     method public static void parkNanos(long);
     method public static void parkUntil(Object, long);
     method public static void parkUntil(long);
+    method public static void setCurrentBlocker(Object);
     method public static void unpark(Thread);
   }
 

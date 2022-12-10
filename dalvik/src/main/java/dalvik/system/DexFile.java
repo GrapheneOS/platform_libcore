@@ -19,6 +19,7 @@ package dalvik.system;
 import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
 
 import android.annotation.SystemApi;
+import android.annotation.TestApi;
 import android.compat.annotation.ChangeId;
 import android.compat.annotation.EnabledAfter;
 import android.compat.annotation.UnsupportedAppUsage;
@@ -65,11 +66,14 @@ public final class DexFile {
      * Enforce the file passed to open DexFile to be set as read-only for apps targeting U+. This
      * is to prevent files to be dynamically loaded being unexpectedly overwritten by
      * malicious actors.
+     *
+     * @hide
      */
     // TODO (topjohnwu@): change to @EnabledSince with U API version
+    @TestApi
     @ChangeId
     @EnabledAfter(targetSdkVersion = VersionCodes.TIRAMISU)
-    private static final long ENFORCE_READ_ONLY_JAVA_DCL = 218865702;
+    public static final long ENFORCE_READ_ONLY_JAVA_DCL = 218865702;
 
     /**
      * Opens a DEX file from a given File object.
@@ -750,6 +754,15 @@ public final class DexFile {
      */
     @SystemApi(client = MODULE_LIBRARIES)
     public native static boolean isOptimizedCompilerFilter(@NonNull String filter);
+
+    /**
+     * Returns whether JAR/DEX files' read-only status is enforced.
+     *
+     * @see #ENFORCE_READ_ONLY_JAVA_DCL
+     * @hide
+     */
+    @TestApi
+    public static native boolean isReadOnlyJavaDclEnforced();
 
     /**
      * Returns the version of the compiler filter that is not based on profiles.
