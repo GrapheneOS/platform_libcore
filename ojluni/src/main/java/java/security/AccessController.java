@@ -94,6 +94,15 @@ public final class AccessController {
         return doPrivileged(action);
     }
 
+    /**
+     * Calls {@code action.run()}.
+     * @hide
+     */
+    public static <T> T doPrivileged(PrivilegedAction<T> action,
+            AccessControlContext context, Permission... perms) {
+        return doPrivileged(action);
+    }
+
     public static AccessControlContext getContext() {
         return new AccessControlContext(null);
     }

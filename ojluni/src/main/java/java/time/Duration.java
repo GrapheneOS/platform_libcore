@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2018, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2019, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -136,6 +136,7 @@ public final class Duration
     /**
      * Serialization version.
      */
+    @java.io.Serial
     private static final long serialVersionUID = 3078945930695997490L;
     /**
      * Constant for nanos per second.
@@ -700,7 +701,8 @@ public final class Duration
             return this;
         }
         if (unit instanceof ChronoUnit) {
-            switch ((ChronoUnit) unit) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
+            switch (chronoUnit) {
                 case NANOS: return plusNanos(amountToAdd);
                 case MICROS: return plusSeconds((amountToAdd / (1000_000L * 1000)) * 1000).plusNanos((amountToAdd % (1000_000L * 1000)) * 1000);
                 case MILLIS: return plusMillis(amountToAdd);
@@ -1385,18 +1387,18 @@ public final class Duration
      * <p>
      * The comparison is based on the total length of the durations.
      *
-     * @param otherDuration the other duration, null returns false
+     * @param other the other duration, null returns false
      * @return true if the other duration is equal to this one
      */
     @Override
-    public boolean equals(Object otherDuration) {
-        if (this == otherDuration) {
+    public boolean equals(Object other) {
+        if (this == other) {
             return true;
         }
-        if (otherDuration instanceof Duration) {
-            Duration other = (Duration) otherDuration;
-            return this.seconds == other.seconds &&
-                   this.nanos == other.nanos;
+        if (other instanceof Duration) {
+            Duration otherDuration = (Duration) other;
+            return this.seconds == otherDuration.seconds &&
+                    this.nanos == otherDuration.nanos;
         }
         return false;
     }
@@ -1481,7 +1483,7 @@ public final class Duration
     //-----------------------------------------------------------------------
     /**
      * Writes the object using a
-     * <a href="../../serialized-form.html#java.time.Ser">dedicated serialized form</a>.
+     * <a href="{@docRoot}/serialized-form.html#java.time.Ser">dedicated serialized form</a>.
      * @serialData
      * <pre>
      *  out.writeByte(1);  // identifies a Duration
@@ -1491,6 +1493,7 @@ public final class Duration
      *
      * @return the instance of {@code Ser}, not null
      */
+    @java.io.Serial
     private Object writeReplace() {
         return new Ser(Ser.DURATION_TYPE, this);
     }
@@ -1501,6 +1504,7 @@ public final class Duration
      * @param s the stream to read
      * @throws InvalidObjectException always
      */
+    @java.io.Serial
     private void readObject(ObjectInputStream s) throws InvalidObjectException {
         throw new InvalidObjectException("Deserialization via serialization delegate");
     }

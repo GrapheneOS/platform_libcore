@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2015, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2019, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -207,6 +207,7 @@ public final class LocalTime
     /**
      * Serialization version.
      */
+    @java.io.Serial
     private static final long serialVersionUID = 6414437269572265201L;
 
     /**
@@ -849,9 +850,9 @@ public final class LocalTime
     @Override
     public LocalTime with(TemporalField field, long newValue) {
         if (field instanceof ChronoField) {
-            ChronoField f = (ChronoField) field;
-            f.checkValidValue(newValue);
-            switch (f) {
+            ChronoField chronoField = (ChronoField) field;
+            chronoField.checkValidValue(newValue);
+            switch (chronoField) {
                 case NANO_OF_SECOND: return withNano((int) newValue);
                 case NANO_OF_DAY: return LocalTime.ofNanoOfDay(newValue);
                 case MICRO_OF_SECOND: return withNano((int) newValue * 1000);
@@ -1060,7 +1061,8 @@ public final class LocalTime
     @Override
     public LocalTime plus(long amountToAdd, TemporalUnit unit) {
         if (unit instanceof ChronoUnit) {
-            switch ((ChronoUnit) unit) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
+            switch (chronoUnit) {
                 case NANOS: return plusNanos(amountToAdd);
                 case MICROS: return plusNanos((amountToAdd % MICROS_PER_DAY) * 1000);
                 case MILLIS: return plusNanos((amountToAdd % MILLIS_PER_DAY) * 1000_000);
@@ -1401,8 +1403,9 @@ public final class LocalTime
     public long until(Temporal endExclusive, TemporalUnit unit) {
         LocalTime end = LocalTime.from(endExclusive);
         if (unit instanceof ChronoUnit) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
             long nanosUntil = end.toNanoOfDay() - toNanoOfDay();  // no overflow
-            switch ((ChronoUnit) unit) {
+            switch (chronoUnit) {
                 case NANOS: return nanosUntil;
                 case MICROS: return nanosUntil / 1000;
                 case MILLIS: return nanosUntil / 1000_000;
@@ -1643,7 +1646,7 @@ public final class LocalTime
     //-----------------------------------------------------------------------
     /**
      * Writes the object using a
-     * <a href="../../serialized-form.html#java.time.Ser">dedicated serialized form</a>.
+     * <a href="{@docRoot}/serialized-form.html#java.time.Ser">dedicated serialized form</a>.
      * @serialData
      * A twos-complement value indicates the remaining values are not in the stream
      * and should be set to zero.
@@ -1672,6 +1675,7 @@ public final class LocalTime
      *
      * @return the instance of {@code Ser}, not null
      */
+    @java.io.Serial
     private Object writeReplace() {
         return new Ser(Ser.LOCAL_TIME_TYPE, this);
     }
@@ -1682,6 +1686,7 @@ public final class LocalTime
      * @param s the stream to read
      * @throws InvalidObjectException always
      */
+    @java.io.Serial
     private void readObject(ObjectInputStream s) throws InvalidObjectException {
         throw new InvalidObjectException("Deserialization via serialization delegate");
     }

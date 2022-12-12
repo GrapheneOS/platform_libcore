@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2020, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -103,6 +103,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     /**
      * Serialization version.
      */
+    @java.io.Serial
     private static final long serialVersionUID = 4556003607393004514L;
     /**
      * Hours per day.
@@ -238,8 +239,8 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     @Override
     public boolean isSupported(TemporalField field) {
         if (field instanceof ChronoField) {
-            ChronoField f = (ChronoField) field;
-            return f.isDateBased() || f.isTimeBased();
+            ChronoField chronoField = (ChronoField) field;
+            return chronoField.isDateBased() || chronoField.isTimeBased();
         }
         return field != null && field.isSupportedBy(this);
     }
@@ -247,8 +248,8 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     @Override
     public ValueRange range(TemporalField field) {
         if (field instanceof ChronoField) {
-            ChronoField f = (ChronoField) field;
-            return (f.isTimeBased() ? time.range(field) : date.range(field));
+            ChronoField chronoField = (ChronoField) field;
+            return (chronoField.isTimeBased() ? time.range(field) : date.range(field));
         }
         return field.rangeRefinedBy(this);
     }
@@ -256,8 +257,8 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     @Override
     public int get(TemporalField field) {
         if (field instanceof ChronoField) {
-            ChronoField f = (ChronoField) field;
-            return (f.isTimeBased() ? time.get(field) : date.get(field));
+            ChronoField chronoField = (ChronoField) field;
+            return (chronoField.isTimeBased() ? time.get(field) : date.get(field));
         }
         return range(field).checkValidIntValue(getLong(field), field);
     }
@@ -265,8 +266,8 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     @Override
     public long getLong(TemporalField field) {
         if (field instanceof ChronoField) {
-            ChronoField f = (ChronoField) field;
-            return (f.isTimeBased() ? time.getLong(field) : date.getLong(field));
+            ChronoField chronoField = (ChronoField) field;
+            return (chronoField.isTimeBased() ? time.getLong(field) : date.getLong(field));
         }
         return field.getFrom(this);
     }
@@ -289,8 +290,8 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     @Override
     public ChronoLocalDateTimeImpl<D> with(TemporalField field, long newValue) {
         if (field instanceof ChronoField) {
-            ChronoField f = (ChronoField) field;
-            if (f.isTimeBased()) {
+            ChronoField chronoField = (ChronoField) field;
+            if (chronoField.isTimeBased()) {
                 return with(date, time.with(field, newValue));
             } else {
                 return with(date.with(field, newValue), time);
@@ -303,8 +304,8 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     @Override
     public ChronoLocalDateTimeImpl<D> plus(long amountToAdd, TemporalUnit unit) {
         if (unit instanceof ChronoUnit) {
-            ChronoUnit f = (ChronoUnit) unit;
-            switch (f) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
+            switch (chronoUnit) {
                 case NANOS: return plusNanos(amountToAdd);
                 case MICROS: return plusDays(amountToAdd / MICROS_PER_DAY).plusNanos((amountToAdd % MICROS_PER_DAY) * 1000);
                 case MILLIS: return plusDays(amountToAdd / MILLIS_PER_DAY).plusNanos((amountToAdd % MILLIS_PER_DAY) * 1000000);
@@ -373,9 +374,10 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
         @SuppressWarnings("unchecked")
         ChronoLocalDateTime<D> end = (ChronoLocalDateTime<D>) getChronology().localDateTime(endExclusive);
         if (unit instanceof ChronoUnit) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
             if (unit.isTimeBased()) {
                 long amount = end.getLong(EPOCH_DAY) - date.getLong(EPOCH_DAY);
-                switch ((ChronoUnit) unit) {
+                switch (chronoUnit) {
                     case NANOS: amount = Math.multiplyExact(amount, NANOS_PER_DAY); break;
                     case MICROS: amount = Math.multiplyExact(amount, MICROS_PER_DAY); break;
                     case MILLIS: amount = Math.multiplyExact(amount, MILLIS_PER_DAY); break;
@@ -399,16 +401,17 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     //-----------------------------------------------------------------------
     /**
      * Writes the ChronoLocalDateTime using a
-     * <a href="../../../serialized-form.html#java.time.chrono.Ser">dedicated serialized form</a>.
+     * <a href="{@docRoot}/serialized-form.html#java.time.chrono.Ser">dedicated serialized form</a>.
      * @serialData
      * <pre>
      *  out.writeByte(2);              // identifies a ChronoLocalDateTime
      *  out.writeObject(toLocalDate());
-     *  out.witeObject(toLocalTime());
+     *  out.writeObject(toLocalTime());
      * </pre>
      *
      * @return the instance of {@code Ser}, not null
      */
+   @java.io.Serial
     private Object writeReplace() {
         return new Ser(Ser.CHRONO_LOCAL_DATE_TIME_TYPE, this);
     }
@@ -419,6 +422,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
      * @param s the stream to read
      * @throws InvalidObjectException always
      */
+    @java.io.Serial
     private void readObject(ObjectInputStream s) throws InvalidObjectException {
         throw new InvalidObjectException("Deserialization via serialization delegate");
     }

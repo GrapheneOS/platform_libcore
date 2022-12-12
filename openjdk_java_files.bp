@@ -842,6 +842,7 @@ filegroup {
         "ojluni/src/main/java/java/time/LocalDateTime.java",
         "ojluni/src/main/java/java/time/OffsetDateTime.java",
         "ojluni/src/main/java/java/time/Instant.java",
+        "ojluni/src/main/java/java/time/InstantSource.java",
         "ojluni/src/main/java/java/time/temporal/ValueRange.java",
         "ojluni/src/main/java/java/time/temporal/TemporalAmount.java",
         "ojluni/src/main/java/java/time/temporal/ChronoField.java",

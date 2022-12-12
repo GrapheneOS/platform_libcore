@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2013, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2019, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -121,7 +121,7 @@ import java.util.Objects;
  *                first, last);
  * </pre>
  *
- * <h3>Adding Calendars</h3>
+ * <h2>Adding Calendars</h2>
  * <p> The set of calendars is extensible by defining a subclass of {@link ChronoLocalDate}
  * to represent a date instance and an implementation of {@code Chronology}
  * to be the factory for the ChronoLocalDate subclass.
@@ -146,6 +146,7 @@ abstract class ChronoLocalDateImpl<D extends ChronoLocalDate>
     /**
      * Serialization version.
      */
+    @java.io.Serial
     private static final long serialVersionUID = 6282433883239719096L;
 
     /**
@@ -197,8 +198,8 @@ abstract class ChronoLocalDateImpl<D extends ChronoLocalDate>
     @SuppressWarnings("unchecked")
     public D plus(long amountToAdd, TemporalUnit unit) {
         if (unit instanceof ChronoUnit) {
-            ChronoUnit f = (ChronoUnit) unit;
-            switch (f) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
+            switch (chronoUnit) {
                 case DAYS: return plusDays(amountToAdd);
                 case WEEKS: return plusDays(Math.multiplyExact(amountToAdd, 7));
                 case MONTHS: return plusMonths(amountToAdd);
@@ -377,7 +378,8 @@ abstract class ChronoLocalDateImpl<D extends ChronoLocalDate>
         Objects.requireNonNull(endExclusive, "endExclusive");
         ChronoLocalDate end = getChronology().date(endExclusive);
         if (unit instanceof ChronoUnit) {
-            switch ((ChronoUnit) unit) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
+            switch (chronoUnit) {
                 case DAYS: return daysUntil(end);
                 case WEEKS: return daysUntil(end) / 7;
                 case MONTHS: return monthsUntil(end);

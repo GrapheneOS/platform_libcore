@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012, 2018, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2012, 2020, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -141,12 +141,14 @@ public final class Year
     /**
      * Serialization version.
      */
+    @java.io.Serial
     private static final long serialVersionUID = -23038383694477807L;
     /**
      * Parser.
      */
     private static final DateTimeFormatter PARSER = new DateTimeFormatterBuilder()
-        .appendValue(YEAR, 4, 10, SignStyle.EXCEEDS_PAD)
+        .parseLenient()
+        .appendValue(YEAR, 1, 10, SignStyle.NORMAL)
         .toFormatter();
 
     /**
@@ -261,7 +263,6 @@ public final class Year
      * Obtains an instance of {@code Year} from a text string such as {@code 2007}.
      * <p>
      * The string must represent a valid year.
-     * Years outside the range 0000 to 9999 must be prefixed by the plus or minus symbol.
      *
      * @param text  the text to parse such as "2007", not null
      * @return the parsed year, not null
@@ -489,7 +490,8 @@ public final class Year
     @Override
     public long getLong(TemporalField field) {
         if (field instanceof ChronoField) {
-            switch ((ChronoField) field) {
+            ChronoField chronoField = (ChronoField) field;
+            switch (chronoField) {
                 case YEAR_OF_ERA: return (year < 1 ? 1 - year : year);
                 case YEAR: return year;
                 case ERA: return (year < 1 ? 0 : 1);
@@ -612,9 +614,9 @@ public final class Year
     @Override
     public Year with(TemporalField field, long newValue) {
         if (field instanceof ChronoField) {
-            ChronoField f = (ChronoField) field;
-            f.checkValidValue(newValue);
-            switch (f) {
+            ChronoField chronoField = (ChronoField) field;
+            chronoField.checkValidValue(newValue);
+            switch (chronoField) {
                 case YEAR_OF_ERA: return Year.of((int) (year < 1 ? 1 - newValue : newValue));
                 case YEAR: return Year.of((int) newValue);
                 case ERA: return (getLong(ERA) == newValue ? this : Year.of(1 - year));
@@ -701,7 +703,8 @@ public final class Year
     @Override
     public Year plus(long amountToAdd, TemporalUnit unit) {
         if (unit instanceof ChronoUnit) {
-            switch ((ChronoUnit) unit) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
+            switch (chronoUnit) {
                 case YEARS: return plusYears(amountToAdd);
                 case DECADES: return plusYears(Math.multiplyExact(amountToAdd, 10));
                 case CENTURIES: return plusYears(Math.multiplyExact(amountToAdd, 100));
@@ -907,8 +910,9 @@ public final class Year
     public long until(Temporal endExclusive, TemporalUnit unit) {
         Year end = Year.from(endExclusive);
         if (unit instanceof ChronoUnit) {
+            ChronoUnit chronoUnit = (ChronoUnit) unit;
             long yearsUntil = ((long) end.year) - year;  // no overflow
-            switch ((ChronoUnit) unit) {
+            switch (chronoUnit) {
                 case YEARS: return yearsUntil;
                 case DECADES: return yearsUntil / 10;
                 case CENTURIES: return yearsUntil / 100;
@@ -1082,7 +1086,7 @@ public final class Year
     //-----------------------------------------------------------------------
     /**
      * Writes the object using a
-     * <a href="../../serialized-form.html#java.time.Ser">dedicated serialized form</a>.
+     * <a href="{@docRoot}/serialized-form.html#java.time.Ser">dedicated serialized form</a>.
      * @serialData
      * <pre>
      *  out.writeByte(11);  // identifies a Year
@@ -1091,6 +1095,7 @@ public final class Year
      *
      * @return the instance of {@code Ser}, not null
      */
+    @java.io.Serial
     private Object writeReplace() {
         return new Ser(Ser.YEAR_TYPE, this);
     }
@@ -1101,6 +1106,7 @@ public final class Year
      * @param s the stream to read
      * @throws InvalidObjectException always
      */
+    @java.io.Serial
     private void readObject(ObjectInputStream s) throws InvalidObjectException {
         throw new InvalidObjectException("Deserialization via serialization delegate");
     }
