@@ -28,7 +28,6 @@ import java.time.Clock.SourceClock;
 import java.time.Clock.SystemInstantSource;
 import java.util.Objects;
 
-// Android-changed: Hide this new API temporarily.
 /**
  * Provides access to the current instant.
  * <p>
@@ -95,8 +94,6 @@ import java.util.Objects;
  * such as an NTP server.
  *
  * @since 17
- *
- * @hide
  */
 public interface InstantSource {
 

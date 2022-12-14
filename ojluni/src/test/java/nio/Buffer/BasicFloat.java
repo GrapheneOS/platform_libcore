@@ -768,10 +768,26 @@ public class BasicFloat
                     fail("Incorrect results for FloatBuffer.compareTo",
                          xb, yb, x, y);
                 }
+
+
+		// Android-changed: fix issue flagged by error prone (x != x) instead of isNan(x).
+                if (!(Float.isNaN(x) && Float.isNaN(y))) {
+
+
+
+
+
                 if (xb.equals(yb) != (x == y)) {
                     fail("Incorrect results for FloatBuffer.equals",
                          xb, yb, x, y);
                 }
+
+
+                }
+
+
+
+
             }
         }
 

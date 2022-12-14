@@ -11101,12 +11101,10 @@ package java.text {
 
 package java.time {
 
-  public abstract class Clock {
+  public abstract class Clock implements java.time.InstantSource {
     ctor protected Clock();
     method public static java.time.Clock fixed(java.time.Instant, java.time.ZoneId);
     method public abstract java.time.ZoneId getZone();
-    method public abstract java.time.Instant instant();
-    method public long millis();
     method public static java.time.Clock offset(java.time.Clock, java.time.Duration);
     method public static java.time.Clock system(java.time.ZoneId);
     method public static java.time.Clock systemDefaultZone();
@@ -11239,6 +11237,16 @@ package java.time {
     field public static final java.time.Instant EPOCH;
     field public static final java.time.Instant MAX;
     field public static final java.time.Instant MIN;
+  }
+
+  public interface InstantSource {
+    method public static java.time.InstantSource fixed(java.time.Instant);
+    method public java.time.Instant instant();
+    method public default long millis();
+    method public static java.time.InstantSource offset(java.time.InstantSource, java.time.Duration);
+    method public static java.time.InstantSource system();
+    method public static java.time.InstantSource tick(java.time.InstantSource, java.time.Duration);
+    method public default java.time.Clock withZone(java.time.ZoneId);
   }
 
   public final class LocalDate implements java.time.chrono.ChronoLocalDate java.io.Serializable java.time.temporal.Temporal java.time.temporal.TemporalAdjuster {

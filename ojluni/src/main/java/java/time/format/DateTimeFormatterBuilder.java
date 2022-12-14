@@ -3963,14 +3963,13 @@ public final class DateTimeFormatterBuilder {
             if (offsetSecs == null) {
                 return false;
             }
-            // Android-changed: libcore has no DateTimeTextProvider.getLocalizedResource method.
-            // TODO: Use ICU to get the localized "GNT"
+            // Android-changed: Get GMT zero format string from ICU.
             // String key = "timezone.gmtZeroFormat";
             // String gmtText = DateTimeTextProvider.getLocalizedResource(key, context.getLocale());
-            // if (gmtText == null) {
-            //     gmtText = "GMT";  // Default to "GMT"
-            // }
-            String gmtText = "GMT";  // TODO: get localized version of 'GMT'
+            String gmtText = ICU.getGMTZeroFormatString(context.getLocale());
+            if (gmtText == null) {
+                gmtText = "GMT";  // Default to "GMT"
+            }
             buf.append(gmtText);
             int totalSecs = Math.toIntExact(offsetSecs);
             if (totalSecs != 0) {
@@ -4017,13 +4016,12 @@ public final class DateTimeFormatterBuilder {
             int pos = position;
             int end = text.length();
             // Android-changed: libcore has no DateTimeTextProvider.getLocalizedResource method.
-            // TODO: Use ICU to get the localized "GNT"
             // String key = "timezone.gmtZeroFormat";
             // String gmtText = DateTimeTextProvider.getLocalizedResource(key, context.getLocale());
-            // if (gmtText == null) {
-            //     gmtText = "GMT";  // Default to "GMT"
-            // }
-            String gmtText = "GMT";  // TODO: get localized version of 'GMT'
+            String gmtText = ICU.getGMTZeroFormatString(context.getLocale());
+            if (gmtText == null) {
+                gmtText = "GMT";  // Default to "GMT"
+            }
             if (!context.subSequenceEquals(text, pos, gmtText, 0, gmtText.length())) {
                     return ~position;
                 }

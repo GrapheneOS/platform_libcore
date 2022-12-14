@@ -768,10 +768,26 @@ public class Basic$Type$
                     fail("Incorrect results for $Type$Buffer.compareTo",
                          xb, yb, x, y);
                 }
+
+#if[float]
+		// Android-changed: fix issue flagged by error prone (x != x) instead of isNan(x).
+                if (!(Float.isNaN(x) && Float.isNaN(y))) {
+#end[float]
+#if[double]
+		// Android-changed: fix issue flagged by error prone (x != x) instead of isNan(x).
+                if (!(Double.isNaN(x) && Double.isNaN(y))) {
+#end[double]
                 if (xb.equals(yb) != (x == y)) {
                     fail("Incorrect results for $Type$Buffer.equals",
                          xb, yb, x, y);
                 }
+
+#if[float]
+                }
+#end[float]
+#if[double]
+                }
+#end[double]
             }
         }
 

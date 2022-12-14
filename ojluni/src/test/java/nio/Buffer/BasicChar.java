@@ -768,10 +768,26 @@ public class BasicChar
                     fail("Incorrect results for CharBuffer.compareTo",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+
+
+
                 if (xb.equals(yb) != (x == y)) {
                     fail("Incorrect results for CharBuffer.equals",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+
             }
         }
 

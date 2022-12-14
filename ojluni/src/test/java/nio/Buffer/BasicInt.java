@@ -768,10 +768,26 @@ public class BasicInt
                     fail("Incorrect results for IntBuffer.compareTo",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+
+
+
                 if (xb.equals(yb) != (x == y)) {
                     fail("Incorrect results for IntBuffer.equals",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+
             }
         }
 

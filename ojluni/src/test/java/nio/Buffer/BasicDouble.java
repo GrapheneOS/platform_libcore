@@ -768,10 +768,26 @@ public class BasicDouble
                     fail("Incorrect results for DoubleBuffer.compareTo",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+		// Android-changed: fix issue flagged by error prone (x != x) instead of isNan(x).
+                if (!(Double.isNaN(x) && Double.isNaN(y))) {
+
                 if (xb.equals(yb) != (x == y)) {
                     fail("Incorrect results for DoubleBuffer.equals",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+                }
+
             }
         }
 

@@ -18,6 +18,7 @@ package libcore.icu;
 
 import android.compat.annotation.UnsupportedAppUsage;
 import android.icu.text.DateTimePatternGenerator;
+import android.icu.text.TimeZoneFormat;
 import android.icu.util.Currency;
 import android.icu.util.IllformedLocaleException;
 import android.icu.util.ULocale;
@@ -627,6 +628,10 @@ public final class ICU {
       return null;
     }
     return tzid;
+  }
+
+  public static String getGMTZeroFormatString(Locale locale) {
+    return TimeZoneFormat.getInstance(locale).getGMTZeroFormat();
   }
 
 }

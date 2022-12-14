@@ -768,10 +768,26 @@ public class BasicShort
                     fail("Incorrect results for ShortBuffer.compareTo",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+
+
+
                 if (xb.equals(yb) != (x == y)) {
                     fail("Incorrect results for ShortBuffer.equals",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+
             }
         }
 

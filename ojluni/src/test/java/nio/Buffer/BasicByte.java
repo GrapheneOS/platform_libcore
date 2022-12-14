@@ -768,10 +768,26 @@ public class BasicByte
                     fail("Incorrect results for ByteBuffer.compareTo",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+
+
+
                 if (xb.equals(yb) != (x == y)) {
                     fail("Incorrect results for ByteBuffer.equals",
                          xb, yb, x, y);
                 }
+
+
+
+
+
+
+
             }
         }
 
