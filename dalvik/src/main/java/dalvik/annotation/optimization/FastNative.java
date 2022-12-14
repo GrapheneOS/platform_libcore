@@ -16,10 +16,6 @@
 
 package dalvik.annotation.optimization;
 
-import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
-
-import android.annotation.SystemApi;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -73,11 +69,7 @@ import java.lang.annotation.Target;
  * <p>
  * Has no effect when used with non-native methods.
  * </p>
- *
- * @hide
  */
-@SystemApi(client = MODULE_LIBRARIES)
-@libcore.api.IntraCoreApi
 @Retention(RetentionPolicy.CLASS)  // Save memory, don't instantiate as an object at runtime.
 @Target(ElementType.METHOD)
 public @interface FastNative {}

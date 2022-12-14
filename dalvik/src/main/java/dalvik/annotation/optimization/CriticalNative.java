@@ -16,10 +16,6 @@
 
 package dalvik.annotation.optimization;
 
-import static android.annotation.SystemApi.Client.MODULE_LIBRARIES;
-
-import android.annotation.SystemApi;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -94,10 +90,7 @@ import java.lang.annotation.Target;
  * The runtime must throw a {@code VerifierError} upon class loading if this is used with a native
  * method that contains object parameters, an object return value, or a non-static.
  * </p>
- *
- * @hide
  */
-@SystemApi(client = MODULE_LIBRARIES)
 @Retention(RetentionPolicy.CLASS)  // Save memory, don't instantiate as an object at runtime.
 @Target(ElementType.METHOD)
 public @interface CriticalNative {}
