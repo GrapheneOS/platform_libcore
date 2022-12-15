@@ -315,7 +315,9 @@ package android.system {
     field public static final int IFA_F_DADFAILED;
     field public static final int IFA_F_DEPRECATED;
     field public static final int IFA_F_HOMEADDRESS;
+    field public static final int IFA_F_MANAGETEMPADDR;
     field public static final int IFA_F_NODAD;
+    field public static final int IFA_F_NOPREFIXROUTE;
     field public static final int IFA_F_OPTIMISTIC;
     field public static final int IFA_F_PERMANENT;
     field public static final int IFA_F_SECONDARY;
