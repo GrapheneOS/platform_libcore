@@ -25,6 +25,7 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CountDownLatch;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -53,14 +54,19 @@ public class ForkJoinPoolTest {
 
             final AtomicInteger value = new AtomicInteger(0);
             final AtomicBoolean stop = new AtomicBoolean(false);
+            final CountDownLatch startPending = new CountDownLatch(1);
             ForkJoinTask task = pool.submit(new Runnable() {
                     public void run() {
+                        startPending.countDown();
                         while(!stop.get()) {
                             value.incrementAndGet();
                         }
                         stop.set(false);
                     }
                 });
+            while (startPending.getCount() > 0) {
+                Thread.yield();
+            }
             assertEquals(1, pool.getRunningThreadCount());
             stop.set(true);
             task.join();

@@ -849,6 +849,10 @@ public class TestUnicodeExtension {
     public void test_localizedBy(Locale locale, Chronology chrono, ZoneId zone,
                                 Chronology chronoExpected, ZoneId zoneExpected,
                                 String formatExpected) {
+        // Skip this test if older ICU provides the locale data.
+        if (VersionInfo.ICU_VERSION.getMajor() < 72) {
+            return;
+        }
         // try this test both with the implicit default locale, and explicit default locale ja-JP
         Locale def = Locale.getDefault();
         try {
@@ -875,6 +879,10 @@ public class TestUnicodeExtension {
     public void test_withLocale(Locale locale, Chronology chrono, ZoneId zone,
                                 Chronology chronoExpected, ZoneId zoneExpected,
                                 String formatExpected) {
+        // Skip this test if older ICU provides the locale data.
+        if (VersionInfo.ICU_VERSION.getMajor() < 72) {
+            return;
+        }
         DateTimeFormatter dtf =
             DateTimeFormatter.ofLocalizedDateTime(FormatStyle.FULL, FormatStyle.FULL)
                 .withChronology(chrono).withZone(zone).withLocale(locale);

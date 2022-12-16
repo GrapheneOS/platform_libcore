@@ -51,6 +51,7 @@ public class OldDecimalFormatSymbolsTest extends TestCase {
             // equality on all other fields with equals().
             riSymbols.setNaN("NaN");
             riSymbols.setGroupingSeparator('\u202f');
+            riSymbols.setMonetaryGroupingSeparator('\u202f');
             // Compare the Android defaults with the RI snapshot.
             DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.FRANCE);
             assertEquals(symbols, riSymbols);
