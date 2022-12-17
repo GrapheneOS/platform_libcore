@@ -262,7 +262,7 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
         return percent;
     }
 
-    // Android-added: getPercentString() for percent signs longer than one char.
+    // Android-added: getPercentString() for @UnsupportedAppUsage. Use getPercentText() otherwise.
     /**
      * Gets the string used for percent sign. Different for Arabic, etc.
      *
@@ -384,19 +384,6 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
      */
     public char getMinusSign() {
         return minusSign;
-    }
-
-
-    // Android-added: getPercentString() for percent signs longer than one char.
-    /**
-     * Gets the string used to represent minus sign. If no explicit
-     * negative format is specified, one is formed by prefixing
-     * minusSign to the positive format.
-     *
-     * @hide
-     */
-    public String getMinusSignString() {
-        return String.valueOf(minusSign);
     }
 
     /**
@@ -583,6 +570,8 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
         }
         hashCode = 0;
         exponentialSeparator = exp;
+        // Android-added: reset cachedIcuDFS.
+        cachedIcuDFS = null;
     }
 
     /**
@@ -610,6 +599,8 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
     {
         hashCode = 0;
         this.monetaryGroupingSeparator = monetaryGroupingSeparator;
+        // Android-added: reset cachedIcuDFS.
+        cachedIcuDFS = null;
     }
 
     //------------------------------------------------------------
@@ -630,6 +621,8 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
     void setExponentialSymbol(char exp)
     {
         exponential = exp;
+        // Android-added: reset cachedIcuDFS.
+        cachedIcuDFS = null;
     }
 
     /**
@@ -665,6 +658,8 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
         hashCode = 0;
         this.perMillText = perMillText;
         this.perMill = findNonFormatChar(perMillText, '\u2030');
+        // Android-added: reset cachedIcuDFS.
+        cachedIcuDFS = null;
     }
 
     /**
@@ -700,6 +695,8 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
         hashCode = 0;
         this.percentText = percentText;
         this.percent = findNonFormatChar(percentText, '%');
+        // Android-added: reset cachedIcuDFS.
+        cachedIcuDFS = null;
     }
 
     /**
@@ -740,6 +737,8 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
         hashCode = 0;
         this.minusSignText = minusSignText;
         this.minusSign = findNonFormatChar(minusSignText, '-');
+        // Android-added: reset cachedIcuDFS.
+        cachedIcuDFS = null;
     }
 
     //------------------------------------------------------------
@@ -1148,7 +1147,8 @@ public class DecimalFormatSymbols implements Cloneable, Serializable {
         fields.put("minusSign", minusSign);
         fields.put("percent", percent);
 
-        fields.put("minusSignStr", getMinusSignString());
+        // minusSignStr is a single-char string.
+        fields.put("minusSignStr", String.valueOf(minusSign));
         fields.put("percentStr", getPercentString());
 
         // Fields added when serialVersionOnStream increased from 3 to 5 on ART U module.

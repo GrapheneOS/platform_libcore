@@ -72,8 +72,8 @@ extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   // Some registration functions also do some extra local initialization,
   // creating local references in the process. ART does not expect JNI_OnLoad()
   // to leave any local references in the current frame, so create a new one.
-  // Request space for 256 local references (increase if necessary).
-  result = env->PushLocalFrame(256);
+  // Request space for 128 local references (increase if necessary).
+  result = env->PushLocalFrame(128);
   CHECK_EQ(result, 0);
 
   // Some registration functions also record field ids retrieved using
