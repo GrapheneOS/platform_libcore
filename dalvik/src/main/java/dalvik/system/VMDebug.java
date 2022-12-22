@@ -174,6 +174,14 @@ public final class VMDebug {
     private VMDebug() {}
 
     /**
+     * Request JDWP agent to suspend all Java Thread and send VM_START.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static native void suspendAllAndSendVmStart();
+
+    /**
      * Returns the time since the last known debugger activity.
      *
      * @return the time in milliseconds, or -1 if the debugger is not connected
