@@ -289,6 +289,7 @@ package dalvik.system {
     method public static void startMethodTracingDdms(int, int, boolean, int);
     method public static void stopAllocCounting();
     method public static void stopMethodTracing();
+    method public static void suspendAllAndSendVmStart();
     method public static long threadCpuTimeNanos();
     field public static final int KIND_ALL_COUNTS = -1; // 0xffffffff
     field public static final int KIND_GLOBAL_ALLOCATED_BYTES = 2; // 0x2
