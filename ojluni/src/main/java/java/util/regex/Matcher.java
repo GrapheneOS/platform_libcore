@@ -1085,10 +1085,9 @@ public final class Matcher implements MatchResult {
                     StringBuilder gsb = new StringBuilder();
                     while (cursor < replacement.length()) {
                         nextChar = replacement.charAt(cursor);
-                        // if (ASCII.isLower(nextChar) ||
-                        //         ASCII.isUpper(nextChar) ||
-                        //         ASCII.isDigit(nextChar)) {
-                        if (isLower(nextChar) || isUpper(nextChar) || isDigit(nextChar)) {
+                        if (ASCII.isLower(nextChar) ||
+                                ASCII.isUpper(nextChar) ||
+                                ASCII.isDigit(nextChar)) {
                             gsb.append(nextChar);
                             cursor++;
                         } else {
@@ -1102,12 +1101,11 @@ public final class Matcher implements MatchResult {
                         throw new IllegalArgumentException(
                                 "named capturing group is missing trailing '}'");
                     String gname = gsb.toString();
-                    // if (ASCII.isDigit(gname.charAt(0)))
-                    if (isDigit(gname.charAt(0)))
+                    if (ASCII.isDigit(gname.charAt(0)))
                         throw new IllegalArgumentException(
                                 "capturing group name {" + gname +
                                         "} starts with digit character");
-                    // Android-changed:
+                    // Android-changed: Use ICU4C as the regex backend.
                     // if (!parentPattern.namedGroups().containsKey(gname))
                     int groupIndex = nativeMatcher.getMatchedGroupIndex(gname);
                     if (groupIndex < 0)
@@ -1151,19 +1149,6 @@ public final class Matcher implements MatchResult {
         }
         return result;
     }
-
-    // TEMP Android-added:
-    static boolean isLower(int ch) {
-        return ((ch-'a')|('z'-ch)) >= 0;
-    }
-
-    static boolean isUpper(int ch) {
-        return ((ch-'A')|('Z'-ch)) >= 0;
-    }
-    static boolean isDigit(int ch) {
-        return ((ch-'0')|('9'-ch)) >= 0;
-    }
-    // TEMP Android-added:
 
     /**
      * Implements a terminal append-and-replace step.
