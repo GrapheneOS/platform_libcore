@@ -107,7 +107,9 @@ public class UUIDTest {
         testFromStringError("----");
         testFromStringError("-0-0-0-0");
         testFromStringError("0-0-0-0-");
-        testFromStringError("0-0-0-0-0-");
+        // Android-changed: due to targetSdkVersion this test checks old
+        // implementation, which is not that strict.
+        // testFromStringError("0-0-0-0-0-");
         testFromStringError("0-0-0-0-x");
     }
 

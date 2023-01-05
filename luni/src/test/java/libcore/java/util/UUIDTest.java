@@ -16,8 +16,9 @@
 
 package libcore.java.util;
 
-import java.util.UUID;
 import junit.framework.TestCase;
+
+import java.util.UUID;
 
 // There are more tests in the harmony suite:
 // harmony-tests/src/test/java/org/apache/harmony/tests/java/util/UUIDTest.java
@@ -51,4 +52,32 @@ public class UUIDTest extends TestCase {
     } catch (IllegalArgumentException expected) { }
   }
 
+  public void testJava8Implementation_allowsLongInputs() {
+    var uuid = UUID.randomUUID();
+    var parsedBackWithLeadingZero = UUID.fromString("0" + uuid);
+
+    assertEquals(uuid, parsedBackWithLeadingZero);
+
+    uuid = UUID
+            .fromStringJava8("7fffffffffffffff-7fffffffffffffff-7fffffffffffffff-0-0");
+    assertEquals(0xffffffffffffffffL, uuid.getMostSignificantBits());
+    assertEquals(0x0L, uuid.getLeastSignificantBits());
+
+    uuid = UUID.fromStringJava8("0-0-0-7fffffffffffffff-7fffffffffffffff");
+    assertEquals(0x0L, uuid.getMostSignificantBits());
+    assertEquals(0xffffffffffffffffL, uuid.getLeastSignificantBits());
+  }
+
+  public void testJava11Implementation_invalidInputs() {
+    var uuid = UUID.randomUUID();
+    try {
+      UUID.fromStringJava11("0" + uuid);
+      fail("0" + uuid + " is invalid UUID, IAE should be thrown");
+    } catch (IllegalArgumentException expected) { }
+
+    try {
+      UUID.fromStringJava11("0-0-0-0-0-");
+      fail("0-0-0-0-0- is invalid UUID, IAE should be thrown");
+    } catch (IllegalArgumentException expected) { }
+  }
 }
