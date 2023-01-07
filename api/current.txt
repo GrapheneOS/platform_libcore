@@ -14383,6 +14383,7 @@ package java.util {
   }
 
   public final class ServiceLoader<S> implements java.lang.Iterable<S> {
+    method public java.util.Optional<S> findFirst();
     method public java.util.Iterator<S> iterator();
     method public static <S> java.util.ServiceLoader<S> load(Class<S>, ClassLoader);
     method public static <S> java.util.ServiceLoader<S> load(Class<S>);

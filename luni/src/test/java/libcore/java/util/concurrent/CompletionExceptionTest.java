@@ -25,6 +25,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+@RunWith(JUnit4.class)
 public class CompletionExceptionTest {
 
     // Adding derived class to be able to test the protected constructors
