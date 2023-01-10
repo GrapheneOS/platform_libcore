@@ -1005,58 +1005,6 @@ java_sdk_library {
     dist_group: "android",
 }
 
-// Used when compiling higher-level code against art.module.public.api.stubs.
-//
-// This is only intended for use within core libraries and must not be used
-// from outside.
-java_system_modules {
-    name: "art-module-public-api-stubs-system-modules",
-    visibility: [
-        "//art/build/sdk",
-        "//external/conscrypt",
-        "//external/icu/android_icu4j",
-        "//external/wycheproof",
-    ],
-    libs: [
-        "art.module.public.api.stubs",
-        // This one is not on device but it's needed when javac compiles code
-        // containing lambdas.
-        "core-lambda-stubs-for-system-modules",
-        // This one is not on device but it's needed when javac compiles code
-        // containing @Generated annotations produced by some code generation
-        // tools.
-        // See http://b/123891440.
-        "core-generated-annotation-stubs",
-
-        // Ensure that core libraries that depend on the public API can access
-        // the UnsupportedAppUsage, CorePlatformApi and IntraCoreApi
-        // annotations.
-        "art.module.api.annotations.for.system.modules",
-
-        // Make nullability annotations available when compiling public stubs.
-        // They are provided as a separate library because while the
-        // annotations are not themselves part of the public API provided by
-        // this module they are used in the stubs.
-        "stub-annotations",
-    ],
-}
-
-// Used when compiling higher-level code against art.module.public.api.stubs.module_lib.
-//
-// This is only intended for use within core libraries and must not be used
-// from outside.
-java_system_modules {
-    name: "art-module-lib-api-stubs-system-modules",
-    visibility: [
-        "//art/build/sdk",
-        "//external/conscrypt",
-        "//external/icu/android_icu4j",
-    ],
-    libs: [
-        "art.module.public.api.stubs.module_lib",
-    ],
-}
-
 // Target for validating nullability annotations for correctness and
 // completeness. To check that there are no nullability errors:
 //   m art-module-public-api-stubs-nullability-validation
@@ -1101,6 +1049,9 @@ java_system_modules {
 // avoid introducing compile time cycles.
 java_library {
     name: "art.module.api.annotations.for.system.modules",
+    visibility: [
+        "//build/soong/java/core-libraries",
+    ],
     srcs: [
         ":api_surface_annotation_files",
     ],
