@@ -353,6 +353,7 @@ java_library {
     name: "core-libart-for-host",
     visibility: [
         "//art/build/sdk",
+        "//external/robolectric",
         "//external/robolectric-shadows",
         "//frameworks/layoutlib",
     ],
