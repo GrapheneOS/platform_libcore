@@ -17,10 +17,12 @@ package tests.targets.security;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.KeyStore.PrivateKeyEntry;
@@ -31,7 +33,9 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import javax.crypto.Cipher;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
@@ -46,99 +50,121 @@ import org.junit.runners.Parameterized.Parameters;
  * Each KeyStore to be tested contains the same certificate and private key
  * pair and has the password "password".
  */
-@RunWith(Parameterized.class)
+@RunWith(Enclosed.class)
 public class KeyStorePkcs7FormatTest {
     private static final char[] PASSWORD = "password".toCharArray();
+    private static final String UNKNOWN_HASH = "/keystore/sha3.p12";
 
-    @Parameters(name = "{0}")
-    public static Iterable<?> data() {
-        return Arrays.asList(
-            "/keystore/pberc2.p12",
-            "/keystore/pbes2-aes-128-aes-128-sha1.p12",
-            "/keystore/pbes2-aes-128-aes-128-sha224.p12",
-            "/keystore/pbes2-aes-128-aes-128-sha256.p12",
-            "/keystore/pbes2-aes-128-aes-128-sha384.p12",
-            "/keystore/pbes2-aes-128-aes-128-sha512.p12",
-            "/keystore/pbes2-aes-128-aes-192-sha1.p12",
-            "/keystore/pbes2-aes-128-aes-192-sha224.p12",
-            "/keystore/pbes2-aes-128-aes-192-sha256.p12",
-            "/keystore/pbes2-aes-128-aes-192-sha384.p12",
-            "/keystore/pbes2-aes-128-aes-192-sha512.p12",
-            "/keystore/pbes2-aes-128-aes-256-sha1.p12",
-            "/keystore/pbes2-aes-128-aes-256-sha224.p12",
-            "/keystore/pbes2-aes-128-aes-256-sha256.p12",
-            "/keystore/pbes2-aes-128-aes-256-sha384.p12",
-            "/keystore/pbes2-aes-128-aes-256-sha512.p12",
-            "/keystore/pbes2-aes-192-aes-128-sha1.p12",
-            "/keystore/pbes2-aes-192-aes-128-sha224.p12",
-            "/keystore/pbes2-aes-192-aes-128-sha256.p12",
-            "/keystore/pbes2-aes-192-aes-128-sha384.p12",
-            "/keystore/pbes2-aes-192-aes-128-sha512.p12",
-            "/keystore/pbes2-aes-192-aes-192-sha1.p12",
-            "/keystore/pbes2-aes-192-aes-192-sha224.p12",
-            "/keystore/pbes2-aes-192-aes-192-sha256.p12",
-            "/keystore/pbes2-aes-192-aes-192-sha384.p12",
-            "/keystore/pbes2-aes-192-aes-192-sha512.p12",
-            "/keystore/pbes2-aes-192-aes-256-sha1.p12",
-            "/keystore/pbes2-aes-192-aes-256-sha224.p12",
-            "/keystore/pbes2-aes-192-aes-256-sha256.p12",
-            "/keystore/pbes2-aes-192-aes-256-sha384.p12",
-            "/keystore/pbes2-aes-192-aes-256-sha512.p12",
-            "/keystore/pbes2-aes-256-aes-128-sha1.p12",
-            "/keystore/pbes2-aes-256-aes-128-sha224.p12",
-            "/keystore/pbes2-aes-256-aes-128-sha256.p12",
-            "/keystore/pbes2-aes-256-aes-128-sha384.p12",
-            "/keystore/pbes2-aes-256-aes-128-sha512.p12",
-            "/keystore/pbes2-aes-256-aes-192-sha1.p12",
-            "/keystore/pbes2-aes-256-aes-192-sha224.p12",
-            "/keystore/pbes2-aes-256-aes-192-sha256.p12",
-            "/keystore/pbes2-aes-256-aes-192-sha384.p12",
-            "/keystore/pbes2-aes-256-aes-192-sha512.p12",
-            "/keystore/pbes2-aes-256-aes-256-sha1.p12",
-            "/keystore/pbes2-aes-256-aes-256-sha224.p12",
-            "/keystore/pbes2-aes-256-aes-256-sha256.p12",
-            "/keystore/pbes2-aes-256-aes-256-sha384.p12",
-            "/keystore/pbes2-aes-256-aes-256-sha512.p12"
+    @RunWith(Parameterized.class)
+    public static class ParameterizedTests {
+        @Parameters(name = "{0}")
+        public static Iterable<?> data() {
+            return Arrays.asList(
+                "/keystore/pberc2.p12",
+                "/keystore/pbes2-aes-128-aes-128-sha1.p12",
+                "/keystore/pbes2-aes-128-aes-128-sha224.p12",
+                "/keystore/pbes2-aes-128-aes-128-sha256.p12",
+                "/keystore/pbes2-aes-128-aes-128-sha384.p12",
+                "/keystore/pbes2-aes-128-aes-128-sha512.p12",
+                "/keystore/pbes2-aes-128-aes-192-sha1.p12",
+                "/keystore/pbes2-aes-128-aes-192-sha224.p12",
+                "/keystore/pbes2-aes-128-aes-192-sha256.p12",
+                "/keystore/pbes2-aes-128-aes-192-sha384.p12",
+                "/keystore/pbes2-aes-128-aes-192-sha512.p12",
+                "/keystore/pbes2-aes-128-aes-256-sha1.p12",
+                "/keystore/pbes2-aes-128-aes-256-sha224.p12",
+                "/keystore/pbes2-aes-128-aes-256-sha256.p12",
+                "/keystore/pbes2-aes-128-aes-256-sha384.p12",
+                "/keystore/pbes2-aes-128-aes-256-sha512.p12",
+                "/keystore/pbes2-aes-192-aes-128-sha1.p12",
+                "/keystore/pbes2-aes-192-aes-128-sha224.p12",
+                "/keystore/pbes2-aes-192-aes-128-sha256.p12",
+                "/keystore/pbes2-aes-192-aes-128-sha384.p12",
+                "/keystore/pbes2-aes-192-aes-128-sha512.p12",
+                "/keystore/pbes2-aes-192-aes-192-sha1.p12",
+                "/keystore/pbes2-aes-192-aes-192-sha224.p12",
+                "/keystore/pbes2-aes-192-aes-192-sha256.p12",
+                "/keystore/pbes2-aes-192-aes-192-sha384.p12",
+                "/keystore/pbes2-aes-192-aes-192-sha512.p12",
+                "/keystore/pbes2-aes-192-aes-256-sha1.p12",
+                "/keystore/pbes2-aes-192-aes-256-sha224.p12",
+                "/keystore/pbes2-aes-192-aes-256-sha256.p12",
+                "/keystore/pbes2-aes-192-aes-256-sha384.p12",
+                "/keystore/pbes2-aes-192-aes-256-sha512.p12",
+                "/keystore/pbes2-aes-256-aes-128-sha1.p12",
+                "/keystore/pbes2-aes-256-aes-128-sha224.p12",
+                "/keystore/pbes2-aes-256-aes-128-sha256.p12",
+                "/keystore/pbes2-aes-256-aes-128-sha384.p12",
+                "/keystore/pbes2-aes-256-aes-128-sha512.p12",
+                "/keystore/pbes2-aes-256-aes-192-sha1.p12",
+                "/keystore/pbes2-aes-256-aes-192-sha224.p12",
+                "/keystore/pbes2-aes-256-aes-192-sha256.p12",
+                "/keystore/pbes2-aes-256-aes-192-sha384.p12",
+                "/keystore/pbes2-aes-256-aes-192-sha512.p12",
+                "/keystore/pbes2-aes-256-aes-256-sha1.p12",
+                "/keystore/pbes2-aes-256-aes-256-sha224.p12",
+                "/keystore/pbes2-aes-256-aes-256-sha256.p12",
+                "/keystore/pbes2-aes-256-aes-256-sha384.p12",
+                "/keystore/pbes2-aes-256-aes-256-sha512.p12"
             );
+        }
+
+        @Parameter
+        public String keystoreFile;
+
+        @Test
+        public void keystoreIsReadableAndConsistent() throws Exception {
+            KeyStore keystore = KeyStore.getInstance("PKCS12");
+            InputStream inputStream = getClass().getResourceAsStream(keystoreFile);
+            assertNotNull("Resource not found: " + keystoreFile, inputStream);
+            keystore.load(inputStream, PASSWORD);
+
+            Enumeration<String> aliases = keystore.aliases();
+            assertTrue("Empty KeyStore", aliases.hasMoreElements());
+
+            while (aliases.hasMoreElements()) {
+                String alias = aliases.nextElement();
+
+                if (!keystore.isKeyEntry(alias)) {
+                    fail("Test KeyStore should only contain private key entries");
+                }
+
+                PrivateKeyEntry keyEntry = (PrivateKeyEntry) keystore.getEntry(alias, null);
+                X509Certificate certificate = (X509Certificate) keyEntry.getCertificate();
+                assertEquals("CN=Test", certificate.getSubjectX500Principal().getName());
+
+                // Check the keys actually work with each other.
+                RSAPublicKey publicKey = (RSAPublicKey) certificate.getPublicKey();
+                RSAPrivateKey privateKey = (RSAPrivateKey) keyEntry.getPrivateKey();
+                byte[] original = "Some random input text".getBytes();
+
+                Cipher cipher = Cipher.getInstance("RSA");
+                cipher.init(Cipher.ENCRYPT_MODE, privateKey);
+                byte[] encrypted = cipher.doFinal(original);
+
+                cipher.init(Cipher.DECRYPT_MODE, publicKey);
+                byte[] decrypted = cipher.doFinal(encrypted);
+
+                assertArrayEquals(original, decrypted);
+            }
+        }
     }
 
-    @Parameter
-    public String keystoreFile;
+    @RunWith(JUnit4.class)
+    public static class OtherTests {
+        @Test
+        public void unknownHashThrowsCorrectException() throws Exception {
+            KeyStore keystore = KeyStore.getInstance("PKCS12");
+            InputStream inputStream = getClass().getResourceAsStream(UNKNOWN_HASH);
+            assertNotNull("Resource not found: " + UNKNOWN_HASH, inputStream);
 
-    @Test
-    public void keystoreIsReadableAndConsistent() throws Exception {
-        KeyStore keystore = KeyStore.getInstance("PKCS12");
-        InputStream inputStream = getClass().getResourceAsStream(keystoreFile);
-        assertNotNull("Resource not found: " + keystoreFile, inputStream);
-        keystore.load(inputStream, PASSWORD);
-
-        Enumeration<String> aliases = keystore.aliases();
-        assertTrue("Empty KeyStore", aliases.hasMoreElements());
-
-        while (aliases.hasMoreElements()) {
-            String alias = aliases.nextElement();
-
-            if (!keystore.isKeyEntry(alias)) {
-                fail("Test KeyStore should only contain private key entries");
+            try {
+                keystore.load(inputStream, PASSWORD);
+                fail();
+            } catch (IOException expected) {
+                assertFalse("Internal BCPrivate exception thrown",
+                    expected.getMessage().contains("BCPrivate"));
             }
-
-            PrivateKeyEntry keyEntry = (PrivateKeyEntry) keystore.getEntry(alias, null);
-            X509Certificate certificate = (X509Certificate) keyEntry.getCertificate();
-            assertEquals("CN=Test", certificate.getSubjectX500Principal().getName());
-
-            // Check the keys actually work with each other.
-            RSAPublicKey publicKey = (RSAPublicKey) certificate.getPublicKey();
-            RSAPrivateKey privateKey = (RSAPrivateKey) keyEntry.getPrivateKey();
-            byte[] original = "Some random input text".getBytes();
-
-            Cipher cipher = Cipher.getInstance("RSA");
-            cipher.init(Cipher.ENCRYPT_MODE, privateKey);
-            byte[] encrypted = cipher.doFinal(original);
-
-            cipher.init(Cipher.DECRYPT_MODE, publicKey);
-            byte[] decrypted = cipher.doFinal(encrypted);
-
-            assertArrayEquals(original, decrypted);
         }
     }
 }

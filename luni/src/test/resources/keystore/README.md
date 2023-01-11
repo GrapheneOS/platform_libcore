@@ -41,9 +41,28 @@ openssl1 pkcs12 -export -out pberc2.p12 -in certificate.pem -inkey privkey.pem \
     -passout pass:password
 ```
 
+Can also be generated using:
+
+```
+openssl3 pkcs12 -legacy -export -out pberc2.p12 -in certificate.pem -inkey privkey.pem \
+    -passout pass:password
+```
+
+which generates identical ASN.1 data.
+
 #### PBES2
 
-All the other files are generated with the mkstores.sh script which uses
+All the pbes2-* files are generated with the mkstores.sh script which uses
 openssl3 to generate all supported variations of private key and certificate
 encryption (from the AES family) and overall MAC algorithm from the SHA-1 and
 SHA-2 family.
+
+#### SHA-3
+
+A file using SHA3-256 as its MAC algorithm.  Used to trigger exceptions
+for testing. Created with:
+
+```
+openssl3 pkcs12 -export -out sha3.p12 -in certificate.pem -inkey privkey.pem \
+    -passout pass:password -macalg SHA3-256
+```
