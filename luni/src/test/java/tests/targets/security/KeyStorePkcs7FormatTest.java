@@ -60,7 +60,12 @@ public class KeyStorePkcs7FormatTest {
         @Parameters(name = "{0}")
         public static Iterable<?> data() {
             return Arrays.asList(
-                "/keystore/pberc2.p12",
+                "/keystore/pbe-rc2.p12",
+                "/keystore/pbe-3des-sha1.p12",
+                "/keystore/pbe-3des-sha224.p12",
+                "/keystore/pbe-3des-sha256.p12",
+                "/keystore/pbe-3des-sha384.p12",
+                "/keystore/pbe-3des-sha512.p12",
                 "/keystore/pbes2-aes-128-aes-128-sha1.p12",
                 "/keystore/pbes2-aes-128-aes-128-sha224.p12",
                 "/keystore/pbes2-aes-128-aes-128-sha256.p12",

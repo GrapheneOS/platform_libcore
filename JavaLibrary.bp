@@ -475,6 +475,7 @@ java_library {
     visibility: [
         "//art/build/sdk",
         "//build/soong/java/core-libraries",
+        "//frameworks/base",
     ],
     defaults: ["core_lambda_stubs_defaults"],
     srcs: [
@@ -492,6 +493,7 @@ java_library {
     visibility: [
         "//art/build/sdk",
         "//build/soong/java/core-libraries",
+        "//frameworks/base",
     ],
     defaults: ["libcore_java_defaults"],
     srcs: [
