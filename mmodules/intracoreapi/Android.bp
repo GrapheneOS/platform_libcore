@@ -112,3 +112,12 @@ java_library {
     sdk_version: "none",
     patch_module: "java.base",
 }
+
+java_api_contribution {
+    name: "art-module-intra-core-api-intra-core-stubs",
+    api_surface: "intra-core",
+    api_file: "api/intra/current.txt",
+    visibility: [
+        "//build/orchestrator/apis",
+    ],
+}
