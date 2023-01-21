@@ -22,7 +22,7 @@ package {
 // For general tips, see http://go/android-license-faq.
 license {
     name: "libcore_ojluni_src_main_license",
-    visibility: [":__subpackages__"],
+    visibility: ["//libcore:__subpackages__"],
     license_kinds: [
         "SPDX-license-identifier-Apache-2.0",
         "SPDX-license-identifier-GPL-2.0-with-classpath-exception",

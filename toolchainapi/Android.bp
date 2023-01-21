@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+package {
+    default_applicable_licenses: ["libcore_ojluni_src_main_license"],
+}
+
 // Stub library containing the contributions of ART module to Toolchain
 // API Surface.
 // This is a droidstubs and not a java_sdk_library since "toolchain" does not
