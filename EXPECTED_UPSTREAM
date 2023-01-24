@@ -58,7 +58,7 @@ ojluni/src/main/java/java/io/FileNotFoundException.java,jdk17u/jdk-17.0.3-ga,src
 ojluni/src/main/java/java/io/FileOutputStream.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/io/FileOutputStream.java
 ojluni/src/main/java/java/io/FilePermission.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/FilePermission.java
 ojluni/src/main/java/java/io/FileReader.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/FileReader.java
-ojluni/src/main/java/java/io/FileSystem.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/io/FileSystem.java
+ojluni/src/main/java/java/io/FileSystem.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/FileSystem.java
 ojluni/src/main/java/java/io/FileWriter.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/FileWriter.java
 ojluni/src/main/java/java/io/FilenameFilter.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/FilenameFilter.java
 ojluni/src/main/java/java/io/FilterInputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/FilterInputStream.java
@@ -99,9 +99,9 @@ ojluni/src/main/java/java/io/PushbackInputStream.java,jdk11u/jdk-11.0.13-ga,src/
 ojluni/src/main/java/java/io/PushbackReader.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/PushbackReader.java
 ojluni/src/main/java/java/io/RandomAccessFile.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/io/RandomAccessFile.java
 ojluni/src/main/java/java/io/Reader.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/Reader.java
-ojluni/src/main/java/java/io/SequenceInputStream.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/io/SequenceInputStream.java
+ojluni/src/main/java/java/io/SequenceInputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/SequenceInputStream.java
 ojluni/src/main/java/java/io/Serial.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/io/Serial.java
-ojluni/src/main/java/java/io/SerialCallbackContext.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/io/SerialCallbackContext.java
+ojluni/src/main/java/java/io/SerialCallbackContext.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/SerialCallbackContext.java
 ojluni/src/main/java/java/io/Serializable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/Serializable.java
 ojluni/src/main/java/java/io/SerializablePermission.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/SerializablePermission.java
 ojluni/src/main/java/java/io/StreamCorruptedException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/io/StreamCorruptedException.java
@@ -112,7 +112,7 @@ ojluni/src/main/java/java/io/StringWriter.java,jdk11u/jdk-11.0.13-ga,src/java.ba
 ojluni/src/main/java/java/io/SyncFailedException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/io/SyncFailedException.java
 ojluni/src/main/java/java/io/UTFDataFormatException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/io/UTFDataFormatException.java
 ojluni/src/main/java/java/io/UncheckedIOException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/io/UncheckedIOException.java
-ojluni/src/main/java/java/io/UnixFileSystem.java,jdk8u/jdk8u121-b13,jdk/src/solaris/classes/java/io/UnixFileSystem.java
+ojluni/src/main/java/java/io/UnixFileSystem.java,jdk11u/jdk-11.0.13-ga,src/java.base/unix/classes/java/io/UnixFileSystem.java
 ojluni/src/main/java/java/io/UnsupportedEncodingException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/io/UnsupportedEncodingException.java
 ojluni/src/main/java/java/io/WriteAbortedException.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/io/WriteAbortedException.java
 ojluni/src/main/java/java/io/Writer.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/io/Writer.java
@@ -1815,7 +1815,7 @@ ojluni/src/main/native/UnixAsynchronousServerSocketChannelImpl.c,jdk8u/jdk8u121-
 ojluni/src/main/native/UnixAsynchronousSocketChannelImpl.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/UnixAsynchronousSocketChannelImpl.c
 ojluni/src/main/native/UnixCopyFile.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/fs/UnixCopyFile.c
 ojluni/src/main/native/UnixDomainSockets.c,jdk17u/jdk-17.0.2-ga,src/java.base/unix/native/libnio/ch/UnixDomainSockets.c
-ojluni/src/main/native/UnixFileSystem_md.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/java/io/UnixFileSystem_md.c
+ojluni/src/main/native/UnixFileSystem_md.c,jdk11u/jdk-11.0.13-ga,src/java.base/unix/native/libjava/UnixFileSystem_md.c
 ojluni/src/main/native/UnixNativeDispatcher.c,jdk8u/jdk8u60-b31,jdk/src/solaris/native/sun/nio/fs/UnixNativeDispatcher.c
 ojluni/src/main/native/ZipFile.c,jdk8u/jdk8u60-b31,jdk/src/share/native/java/util/zip/ZipFile.c
 ojluni/src/main/native/canonicalize_md.c,jdk7u/jdk7u40-b60,jdk/src/solaris/native/java/io/canonicalize_md.c
