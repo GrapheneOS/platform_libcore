@@ -206,7 +206,6 @@ java_library {
         // framework-api-annotations contain API annotations, e.g. @SystemApi.
         ":framework-api-annotations",
         ":openjdk_lambda_stub_files",
-        ":openjdk_generated_annotation_stub_files",
         ":app-compat-annotations-source",
 
         // Use the okhttp source too to allow libcore code to reference it
@@ -484,10 +483,11 @@ java_library {
     include_srcs: true,
 }
 
-// Creates a jar that exists to satisfy javac when compiling source code that
-// contains @Generated annotations, which are produced by some code generation
-// tools (notably dagger) but aren't part of the Android API.
-// See http://b/123891440.
+// This is an empty jar that exists for backwards compatibility with T (and below).
+// Historically, it existed to satisfy javac when compiling source code that
+// contains @Generated annotations.
+// This is no longer necessary since @Generated was added to ART's Public API
+// surface in U.
 java_library {
     name: "core-generated-annotation-stubs",
     visibility: [
@@ -497,7 +497,6 @@ java_library {
     ],
     defaults: ["libcore_java_defaults"],
     srcs: [
-        ":openjdk_generated_annotation_stub_files",
     ],
     hostdex: true,
     sdk_version: "none",
@@ -944,7 +943,6 @@ java_sdk_library {
         // in openjdk_java_files.bp for more details.
         ":openjdk_mmodule_extra_files",
         ":okhttp_api_files",
-
     ],
     libs: [
         // Put framework-api-annotations into libs to avoid exposing the definition of framework's

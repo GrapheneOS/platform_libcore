@@ -58,7 +58,6 @@ declare -A PATH_TO_CONFIG=(
     [luni/src/test/parameter_metadata]=tools/checkstyle/aosp-copyright.xml
     [metrictests]=tools/checkstyle/aosp-copyright.xml
     [ojluni/annotations]=tools/checkstyle/ojluni-src-main-header.xml
-    [ojluni/src/generated-annotation]=tools/checkstyle/ojluni-src-main-header.xml
     [ojluni/src/lambda]=tools/checkstyle/ojluni-src-main-header.xml
     [ojluni/src/main]=tools/checkstyle/ojluni-src-main-header.xml
     [ojluni/src/test]=tools/checkstyle/ojluni-src-test-header.xml

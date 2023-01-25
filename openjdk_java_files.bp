@@ -1251,6 +1251,7 @@ filegroup {
         "ojluni/src/main/java/java/util/zip/ZipOutputStream.java",
         "ojluni/src/main/java/java/util/zip/ZipUtils.java",
         "ojluni/src/main/java/java/util/zip/ZStreamRef.java",
+        "ojluni/src/main/java/javax/annotation/processing/Generated.java",
         "ojluni/src/main/java/javax/crypto/AEADBadTagException.java",
         "ojluni/src/main/java/javax/crypto/BadPaddingException.java",
         "ojluni/src/main/java/javax/crypto/CipherInputStream.java",
@@ -1419,21 +1420,6 @@ filegroup {
         "ojluni/src/lambda/java/java/lang/invoke/LambdaConversionException.java",
         "ojluni/src/lambda/java/java/lang/invoke/MethodHandle.java",
         "ojluni/src/lambda/java/java/lang/invoke/MethodType.java",
-    ],
-}
-
-// Stubs needed to satisfy javac when compiling source code that contains
-// @Generated annotations, which are produced by some code generation tools.
-// TODO: Remove this source file, this target, and all its dependencies, if
-// the code generation tools (notably dagger) can be fixed.
-// See http://b/123891440.
-filegroup {
-    name: "openjdk_generated_annotation_stub_files",
-    visibility: [
-        "//libcore:__subpackages__",
-    ],
-    srcs: [
-        "ojluni/src/generated-annotation/java/javax/annotation/processing/Generated.java",
     ],
 }
 
@@ -1890,7 +1876,6 @@ filegroup {
         ":openjdk_mmodule_extra_files",
         ":openjdk_internal_files",
         ":openjdk_lambda_stub_files",
-        ":openjdk_generated_annotation_stub_files",
     ],
 }
 

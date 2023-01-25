@@ -18165,6 +18165,16 @@ package java.util.zip {
 
 }
 
+package javax.annotation.processing {
+
+  @java.lang.annotation.Documented @java.lang.annotation.Retention(java.lang.annotation.RetentionPolicy.SOURCE) @java.lang.annotation.Target({java.lang.annotation.ElementType.PACKAGE, java.lang.annotation.ElementType.TYPE, java.lang.annotation.ElementType.METHOD, java.lang.annotation.ElementType.CONSTRUCTOR, java.lang.annotation.ElementType.FIELD, java.lang.annotation.ElementType.LOCAL_VARIABLE, java.lang.annotation.ElementType.PARAMETER}) public @interface Generated {
+    method public abstract String comments() default "";
+    method public abstract String date() default "";
+    method public abstract String[] value();
+  }
+
+}
+
 package javax.crypto {
 
   public class AEADBadTagException extends javax.crypto.BadPaddingException {
