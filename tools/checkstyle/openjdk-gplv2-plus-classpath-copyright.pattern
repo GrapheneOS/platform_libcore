@@ -1,7 +1,7 @@
 /\*.*
  \*.*Android.*
  \* Copyright \(c\) \d\d\d\d,( ?\d\d\d\d,?)? Oracle and/or its affiliates\. All rights reserved\.
- \*.*(Android|Google|Red Hat).*
+ \*.*(Android|Google|Red Hat|SAP SE).*
  \*$
  \* DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER\.
  \*

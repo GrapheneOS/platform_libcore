@@ -1755,6 +1755,7 @@ filegroup {
         "ojluni/src/main/java/sun/security/util/Resources.java",
         "ojluni/src/main/java/sun/security/util/ResourcesMgr.java",
         "ojluni/src/main/java/sun/security/util/SecurityConstants.java",
+        "ojluni/src/main/java/sun/security/util/SecurityProperties.java",
         "ojluni/src/main/java/sun/security/util/SignatureFileVerifier.java",
         "ojluni/src/main/java/sun/security/x509/AccessDescription.java",
         "ojluni/src/main/java/sun/security/x509/AttributeNameEnumeration.java",

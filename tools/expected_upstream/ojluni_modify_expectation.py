@@ -47,8 +47,7 @@ AUTOCOMPLETE_TAGS = [
     'jdk9/jdk-9+181',
     'jdk11u/jdk-11+28',
     'jdk11u/jdk-11.0.13-ga',
-    'jdk17u/jdk-17.0.2-ga',
-    'jdk17u/jdk-17.0.5-ga',
+    'jdk17u/jdk-17.0.6-ga',
 ]
 
 
