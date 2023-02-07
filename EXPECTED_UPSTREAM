@@ -203,7 +203,7 @@ ojluni/src/main/java/java/lang/StackStreamFactory.java,jdk17u/jdk-17.0.6-ga,src/
 ojluni/src/main/java/java/lang/StackTraceElement.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/StackTraceElement.java
 ojluni/src/main/java/java/lang/StackWalker.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/lang/StackWalker.java
 ojluni/src/main/java/java/lang/StrictMath.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/lang/StrictMath.java
-ojluni/src/main/java/java/lang/String.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/lang/String.java
+ojluni/src/main/java/java/lang/String.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/lang/String.java
 ojluni/src/main/java/java/lang/StringBuffer.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/StringBuffer.java
 ojluni/src/main/java/java/lang/StringBuilder.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/StringBuilder.java
 ojluni/src/main/java/java/lang/StringIndexOutOfBoundsException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/lang/StringIndexOutOfBoundsException.java
@@ -289,8 +289,8 @@ ojluni/src/main/java/java/lang/reflect/UndeclaredThrowableException.java,jdk11u/
 ojluni/src/main/java/java/lang/reflect/WeakCache.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/reflect/WeakCache.java
 ojluni/src/main/java/java/lang/reflect/WildcardType.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/reflect/WildcardType.java
 ojluni/src/main/java/java/lang/reflect/package-info.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/reflect/package-info.java
-ojluni/src/main/java/java/math/BigDecimal.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/math/BigDecimal.java
-ojluni/src/main/java/java/math/BigInteger.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/math/BigInteger.java
+ojluni/src/main/java/java/math/BigDecimal.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/math/BigDecimal.java
+ojluni/src/main/java/java/math/BigInteger.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/math/BigInteger.java
 ojluni/src/main/java/java/math/BitSieve.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/math/BitSieve.java
 ojluni/src/main/java/java/math/MathContext.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/math/MathContext.java
 ojluni/src/main/java/java/math/MutableBigInteger.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/math/MutableBigInteger.java
@@ -939,7 +939,7 @@ ojluni/src/main/java/java/util/NoSuchElementException.java,jdk17u/jdk-17.0.6-ga,
 ojluni/src/main/java/java/util/Objects.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Objects.java
 ojluni/src/main/java/java/util/Observable.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Observable.java
 ojluni/src/main/java/java/util/Observer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Observer.java
-ojluni/src/main/java/java/util/Optional.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/java/util/Optional.java
+ojluni/src/main/java/java/util/Optional.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Optional.java
 ojluni/src/main/java/java/util/OptionalDouble.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/OptionalDouble.java
 ojluni/src/main/java/java/util/OptionalInt.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/OptionalInt.java
 ojluni/src/main/java/java/util/OptionalLong.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/OptionalLong.java
@@ -1160,7 +1160,7 @@ ojluni/src/main/java/java/util/regex/ASCII.java,jdk17u/jdk-17.0.6-ga,src/java.ba
 ojluni/src/main/java/java/util/regex/MatchResult.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/regex/MatchResult.java
 ojluni/src/main/java/java/util/regex/Matcher.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/regex/Matcher.java
 ojluni/src/main/java/java/util/regex/Pattern.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/regex/Pattern.java
-ojluni/src/main/java/java/util/regex/PatternSyntaxException.java,jdk17u/jdk-17.0.2-ga,src/java.base/share/classes/java/util/regex/PatternSyntaxException.java
+ojluni/src/main/java/java/util/regex/PatternSyntaxException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/regex/PatternSyntaxException.java
 ojluni/src/main/java/java/util/stream/AbstractPipeline.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/stream/AbstractPipeline.java
 ojluni/src/main/java/java/util/stream/AbstractShortCircuitTask.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/stream/AbstractShortCircuitTask.java
 ojluni/src/main/java/java/util/stream/AbstractSpinedBuffer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/stream/AbstractSpinedBuffer.java
@@ -1643,7 +1643,7 @@ ojluni/src/main/java/sun/security/timestamp/TimestampToken.java,jdk8u/jdk8u60-b3
 ojluni/src/main/java/sun/security/util/AbstractAlgorithmConstraints.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/AbstractAlgorithmConstraints.java
 ojluni/src/main/java/sun/security/util/AlgorithmDecomposer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/AlgorithmDecomposer.java
 ojluni/src/main/java/sun/security/util/AnchorCertificates.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/AnchorCertificates.java
-ojluni/src/main/java/sun/security/util/BitArray.java,jdk17u/jdk-17.0.3-ga,src/java.base/share/classes/sun/security/util/BitArray.java
+ojluni/src/main/java/sun/security/util/BitArray.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/BitArray.java
 ojluni/src/main/java/sun/security/util/ByteArrayLexOrder.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/ByteArrayLexOrder.java
 ojluni/src/main/java/sun/security/util/ByteArrayTagOrder.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/ByteArrayTagOrder.java
 ojluni/src/main/java/sun/security/util/Cache.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/Cache.java
@@ -1854,7 +1854,7 @@ ojluni/src/test/java/lang/StackWalker/StackStreamState.java,jdk17u/jdk-17.0.6-ga
 ojluni/src/test/java/lang/StackWalker/StackStreamTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/StackWalker/StackStreamTest.java
 ojluni/src/test/java/lang/StackWalker/StackWalkTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/StackWalker/StackWalkTest.java
 # The test TestBCI analyses .class files, but Android runs dex codes.
-# ojluni/src/test/java/lang/StackWalker/TestBCI.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/lang/StackWalker/TestBCI.java
+# ojluni/src/test/java/lang/StackWalker/TestBCI.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/StackWalker/TestBCI.java
 ojluni/src/test/java/lang/StackWalker/VerifyStackTrace.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/StackWalker/VerifyStackTrace.java
 ojluni/src/test/java/lang/StackWalker/WalkFunction.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/StackWalker/WalkFunction.java
 ojluni/src/test/java/lang/String/Transform.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/String/Transform.java
@@ -2225,7 +2225,7 @@ ojluni/src/test/java/util/regex/GraphemeTestCases.txt,jdk17u/jdk-17.0.6-ga,test/
 ojluni/src/test/java/util/regex/POSIX_ASCII.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/POSIX_ASCII.java
 ojluni/src/test/java/util/regex/POSIX_Unicode.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/POSIX_Unicode.java
 ojluni/src/test/java/util/regex/PatternStreamTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/PatternStreamTest.java
-ojluni/src/test/java/util/regex/RegExTest.java,jdk17u/jdk-17.0.2-ga,test/jdk/java/util/regex/RegExTest.java
+ojluni/src/test/java/util/regex/RegExTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/RegExTest.java
 ojluni/src/test/java/util/regex/SupplementaryTestCases.txt,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/SupplementaryTestCases.txt
 ojluni/src/test/java/util/regex/TestCases.txt,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/TestCases.txt
 ojluni/src/test/java/util/zip/ChecksumBase.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/zip/ChecksumBase.java
