@@ -1380,6 +1380,7 @@ ojluni/src/main/java/jdk/internal/reflect/Reflection.java,jdk11u/jdk-11.0.13-ga,
 ojluni/src/main/java/jdk/internal/util/ArraysSupport.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/util/ArraysSupport.java
 ojluni/src/main/java/jdk/internal/util/Preconditions.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/util/Preconditions.java
 ojluni/src/main/java/jdk/internal/util/StaticProperty.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/util/StaticProperty.java
+ojluni/src/main/java/jdk/internal/util/jar/JarIndex.java,jdk17u/jdk-17.0.5-ga,src/java.base/share/classes/jdk/internal/util/jar/JarIndex.java
 ojluni/src/main/java/jdk/internal/vm/annotation/Contended.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/vm/annotation/Contended.java
 ojluni/src/main/java/jdk/internal/vm/annotation/IntrinsicCandidate.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/vm/annotation/IntrinsicCandidate.java
 ojluni/src/main/java/jdk/internal/vm/annotation/ReservedStackAccess.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/vm/annotation/ReservedStackAccess.java
@@ -1405,11 +1406,9 @@ ojluni/src/main/java/sun/misc/FpUtils.java,jdk8u/jdk8u121-b13,jdk/src/share/clas
 ojluni/src/main/java/sun/misc/HexDumpEncoder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/HexDumpEncoder.java
 ojluni/src/main/java/sun/misc/IOUtils.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/IOUtils.java
 ojluni/src/main/java/sun/misc/InvalidJarIndexException.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/InvalidJarIndexException.java
-ojluni/src/main/java/sun/misc/JarIndex.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/JarIndex.java
 ojluni/src/main/java/sun/misc/JavaIOFileDescriptorAccess.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/JavaIOFileDescriptorAccess.java
 ojluni/src/main/java/sun/misc/LRUCache.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/LRUCache.java
 ojluni/src/main/java/sun/misc/MessageUtils.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/MessageUtils.java
-ojluni/src/main/java/sun/misc/MetaIndex.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/MetaIndex.java
 ojluni/src/main/java/sun/misc/REException.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/REException.java
 ojluni/src/main/java/sun/misc/RegexpPool.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/RegexpPool.java
 ojluni/src/main/java/sun/misc/RegexpTarget.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/misc/RegexpTarget.java

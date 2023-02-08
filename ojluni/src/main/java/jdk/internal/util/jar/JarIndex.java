@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1999, 2016, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 1999, 2019, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -23,14 +23,16 @@
  * questions.
  */
 
-package sun.misc;
+package jdk.internal.util.jar;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.*;
-import java.security.AccessController;
 import java.util.*;
 import java.util.jar.*;
 import java.util.zip.*;
-import sun.security.action.GetPropertyAction;
+
+import static sun.security.action.GetPropertyAction.privilegedGetProperty;
 
 /**
  * This class is used to maintain mappings from packages, classes
@@ -74,8 +76,7 @@ public class JarIndex {
      * be added to the index. Otherwise, just the directory names are added.
      */
     private static final boolean metaInfFilenames =
-        "true".equals(AccessController.doPrivileged(
-             new GetPropertyAction("sun.misc.JarIndex.metaInfFilenames")));
+        "true".equals(privilegedGetProperty("sun.misc.JarIndex.metaInfFilenames"));
 
     /**
      * Constructs a new, empty jar index.
@@ -109,31 +110,11 @@ public class JarIndex {
     /**
      * Returns the jar index, or <code>null</code> if none.
      *
-     * This single parameter version of the method is retained
-     * for binary compatibility with earlier releases.
-     *
      * @param jar the JAR file to get the index from.
      * @exception IOException if an I/O error has occurred.
      */
     public static JarIndex getJarIndex(JarFile jar) throws IOException {
-        return getJarIndex(jar, null);
-    }
-
-    /**
-     * Returns the jar index, or <code>null</code> if none.
-     *
-     * @param jar the JAR file to get the index from.
-     * @exception IOException if an I/O error has occurred.
-     */
-    public static JarIndex getJarIndex(JarFile jar, MetaIndex metaIndex) throws IOException {
         JarIndex index = null;
-        /* If metaIndex is not null, check the meta index to see
-           if META-INF/INDEX.LIST is contained in jar file or not.
-        */
-        if (metaIndex != null &&
-            !metaIndex.mayContain(INDEX_NAME)) {
-            return null;
-        }
         JarEntry e = jar.getJarEntry(INDEX_NAME);
         // if found, then load the index
         if (e != null) {
@@ -175,7 +156,7 @@ public class JarIndex {
         if ((jarFiles = indexMap.get(fileName)) == null) {
             /* try the package name again */
             int pos;
-            if((pos = fileName.lastIndexOf("/")) != -1) {
+            if((pos = fileName.lastIndexOf('/')) != -1) {
                 jarFiles = indexMap.get(fileName.substring(0, pos));
             }
         }
@@ -198,7 +179,7 @@ public class JarIndex {
     public void add(String fileName, String jarName) {
         String packageName;
         int pos;
-        if((pos = fileName.lastIndexOf("/")) != -1) {
+        if((pos = fileName.lastIndexOf('/')) != -1) {
             packageName = fileName.substring(0, pos);
         } else {
             packageName = fileName;
@@ -245,7 +226,8 @@ public class JarIndex {
                 // Any files in META-INF/ will be indexed explicitly
                 if (fileName.equals("META-INF/") ||
                     fileName.equals(INDEX_NAME) ||
-                    fileName.equals(JarFile.MANIFEST_NAME))
+                    fileName.equals(JarFile.MANIFEST_NAME) ||
+                    fileName.startsWith("META-INF/versions/"))
                     continue;
 
                 if (!metaInfFilenames || !fileName.startsWith("META-INF/")) {
@@ -271,7 +253,7 @@ public class JarIndex {
      */
     public void write(OutputStream out) throws IOException {
         BufferedWriter bw = new BufferedWriter
-            (new OutputStreamWriter(out, "UTF8"));
+            (new OutputStreamWriter(out, UTF_8));
         bw.write("JarIndex-Version: 1.0\n\n");
 
         if (jarFiles != null) {
@@ -301,7 +283,7 @@ public class JarIndex {
      */
     public void read(InputStream is) throws IOException {
         BufferedReader br = new BufferedReader
-            (new InputStreamReader(is, "UTF8"));
+            (new InputStreamReader(is, UTF_8));
         String line = null;
         String currentJar = null;
 
@@ -312,7 +294,7 @@ public class JarIndex {
         while((line = br.readLine()) != null && !line.endsWith(".jar"));
 
         for(;line != null; line = br.readLine()) {
-            if (line.length() == 0)
+            if (line.isEmpty())
                 continue;
 
             if (line.endsWith(".jar")) {

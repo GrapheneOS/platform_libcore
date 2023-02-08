@@ -19,6 +19,9 @@ package libcore.tools.analyzer.openjdk;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
+import libcore.tools.analyzer.openjdk.DependencyAnalyzer.Result.MethodDependency;
+import libcore.tools.analyzer.openjdk.SignaturesCollector.SignaturesCollection;
+
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
@@ -35,23 +38,19 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class Main {
-    private static final String DEFAULT_JMOD = "jmods/java.base.jmod";
-    private static final String DEFAULT_JMOD_PATH = pathFromEnvOrThrow("ANDROID_JAVA_HOME")
-            .resolve(DEFAULT_JMOD).toFile().getAbsolutePath();
 
     private static class MainArgs {
 
-        @Parameter(names = "-h", help = true, description = "help usage")
+        @Parameter(names = "-h", help = true, description = "Shows this help message")
         public boolean help = false;
     }
 
@@ -60,9 +59,9 @@ public class Main {
     private static class CommandDump {
         public static final String NAME = "dump";
 
-        @Parameter(names = {"-cp", "--classpath"},
-                description = "file path to a .jmod or .jar file  which contains .class files.")
-        public String classpathFile = DEFAULT_JMOD_PATH;
+        @Parameter(names = {"-cp", "--classpath"}, description = "file path to a .jmod or .jar file"
+                + " or one of the following java version: oj, 8, 9, 11, 17")
+        public String classpathFile = "17";
 
         @Parameter(required = true, arity = 1,
                 description = "<class>. The fully qualified name of the class in the classpath. "
@@ -70,14 +69,14 @@ public class Main {
                         + " e.g. java.lang.Character\\$Subset")
         public List<String> classNames;
 
-        @Parameter(names = "-h", help = true, description = "help usage")
+        @Parameter(names = "-h", help = true, description = "Shows this help message")
         public boolean help = false;
 
         private void run() throws UncheckedIOException {
-            Path jmod = Path.of(classpathFile);
+            Path jmod = AndroidHostEnvUtil.parseInputClasspath(classpathFile);
             String className = classNames.get(0);
             try (ZipFile zipFile = new ZipFile(jmod.toFile())) {
-                ZipEntry e = getEntryFromClassNameOrThrow(zipFile, jmod, className);
+                ZipEntry e = ClassFileUtil.getEntryFromClassNameOrThrow(zipFile, className);
                 try (InputStream in = zipFile.getInputStream(e)) {
                     ClassReader classReader = new ClassReader(in);
                     PrintWriter printer = new PrintWriter(System.out);
@@ -104,23 +103,23 @@ public class Main {
         public String newClasspath = "17";
 
         @Parameter(required = true, arity = 1,
-                description = "<class>. The fully qualified name of the class in the classpath.\n"
+                description = "<class>. The fully qualified name of the class in the classpath. "
                         + "Note that inner class uses $ separator and $ has to be escaped in shell,"
                         + " e.g. java.lang.Character\\$Subset")
         public List<String> classNames;
 
-        @Parameter(names = "-h", help = true, description = "help usage")
+        @Parameter(names = "-h", help = true, description = "Shows this help message")
         public boolean help = false;
 
         private void run() throws UncheckedIOException {
-            Path basePath = toFilePath(baseClasspath);
-            Path newPath = toFilePath(newClasspath);
+            Path basePath = AndroidHostEnvUtil.parseInputClasspath(baseClasspath);
+            Path newPath = AndroidHostEnvUtil.parseInputClasspath(newClasspath);
             String className = classNames.get(0);
             DiffAnalyzer analyzer;
             try (ZipFile baseZip = new ZipFile(basePath.toFile());
                  ZipFile newZip = new ZipFile(newPath.toFile())) {
-                ZipEntry baseEntry = getEntryFromClassNameOrThrow(baseZip, basePath, className);
-                ZipEntry newEntry = getEntryFromClassNameOrThrow(newZip, newPath, className);
+                ZipEntry baseEntry = ClassFileUtil.getEntryFromClassNameOrThrow(baseZip, className);
+                ZipEntry newEntry = ClassFileUtil.getEntryFromClassNameOrThrow(newZip, className);
                 try (InputStream baseIn = baseZip.getInputStream(baseEntry);
                      InputStream newIn = newZip.getInputStream(newEntry)) {
                     analyzer = DiffAnalyzer.analyze(baseIn, newIn);
@@ -131,25 +130,6 @@ public class Main {
 
             System.out.println("Class:" + className);
             analyzer.print(System.out);
-        }
-
-        private static Path toFilePath(String classpath) {
-            switch (classpath) {
-                case "oj":
-                    return getAndroidBuildTop().resolve(
-                            "out/soong/.intermediates/libcore/core-oj/android_common/"
-                                    + "javac/core-oj.jar");
-                case "8":
-                    return getAndroidBuildTop().resolve(
-                            "prebuilts/jdk/jdk8/linux-x86/jre/lib/rt.jar");
-                case "9":
-                case "11":
-                case "17":
-                    return getAndroidBuildTop().resolve(
-                            "prebuilts/jdk/jdk" + classpath + "/linux-x86/jmods/java.base.jmod");
-                default:
-                    return Path.of(classpath);
-            }
         }
 
         private static class DiffAnalyzer {
@@ -166,8 +146,8 @@ public class Main {
 
             private static DiffAnalyzer analyze(InputStream baseIn, InputStream newIn)
                     throws IOException {
-                ClassNode baseClass = parseClass(baseIn);
-                ClassNode newClass = parseClass(newIn);
+                ClassNode baseClass = ClassFileUtil.parseClass(baseIn);
+                ClassNode newClass = ClassFileUtil.parseClass(newIn);
                 Map<String, MethodNode> baseMethods = getExposedMethods(baseClass)
                         .collect(toMap(DiffAnalyzer::toApiSignature, node -> node));
                 Map<String, MethodNode> newMethods = getExposedMethods(newClass)
@@ -248,14 +228,6 @@ public class Main {
                                 .anyMatch(anno ->"Ljava/lang/Deprecated;".equals(anno.desc));
             }
 
-            private static ClassNode parseClass(InputStream in) throws IOException {
-                ClassReader classReader = new ClassReader(in);
-                ClassNode node = new ClassNode();
-                classReader.accept(node,
-                        ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG| ClassReader.SKIP_FRAMES);
-                return node;
-            }
-
             void print(OutputStream out) {
                 PrintWriter writer = new PrintWriter(out, /*autoFlush=*/true);
 
@@ -292,14 +264,247 @@ public class Main {
         }
     }
 
+    @Parameters(commandNames = CommandShowDeps.NAME, commandDescription = "Show the dependencies of"
+        + " classes or packages.")
+    private static class CommandShowDeps {
+
+        public static final String NAME = "show-deps";
+
+        @Parameter(names = {"-cp"}, description = "file path to a .jmod or .jar file or "
+            + "one of the following java version: oj, 8, 9, 11, 17")
+        public String classpath = "17";
+
+        /**
+         * @see DependencyAnalyzer.ExcludeClasspathFilter
+         */
+        @Parameter(names = {"-x", "--exclude-deps-in-classpath"}, description = "a file path to "
+                + "a .jmod or .jar file or one of the following java version: oj, 8, 9, 11, 17. "
+                + "The classes, methods and fields that exist in this classpath are "
+                + "excluded from the output list of dependencies.")
+        public String excludeClasspath = "oj";
+
+        @Parameter(required = true,
+            description = "(<classes>|<packages>). The class or package names in the classpath. "
+                + "Note that inner class uses $ separator and $ has to be escaped in shell,"
+                + " e.g. java.lang.Character\\$Subset")
+        public List<String> classesOrPackages;
+
+        @Parameter(names = "-i", description = "Show the dependencies within the provided "
+                + "<classes> / <packages>")
+        public boolean includeInternal = false;
+
+        /**
+         * @see DependencyAnalyzer.ExpectedUpstreamFilter
+         */
+        @Parameter(names = "-e", description = "Exclude the existing dependencies in the OpenJDK "
+                + "version of the file specified in the libcore/EXPECTED_UPSTREAM file. Such "
+                + "dependencies are likely to be eliminated / replaced in the libcore version "
+                + "already even though the new OpenJDK version still depends on them.")
+        public boolean usesExpectedUpstreamAsBaseDeps = false;
+
+        @Parameter(names = "-c", description = "Only show class-level dependencies, not "
+                + "field-level or method-level dependency details.")
+        public boolean classOnly = false;
+
+        @Parameter(names = "-h", help = true, description = "Shows this help message")
+        public boolean help = false;
+
+        private final PrintWriter mWriter = new PrintWriter(System.out, /*autoFlush=*/true);
+
+        private void run()  {
+            Path cp = AndroidHostEnvUtil.parseInputClasspath(classpath);
+            Path ecp = excludeClasspath == null ? null
+                    : AndroidHostEnvUtil.parseInputClasspath(excludeClasspath);
+            DependencyAnalyzer analyzer = new DependencyAnalyzer(cp, ecp,
+                    includeInternal, usesExpectedUpstreamAsBaseDeps);
+
+            DependencyAnalyzer.Result result = analyzer.analyze(classesOrPackages);
+            var details = result.getDetails();
+            boolean isSingleClass = isInputSingleClass();
+            if (isSingleClass) {
+                mWriter.println("Input Class: " + classesOrPackages.get(0));
+            }
+
+            for (var classEntry : details.entrySet()) {
+                printMethodDependencies(isSingleClass, classEntry.getKey(), classEntry.getValue());
+            }
+            mWriter.println(" Summary:");
+            var collection = result.getAggregated();
+            printInsn(null, collection);
+        }
+
+        private void printMethodDependencies(boolean isSingleClass, String className,
+                List<MethodDependency> deps) {
+            boolean isClassNamePrinted = false;
+            for (var dep : deps) {
+                // Try not to flood and print tons of methods which have no dependency.
+                // A native method has no method and field dependency in java code, and thus
+                // print it when the user intends to understand the dependency of a single
+                // class.
+                if (!dep.mDependency.isEmpty()
+                        || (isSingleClass && (dep.mNode.access & Opcodes.ACC_NATIVE) != 0)) {
+                    if (!isClassNamePrinted) {
+                        mWriter.println("Class: " + className);
+                        isClassNamePrinted = true;
+                    }
+                    printInsn(dep.mNode, dep.mDependency);
+                }
+            }
+
+        }
+
+        private boolean isInputSingleClass() {
+            if (classesOrPackages.size() != 1) {
+                return false;
+            }
+
+            String[] split = classesOrPackages.get(0).split("\\.");
+            String last = split[split.length - 1];
+            return last.length() >= 1 && Character.isUpperCase(last.charAt(0));
+        }
+
+
+        private void printInsn(MethodNode method, SignaturesCollection collection) {
+            PrintWriter writer = mWriter;
+
+            if (method != null) {
+                String printedMethod = "";
+                printedMethod += (method.access & Opcodes.ACC_PUBLIC) != 0 ? "public " : "";
+                printedMethod += (method.access & Opcodes.ACC_PROTECTED) != 0 ? "protected " : "";
+                printedMethod += (method.access & Opcodes.ACC_PRIVATE) != 0 ? "private " : "";
+                printedMethod += (method.access & Opcodes.ACC_STATIC) != 0 ? "static " : "";
+                printedMethod += (method.access & Opcodes.ACC_ABSTRACT) != 0 ? "abstract " : "";
+                printedMethod += (method.access & Opcodes.ACC_NATIVE) != 0 ? "native " : "";
+                printedMethod += (method.access & Opcodes.ACC_SYNTHETIC) != 0 ? "synthetic " : "";
+                printedMethod += method.name + method.desc;
+                writer.println(" Method: " + printedMethod);
+            }
+
+            collection.getClassStream()
+                    .findAny()
+                    .ifPresent(s -> writer.println("  Type dependencies:"));
+            collection.getClassStream()
+                    .forEach(s -> writer.println("   " + s));
+
+            var methodStrs = collection.getMethodStream()
+                    .map(m -> classOnly ? m.getOwner() : m.toString())
+                    .sorted()
+                    .distinct()
+                    .collect(Collectors.toUnmodifiableList());
+            if (!methodStrs.isEmpty()) {
+                writer.println("  Method invokes:");
+                for (String s : methodStrs) {
+                    writer.println("   " + s);
+                }
+            }
+            var fieldStrs = collection.getFieldStream()
+                    .map(f -> classOnly ? f.getOwner() : f.toString())
+                    .sorted()
+                    .distinct()
+                    .collect(Collectors.toUnmodifiableList());
+            if (!fieldStrs.isEmpty()) {
+                writer.println("  Field accesses:");
+                for (String s : fieldStrs) {
+                    writer.println("   " + s);
+                }
+            }
+            writer.println();
+        }
+    }
+
+    @Parameters(commandNames = CommandListNoDeps.NAME,
+            commandDescription = "List classes without any dependency in the target version. "
+                    + "These classes in libcore/ojluni/ can be upgraded to the target version "
+                    + "in a standalone way without upgrading the other classes.")
+    private static class CommandListNoDeps {
+
+        public static final String NAME = "list-no-deps";
+
+        @Parameter(names = {"-t", "--target"},
+                description = "one of the following OpenJDK version: 9, 11, 17")
+        public String classpath = "17";
+
+        @Parameter(names = "-h", help = true, description = "Shows this help message")
+        public boolean help = false;
+
+        private void run() throws UncheckedIOException {
+            if (!List.of("9", "11", "17").contains(classpath)) {
+                throw new IllegalArgumentException("Only 9, 11, 17 java version is supported. "
+                        + "This java version isn't supported: " + classpath);
+            }
+            int targetVersion = Integer.parseInt(classpath);
+
+            Path cp = AndroidHostEnvUtil.parseInputClasspath(classpath);
+            Path excludeClasspath = AndroidHostEnvUtil.parseInputClasspath("oj");
+            DependencyAnalyzer analyzer = new DependencyAnalyzer(cp, excludeClasspath,
+                    false, true);
+
+            List<ExpectedUpstreamFile.ExpectedUpstreamEntry> entries;
+            try {
+                entries = new ExpectedUpstreamFile().readAllEntries();
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
+
+            List<String> noDepClasses = new ArrayList<>();
+            PrintWriter writer = new PrintWriter(System.out, /*autoFlush=*/true);
+            for (ExpectedUpstreamFile.ExpectedUpstreamEntry entry : entries) {
+                String path = entry.dstPath;
+                if (!path.startsWith("ojluni/src/main/java/") || !path.endsWith(".java")) {
+                    continue;
+                }
+                String jdkStr = entry.gitRef.split("/")[0];
+                if (jdkStr.length() < 5) {
+                    // ignore unparsable entry
+                    continue;
+                }
+
+                int jdkVersion;
+                try {
+                    jdkVersion = Integer.parseInt(jdkStr.substring(
+                            "jdk".length(), jdkStr.length() - 1));
+                } catch (NumberFormatException e) {
+                    // ignore unparsable entry
+                    continue;
+                }
+
+                if (jdkVersion >= targetVersion) {
+                    continue;
+                }
+
+                String className = path.substring("ojluni/src/main/java/".length(),
+                        path.length() - ".java".length()).replace('/', '.');
+                try {
+                    DependencyAnalyzer.Result classResult = analyzer.analyze(List.of(className));
+                    if (classResult.getAggregated().isEmpty()) {
+                        noDepClasses.add(className);
+                    }
+                } catch (IllegalArgumentException e) {
+                    // Print the classes not found. The classes are either not in java.base
+                    // or removed in the target OpenJDK version.
+                    writer.println("Class not found: " + className + " in " + cp.toString());
+                }
+            }
+
+            writer.println("Classes with no deps: ");
+            for (String name : noDepClasses) {
+                writer.println(" " + name);
+            }
+        }
+    }
+
     public static void main(String[] argv) {
         MainArgs mainArgs = new MainArgs();
         CommandDump commandDump = new CommandDump();
         CommandApiDiff commandApiDiff = new CommandApiDiff();
+        CommandShowDeps commandShowDeps = new CommandShowDeps();
+        CommandListNoDeps commandListNoDeps = new CommandListNoDeps();
         JCommander jCommander = JCommander.newBuilder()
                 .addObject(mainArgs)
                 .addCommand(commandDump)
                 .addCommand(commandApiDiff)
+                .addCommand(commandShowDeps)
+                .addCommand(commandListNoDeps)
                 .build();
         jCommander.parse(argv);
 
@@ -323,46 +528,23 @@ public class Main {
                     commandApiDiff.run();
                 }
                 break;
+            case CommandShowDeps.NAME:
+                if (commandShowDeps.help) {
+                    jCommander.usage(CommandShowDeps.NAME);
+                } else {
+                    commandShowDeps.run();
+                }
+                break;
+            case CommandListNoDeps.NAME:
+                if (commandShowDeps.help) {
+                    jCommander.usage(CommandShowDeps.NAME);
+                } else {
+                    commandListNoDeps.run();
+                }
+                break;
             default:
                 throw new IllegalArgumentException("Unknown sub-command: " +
                         jCommander.getParsedCommand());
         }
-    }
-
-    private static ZipEntry getEntryFromClassNameOrThrow(ZipFile zipFile, Path zipPath,
-            String className) throws IllegalArgumentException {
-        String entryName = className.replaceAll("\\.", "/") + ".class";
-        ZipEntry e = zipFile.getEntry(entryName);
-        if (e == null) {
-            String secondName = "classes/" + entryName;
-            e = zipFile.getEntry(secondName);
-            if (e == null) {
-                throw new IllegalArgumentException(String.format(Locale.US,
-                        "Neither %s nor %s is found in %s", entryName, secondName,
-                        zipPath.toString()));
-            }
-        }
-        return e;
-    }
-
-    private static Path getAndroidBuildTop() {
-        return pathFromEnvOrThrow("ANDROID_BUILD_TOP");
-    }
-
-    private static Path pathFromEnvOrThrow(String name) {
-        String envValue = getEnvOrThrow(name);
-        Path result = Paths.get(envValue);
-        if (!result.toFile().exists()) {
-            throw new IllegalStateException("Path not found: " + result);
-        }
-        return result;
-    }
-
-    private static String getEnvOrThrow(String name) {
-        String result = System.getenv(name);
-        if (result == null) {
-            throw new IllegalStateException("Environment variable undefined: " + name);
-        }
-        return result;
     }
 }
