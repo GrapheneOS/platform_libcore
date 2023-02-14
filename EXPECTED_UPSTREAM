@@ -1641,12 +1641,13 @@ ojluni/src/main/java/sun/security/provider/certpath/X509CertificatePair.java,jdk
 ojluni/src/main/java/sun/security/timestamp/TimestampToken.java,jdk8u/jdk8u60-b31,jdk/src/share/classes/sun/security/timestamp/TimestampToken.java
 ojluni/src/main/java/sun/security/util/AbstractAlgorithmConstraints.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/AbstractAlgorithmConstraints.java
 ojluni/src/main/java/sun/security/util/AlgorithmDecomposer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/AlgorithmDecomposer.java
-ojluni/src/main/java/sun/security/util/AnchorCertificates.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/AnchorCertificates.java
+ojluni/src/main/java/sun/security/util/AnchorCertificates.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/AnchorCertificates.java
 ojluni/src/main/java/sun/security/util/BitArray.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/BitArray.java
 ojluni/src/main/java/sun/security/util/ByteArrayLexOrder.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/ByteArrayLexOrder.java
 ojluni/src/main/java/sun/security/util/ByteArrayTagOrder.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/ByteArrayTagOrder.java
 ojluni/src/main/java/sun/security/util/Cache.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/Cache.java
 ojluni/src/main/java/sun/security/util/CertConstraintParameters.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/CertConstraintParameters.java
+ojluni/src/main/java/sun/security/util/ConstraintsParameters.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/ConstraintsParameters.java
 ojluni/src/main/java/sun/security/util/Debug.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/Debug.java
 ojluni/src/main/java/sun/security/util/DerEncoder.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/DerEncoder.java
 ojluni/src/main/java/sun/security/util/DerIndefLenConverter.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/DerIndefLenConverter.java
@@ -1655,6 +1656,7 @@ ojluni/src/main/java/sun/security/util/DerInputStream.java,jdk8u/jdk8u121-b13,jd
 ojluni/src/main/java/sun/security/util/DerOutputStream.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/DerOutputStream.java
 ojluni/src/main/java/sun/security/util/DerValue.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/DerValue.java
 ojluni/src/main/java/sun/security/util/DisabledAlgorithmConstraints.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/DisabledAlgorithmConstraints.java
+ojluni/src/main/java/sun/security/util/FilePaths.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/FilePaths.java
 ojluni/src/main/java/sun/security/util/KeyUtil.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/KeyUtil.java
 ojluni/src/main/java/sun/security/util/Length.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/security/util/Length.java
 ojluni/src/main/java/sun/security/util/ManifestDigester.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/util/ManifestDigester.java
