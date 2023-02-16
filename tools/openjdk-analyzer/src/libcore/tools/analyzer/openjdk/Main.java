@@ -41,6 +41,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -131,135 +134,139 @@ public class Main {
             System.out.println("Class:" + className);
             analyzer.print(System.out);
         }
+    }
 
-        private static class DiffAnalyzer {
-            List<MethodNode> newMethods = new ArrayList<>();
+    private static class DiffAnalyzer {
+        List<MethodNode> newMethods = new ArrayList<>();
 
-            List<MethodNode> removedMethods = new ArrayList<>();
+        List<MethodNode> removedMethods = new ArrayList<>();
 
-            List<MethodNode> newlyDeprecatedMethods = new ArrayList<>();
-            List<FieldNode> newFields = new ArrayList<>();
+        List<MethodNode> newlyDeprecatedMethods = new ArrayList<>();
+        List<FieldNode> newFields = new ArrayList<>();
 
-            List<FieldNode> removedFields = new ArrayList<>();
+        List<FieldNode> removedFields = new ArrayList<>();
 
-            List<FieldNode> newlyDeprecatedFields = new ArrayList<>();
+        List<FieldNode> newlyDeprecatedFields = new ArrayList<>();
 
-            private static DiffAnalyzer analyze(InputStream baseIn, InputStream newIn)
-                    throws IOException {
-                ClassNode baseClass = ClassFileUtil.parseClass(baseIn);
-                ClassNode newClass = ClassFileUtil.parseClass(newIn);
-                Map<String, MethodNode> baseMethods = getExposedMethods(baseClass)
-                        .collect(toMap(DiffAnalyzer::toApiSignature, node -> node));
-                Map<String, MethodNode> newMethods = getExposedMethods(newClass)
-                        .collect(toMap(DiffAnalyzer::toApiSignature, node -> node));
+        private static DiffAnalyzer analyze(InputStream baseIn, InputStream newIn)
+                throws IOException {
+            ClassNode baseClass = ClassFileUtil.parseClass(baseIn);
+            ClassNode newClass = ClassFileUtil.parseClass(newIn);
+            return analyze(baseClass, newClass);
+        }
 
-                DiffAnalyzer result = new DiffAnalyzer();
-                result.newMethods = getExposedMethods(newClass)
-                        .filter(node -> !baseMethods.containsKey(toApiSignature(node)))
-                        .collect(toList());
-                result.removedMethods = getExposedMethods(baseClass)
-                        .filter(node -> !newMethods.containsKey(toApiSignature(node)))
-                        .collect(toList());
-                result.newlyDeprecatedMethods = getExposedMethods(newClass)
-                        .filter(DiffAnalyzer::isDeprecated)
-                        .filter(node -> !baseMethods.containsKey(toApiSignature(node))
-                                || !isDeprecated(baseMethods.get(toApiSignature(node))) )
-                        .collect(toList());
+        private static DiffAnalyzer analyze(ClassNode baseClass, ClassNode newClass) {
+            Map<String, MethodNode> baseMethods = getExposedMethods(baseClass)
+                    .collect(toMap(DiffAnalyzer::toApiSignature, node -> node));
+            Map<String, MethodNode> newMethods = getExposedMethods(newClass)
+                    .collect(toMap(DiffAnalyzer::toApiSignature, node -> node));
+
+            DiffAnalyzer result = new DiffAnalyzer();
+            result.newMethods = getExposedMethods(newClass)
+                    .filter(node -> !baseMethods.containsKey(toApiSignature(node)))
+                    .collect(toList());
+            result.removedMethods = getExposedMethods(baseClass)
+                    .filter(node -> !newMethods.containsKey(toApiSignature(node)))
+                    .collect(toList());
+            result.newlyDeprecatedMethods = getExposedMethods(newClass)
+                    .filter(DiffAnalyzer::isDeprecated)
+                    .filter(node -> !baseMethods.containsKey(toApiSignature(node))
+                            || !isDeprecated(baseMethods.get(toApiSignature(node))) )
+                    .collect(toList());
 
 
-                Map<String, FieldNode> baseFields = getExposedFields(baseClass)
-                        .collect(toMap(node -> node.name, node -> node));
-                Map<String, FieldNode> newFields = getExposedFields(newClass)
-                        .collect(toMap(node -> node.name, node -> node));
+            Map<String, FieldNode> baseFields = getExposedFields(baseClass)
+                    .collect(toMap(node -> node.name, node -> node));
+            Map<String, FieldNode> newFields = getExposedFields(newClass)
+                    .collect(toMap(node -> node.name, node -> node));
 
-                result.newFields = getExposedFields(newClass)
-                        .filter(node -> !baseFields.containsKey(node.name))
-                        .collect(toList());
-                result.removedFields = getExposedFields(baseClass)
-                        .filter(node -> !newFields.containsKey(node.name))
-                        .collect(toList());
-                result.newlyDeprecatedFields = getExposedFields(newClass)
-                        .filter(DiffAnalyzer::isDeprecated)
-                        .filter(node -> !baseFields.containsKey(node.name)
-                                || !isDeprecated(baseFields.get(node.name)) )
-                        .collect(toList());
+            result.newFields = getExposedFields(newClass)
+                    .filter(node -> !baseFields.containsKey(node.name))
+                    .collect(toList());
+            result.removedFields = getExposedFields(baseClass)
+                    .filter(node -> !newFields.containsKey(node.name))
+                    .collect(toList());
+            result.newlyDeprecatedFields = getExposedFields(newClass)
+                    .filter(DiffAnalyzer::isDeprecated)
+                    .filter(node -> !baseFields.containsKey(node.name)
+                            || !isDeprecated(baseFields.get(node.name)) )
+                    .collect(toList());
 
-                return result;
+            return result;
+        }
+
+        /**
+         * Known issue: this signature doesn't differentiate static and virtual methods.
+         */
+        private static String toApiSignature(MethodNode node) {
+            return node.name + node.desc;
+        }
+
+        private static Stream<MethodNode> getExposedMethods(ClassNode classNode) {
+            if (!isExposed(classNode.access)) {
+                return Stream.empty();
             }
 
-            /**
-             * Known issue: this signature doesn't differentiate static and virtual methods.
-             */
-            private static String toApiSignature(MethodNode node) {
-                return node.name + node.desc;
+            return classNode.methods.stream()
+                    .filter(m -> isExposed(m.access));
+        }
+
+        private static Stream<FieldNode> getExposedFields(ClassNode classNode) {
+            if (!isExposed(classNode.access)) {
+                return Stream.empty();
             }
 
-            private static Stream<MethodNode> getExposedMethods(ClassNode classNode) {
-                if (!isExposed(classNode.access)) {
-                    return Stream.empty();
-                }
+            return classNode.fields.stream()
+                    .filter(m -> isExposed(m.access));
+        }
 
-                return classNode.methods.stream()
-                        .filter(m -> isExposed(m.access));
+        private static boolean isExposed(int flags) {
+            return (flags & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) != 0;
+        }
+
+        private static boolean isDeprecated(MethodNode node) {
+            return node.visibleAnnotations != null &&
+                    node.visibleAnnotations.stream()
+                            .anyMatch(anno ->"Ljava/lang/Deprecated;".equals(anno.desc));
+        }
+
+        private static boolean isDeprecated(FieldNode node) {
+            return node.visibleAnnotations != null &&
+                    node.visibleAnnotations.stream()
+                            .anyMatch(anno ->"Ljava/lang/Deprecated;".equals(anno.desc));
+        }
+
+        void print(OutputStream out) {
+            PrintWriter writer = new PrintWriter(out, /*autoFlush=*/true);
+
+            printMethods(writer, "New methods", newMethods);
+            printMethods(writer, "Removed methods", removedMethods);
+            printMethods(writer, "Newly deprecated methods", newlyDeprecatedMethods);
+
+            printFields(writer, "New fields", newFields);
+            printFields(writer, "Removed fields", removedFields);
+            printFields(writer, "Newly deprecated fields", newlyDeprecatedFields);
+        }
+
+        private static void printMethods(PrintWriter w, String header, List<MethodNode> nodes) {
+            if (nodes.isEmpty()) {
+                return;
             }
 
-            private static Stream<FieldNode> getExposedFields(ClassNode classNode) {
-                if (!isExposed(classNode.access)) {
-                    return Stream.empty();
-                }
+            w.println(" " + header + ":");
+            for (MethodNode node : nodes) {
+                w.println("  " + toApiSignature(node));
+            }
+        }
 
-                return classNode.fields.stream()
-                        .filter(m -> isExposed(m.access));
+        private static void printFields(PrintWriter w, String header, List<FieldNode> nodes) {
+            if (nodes.isEmpty()) {
+                return;
             }
 
-            private static boolean isExposed(int flags) {
-                return (flags & (Opcodes.ACC_PUBLIC | Opcodes.ACC_PROTECTED)) != 0;
-            }
-
-            private static boolean isDeprecated(MethodNode node) {
-                return node.visibleAnnotations != null &&
-                        node.visibleAnnotations.stream()
-                                .anyMatch(anno ->"Ljava/lang/Deprecated;".equals(anno.desc));
-            }
-
-            private static boolean isDeprecated(FieldNode node) {
-                return node.visibleAnnotations != null &&
-                        node.visibleAnnotations.stream()
-                                .anyMatch(anno ->"Ljava/lang/Deprecated;".equals(anno.desc));
-            }
-
-            void print(OutputStream out) {
-                PrintWriter writer = new PrintWriter(out, /*autoFlush=*/true);
-
-                printMethods(writer, "New methods", newMethods);
-                printMethods(writer, "Removed methods", removedMethods);
-                printMethods(writer, "Newly deprecated methods", newlyDeprecatedMethods);
-
-                printFields(writer, "New fields", newFields);
-                printFields(writer, "Removed fields", removedFields);
-                printFields(writer, "Newly deprecated fields", newlyDeprecatedFields);
-            }
-
-            private static void printMethods(PrintWriter w, String header, List<MethodNode> nodes) {
-                if (nodes.isEmpty()) {
-                    return;
-                }
-
-                w.println(" " + header + ":");
-                for (MethodNode node : nodes) {
-                    w.println("  " + toApiSignature(node));
-                }
-            }
-
-            private static void printFields(PrintWriter w, String header, List<FieldNode> nodes) {
-                if (nodes.isEmpty()) {
-                    return;
-                }
-
-                w.println(" " + header + ":");
-                for (FieldNode node : nodes) {
-                    w.println("  " + node.name + ": " + node.desc);
-                }
+            w.println(" " + header + ":");
+            for (FieldNode node : nodes) {
+                w.println("  " + node.name + ": " + node.desc);
             }
         }
     }
@@ -313,7 +320,7 @@ public class Main {
 
         private void run()  {
             Path cp = AndroidHostEnvUtil.parseInputClasspath(classpath);
-            Path ecp = excludeClasspath == null ? null
+            Path ecp = excludeClasspath == null || excludeClasspath.isEmpty() ? null
                     : AndroidHostEnvUtil.parseInputClasspath(excludeClasspath);
             DependencyAnalyzer analyzer = new DependencyAnalyzer(cp, ecp,
                     includeInternal, usesExpectedUpstreamAsBaseDeps);
@@ -492,6 +499,132 @@ public class Main {
             }
         }
     }
+    @Parameters(commandNames = CommandListNewApis.NAME,
+            commandDescription = "List the new classes / methods / fields in java.base version.")
+    private static class CommandListNewApis {
+
+        public static final String NAME = "list-new-apis";
+
+        @Parameter(names = {"-t", "--target"},
+                description = "one of the following OpenJDK version: 8, 9, 11, 17")
+        public String classpath = "17";
+
+        @Parameter(names = {"-d"},
+                description = "Disable the API filters read from " + UnsupportedNewApis.FILE_NAME)
+        public boolean disableFilter = false;
+
+        @Parameter(names = "-h", help = true, description = "Shows this help message")
+        public boolean help = false;
+
+        private void run() throws UncheckedIOException {
+            if (!List.of("8", "9", "11", "17").contains(classpath)) {
+                throw new IllegalArgumentException("Only 8, 9, 11, 17 java version is supported. "
+                        + "This java version isn't supported: " + classpath);
+            }
+
+            Path newClassPath = AndroidHostEnvUtil.parseInputClasspath(classpath);
+            Path baseClasspath = AndroidHostEnvUtil.parseInputClasspath("oj");
+
+            SignaturesCollector collector = new SignaturesCollector();
+            // Set up filter if it's enabled.
+            Predicate<String> classNamePredicate;
+            if (disableFilter) {
+                classNamePredicate = (s) -> true;
+            } else {
+                UnsupportedNewApis unsupportedApis = UnsupportedNewApis.getInstance();
+                classNamePredicate = Predicate.not(unsupportedApis::contains);
+                collector.setFieldFilter(Predicate.not(unsupportedApis::contains));
+                collector.setMethodFilter(Predicate.not(unsupportedApis::contains));
+            }
+
+            try (ZipFile baseZip = new ZipFile(baseClasspath.toFile());
+                 ZipFile newZip = new ZipFile(newClassPath.toFile())) {
+
+                Predicate<String> nameTest = Pattern.compile(
+                        "^(classes/)?java(x)?/.*\\.class$").asMatchPredicate();
+                var zipEntries = newZip.entries();
+                while (zipEntries.hasMoreElements()) {
+                    ZipEntry zipEntry = zipEntries.nextElement();
+                    if (!nameTest.test(zipEntry.getName())) {
+                        continue;
+                    }
+
+                    ClassNode newNode = readClassNode(newZip, zipEntry);
+                    if (!isClassExposed(newZip, newNode, classNamePredicate)) {
+                        continue;
+                    }
+
+                    ZipEntry baseEntry = ClassFileUtil.getEntryFromClassName(baseZip,
+                            newNode.name, true);
+                    String internalClassName = newNode.name;
+                    // Add the class name if the entire class is missing.
+                    if (baseEntry == null) {
+                        collector.addClass(internalClassName);
+                        continue;
+                    }
+
+                    ClassNode baseNode = readClassNode(baseZip, baseEntry);
+                    DiffAnalyzer analyzer = DiffAnalyzer.analyze(baseNode, newNode);
+                    for (FieldNode fieldNode : analyzer.newFields) {
+                        collector.add(internalClassName, fieldNode);
+                    }
+                    for (MethodNode methodNode : analyzer.newMethods) {
+                        collector.add(internalClassName, methodNode);
+                    }
+                }
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
+
+            PrintWriter writer = new PrintWriter(System.out, true);
+            SignaturesCollection collection = collector.getCollection();
+            collection.getClassStream()
+                    .forEach(writer::println);
+            Stream.concat(
+                collection.getMethodStream().map(SignaturesCollector.Method::toString),
+                collection.getFieldStream().map(
+                        f -> f.getOwner() + "#" + f.getName() + ":" + f.getDesc())
+            ).sorted().forEach(writer::println);
+        }
+
+        private static ClassNode readClassNode(ZipFile zipFile, ZipEntry entry) throws IOException {
+            try (InputStream in = zipFile.getInputStream(entry)) {
+                return ClassFileUtil.parseClass(in);
+            }
+        }
+
+        /**
+         * Return true if the class is public / protected. However, if it's inner class, it returns
+         * true only if the outer classes are all public / protected as well.
+         */
+        private static boolean isClassExposed(ZipFile zipFile, ClassNode node,
+                Predicate<String> classNamePredicate) throws IOException {
+            if (!DiffAnalyzer.isExposed(node.access) || !classNamePredicate.test(node.name)) {
+                return false;
+            }
+
+            Optional<String> outerClass = node.innerClasses.stream()
+                    .filter(inner -> node.name.equals(inner.name) && inner.outerName != null)
+                    .map(innerClassNode -> innerClassNode.outerName)
+                    .findFirst();
+
+            if (!outerClass.isPresent()) {
+                return true;
+            }
+
+            ZipEntry zipEntry = ClassFileUtil.getEntryFromClassName(zipFile, outerClass.get(),
+                    true);
+            if (zipEntry == null) {
+                return true;
+            }
+
+            // TODO: Lookup in a cache before parsing the .class file.
+            try (InputStream in = zipFile.getInputStream(zipEntry)) {
+                ClassNode outerNode = ClassFileUtil.parseClass(in);
+                return isClassExposed(zipFile, outerNode, classNamePredicate);
+            }
+        }
+    }
 
     public static void main(String[] argv) {
         MainArgs mainArgs = new MainArgs();
@@ -499,12 +632,14 @@ public class Main {
         CommandApiDiff commandApiDiff = new CommandApiDiff();
         CommandShowDeps commandShowDeps = new CommandShowDeps();
         CommandListNoDeps commandListNoDeps = new CommandListNoDeps();
+        CommandListNewApis commandListNewApis = new CommandListNewApis();
         JCommander jCommander = JCommander.newBuilder()
                 .addObject(mainArgs)
                 .addCommand(commandDump)
                 .addCommand(commandApiDiff)
                 .addCommand(commandShowDeps)
                 .addCommand(commandListNoDeps)
+                .addCommand(commandListNewApis)
                 .build();
         jCommander.parse(argv);
 
@@ -540,6 +675,13 @@ public class Main {
                     jCommander.usage(CommandShowDeps.NAME);
                 } else {
                     commandListNoDeps.run();
+                }
+                break;
+            case CommandListNewApis.NAME:
+                if (commandListNewApis.help) {
+                    jCommander.usage(CommandListNewApis.NAME);
+                } else {
+                    commandListNewApis.run();
                 }
                 break;
             default:

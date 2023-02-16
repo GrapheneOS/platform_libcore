@@ -20,6 +20,7 @@ import org.objectweb.asm.Handle;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
+import org.objectweb.asm.tree.FieldNode;
 import org.objectweb.asm.tree.InvokeDynamicInsnNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
@@ -67,10 +68,20 @@ public class SignaturesCollector {
         }
         return this;
     }
+    public SignaturesCollector add(String internalClassName, MethodNode methodNode) {
+        Method method = new Method(internalClassName, methodNode);
+        return add(method);
+    }
 
     public SignaturesCollector add(FieldInsnNode node) {
         return add(new Field(node));
     }
+
+    public SignaturesCollector add(String internalClassName, FieldNode fieldNode) {
+        Field field = new Field(internalClassName, fieldNode);
+        return add(field);
+    }
+
 
     private SignaturesCollector add(Field field) {
         if (mFieldPredicate.test(field)) {
@@ -264,6 +275,10 @@ public class SignaturesCollector {
 
         private Field(FieldInsnNode node) {
             this(node.owner, node.name, node.desc);
+        }
+
+        private Field(String internalClassName, FieldNode fieldNode) {
+            this(internalClassName, fieldNode.name, fieldNode.desc);
         }
 
         @Override

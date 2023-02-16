@@ -1,0 +1,52 @@
+# Copyright (C) 2023 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# See UnsupportedNewApis.contains() for the API signature format
+
+# Android doesn't support java.lang.Module system.
+java/lang/LayerInstantiationException
+java/lang/Module
+java/lang/ModuleLayer
+java/lang/module/Configuration
+java/lang/module/FindException
+java/lang/module/InvalidModuleDescriptorException
+java/lang/module/ModuleDescriptor
+java/lang/module/ModuleFinder
+java/lang/module/ModuleReader
+java/lang/module/ModuleReference
+java/lang/module/ResolutionException
+java/lang/module/ResolvedModule
+java/lang/Class#forName(Ljava/lang/Module;Ljava/lang/String;)Ljava/lang/Class;
+java/lang/Class#getModule()Ljava/lang/Module;
+java/lang/ClassLoader#getUnnamedModule()Ljava/lang/Module;
+java/lang/StackTraceElement#getModuleName()Ljava/lang/String;
+java/lang/StackTraceElement#getModuleVersion()Ljava/lang/String;
+java/util/ResourceBundle#getBundle(Ljava/lang/String;Ljava/lang/Module;)Ljava/util/ResourceBundle;
+java/util/ResourceBundle#getBundle(Ljava/lang/String;Ljava/util/Locale;Ljava/lang/Module;)Ljava/util/ResourceBundle;
+java/util/ServiceLoader#load(Ljava/lang/ModuleLayer;Ljava/lang/Class;)Ljava/util/ServiceLoader;
+
+# Android doesn't support the following i18n SPI because the i18n stack is closely
+# integrated with ICU.
+java/text/spi/BreakIteratorProvider
+java/text/spi/CollatorProvider
+java/text/spi/DateFormatProvider
+java/text/spi/DateFormatSymbolsProvider
+java/text/spi/DecimalFormatSymbolsProvider
+java/text/spi/NumberFormatProvider
+java/util/spi/CalendarDataProvider
+java/util/spi/CalendarNameProvider
+java/util/spi/CurrencyNameProvider
+java/util/spi/LocaleNameProvider
+java/util/spi/LocaleServiceProvider
+java/util/spi/TimeZoneNameProvider

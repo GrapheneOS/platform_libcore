@@ -24,6 +24,7 @@ package {
 java_binary_host {
     name: "libcore-openjdk-analyzer",
     srcs: ["src/**/*.java"],
+    java_resources: [":libcore-openjdk-analyzer-resources"],
     manifest: "src/manifest.txt",
     static_libs: [
         "jcommander",
@@ -31,4 +32,12 @@ java_binary_host {
         "ow2-asm-tree",
         "ow2-asm-util",
     ],
+}
+
+filegroup {
+    name: "libcore-openjdk-analyzer-resources",
+    // Set path to keep the resources and .class files in the same directory in the jar file.
+    path: "src",
+    srcs: ["src/libcore/**/*"],
+    exclude_srcs: ["src/libcore/**/*.java"],
 }
