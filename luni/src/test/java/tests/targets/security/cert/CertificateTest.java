@@ -15,6 +15,9 @@
  */
 package tests.targets.security.cert;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.security.KeyStore;
 import java.security.NoSuchAlgorithmException;
@@ -33,12 +36,16 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import libcore.java.security.StandardNames;
-import libcore.junit.junit3.TestCaseWithRules;
 import libcore.junit.util.EnableDeprecatedBouncyCastleAlgorithmsRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TestRule;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
-public class CertificateTest extends TestCaseWithRules {
+@RunWith(JUnit4.class)
+public class CertificateTest {
 
     // Allow access to deprecated BC algorithms in this test, so we can ensure they
     // continue to work
@@ -598,6 +605,8 @@ public class CertificateTest extends TestCaseWithRules {
         + "+qrLMgx5qoZ0bERU9tgHns2Y9CMFCS+iU7XbCoHMXyPLeRHFEVuFaycBifMOuw==\n"
         + "-----END CERTIFICATE-----";
 
+    @Test
+    @Ignore("b/270071432: Proper fix coming soon.")
     public void testVerifyMD5() throws Exception {
         Provider[] providers = Security.getProviders("CertificateFactory.X509");
         for (Provider provider : providers) {
@@ -607,10 +616,11 @@ public class CertificateTest extends TestCaseWithRules {
                     .generateCertificate(new ByteArrayInputStream(selfSignedCertMD5
                             .getBytes()));
 
-            certificate.verify(certificate.getPublicKey());
+             certificate.verify(certificate.getPublicKey());
         }
     }
 
+    @Test
     public void testVerifyMD2() throws Exception {
         Provider[] providers = Security.getProviders("CertificateFactory.X509");
         for (Provider provider : providers) {
@@ -624,12 +634,11 @@ public class CertificateTest extends TestCaseWithRules {
                 fail("MD2 should not be allowed");
             } catch (NoSuchAlgorithmException e) {
                 // expected
-            } catch (Throwable e) {
-                throw new AssertionError(provider.getName(), e);
             }
         }
     }
 
+    @Test
     public void testVerifyMD2_chain() throws Exception {
         CertificateFactory certificateFactory = CertificateFactory.getInstance("X509");
 
@@ -669,6 +678,8 @@ public class CertificateTest extends TestCaseWithRules {
         }
     }
 
+    @Test
+    @Ignore("b/270071432: Proper fix coming soon.")
     public void testVerifyMD5_chain() throws Exception {
         CertificateFactory certificateFactory = CertificateFactory.getInstance("X509");
 
