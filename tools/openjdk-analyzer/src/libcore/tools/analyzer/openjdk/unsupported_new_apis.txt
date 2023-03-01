@@ -121,6 +121,7 @@ java/security/UnresolvedPermission#equals(Ljava/lang/Object;)Z
 java/security/UnresolvedPermission#hashCode()I
 java/security/UnresolvedPermission#newPermissionCollection()Ljava/security/PermissionCollection;
 java/security/UnresolvedPermission#toString()Ljava/lang/String;
+java/security/URIParameter
 java/util/PropertyPermission#equals(Ljava/lang/Object;)Z
 java/util/PropertyPermission#getActions()Ljava/lang/String;
 java/util/PropertyPermission#hashCode()I

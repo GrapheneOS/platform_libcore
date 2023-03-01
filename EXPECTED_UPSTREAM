@@ -524,6 +524,7 @@ ojluni/src/main/java/java/security/DigestInputStream.java,jdk11u/jdk-11.0.13-ga,
 ojluni/src/main/java/java/security/DigestOutputStream.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/DigestOutputStream.java
 ojluni/src/main/java/java/security/DomainCombiner.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/DomainCombiner.java
 ojluni/src/main/java/java/security/DomainLoadStoreParameter.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/DomainLoadStoreParameter.java
+ojluni/src/main/java/java/security/DrbgParameters.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/DrbgParameters.java
 ojluni/src/main/java/java/security/GeneralSecurityException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/GeneralSecurityException.java
 ojluni/src/main/java/java/security/Guard.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/Guard.java
 ojluni/src/main/java/java/security/GuardedObject.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/GuardedObject.java
@@ -565,6 +566,7 @@ ojluni/src/main/java/java/security/ProviderException.java,jdk11u/jdk-11.0.13-ga,
 ojluni/src/main/java/java/security/PublicKey.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/PublicKey.java
 ojluni/src/main/java/java/security/SecureClassLoader.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/SecureClassLoader.java
 ojluni/src/main/java/java/security/SecureRandom.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/SecureRandom.java
+ojluni/src/main/java/java/security/SecureRandomParameters.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/SecureRandomParameters.java
 ojluni/src/main/java/java/security/SecureRandomSpi.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/SecureRandomSpi.java
 ojluni/src/main/java/java/security/Security.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/Security.java
 ojluni/src/main/java/java/security/SecurityPermission.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/SecurityPermission.java
@@ -660,6 +662,7 @@ ojluni/src/main/java/java/security/interfaces/XECPublicKey.java,jdk17u/jdk-17.0.
 ojluni/src/main/java/java/security/interfaces/package-info.java,jdk17u/jdk-17.0.5-ga,src/java.base/share/classes/java/security/interfaces/package-info.java
 ojluni/src/main/java/java/security/package-info.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/package-info.java
 ojluni/src/main/java/java/security/spec/AlgorithmParameterSpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/AlgorithmParameterSpec.java
+ojluni/src/main/java/java/security/spec/DSAGenParameterSpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/DSAGenParameterSpec.java
 ojluni/src/main/java/java/security/spec/DSAParameterSpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/DSAParameterSpec.java
 ojluni/src/main/java/java/security/spec/DSAPrivateKeySpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/DSAPrivateKeySpec.java
 ojluni/src/main/java/java/security/spec/DSAPublicKeySpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/DSAPublicKeySpec.java
@@ -671,6 +674,7 @@ ojluni/src/main/java/java/security/spec/ECParameterSpec.java,jdk11u/jdk-11.0.13-
 ojluni/src/main/java/java/security/spec/ECPoint.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/spec/ECPoint.java
 ojluni/src/main/java/java/security/spec/ECPrivateKeySpec.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/spec/ECPrivateKeySpec.java
 ojluni/src/main/java/java/security/spec/ECPublicKeySpec.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/spec/ECPublicKeySpec.java
+ojluni/src/main/java/java/security/spec/EdDSAParameterSpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/EdDSAParameterSpec.java
 ojluni/src/main/java/java/security/spec/EdECPoint.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/EdECPoint.java
 ojluni/src/main/java/java/security/spec/EdECPrivateKeySpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/EdECPrivateKeySpec.java
 ojluni/src/main/java/java/security/spec/EdECPublicKeySpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/spec/EdECPublicKeySpec.java
@@ -1259,6 +1263,7 @@ ojluni/src/main/java/javax/crypto/interfaces/DHKey.java,jdk17u/jdk-17.0.6-ga,src
 ojluni/src/main/java/javax/crypto/interfaces/DHPrivateKey.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/javax/crypto/interfaces/DHPrivateKey.java
 ojluni/src/main/java/javax/crypto/interfaces/DHPublicKey.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/javax/crypto/interfaces/DHPublicKey.java
 ojluni/src/main/java/javax/crypto/interfaces/PBEKey.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/javax/crypto/interfaces/PBEKey.java
+ojluni/src/main/java/javax/crypto/spec/ChaCha20ParameterSpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/javax/crypto/spec/ChaCha20ParameterSpec.java
 ojluni/src/main/java/javax/crypto/spec/DESKeySpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/javax/crypto/spec/DESKeySpec.java
 ojluni/src/main/java/javax/crypto/spec/DESedeKeySpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/javax/crypto/spec/DESedeKeySpec.java
 ojluni/src/main/java/javax/crypto/spec/DHGenParameterSpec.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/javax/crypto/spec/DHGenParameterSpec.java
@@ -1332,6 +1337,7 @@ ojluni/src/main/java/javax/security/auth/login/LoginException.java,jdk8u/jdk8u12
 ojluni/src/main/java/javax/security/auth/login/package-info.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/javax/security/auth/login/package-info.java
 ojluni/src/main/java/javax/security/auth/package-info.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/javax/security/auth/package-info.java
 ojluni/src/main/java/javax/security/auth/x500/X500Principal.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/javax/security/auth/x500/X500Principal.java
+ojluni/src/main/java/javax/security/auth/x500/X500PrivateCredential.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/javax/security/auth/x500/X500PrivateCredential.java
 ojluni/src/main/java/javax/security/auth/x500/package-info.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/javax/security/auth/x500/package-info.java
 ojluni/src/main/java/javax/security/cert/Certificate.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/javax/security/cert/Certificate.java
 ojluni/src/main/java/javax/security/cert/CertificateEncodingException.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/javax/security/cert/CertificateEncodingException.java
