@@ -2200,6 +2200,7 @@ ojluni/src/test/java/util/Base64/plain.txt,jdk17u/jdk-17.0.6-ga,test/jdk/java/ut
 ojluni/src/test/java/util/Base64/urlEncode.txt,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/Base64/urlEncode.txt
 ojluni/src/test/java/util/Collections/NCopies.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/Collections/NCopies.java
 ojluni/src/test/java/util/HashSet/Serialization.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/HashSet/Serialization.java
+ojluni/src/test/java/util/HexFormat/HexFormatTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/HexFormat/HexFormatTest.java
 ojluni/src/test/java/util/IdentityHashMap/Capacity.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/IdentityHashMap/Capacity.java
 ojluni/src/test/java/util/IdentityHashMap/DistinctEntrySetElements.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/IdentityHashMap/DistinctEntrySetElements.java
 ojluni/src/test/java/util/IdentityHashMap/EntrySetIteratorRemoveInvalidatesEntry.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/IdentityHashMap/EntrySetIteratorRemoveInvalidatesEntry.java
