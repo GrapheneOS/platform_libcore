@@ -181,4 +181,10 @@ public @libcore.util.NonNull Class<?> @libcore.util.NonNull [] getNestMembers();
 public @libcore.util.Nullable Class<?> @libcore.util.NonNull [] getPermittedSubclasses();
 
 public boolean isSealed() { throw new RuntimeException("Stub!"); }
+
+public @libcore.util.Nullable Class<?> componentType();
+
+public @libcore.util.NonNull Class<?> arrayType();
+
+public @libcore.util.NonNull String descriptorString();
 }

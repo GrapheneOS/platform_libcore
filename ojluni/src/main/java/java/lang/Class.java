@@ -36,6 +36,7 @@ import java.lang.ref.SoftReference;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectStreamField;
+import java.lang.invoke.TypeDescriptor;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
@@ -75,6 +76,8 @@ import libcore.util.CollectionUtils;
 import libcore.util.EmptyArray;
 
 import sun.security.util.SecurityConstants;
+import dalvik.system.ClassExt;
+import sun.invoke.util.Wrapper;
 import sun.reflect.CallerSensitive;
 import sun.reflect.Reflection;
 import sun.reflect.misc.ReflectUtil;
@@ -167,7 +170,8 @@ import sun.reflect.misc.ReflectUtil;
 public final class Class<T> implements java.io.Serializable,
                               GenericDeclaration,
                               Type,
-                              AnnotatedElement {
+                              AnnotatedElement,
+                              TypeDescriptor.OfField<Class<?>> {
     private static final int ANNOTATION= 0x00002000;
     private static final int ENUM      = 0x00004000;
     private static final int SYNTHETIC = 0x00001000;
@@ -1410,6 +1414,121 @@ public final class Class<T> implements java.io.Serializable,
         }
         */
       return componentType;
+    }
+    /**
+     * Returns the component type of this {@code Class}, if it describes
+     * an array type, or {@code null} otherwise.
+     *
+     * @implSpec
+     * Equivalent to {@link Class#getComponentType()}.
+     *
+     * @return a {@code Class} describing the component type, or {@code null}
+     * if this {@code Class} does not describe an array type
+     * @since 12
+     * @hide
+     */
+    @Override
+    public Class<?> componentType() {
+        return isArray() ? componentType : null;
+    }
+
+    /**
+     * Returns a {@code Class} for an array type whose component type
+     * is described by this {@linkplain Class}.
+     *
+     * @return a {@code Class} describing the array type
+     * @since 12
+     * @hide
+     */
+    @Override
+    public Class<?> arrayType() {
+        return Array.newInstance(this, 0).getClass();
+    }
+
+    /**
+     * Returns the descriptor string of the entity (class, interface, array class,
+     * primitive type, or {@code void}) represented by this {@code Class} object.
+     *
+     * <p> If this {@code Class} object represents a class or interface,
+     * not an array class, then:
+     * <ul>
+     * <li> If the class or interface is not {@linkplain Class#isHidden() hidden},
+     *      then the result is a field descriptor (JVMS {@jvms 4.3.2})
+     *      for the class or interface. Calling
+     *      {@link ClassDesc#ofDescriptor(String) ClassDesc::ofDescriptor}
+     *      with the result descriptor string produces a {@link ClassDesc ClassDesc}
+     *      describing this class or interface.
+     * <li> If the class or interface is {@linkplain Class#isHidden() hidden},
+     *      then the result is a string of the form:
+     *      <blockquote>
+     *      {@code "L" +} <em>N</em> {@code + "." + <suffix> + ";"}
+     *      </blockquote>
+     *      where <em>N</em> is the <a href="ClassLoader.html#binary-name">binary name</a>
+     *      encoded in internal form indicated by the {@code class} file passed to
+     *      {@link MethodHandles.Lookup#defineHiddenClass(byte[], boolean, MethodHandles.Lookup.ClassOption...)
+     *      Lookup::defineHiddenClass}, and {@code <suffix>} is an unqualified name.
+     *      A hidden class or interface has no {@linkplain ClassDesc nominal descriptor}.
+     *      The result string is not a type descriptor.
+     * </ul>
+     *
+     * <p> If this {@code Class} object represents an array class, then
+     * the result is a string consisting of one or more '{@code [}' characters
+     * representing the depth of the array nesting, followed by the
+     * descriptor string of the element type.
+     * <ul>
+     * <li> If the element type is not a {@linkplain Class#isHidden() hidden} class
+     * or interface, then this array class can be described nominally.
+     * Calling {@link ClassDesc#ofDescriptor(String) ClassDesc::ofDescriptor}
+     * with the result descriptor string produces a {@link ClassDesc ClassDesc}
+     * describing this array class.
+     * <li> If the element type is a {@linkplain Class#isHidden() hidden} class or
+     * interface, then this array class cannot be described nominally.
+     * The result string is not a type descriptor.
+     * </ul>
+     *
+     * <p> If this {@code Class} object represents a primitive type or
+     * {@code void}, then the result is a field descriptor string which
+     * is a one-letter code corresponding to a primitive type or {@code void}
+     * ({@code "B", "C", "D", "F", "I", "J", "S", "Z", "V"}) (JVMS {@jvms 4.3.2}).
+     *
+     * @apiNote
+     * This is not a strict inverse of {@link #forName};
+     * distinct classes which share a common name but have different class loaders
+     * will have identical descriptor strings.
+     *
+     * @return the descriptor string for this {@code Class} object
+     * @jvms 4.3.2 Field Descriptors
+     * @since 12
+     * @hide
+     */
+    @Override
+    public String descriptorString() {
+        if (isPrimitive())
+            return Wrapper.forPrimitiveType(this).basicTypeString();
+
+        if (isArray()) {
+            return "[" + componentType.descriptorString();
+        // Android-changed: Remove check for isHidden()
+        /*
+        } else if (isHidden()) {
+            String name = getName();
+            int index = name.indexOf('/');
+            return new StringBuilder(name.length() + 2)
+                    .append('L')
+                    .append(name.substring(0, index).replace('.', '/'))
+                    .append('.')
+                    .append(name, index + 1, name.length())
+                    .append(';')
+                    .toString();
+        */
+        } else {
+            String name = getName().replace('.', '/');
+            return new StringBuilder(name.length() + 2)
+                    .append('L')
+                    .append(name)
+                    .append(';')
+                    .toString();
+        }
     }
 
     /**

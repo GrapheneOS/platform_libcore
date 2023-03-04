@@ -1989,6 +1989,7 @@ ojluni/src/test/java/net/InetSocketAddress/CreateUnresolved.java,jdk17u/jdk-17.0
 ojluni/src/test/java/net/InetSocketAddress/ToString.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/net/InetSocketAddress/ToString.java
 ojluni/src/test/java/net/UnixDomainSocketAddress/LengthTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/net/UnixDomainSocketAddress/LengthTest.java
 ojluni/src/test/java/net/UnixDomainSocketAddress/UnixDomainSocketAddressSerializationTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/net/UnixDomainSocketAddress/UnixDomainSocketAddressSerializationTest.java
+ojluni/src/test/java/nio/Buffer/EqualsCompareTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/nio/Buffer/EqualsCompareTest.java
 ojluni/src/test/java/nio/channels/SelectionKey/AtomicUpdates.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/nio/channels/SelectionKey/AtomicUpdates.java
 ojluni/src/test/java/nio/channels/Selector/ByteServer.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/channels/Selector/ByteServer.java
 ojluni/src/test/java/nio/channels/Selector/SelectAfterRead.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/channels/Selector/SelectAfterRead.java

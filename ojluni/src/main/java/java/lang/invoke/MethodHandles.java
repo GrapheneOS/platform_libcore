@@ -735,6 +735,7 @@ public class MethodHandles {
                     lookupClass.getClassLoader() == Object.class.getClassLoader()) {
                 if ((name.startsWith("java.")
                             && !name.startsWith("java.util.concurrent.")
+                            && !name.equals("java.lang.runtime.ObjectMethods")
                             && !name.equals("java.lang.Thread")) ||
                         (name.startsWith("sun.")
                                 && !name.startsWith("sun.invoke.")
