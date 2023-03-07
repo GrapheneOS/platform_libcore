@@ -31,6 +31,7 @@ import java.util.Objects;
 import java.util.concurrent.ThreadFactory;
 import java.util.function.Function;
 
+// Android-changed: Use the shared SystemCleaner instance on Android.
 /**
  * {@code Cleaner} manages a set of object references and corresponding cleaning actions.
  * <p>
@@ -86,8 +87,8 @@ import java.util.function.Function;
  * by the Cleaner when the CleaningExample instance has become phantom reachable.
  * <pre>{@code
  * public class CleaningExample implements AutoCloseable {
- *        // A cleaner, preferably one shared within a library
- *        private static final Cleaner cleaner = <cleaner>;
+ *        // Use the shared android.system.SystemCleaner instance on Android.
+ *        private static final Cleaner cleaner = SystemCleaner.cleaner();
  *
  *        static class State implements Runnable {
  *

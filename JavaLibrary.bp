@@ -475,6 +475,7 @@ java_library {
         "//art/build/sdk",
         "//build/soong/java/core-libraries",
         "//frameworks/base",
+        "//frameworks/base/api",
     ],
     defaults: ["core_lambda_stubs_defaults"],
     srcs: [
@@ -494,6 +495,7 @@ java_library {
         "//art/build/sdk",
         "//build/soong/java/core-libraries",
         "//frameworks/base",
+        "//frameworks/base/api",
     ],
     defaults: ["libcore_java_defaults"],
     srcs: [
@@ -854,6 +856,7 @@ filegroup {
     name: "known-oj-tags",
     visibility: [
         "//frameworks/base",
+        "//frameworks/base/api",
     ],
     srcs: [
         "known_oj_tags.txt",
@@ -1070,6 +1073,7 @@ java_library {
         "//art/build/sdk",
         "//external/icu/android_icu4j",
         "//frameworks/base",
+        "//frameworks/base/api",
     ],
     host_supported: true,
     srcs: [

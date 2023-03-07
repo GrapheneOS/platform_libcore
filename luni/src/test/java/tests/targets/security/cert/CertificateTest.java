@@ -27,6 +27,7 @@ import java.security.Security;
 import java.security.SignatureException;
 import java.security.cert.CertPath;
 import java.security.cert.CertPathValidator;
+import java.security.cert.CertPathValidatorException;
 import java.security.cert.CertPathValidatorResult;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -190,6 +191,26 @@ public class CertificateTest {
         backdate(params, 2016);
 
         validate(path, certPathValidator, params);
+    }
+
+    @Test
+    public void verifyMd5ChainExceptionWhenUnsupported() throws Exception {
+        Assume.assumeFalse(md5SignatureSupported);
+
+        CertPath path = certificateFactory.generateCertPath(
+            List.of(md5ChainLeaf, md5ChainIntermediate, md5ChainRoot));
+
+        CertPathValidator certPathValidator = CertPathValidator.getInstance("PKIX");
+        PKIXParameters params = createPkixParams(md5ChainRoot);
+        backdate(params, 2016);
+
+        Exception exception = assertThrows(CertPathValidatorException.class,
+            () -> validate(path, certPathValidator, params));
+        // Correct cause should be NoSuchAlgorithmException but older Conscrypt modules
+        // may throw CertificateException.
+        assertTrue(exception.getCause().getClass() == CertificateException.class ||
+            exception.getCause().getClass() == NoSuchAlgorithmException.class);
+
     }
 
     @Test
