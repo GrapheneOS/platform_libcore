@@ -334,7 +334,7 @@ public class InetSocketAddress
         InetSocketAddressHolder h = new InetSocketAddressHolder(oisHostname,
                                                                 oisAddr,
                                                                 oisPort);
-        UNSAFE.putObject(this, FIELDS_OFFSET, h);
+        UNSAFE.putReference(this, FIELDS_OFFSET, h);
     }
 
     /**

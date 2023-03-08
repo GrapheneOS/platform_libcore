@@ -307,20 +307,9 @@ public class HashMap<K,V> extends AbstractMap<K,V>
             if (o == this)
                 return true;
 
-            // BEGIN Android-changed: Patternmatching for instanceof is not available yet.
-            /*
             return o instanceof Map.Entry<?, ?> e
                     && Objects.equals(key, e.getKey())
                     && Objects.equals(value, e.getValue());
-            */
-            if (o instanceof Map.Entry) {
-                Map.Entry<?,?> e = (Map.Entry<?,?>)o;
-                if (Objects.equals(key, e.getKey()) &&
-                    Objects.equals(value, e.getValue()))
-                    return true;
-            }
-            return false;
-            // END Android-changed: Patternmatching for instanceof is not available yet.
         }
     }
 
@@ -1109,26 +1098,14 @@ public class HashMap<K,V> extends AbstractMap<K,V>
             return new EntryIterator();
         }
         public final boolean contains(Object o) {
-            // BEGIN Android-changed: Patternmatching for instanceof is not available yet.
-            /*
             if (!(o instanceof Map.Entry<?, ?> e))
-            */
-            if (!(o instanceof Map.Entry))
-            // END Android-changed: Patternmatching for instanceof is not available yet.
                 return false;
-            Map.Entry<?,?> e = (Map.Entry<?,?>) o;
             Object key = e.getKey();
             Node<K,V> candidate = getNode(key);
             return candidate != null && candidate.equals(e);
         }
         public final boolean remove(Object o) {
-            // BEGIN Android-changed: Patternmatching for instanceof is not available yet.
-            /*
             if (o instanceof Map.Entry<?, ?> e) {
-            */
-            if (o instanceof Map.Entry) {
-                Map.Entry<?,?> e = (Map.Entry<?,?>) o;
-            // END Android-changed: Patternmatching for instanceof is not available yet.
                 Object key = e.getKey();
                 Object value = e.getValue();
                 return removeNode(hash(key), key, value, true, true) != null;

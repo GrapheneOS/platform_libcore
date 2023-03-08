@@ -2687,9 +2687,8 @@ public final class Scanner implements Iterator<String>, Closeable {
      */
     public BigInteger nextBigInteger(int radix) {
         // Check cached result
-        if ((typeCache != null) && (typeCache instanceof BigInteger)
+        if ((typeCache != null) && (typeCache instanceof BigInteger val)
             && this.radix == radix) {
-            var val = (BigInteger) typeCache;
             useTypeCache();
             return val;
         }
@@ -2753,8 +2752,7 @@ public final class Scanner implements Iterator<String>, Closeable {
      */
     public BigDecimal nextBigDecimal() {
         // Check cached result
-        if ((typeCache != null) && (typeCache instanceof BigDecimal)) {
-            var val = (BigDecimal)typeCache;
+        if ((typeCache != null) && (typeCache instanceof BigDecimal val)) {
             useTypeCache();
             return val;
         }
