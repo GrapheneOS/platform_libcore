@@ -864,7 +864,7 @@ ojluni/src/main/java/java/time/zone/ZoneRules.java,jdk17u/jdk-17.0.6-ga,src/java
 ojluni/src/main/java/java/time/zone/ZoneRulesException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/time/zone/ZoneRulesException.java
 ojluni/src/main/java/java/time/zone/ZoneRulesProvider.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/time/zone/ZoneRulesProvider.java
 ojluni/src/main/java/java/time/zone/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/time/zone/package-info.java
-ojluni/src/main/java/java/util/AbstractCollection.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractCollection.java
+ojluni/src/main/java/java/util/AbstractCollection.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractCollection.java
 ojluni/src/main/java/java/util/AbstractList.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractList.java
 ojluni/src/main/java/java/util/AbstractMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractMap.java
 ojluni/src/main/java/java/util/AbstractQueue.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractQueue.java
