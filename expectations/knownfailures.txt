@@ -1817,5 +1817,16 @@
     "test.java.util.concurrent.tck.ThreadPoolExecutorTest#testPoolSizeInvariants",
     "test.java.util.concurrent.tck.ThreadTest#testGetAndSetDefaultUncaughtExceptionHandler"
  ]
+},
+{
+   description: "Android has a behavior difference to be fixed.",
+   result: EXEC_FAILED,
+   bug: 181171596,
+   names: [
+     "crossvmtest.java.lang.RecordComponentTest#testGetRecordComponentAnnotation",
+     "crossvmtest.java.lang.RecordComponentTest#testGetAnnotations",
+     "crossvmtest.java.lang.RecordComponentTest#testGetDeclaredAnnotations",
+     "crossvmtest.java.lang.RecordTest#testWriteField"
+  ]
 }
 ]

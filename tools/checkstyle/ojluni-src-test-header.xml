@@ -40,6 +40,15 @@
     <property name="fileNamePattern"
       value="ojluni/src/test/java/security/Provider/ProvidersTest.java" />
   </module>
+  <!--
+  puppycrawl fails to parse the Record type implementing Serializable, and the code valid in Java 17.
+    libcore/ojluni/src/test/java/lang/reflect/records/RecordReflectionTest.java:55:39: unexpected token: implements
+    libcore/ojluni/src/test/java/lang/reflect/records/RecordReflectionTest.java:63:12: unexpected token: void
+  -->
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern"
+      value="ojluni/src/test/java/lang/reflect/records/RecordReflectionTest.java" />
+  </module>
 
   <module name="TreeWalker">
     <module name="RegexpSinglelineJava">

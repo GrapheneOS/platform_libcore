@@ -205,6 +205,7 @@ filegroup {
         "ojluni/src/main/java/java/lang/reflect/Parameter.java",
         "ojluni/src/main/java/java/lang/reflect/ParameterizedType.java",
         "ojluni/src/main/java/java/lang/reflect/Proxy.java",
+        "ojluni/src/main/java/java/lang/reflect/RecordComponent.java",
         "ojluni/src/main/java/java/lang/reflect/ReflectPermission.java",
         "ojluni/src/main/java/java/lang/reflect/Type.java",
         "ojluni/src/main/java/java/lang/reflect/TypeVariable.java",

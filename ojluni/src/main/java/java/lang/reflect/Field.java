@@ -188,7 +188,7 @@ class Field extends AccessibleObject implements Member {
     }
 
     // BEGIN Android-added: getGenericType() implemented differently.
-    private String getSignatureAttribute() {
+    String getSignatureAttribute() {
         String[] annotation = getSignatureAnnotation();
         if (annotation == null) {
             return null;

@@ -30,6 +30,7 @@ declare -A PATH_TO_CONFIG=(
     [luni/src/test/dex_src/libcore]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/etc]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/filesystems]=tools/checkstyle/aosp-copyright.xml
+    [luni/src/test/java/crossvmtest]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/libcore/android]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/libcore/build]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/libcore/dalvik/system]=tools/checkstyle/aosp-copyright.xml

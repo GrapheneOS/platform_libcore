@@ -282,6 +282,7 @@ ojluni/src/main/java/java/lang/reflect/Modifier.java,jdk11u/jdk-11.0.13-ga,src/j
 ojluni/src/main/java/java/lang/reflect/Parameter.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/reflect/Parameter.java
 ojluni/src/main/java/java/lang/reflect/ParameterizedType.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/reflect/ParameterizedType.java
 ojluni/src/main/java/java/lang/reflect/Proxy.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/lang/reflect/Proxy.java
+ojluni/src/main/java/java/lang/reflect/RecordComponent.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/lang/reflect/RecordComponent.java
 ojluni/src/main/java/java/lang/reflect/ReflectPermission.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/reflect/ReflectPermission.java
 ojluni/src/main/java/java/lang/reflect/Type.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/reflect/Type.java
 ojluni/src/main/java/java/lang/reflect/TypeVariable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/reflect/TypeVariable.java
@@ -1942,6 +1943,7 @@ ojluni/src/test/java/lang/invoke/VarHandles/accessibility/pkg/subpkg/B_extends_A
 ojluni/src/test/java/lang/invoke/VarHandles/accessibility/pkg/subpkg/C.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/invoke/VarHandles/accessibility/pkg/subpkg/C.java
 ojluni/src/test/java/lang/invoke/VarHandles/generate-vh-tests.sh,jdk11u/jdk-11.0.13-ga,test/jdk/java/lang/invoke/VarHandles/generate-vh-tests.sh
 ojluni/src/test/java/lang/reflect/records/CheckEqualityIsBasedOnFields.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/reflect/records/CheckEqualityIsBasedOnFields.java
+ojluni/src/test/java/lang/reflect/records/RecordReflectionTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/lang/reflect/records/RecordReflectionTest.java
 ojluni/src/test/java/math/BigDecimal/AddTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/AddTests.java
 ojluni/src/test/java/math/BigDecimal/CompareToTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/CompareToTests.java
 ojluni/src/test/java/math/BigDecimal/Constructor.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/Constructor.java

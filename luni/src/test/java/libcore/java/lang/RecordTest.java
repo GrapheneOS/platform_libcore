@@ -23,6 +23,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.util.Arrays;
+
 public class RecordTest {
 
     public record RecordInteger(int x) {};
@@ -57,5 +61,20 @@ public class RecordTest {
 
         assertEquals(a.toString(), b.toString());
         assertNotEquals(a.toString(), c.toString());
+    }
+
+    @Test
+    public void testReflection() {
+        RecordInteger a = new RecordInteger(9);
+
+        Field[] fields = a.getClass().getDeclaredFields();
+        assertEquals(Arrays.deepToString(fields), 1, fields.length);
+        Constructor<?> c = RecordInteger.class.getConstructors()[0];
+        assertEquals(Arrays.deepToString(c.getParameters()), 1, c.getParameters().length);
+        assertEquals(c.getParameters()[0].toString(), "x", c.getParameters()[0].getName());
+        assertEquals(fields[0].toString(), "x", fields[0].getName());
+        assertTrue(a.getClass().isRecord());
+        assertEquals(Arrays.deepToString(a.getClass().getRecordComponents()),
+                1, a.getClass().getRecordComponents().length);
     }
 }

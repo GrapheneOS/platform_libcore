@@ -48,7 +48,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.Proxy;
+import java.lang.reflect.RecordComponent;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.net.URL;
@@ -2613,6 +2615,75 @@ public final class Class<T> implements java.io.Serializable,
     public native Field[] getDeclaredFields();
 
     /**
+     * Returns an array of {@code RecordComponent} objects representing all the
+     * record components of this record class, or {@code null} if this class is
+     * not a record class.
+     *
+     * <p> The components are returned in the same order that they are declared
+     * in the record header. The array is empty if this record class has no
+     * components. If the class is not a record class, that is {@link
+     * #isRecord()} returns {@code false}, then this method returns {@code null}.
+     * Conversely, if {@link #isRecord()} returns {@code true}, then this method
+     * returns a non-null value.
+     *
+     * @apiNote
+     * <p> The following method can be used to find the record canonical constructor:
+     *
+     * <pre>{@code
+     * static <T extends Record> Constructor<T> getCanonicalConstructor(Class<T> cls)
+     *     throws NoSuchMethodException {
+     *   Class<?>[] paramTypes =
+     *     Arrays.stream(cls.getRecordComponents())
+     *           .map(RecordComponent::getType)
+     *           .toArray(Class<?>[]::new);
+     *   return cls.getDeclaredConstructor(paramTypes);
+     * }}</pre>
+     *
+     * @return  An array of {@code RecordComponent} objects representing all the
+     *          record components of this record class, or {@code null} if this
+     *          class is not a record class
+     * @throws  SecurityException
+     *          If a security manager, <i>s</i>, is present and any of the
+     *          following conditions is met:
+     *
+     *          <ul>
+     *
+     *          <li> the caller's class loader is not the same as the
+     *          class loader of this class and invocation of
+     *          {@link SecurityManager#checkPermission
+     *          s.checkPermission} method with
+     *          {@code RuntimePermission("accessDeclaredMembers")}
+     *          denies access to the declared methods within this class
+     *
+     *          <li> the caller's class loader is not the same as or an
+     *          ancestor of the class loader for the current class and
+     *          invocation of {@link SecurityManager#checkPackageAccess
+     *          s.checkPackageAccess()} denies access to the package
+     *          of this class
+     *
+     *          </ul>
+     *
+     * @jls 8.10 Record Classes
+     * @since 16
+     * @hide
+     */
+    @CallerSensitive
+    public RecordComponent[] getRecordComponents() {
+        // Android-removed: Android doesn't support SecurityManager.
+        /*
+        @SuppressWarnings("removal")
+        SecurityManager sm = System.getSecurityManager();
+        if (sm != null) {
+            checkMemberAccess(sm, Member.DECLARED, Reflection.getCallerClass(), true);
+        }
+        */
+        if (!isRecord()) {
+            return null;
+        }
+        return getRecordComponents0();
+    }
+
+    /**
      * Populates a list of fields without performing any security or type
      * resolution checks first. If no fields exist, the list is not modified.
      *
@@ -3792,7 +3863,91 @@ public final class Class<T> implements java.io.Serializable,
     private native Constructor<T>[] getDeclaredConstructors0(boolean publicOnly);
     private native Class<?>[]   getDeclaredClasses0();
 
-    *//**
+    */
+
+    /*
+     * Returns an array containing the components of the Record attribute,
+     * or null if the attribute is not present.
+     *
+     * Note that this method returns non-null array on a class with
+     * the Record attribute even if this class is not a record.
+     */
+    // BEGIN Android-changed: Re-implement these Record-related methods on ART.
+    // TODO: Use dalvik.annotation.Record instead name parameters in the constructor.
+    // private native RecordComponent[] getRecordComponents0();
+    // private native boolean       isRecord0();
+    private RecordComponent[] getRecordComponents0() {
+        Constructor<?> constructor = getRecordConstructor();
+        Parameter[] parameters = constructor.getParameters();
+        RecordComponent[] components = new RecordComponent[parameters.length];
+        Map<String, Field> fields = new HashMap<>(parameters.length);
+        for (Field f : getDeclaredFields()) {
+            fields.put(f.getName(), f);
+        }
+        int i = 0;
+        for (Parameter p : parameters) {
+            String name = p.getName();
+            Method accessor = null;
+            try {
+                accessor = getDeclaredMethod(name);
+            } catch (NoSuchMethodException e) {
+            }
+            Field field = fields.get(name);
+            components[i] = new RecordComponent(this, name, p.getType(), accessor,
+                    field.getGenericType().toString(), field);
+            i++;
+        }
+        return components;
+    }
+
+    private boolean isRecord0() {
+        return getRecordConstructor() != null;
+    }
+
+    private Constructor<?> getRecordConstructor() {
+        for (Constructor<?> c : getDeclaredConstructors()) {
+            boolean areAllNamed = true;
+            Parameter[] parameters = c.getParameters();
+            for (Parameter p : parameters) {
+                if (!p.isNamePresent()) {
+                    areAllNamed = false;
+                    break;
+                }
+            }
+            if (!areAllNamed) {
+                continue;
+            }
+
+            // Record has the same number of fields and parameters in constructor.
+            Field[] fields = getDeclaredFields();
+            if (fields.length != parameters.length) {
+                continue;
+            }
+
+            // Record should have the same list param
+            HashMap<String, Parameter> parameterMap = new HashMap<>(parameters.length);
+            for (Parameter p : parameters) {
+                parameterMap.put(p.getName(), p);
+            }
+            for (Field f : fields) {
+                String name = f.getName();
+                Parameter p = parameterMap.get(name);
+                if (p == null || !name.equals(p.getName())) {
+                    areAllNamed = false;
+                    break;
+                }
+            }
+            if (areAllNamed) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+
+    // END Android-changed: Re-implement these Record-related methods on ART.
+
+    /**
      * Helper method to get the method name from arguments.
      *//*
     private String methodToString(String name, Class<?>[] argTypes) {
@@ -3874,6 +4029,31 @@ public final class Class<T> implements java.io.Serializable,
         // don't do the former.
         return (this.getModifiers() & ENUM) != 0 &&
         this.getSuperclass() == java.lang.Enum.class;
+    }
+
+    /**
+     * Returns {@code true} if and only if this class is a record class.
+     *
+     * <p> The {@linkplain #getSuperclass() direct superclass} of a record
+     * class is {@code java.lang.Record}. A record class is {@linkplain
+     * Modifier#FINAL final}. A record class has (possibly zero) record
+     * components; {@link #getRecordComponents()} returns a non-null but
+     * possibly empty value for a record.
+     *
+     * <p> Note that class {@link Record} is not a record class and thus
+     * invoking this method on class {@code Record} returns {@code false}.
+     *
+     * @return true if and only if this class is a record class, otherwise false
+     * @jls 8.10 Record Classes
+     * @since 16
+     * @hide
+     */
+    public boolean isRecord() {
+        // this superclass and final modifier check is not strictly necessary
+        // they are intrinsified and serve as a fast-path check
+        return getSuperclass() == java.lang.Record.class &&
+                (this.getModifiers() & Modifier.FINAL) != 0 &&
+                isRecord0();
     }
 
     // Android-remvoed: Remove unsupported ReflectionFactory.
