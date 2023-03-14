@@ -75,8 +75,7 @@ import jdk.internal.vm.annotation.IntrinsicCandidate;
  * @author  Joseph D. Darcy
  * @since   1.0
  */
-// Android-removed: ValueBased
-// @jdk.internal.ValueBased
+@jdk.internal.ValueBased
 public final class Long extends Number
         implements Comparable<Long>
 // Android-removed: no Constable support.

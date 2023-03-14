@@ -1165,15 +1165,13 @@ class MethodType
         return desc;
     }
 
+    // Android-changed: Remove MethodTypeDesc from javadoc until MethodTypeDesc is added.
     /**
      * Returns a descriptor string for this method type.
      *
      * <p>
      * If this method type can be <a href="#descriptor">described nominally</a>,
      * then the result is a method type descriptor (JVMS {@jvms 4.3.3}).
-     * {@link MethodTypeDesc MethodTypeDesc} for this method type
-     * can be produced by calling {@link MethodTypeDesc#ofDescriptor(String)
-     * MethodTypeDesc::ofDescriptor} with the result descriptor string.
      * <p>
      * If this method type cannot be <a href="#descriptor">described nominally</a>
      * and the result is a string of the form:
@@ -1181,8 +1179,7 @@ class MethodType
      * where {@code <parameter-descriptors>} is the concatenation of the
      * {@linkplain Class#descriptorString() descriptor string} of all
      * of the parameter types and the {@linkplain Class#descriptorString() descriptor string}
-     * of the return type. No {@link java.lang.constant.MethodTypeDesc MethodTypeDesc}
-     * can be produced from the result string.
+     * of the return type.
      *
      * @return the descriptor string for this method type
      * @since 12

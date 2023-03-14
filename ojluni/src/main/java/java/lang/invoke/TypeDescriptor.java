@@ -53,11 +53,10 @@ public interface TypeDescriptor {
     String descriptorString();
 
 
+    // Android-changed: Remove Class#describeConstable from javadoc until MethodType is updated
     /**
      * An entity that has a field type descriptor.
      * Field descriptors conforming to JVMS {@jvms 4.3.2} can be described
-     * nominally via {@link Class#describeConstable Class::describeConstable};
-     * otherwise they cannot be described nominally.
      *
      * @param <F> the class implementing {@linkplain TypeDescriptor.OfField}
      * @jvms 4.3.2 Field Descriptors
@@ -99,11 +98,10 @@ public interface TypeDescriptor {
     }
 
 
+    // Android-changed: Remove MethodType#describeConstable from javadoc until MethodType is updated
     /**
      * An entity that has a method type descriptor
      * Method descriptors conforming to JVMS {@jvms 4.3.3} can be described
-     * nominally via {@link MethodType#describeConstable MethodType::describeConstable};
-     * otherwise they cannot be described nominally.
      *
      * @param <F> the type representing field type descriptors
      * @param <M> the class implementing {@linkplain TypeDescriptor.OfMethod}

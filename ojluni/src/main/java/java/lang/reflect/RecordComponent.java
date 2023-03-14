@@ -48,9 +48,9 @@ public final class RecordComponent implements AnnotatedElement {
     private String name;
     private Class<?> type;
     private Method accessor;
-    private String signature;
     // generic info repository; lazily initialized
     // Android-remove: Remove unused fields.
+    // private String signature;
     // private transient FieldRepository genericInfo;
     // private byte[] annotations;
     // private byte[] typeAnnotations;
@@ -67,12 +67,11 @@ public final class RecordComponent implements AnnotatedElement {
      * @hide
      */
     public RecordComponent(Class<?> clazz, String name, Class<?> type, Method accessor,
-            String signature, Field field) {
+            Field field) {
         this.clazz = clazz;
         this.name = name;
         this.type = type;
         this.accessor = accessor;
-        this.signature = signature;
         this.field = field;
     }
 

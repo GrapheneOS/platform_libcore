@@ -158,8 +158,7 @@ import jdk.internal.vm.annotation.IntrinsicCandidate;
  * @author  Joseph D. Darcy
  * @since 1.0
  */
-// Android-removed: ValueBased
-// @jdk.internal.ValueBased
+@jdk.internal.ValueBased
 public final class Double extends Number
         implements Comparable<Double>
 // Android-removed: no Constable support.

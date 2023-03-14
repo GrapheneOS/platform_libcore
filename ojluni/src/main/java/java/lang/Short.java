@@ -65,8 +65,7 @@ import static java.lang.constant.ConstantDescs.DEFAULT_NAME;
  * @see     java.lang.Number
  * @since   1.1
  */
-// Android-removed: ValueBased
-// @jdk.internal.ValueBased
+@jdk.internal.ValueBased
 public final class Short extends Number implements Comparable<Short> {
 // Android-removed: no Constable support.
 // , Constable {

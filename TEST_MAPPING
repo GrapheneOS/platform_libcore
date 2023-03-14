@@ -86,5 +86,16 @@
         }
       ]
     }
+  ],
+  "kernel-presubmit": [
+    {
+      "name": "CtsLibcoreTestCases",
+      "options": [
+        {
+          // TODO(b/194105624)
+          "exclude-filter": "libcore.java.net.InetAddressTest#test_isReachable_by_ICMP"
+        }
+      ]
+    }
   ]
 }

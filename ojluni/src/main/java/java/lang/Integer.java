@@ -77,8 +77,7 @@ import jdk.internal.vm.annotation.IntrinsicCandidate;
  * @author  Joseph D. Darcy
  * @since 1.0
  */
-// Android-removed: ValueBased
-// @jdk.internal.ValueBased
+@jdk.internal.ValueBased
 public final class Integer extends Number
         implements Comparable<Integer>
 // Android-removed: no Constable support.

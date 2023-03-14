@@ -47,6 +47,7 @@ declare -A PATH_TO_CONFIG=(
     [luni/src/test/java/org/apache/harmony]=tools/checkstyle/not-gpl.xml
     [luni/src/test/java/tests/com/android/org]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/tests/java/lang]=tools/checkstyle/aosp-copyright.xml
+    [luni/src/test/java/tests/java/nio]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/tests/java/security]=tools/checkstyle/asf-copyright.xml
     [luni/src/test/java/tests/java/sql]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/tests/org/w3c]=tools/checkstyle/w3c-copyright.xml

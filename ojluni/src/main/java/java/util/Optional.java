@@ -30,7 +30,7 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-// Android-changed: removed ValueBased paragraph and annotation.
+// Android-changed: removed ValueBased paragraph.
 /**
  * A container object which may or may not contain a non-{@code null} value.
  * If a value is present, {@code isPresent()} returns {@code true}. If no
@@ -59,7 +59,7 @@ import java.util.stream.Stream;
  * @param <T> the type of value
  * @since 1.8
  */
-// @jdk.internal.ValueBased
+@jdk.internal.ValueBased
 public final class Optional<T> {
     /**
      * Common instance for {@code empty()}.

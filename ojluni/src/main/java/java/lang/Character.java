@@ -193,8 +193,7 @@ import static java.lang.constant.ConstantDescs.DEFAULT_NAME;
  * @author  Ulf Zibis
  * @since   1.0
  */
-// Android-removed: ValueBased
-// @jdk.internal.ValueBased
+@jdk.internal.ValueBased
 public final
 class Character implements java.io.Serializable, Comparable<Character> {
 // Android-removed: no Constable support.

@@ -1484,6 +1484,7 @@ filegroup {
         "ojluni/src/main/java/jdk/net/SocketFlow.java",
         "ojluni/src/main/java/jdk/net/Sockets.java",
         "ojluni/src/main/java/jdk/internal/HotSpotIntrinsicCandidate.java",
+        "ojluni/src/main/java/jdk/internal/ValueBased.java",
         "ojluni/src/main/java/jdk/internal/misc/InnocuousThread.java",
         "ojluni/src/main/java/jdk/internal/misc/JavaIOFileDescriptorAccess.java",
         "ojluni/src/main/java/jdk/internal/misc/JavaObjectInputStreamAccess.java",

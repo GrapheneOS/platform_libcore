@@ -866,8 +866,8 @@ ojluni/src/main/java/java/time/zone/ZoneRulesException.java,jdk17u/jdk-17.0.6-ga
 ojluni/src/main/java/java/time/zone/ZoneRulesProvider.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/time/zone/ZoneRulesProvider.java
 ojluni/src/main/java/java/time/zone/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/time/zone/package-info.java
 ojluni/src/main/java/java/util/AbstractCollection.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractCollection.java
-ojluni/src/main/java/java/util/AbstractList.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractList.java
-ojluni/src/main/java/java/util/AbstractMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/AbstractMap.java
+ojluni/src/main/java/java/util/AbstractList.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractList.java
+ojluni/src/main/java/java/util/AbstractMap.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractMap.java
 ojluni/src/main/java/java/util/AbstractQueue.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractQueue.java
 ojluni/src/main/java/java/util/AbstractSequentialList.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractSequentialList.java
 ojluni/src/main/java/java/util/AbstractSet.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractSet.java
@@ -895,7 +895,7 @@ ojluni/src/main/java/java/util/DuplicateFormatFlagsException.java,jdk11u/jdk-11.
 ojluni/src/main/java/java/util/EmptyStackException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/EmptyStackException.java
 ojluni/src/main/java/java/util/EnumMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/EnumMap.java
 ojluni/src/main/java/java/util/EnumSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/EnumSet.java
-ojluni/src/main/java/java/util/Enumeration.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Enumeration.java
+ojluni/src/main/java/java/util/Enumeration.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Enumeration.java
 ojluni/src/main/java/java/util/EventListener.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/EventListener.java
 ojluni/src/main/java/java/util/EventListenerProxy.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/EventListenerProxy.java
 ojluni/src/main/java/java/util/EventObject.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/EventObject.java
@@ -909,7 +909,7 @@ ojluni/src/main/java/java/util/HashMap.java,jdk17u/jdk-17.0.6-ga,src/java.base/s
 ojluni/src/main/java/java/util/HashSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/HashSet.java
 ojluni/src/main/java/java/util/Hashtable.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Hashtable.java
 ojluni/src/main/java/java/util/HexFormat.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/HexFormat.java
-ojluni/src/main/java/java/util/IdentityHashMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IdentityHashMap.java
+ojluni/src/main/java/java/util/IdentityHashMap.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/IdentityHashMap.java
 ojluni/src/main/java/java/util/IllegalFormatCodePointException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatCodePointException.java
 ojluni/src/main/java/java/util/IllegalFormatConversionException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatConversionException.java
 ojluni/src/main/java/java/util/IllegalFormatException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatException.java
@@ -1364,7 +1364,7 @@ ojluni/src/main/java/javax/sql/RowSetWriter.java,jdk11u/jdk-11.0.13-ga,src/java.
 ojluni/src/main/java/javax/sql/StatementEvent.java,jdk7u/jdk7u40-b60,jdk/src/share/classes/javax/sql/StatementEvent.java
 ojluni/src/main/java/javax/sql/StatementEventListener.java,jdk7u/jdk7u40-b60,jdk/src/share/classes/javax/sql/StatementEventListener.java
 ojluni/src/main/java/jdk/internal/HotSpotIntrinsicCandidate.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/HotSpotIntrinsicCandidate.java
-# jdk.internal.ValueBased earlier imports have elected not to bring this across, no technical reason to add it for now (not used by ART).
+ojluni/src/main/java/jdk/internal/ValueBased.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/ValueBased.java
 ojluni/src/main/java/jdk/internal/math/DoubleConsts.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/math/DoubleConsts.java
 ojluni/src/main/java/jdk/internal/math/FDBigInteger.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/jdk/internal/math/FDBigInteger.java
 ojluni/src/main/java/jdk/internal/math/FloatConsts.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/jdk/internal/math/FloatConsts.java

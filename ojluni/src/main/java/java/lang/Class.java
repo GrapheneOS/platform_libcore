@@ -1447,6 +1447,7 @@ public final class Class<T> implements java.io.Serializable,
         return Array.newInstance(this, 0).getClass();
     }
 
+    // Android-changed: Remove Class#isHidden() and ClassDesc from javadoc.
     /**
      * Returns the descriptor string of the entity (class, interface, array class,
      * primitive type, or {@code void}) represented by this {@code Class} object.
@@ -1454,23 +1455,8 @@ public final class Class<T> implements java.io.Serializable,
      * <p> If this {@code Class} object represents a class or interface,
      * not an array class, then:
      * <ul>
-     * <li> If the class or interface is not {@linkplain Class#isHidden() hidden},
-     *      then the result is a field descriptor (JVMS {@jvms 4.3.2})
-     *      for the class or interface. Calling
-     *      {@link ClassDesc#ofDescriptor(String) ClassDesc::ofDescriptor}
-     *      with the result descriptor string produces a {@link ClassDesc ClassDesc}
-     *      describing this class or interface.
-     * <li> If the class or interface is {@linkplain Class#isHidden() hidden},
-     *      then the result is a string of the form:
-     *      <blockquote>
-     *      {@code "L" +} <em>N</em> {@code + "." + <suffix> + ";"}
-     *      </blockquote>
-     *      where <em>N</em> is the <a href="ClassLoader.html#binary-name">binary name</a>
-     *      encoded in internal form indicated by the {@code class} file passed to
-     *      {@link MethodHandles.Lookup#defineHiddenClass(byte[], boolean, MethodHandles.Lookup.ClassOption...)
-     *      Lookup::defineHiddenClass}, and {@code <suffix>} is an unqualified name.
-     *      A hidden class or interface has no {@linkplain ClassDesc nominal descriptor}.
-     *      The result string is not a type descriptor.
+     * <li> The result is a field descriptor (JVMS {@jvms 4.3.2})
+     *      for the class or interface.
      * </ul>
      *
      * <p> If this {@code Class} object represents an array class, then
@@ -1478,14 +1464,7 @@ public final class Class<T> implements java.io.Serializable,
      * representing the depth of the array nesting, followed by the
      * descriptor string of the element type.
      * <ul>
-     * <li> If the element type is not a {@linkplain Class#isHidden() hidden} class
-     * or interface, then this array class can be described nominally.
-     * Calling {@link ClassDesc#ofDescriptor(String) ClassDesc::ofDescriptor}
-     * with the result descriptor string produces a {@link ClassDesc ClassDesc}
-     * describing this array class.
-     * <li> If the element type is a {@linkplain Class#isHidden() hidden} class or
-     * interface, then this array class cannot be described nominally.
-     * The result string is not a type descriptor.
+     * <li> This array class can be described nominally.
      * </ul>
      *
      * <p> If this {@code Class} object represents a primitive type or
@@ -3893,8 +3872,7 @@ public final class Class<T> implements java.io.Serializable,
             } catch (NoSuchMethodException e) {
             }
             Field field = fields.get(name);
-            components[i] = new RecordComponent(this, name, p.getType(), accessor,
-                    field.getGenericType().toString(), field);
+            components[i] = new RecordComponent(this, name, p.getType(), accessor, field);
             i++;
         }
         return components;

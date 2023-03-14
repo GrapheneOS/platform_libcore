@@ -68,8 +68,7 @@ import libcore.util.HexEncoding;
  * @see     java.lang.Number
  * @since   1.1
  */
-// Android-removed: ValueBased
-// @jdk.internal.ValueBased
+@jdk.internal.ValueBased
 public final class Byte extends Number implements Comparable<Byte>
 // Android-removed: no Constable support.
 // , Constable
