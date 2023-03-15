@@ -478,8 +478,7 @@ public final class YearMonth
      */
     @Override
     public long getLong(TemporalField field) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             switch (chronoField) {
                 case MONTH_OF_YEAR: return month;
                 case PROLEPTIC_MONTH: return getProlepticMonth();
@@ -676,8 +675,7 @@ public final class YearMonth
      */
     @Override
     public YearMonth with(TemporalField field, long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             chronoField.checkValidValue(newValue);
             switch (chronoField) {
                 case MONTH_OF_YEAR: return withMonth((int) newValue);
@@ -799,8 +797,7 @@ public final class YearMonth
      */
     @Override
     public YearMonth plus(long amountToAdd, TemporalUnit unit) {
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit chronoUnit = (ChronoUnit) unit;
+        if (unit instanceof ChronoUnit chronoUnit) {
             switch (chronoUnit) {
                 case MONTHS: return plusMonths(amountToAdd);
                 case YEARS: return plusYears(amountToAdd);
@@ -1041,8 +1038,7 @@ public final class YearMonth
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
         YearMonth end = YearMonth.from(endExclusive);
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit chronoUnit = (ChronoUnit) unit;
+        if (unit instanceof ChronoUnit chronoUnit) {
             long monthsUntil = end.getProlepticMonth() - getProlepticMonth();  // no overflow
             switch (chronoUnit) {
                 case MONTHS: return monthsUntil;
@@ -1164,11 +1160,9 @@ public final class YearMonth
         if (this == obj) {
             return true;
         }
-        if (obj instanceof YearMonth) {
-            YearMonth other = (YearMonth) obj;
-            return year == other.year && month == other.month;
-        }
-        return false;
+        return (obj instanceof YearMonth other)
+                && year == other.year
+                && month == other.month;
     }
 
     /**

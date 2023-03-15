@@ -125,9 +125,8 @@ public class ParsePosition {
     public boolean equals(Object obj)
     {
         if (obj == null) return false;
-        if (!(obj instanceof ParsePosition))
+        if (!(obj instanceof ParsePosition other))
             return false;
-        ParsePosition other = (ParsePosition) obj;
         return (index == other.index && errorIndex == other.errorIndex);
     }
 

@@ -387,8 +387,7 @@ public final class HijrahDate
 
     @Override
     public HijrahDate with(TemporalField field, long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             // not using checkValidIntValue so EPOCH_DAY and PROLEPTIC_MONTH work
             chrono.range(chronoField).checkValidValue(newValue, chronoField);    // TODO: validate value
             int nvalue = (int) newValue;
@@ -621,14 +620,11 @@ public final class HijrahDate
         if (this == obj) {
             return true;
         }
-        if (obj instanceof HijrahDate) {
-            HijrahDate otherDate = (HijrahDate) obj;
-            return prolepticYear == otherDate.prolepticYear
-                    && this.monthOfYear == otherDate.monthOfYear
-                    && this.dayOfMonth == otherDate.dayOfMonth
-                    && getChronology().equals(otherDate.getChronology());
-        }
-        return false;
+        return (obj instanceof HijrahDate otherDate)
+                && prolepticYear == otherDate.prolepticYear
+                && this.monthOfYear == otherDate.monthOfYear
+                && this.dayOfMonth == otherDate.dayOfMonth
+                && getChronology().equals(otherDate.getChronology());
     }
 
     /**

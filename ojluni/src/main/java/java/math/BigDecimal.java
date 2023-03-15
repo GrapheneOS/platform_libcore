@@ -3224,9 +3224,8 @@ public class BigDecimal extends Number implements Comparable<BigDecimal> {
      */
     @Override
     public boolean equals(Object x) {
-        if (!(x instanceof BigDecimal))
+        if (!(x instanceof BigDecimal xDec))
             return false;
-        BigDecimal xDec = (BigDecimal) x;
         if (x == this)
             return true;
         if (scale != xDec.scale)
@@ -4760,19 +4759,13 @@ public class BigDecimal extends Number implements Comparable<BigDecimal> {
             else { // half-way
                 assert cmpFracHalf == 0;
 
-                switch(roundingMode) {
-                case ROUND_HALF_DOWN:
-                    return false;
+                return switch (roundingMode) {
+                    case ROUND_HALF_DOWN -> false;
+                    case ROUND_HALF_UP   -> true;
+                    case ROUND_HALF_EVEN -> oddQuot;
 
-                case ROUND_HALF_UP:
-                    return true;
-
-                case ROUND_HALF_EVEN:
-                    return oddQuot;
-
-                default:
-                    throw new AssertionError("Unexpected rounding mode" + roundingMode);
-                }
+                    default -> throw new AssertionError("Unexpected rounding mode" + roundingMode);
+                };
             }
         }
     }

@@ -871,7 +871,7 @@ ojluni/src/main/java/java/util/AbstractMap.java,jdk17u/jdk-17.0.6-ga,src/java.ba
 ojluni/src/main/java/java/util/AbstractQueue.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractQueue.java
 ojluni/src/main/java/java/util/AbstractSequentialList.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractSequentialList.java
 ojluni/src/main/java/java/util/AbstractSet.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/AbstractSet.java
-ojluni/src/main/java/java/util/ArrayDeque.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArrayDeque.java
+ojluni/src/main/java/java/util/ArrayDeque.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/ArrayDeque.java
 ojluni/src/main/java/java/util/ArrayList.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArrayList.java
 ojluni/src/main/java/java/util/ArrayPrefixHelpers.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ArrayPrefixHelpers.java
 ojluni/src/main/java/java/util/Arrays.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Arrays.java
@@ -917,7 +917,7 @@ ojluni/src/main/java/java/util/IllegalFormatFlagsException.java,jdk11u/jdk-11.0.
 ojluni/src/main/java/java/util/IllegalFormatPrecisionException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatPrecisionException.java
 ojluni/src/main/java/java/util/IllegalFormatWidthException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllegalFormatWidthException.java
 ojluni/src/main/java/java/util/IllformedLocaleException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IllformedLocaleException.java
-ojluni/src/main/java/java/util/ImmutableCollections.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ImmutableCollections.java
+ojluni/src/main/java/java/util/ImmutableCollections.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/ImmutableCollections.java
 ojluni/src/main/java/java/util/InputMismatchException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/InputMismatchException.java
 ojluni/src/main/java/java/util/IntSummaryStatistics.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/IntSummaryStatistics.java
 ojluni/src/main/java/java/util/InvalidPropertiesFormatException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/InvalidPropertiesFormatException.java
@@ -928,13 +928,13 @@ ojluni/src/main/java/java/util/KeyValueHolder.java,jdk11u/jdk-11.0.13-ga,src/jav
 ojluni/src/main/java/java/util/LinkedHashMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/LinkedHashMap.java
 ojluni/src/main/java/java/util/LinkedHashSet.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/LinkedHashSet.java
 ojluni/src/main/java/java/util/LinkedList.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/LinkedList.java
-ojluni/src/main/java/java/util/List.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/List.java
+ojluni/src/main/java/java/util/List.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/List.java
 ojluni/src/main/java/java/util/ListIterator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/ListIterator.java
 ojluni/src/main/java/java/util/ListResourceBundle.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/ListResourceBundle.java
 ojluni/src/main/java/java/util/Locale.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Locale.java
 ojluni/src/main/java/java/util/LocaleISOData.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/LocaleISOData.java
 ojluni/src/main/java/java/util/LongSummaryStatistics.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/LongSummaryStatistics.java
-ojluni/src/main/java/java/util/Map.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Map.java
+ojluni/src/main/java/java/util/Map.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Map.java
 ojluni/src/main/java/java/util/MissingFormatArgumentException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/MissingFormatArgumentException.java
 ojluni/src/main/java/java/util/MissingFormatWidthException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/MissingFormatWidthException.java
 ojluni/src/main/java/java/util/MissingResourceException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/MissingResourceException.java
@@ -961,7 +961,7 @@ ojluni/src/main/java/java/util/ResourceBundle.java,jdk11u/jdk-11.0.13-ga,src/jav
 ojluni/src/main/java/java/util/Scanner.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Scanner.java
 ojluni/src/main/java/java/util/ServiceConfigurationError.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/ServiceConfigurationError.java
 ojluni/src/main/java/java/util/ServiceLoader.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/ServiceLoader.java
-ojluni/src/main/java/java/util/Set.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Set.java
+ojluni/src/main/java/java/util/Set.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Set.java
 ojluni/src/main/java/java/util/SimpleTimeZone.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/SimpleTimeZone.java
 ojluni/src/main/java/java/util/SortedMap.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/SortedMap.java
 ojluni/src/main/java/java/util/SortedSet.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/SortedSet.java

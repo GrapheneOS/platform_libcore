@@ -510,8 +510,7 @@ public final class JapaneseDate
     //-----------------------------------------------------------------------
     @Override
     public JapaneseDate with(TemporalField field, long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             if (getLong(chronoField) == newValue) {  // getLong() validates for supported fields
                 return this;
             }
@@ -693,11 +692,8 @@ public final class JapaneseDate
         if (this == obj) {
             return true;
         }
-        if (obj instanceof JapaneseDate) {
-            JapaneseDate otherDate = (JapaneseDate) obj;
-            return this.isoDate.equals(otherDate.isoDate);
-        }
-        return false;
+        return (obj instanceof JapaneseDate otherDate)
+            && this.isoDate.equals(otherDate.isoDate);
     }
 
     /**

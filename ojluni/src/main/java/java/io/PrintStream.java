@@ -497,8 +497,7 @@ public class PrintStream extends FilterOutputStream
     public boolean checkError() {
         if (out != null)
             flush();
-        if (out instanceof java.io.PrintStream) {
-            PrintStream ps = (PrintStream) out;
+        if (out instanceof PrintStream ps) {
             return ps.checkError();
         }
         return trouble;

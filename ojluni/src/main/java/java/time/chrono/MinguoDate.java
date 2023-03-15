@@ -304,8 +304,7 @@ public final class MinguoDate
     //-----------------------------------------------------------------------
     @Override
     public MinguoDate with(TemporalField field, long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             if (getLong(chronoField) == newValue) {
                 return this;
             }
@@ -452,11 +451,8 @@ public final class MinguoDate
         if (this == obj) {
             return true;
         }
-        if (obj instanceof MinguoDate) {
-            MinguoDate otherDate = (MinguoDate) obj;
-            return this.isoDate.equals(otherDate.isoDate);
-        }
-        return false;
+        return (obj instanceof MinguoDate otherDate)
+                && this.isoDate.equals(otherDate.isoDate);
     }
 
     /**

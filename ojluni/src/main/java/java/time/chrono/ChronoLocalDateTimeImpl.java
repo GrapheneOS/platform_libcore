@@ -238,8 +238,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     //-----------------------------------------------------------------------
     @Override
     public boolean isSupported(TemporalField field) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             return chronoField.isDateBased() || chronoField.isTimeBased();
         }
         return field != null && field.isSupportedBy(this);
@@ -247,8 +246,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
 
     @Override
     public ValueRange range(TemporalField field) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             return (chronoField.isTimeBased() ? time.range(field) : date.range(field));
         }
         return field.rangeRefinedBy(this);
@@ -256,8 +254,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
 
     @Override
     public int get(TemporalField field) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             return (chronoField.isTimeBased() ? time.get(field) : date.get(field));
         }
         return range(field).checkValidIntValue(getLong(field), field);
@@ -265,8 +262,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
 
     @Override
     public long getLong(TemporalField field) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             return (chronoField.isTimeBased() ? time.getLong(field) : date.getLong(field));
         }
         return field.getFrom(this);
@@ -289,8 +285,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
 
     @Override
     public ChronoLocalDateTimeImpl<D> with(TemporalField field, long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             if (chronoField.isTimeBased()) {
                 return with(date, time.with(field, newValue));
             } else {
@@ -303,8 +298,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
     //-----------------------------------------------------------------------
     @Override
     public ChronoLocalDateTimeImpl<D> plus(long amountToAdd, TemporalUnit unit) {
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit chronoUnit = (ChronoUnit) unit;
+        if (unit instanceof ChronoUnit chronoUnit) {
             switch (chronoUnit) {
                 case NANOS: return plusNanos(amountToAdd);
                 case MICROS: return plusDays(amountToAdd / MICROS_PER_DAY).plusNanos((amountToAdd % MICROS_PER_DAY) * 1000);
@@ -373,8 +367,7 @@ final class ChronoLocalDateTimeImpl<D extends ChronoLocalDate>
         Objects.requireNonNull(endExclusive, "endExclusive");
         @SuppressWarnings("unchecked")
         ChronoLocalDateTime<D> end = (ChronoLocalDateTime<D>) getChronology().localDateTime(endExclusive);
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit chronoUnit = (ChronoUnit) unit;
+        if (unit instanceof ChronoUnit chronoUnit) {
             if (unit.isTimeBased()) {
                 long amount = end.getLong(EPOCH_DAY) - date.getLong(EPOCH_DAY);
                 switch (chronoUnit) {

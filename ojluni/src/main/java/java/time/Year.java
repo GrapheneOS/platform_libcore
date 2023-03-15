@@ -489,8 +489,7 @@ public final class Year
      */
     @Override
     public long getLong(TemporalField field) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             switch (chronoField) {
                 case YEAR_OF_ERA: return (year < 1 ? 1 - year : year);
                 case YEAR: return year;
@@ -613,8 +612,7 @@ public final class Year
      */
     @Override
     public Year with(TemporalField field, long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             chronoField.checkValidValue(newValue);
             switch (chronoField) {
                 case YEAR_OF_ERA: return Year.of((int) (year < 1 ? 1 - newValue : newValue));
@@ -702,8 +700,7 @@ public final class Year
      */
     @Override
     public Year plus(long amountToAdd, TemporalUnit unit) {
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit chronoUnit = (ChronoUnit) unit;
+        if (unit instanceof ChronoUnit chronoUnit) {
             switch (chronoUnit) {
                 case YEARS: return plusYears(amountToAdd);
                 case DECADES: return plusYears(Math.multiplyExact(amountToAdd, 10));
@@ -909,8 +906,7 @@ public final class Year
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
         Year end = Year.from(endExclusive);
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit chronoUnit = (ChronoUnit) unit;
+        if (unit instanceof ChronoUnit chronoUnit) {
             long yearsUntil = ((long) end.year) - year;  // no overflow
             switch (chronoUnit) {
                 case YEARS: return yearsUntil;

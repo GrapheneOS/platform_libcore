@@ -696,8 +696,7 @@ public final class Instant
      */
     @Override
     public Instant with(TemporalField field, long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             chronoField.checkValidValue(newValue);
             switch (chronoField) {
                 case MILLI_OF_SECOND: {
@@ -1136,8 +1135,7 @@ public final class Instant
     @Override
     public long until(Temporal endExclusive, TemporalUnit unit) {
         Instant end = Instant.from(endExclusive);
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit chronoUnit = (ChronoUnit) unit;
+        if (unit instanceof ChronoUnit chronoUnit) {
             switch (chronoUnit) {
                 case NANOS: return nanosUntil(end);
                 case MICROS: return nanosUntil(end) / 1000;
@@ -1293,12 +1291,9 @@ public final class Instant
         if (this == other) {
             return true;
         }
-        if (other instanceof Instant) {
-            Instant otherInstant = (Instant) other;
-            return this.seconds == otherInstant.seconds &&
-                    this.nanos == otherInstant.nanos;
-        }
-        return false;
+        return (other instanceof Instant otherInstant)
+                && this.seconds == otherInstant.seconds
+                && this.nanos == otherInstant.nanos;
     }
 
     /**

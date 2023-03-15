@@ -5383,21 +5383,21 @@ public final class DateTimeFormatterBuilder {
          * @return the array index
          */
         static long mapToIndex(String type) {
-            switch (type) {
-                case "am":          return Calendar.AM;
-                case "pm":          return Calendar.PM;
-                case "midnight":    return 2;
-                case "noon":        return 3;
-                case "morning1":    return 4;
-                case "morning2":    return 5;
-                case "afternoon1":  return 6;
-                case "afternoon2":  return 7;
-                case "evening1":    return 8;
-                case "evening2":    return 9;
-                case "night1":      return 10;
-                case "night2":      return 11;
-                default: throw new InternalError("invalid day period type");
-            }
+            return switch (type) {
+                case "am"           -> Calendar.AM;
+                case "pm"           -> Calendar.PM;
+                case "midnight"     -> 2;
+                case "noon"         -> 3;
+                case "morning1"     -> 4;
+                case "morning2"     -> 5;
+                case "afternoon1"   -> 6;
+                case "afternoon2"   -> 7;
+                case "evening1"     -> 8;
+                case "evening2"     -> 9;
+                case "night1"       -> 10;
+                case "night2"       -> 11;
+                default -> throw new InternalError("invalid day period type");
+            };
         }
 
         // BEGIN Android-removed: Remove day period support.

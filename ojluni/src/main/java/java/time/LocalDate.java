@@ -597,8 +597,7 @@ public final class LocalDate
      */
     @Override
     public ValueRange range(TemporalField field) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             if (chronoField.isDateBased()) {
                 switch (chronoField) {
                     case DAY_OF_MONTH: return ValueRange.of(1, lengthOfMonth());
@@ -1042,8 +1041,7 @@ public final class LocalDate
      */
     @Override
     public LocalDate with(TemporalField field, long newValue) {
-        if (field instanceof ChronoField) {
-            ChronoField chronoField = (ChronoField) field;
+        if (field instanceof ChronoField chronoField) {
             chronoField.checkValidValue(newValue);
             switch (chronoField) {
                 case DAY_OF_WEEK: return plusDays(newValue - getDayOfWeek().getValue());
@@ -1165,8 +1163,7 @@ public final class LocalDate
      */
     @Override
     public LocalDate plus(TemporalAmount amountToAdd) {
-        if (amountToAdd instanceof Period) {
-            Period periodToAdd = (Period) amountToAdd;
+        if (amountToAdd instanceof Period periodToAdd) {
             return plusMonths(periodToAdd.toTotalMonths()).plusDays(periodToAdd.getDays());
         }
         Objects.requireNonNull(amountToAdd, "amountToAdd");
@@ -1256,8 +1253,7 @@ public final class LocalDate
      */
     @Override
     public LocalDate plus(long amountToAdd, TemporalUnit unit) {
-        if (unit instanceof ChronoUnit) {
-            ChronoUnit chronoUnit = (ChronoUnit) unit;
+        if (unit instanceof ChronoUnit chronoUnit) {
             switch (chronoUnit) {
                 case DAYS: return plusDays(amountToAdd);
                 case WEEKS: return plusWeeks(amountToAdd);
@@ -1415,8 +1411,7 @@ public final class LocalDate
      */
     @Override
     public LocalDate minus(TemporalAmount amountToSubtract) {
-        if (amountToSubtract instanceof Period) {
-            Period periodToSubtract = (Period) amountToSubtract;
+        if (amountToSubtract instanceof Period periodToSubtract) {
             return minusMonths(periodToSubtract.toTotalMonths()).minusDays(periodToSubtract.getDays());
         }
         Objects.requireNonNull(amountToSubtract, "amountToSubtract");
