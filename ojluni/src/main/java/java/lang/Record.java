@@ -85,12 +85,10 @@ package java.lang;
  *
  * @jls 8.10 Record Types
  * @since 16
- * @hide
  */
 public abstract class Record {
     /**
      * Constructor for record classes to call.
-     * @hide
      */
     protected Record() {}
 
@@ -139,7 +137,6 @@ public abstract class Record {
      * @param   obj   the reference object with which to compare.
      * @return  {@code true} if this record is equal to the
      *          argument; {@code false} otherwise.
-     * @hide
      */
     @Override
     public abstract boolean equals(Object obj);
@@ -166,7 +163,6 @@ public abstract class Record {
      * @see     Object#hashCode()
      *
      * @return  a hash code value for this record.
-     * @hide
      */
     @Override
     public abstract int hashCode();
@@ -198,7 +194,6 @@ public abstract class Record {
      * @see     Object#toString()
      *
      * @return  a string representation of the object.
-     * @hide
      */
     @Override
     public abstract String toString();

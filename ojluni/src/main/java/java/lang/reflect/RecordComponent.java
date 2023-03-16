@@ -40,7 +40,6 @@ import java.util.Objects;
  * @see java.lang.Record
  * @jls 8.10 Record Classes
  * @since 16
- * @hide
  */
 public final class RecordComponent implements AnnotatedElement {
     // declaring class

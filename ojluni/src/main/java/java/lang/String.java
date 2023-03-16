@@ -3688,12 +3688,7 @@ public final class String
         }
         char lastChar = charAt(length - 1);
         boolean optOut = lastChar == '\n' || lastChar == '\r';
-        // BEGIN Android-changed: Stream#toList() is not yet imported. See http://b/241231766.
-        /*
         List<String> lines = lines().toList();
-        */
-        List<String> lines = lines().collect(Collectors.toList());
-        // END Android-changed: Stream#toList() is not yet imported. See http://b/241231766.
         final int outdent = optOut ? 0 : outdent(lines);
         return lines.stream()
             .map(line -> {

@@ -30,7 +30,6 @@ import java.util.List;
  * An entity that has a type descriptor.
  *
  * @since 12
- * @hide
  */
 public interface TypeDescriptor {
     /**
@@ -48,7 +47,6 @@ public interface TypeDescriptor {
      * @return the descriptor string for this {@code TypeDescriptor} object
      * @jvms 4.3.2 Field Descriptors
      * @jvms 4.3.3 Method Descriptors
-     * @hide
      */
     String descriptorString();
 
@@ -61,13 +59,11 @@ public interface TypeDescriptor {
      * @param <F> the class implementing {@linkplain TypeDescriptor.OfField}
      * @jvms 4.3.2 Field Descriptors
      * @since 12
-     * @hide
      */
     interface OfField<F extends TypeDescriptor.OfField<F>> extends TypeDescriptor {
         /**
          * Does this field descriptor describe an array type?
          * @return whether this field descriptor describes an array type
-         * @hide
          */
         boolean isArray();
 
@@ -75,7 +71,6 @@ public interface TypeDescriptor {
          * Does this field descriptor describe a primitive type (including void.)
          *
          * @return whether this field descriptor describes a primitive type
-         * @hide
          */
         boolean isPrimitive();
 
@@ -84,7 +79,6 @@ public interface TypeDescriptor {
          * a descriptor for its component type, otherwise return {@code null}.
          * @return the component type, or {@code null} if this field descriptor does
          * not describe an array type
-         * @hide
          */
         F componentType();
 
@@ -92,7 +86,6 @@ public interface TypeDescriptor {
          * Return a descriptor for the array type whose component type is described by this
          * descriptor
          * @return the descriptor for the array type
-         * @hide
          */
         F arrayType();
     }
@@ -108,7 +101,6 @@ public interface TypeDescriptor {
      * @jvms 4.3.2 Field Descriptors
      * @jvms 4.3.3 Method Descriptors
      * @since 12
-     * @hide
      */
     interface OfMethod<F extends TypeDescriptor.OfField<F>, M extends TypeDescriptor.OfMethod<F, M>>
             extends TypeDescriptor {
@@ -116,7 +108,6 @@ public interface TypeDescriptor {
         /**
          * Return the number of parameters in the method type
          * @return the number of parameters
-         * @hide
          */
         int parameterCount();
 
@@ -127,7 +118,6 @@ public interface TypeDescriptor {
          * @return a field descriptor for the requested parameter type
          * @throws IndexOutOfBoundsException if the index is outside the half-open
          * range {[0, parameterCount)}
-         * @hide
          */
         F parameterType(int i);
 
@@ -135,7 +125,6 @@ public interface TypeDescriptor {
          * Return a field descriptor describing the return type of the method type described
          * by this descriptor
          * @return a field descriptor for the return type
-         * @hide
          */
         F returnType();
 
@@ -143,7 +132,6 @@ public interface TypeDescriptor {
          * Return an array of field descriptors for the parameter types of the method type
          * described by this descriptor
          * @return field descriptors for the parameter types
-         * @hide
          */
         F[] parameterArray();
 
@@ -151,7 +139,6 @@ public interface TypeDescriptor {
          * Return an immutable list of field descriptors for the parameter types of the method type
          * described by this descriptor
          * @return field descriptors for the parameter types
-         * @hide
          */
         List<F> parameterList();
 
@@ -162,7 +149,6 @@ public interface TypeDescriptor {
          * @param newReturn a field descriptor for the new return type
          * @throws NullPointerException if any argument is {@code null}
          * @return the new method descriptor
-         * @hide
          */
         M changeReturnType(F newReturn);
 
@@ -176,7 +162,6 @@ public interface TypeDescriptor {
          * @throws NullPointerException if any argument is {@code null}
          * @throws IndexOutOfBoundsException if the index is outside the half-open
          * range {[0, parameterCount)}
-         * @hide
          */
         M changeParameterType(int index, F paramType);
 
@@ -191,7 +176,6 @@ public interface TypeDescriptor {
          * @throws IndexOutOfBoundsException if {@code start} is outside the half-open
          * range {@code [0, parameterCount)}, or {@code end} is outside the closed range
          * {@code [0, parameterCount]}, or if {@code start > end}
-         * @hide
          */
         M dropParameterTypes(int start, int end);
 
@@ -206,7 +190,6 @@ public interface TypeDescriptor {
          * @throws NullPointerException if any argument is {@code null}
          * @throws IndexOutOfBoundsException if {@code pos} is outside the closed
          * range {[0, parameterCount]}
-         * @hide
          */
         @SuppressWarnings("unchecked")
         M insertParameterTypes(int pos, F... paramTypes);

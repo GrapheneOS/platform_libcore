@@ -676,6 +676,17 @@ public class MethodTypeTest extends TestCase {
                 .toMethodDescriptorString());
     }
 
+    public void testDescriptorString() {
+        assertEquals("(Ljava/lang/String;Ljava/lang/Object;)I", MethodType.methodType(
+                int.class, String.class, Object.class).descriptorString());
+
+        assertEquals("()I", MethodType.methodType(int.class).descriptorString());
+        assertEquals("()[I", MethodType.methodType(int[].class).descriptorString());
+
+        assertEquals("([I)V", MethodType.methodType(void.class, int[].class)
+                .descriptorString());
+    }
+
     private static void assertParameterTypes(MethodType type, Class<?>... params) {
         assertEquals(params.length, type.parameterCount());
 

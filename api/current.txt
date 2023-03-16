@@ -3041,9 +3041,12 @@ package java.lang {
     enum_constant public static final java.lang.Character.UnicodeScript ZANABAZAR_SQUARE;
   }
 
-  public final class Class<T> implements java.lang.reflect.AnnotatedElement java.lang.reflect.GenericDeclaration java.io.Serializable java.lang.reflect.Type {
+  public final class Class<T> implements java.lang.reflect.AnnotatedElement java.lang.reflect.GenericDeclaration java.io.Serializable java.lang.reflect.Type java.lang.invoke.TypeDescriptor.OfField<java.lang.Class<?>> {
+    method @NonNull public Class<?> arrayType();
     method @NonNull public <U> Class<? extends U> asSubclass(@NonNull Class<U>);
     method @Nullable public T cast(@Nullable Object);
+    method @Nullable public Class<?> componentType();
+    method @NonNull public String descriptorString();
     method public boolean desiredAssertionStatus();
     method @NonNull public static Class<?> forName(@NonNull String) throws java.lang.ClassNotFoundException;
     method @NonNull public static Class<?> forName(@NonNull String, boolean, @Nullable ClassLoader) throws java.lang.ClassNotFoundException;
@@ -3086,6 +3089,7 @@ package java.lang {
     method @NonNull public String getPackageName();
     method @Nullable public Class<?>[] getPermittedSubclasses();
     method @Nullable public java.security.ProtectionDomain getProtectionDomain();
+    method @Nullable public java.lang.reflect.RecordComponent[] getRecordComponents();
     method @Nullable public java.net.URL getResource(@NonNull String);
     method @Nullable public java.io.InputStream getResourceAsStream(@NonNull String);
     method @Nullable public Object[] getSigners();
@@ -3103,6 +3107,7 @@ package java.lang {
     method public boolean isMemberClass();
     method public boolean isNestmateOf(@NonNull Class<?>);
     method public boolean isPrimitive();
+    method public boolean isRecord();
     method public boolean isSealed();
     method public boolean isSynthetic();
     method @Deprecated @NonNull public T newInstance() throws java.lang.IllegalAccessException, java.lang.InstantiationException;
@@ -3752,6 +3757,13 @@ package java.lang {
 
   public interface Readable {
     method public int read(java.nio.CharBuffer) throws java.io.IOException;
+  }
+
+  public abstract class Record {
+    ctor protected Record();
+    method public abstract boolean equals(@Nullable Object);
+    method public abstract int hashCode();
+    method @NonNull public abstract String toString();
   }
 
   public class ReflectiveOperationException extends java.lang.Exception {
@@ -4656,11 +4668,12 @@ package java.lang.invoke {
     field public static final int PUBLIC = 1; // 0x1
   }
 
-  public final class MethodType implements java.io.Serializable {
+  public final class MethodType implements java.io.Serializable java.lang.invoke.TypeDescriptor.OfMethod<java.lang.Class<?>,java.lang.invoke.MethodType> {
     method public java.lang.invoke.MethodType appendParameterTypes(Class<?>...);
     method public java.lang.invoke.MethodType appendParameterTypes(java.util.List<java.lang.Class<?>>);
     method public java.lang.invoke.MethodType changeParameterType(int, Class<?>);
     method public java.lang.invoke.MethodType changeReturnType(Class<?>);
+    method @NonNull public String descriptorString();
     method public java.lang.invoke.MethodType dropParameterTypes(int, int);
     method public java.lang.invoke.MethodType erase();
     method public static java.lang.invoke.MethodType fromMethodDescriptorString(String, ClassLoader) throws java.lang.IllegalArgumentException, java.lang.TypeNotPresentException;
@@ -4694,6 +4707,29 @@ package java.lang.invoke {
     method public final java.lang.invoke.MethodHandle dynamicInvoker();
     method public final java.lang.invoke.MethodHandle getTarget();
     method public void setTarget(java.lang.invoke.MethodHandle);
+  }
+
+  public interface TypeDescriptor {
+    method public String descriptorString();
+  }
+
+  public static interface TypeDescriptor.OfField<F extends java.lang.invoke.TypeDescriptor.OfField<F>> extends java.lang.invoke.TypeDescriptor {
+    method public F arrayType();
+    method public F componentType();
+    method public boolean isArray();
+    method public boolean isPrimitive();
+  }
+
+  public static interface TypeDescriptor.OfMethod<F extends java.lang.invoke.TypeDescriptor.OfField<F>, M extends java.lang.invoke.TypeDescriptor.OfMethod<F, M>> extends java.lang.invoke.TypeDescriptor {
+    method public M changeParameterType(int, F);
+    method public M changeReturnType(F);
+    method public M dropParameterTypes(int, int);
+    method public M insertParameterTypes(int, F...);
+    method public F[] parameterArray();
+    method public int parameterCount();
+    method public java.util.List<F> parameterList();
+    method public F parameterType(int);
+    method public F returnType();
   }
 
   public abstract class VarHandle {
@@ -5061,6 +5097,18 @@ package java.lang.reflect {
     field protected java.lang.reflect.InvocationHandler h;
   }
 
+  public final class RecordComponent implements java.lang.reflect.AnnotatedElement {
+    method @NonNull public java.lang.reflect.Method getAccessor();
+    method @Nullable public <T extends java.lang.annotation.Annotation> T getAnnotation(@NonNull Class<T>);
+    method @NonNull public java.lang.annotation.Annotation[] getAnnotations();
+    method @NonNull public java.lang.annotation.Annotation[] getDeclaredAnnotations();
+    method @NonNull public Class<?> getDeclaringRecord();
+    method @Nullable public String getGenericSignature();
+    method @NonNull public java.lang.reflect.Type getGenericType();
+    method @NonNull public String getName();
+    method @NonNull public Class<?> getType();
+  }
+
   public final class ReflectPermission extends java.security.BasicPermission {
     ctor public ReflectPermission(String);
     ctor public ReflectPermission(String, String);
@@ -5085,6 +5133,14 @@ package java.lang.reflect {
   public interface WildcardType extends java.lang.reflect.Type {
     method @NonNull public java.lang.reflect.Type[] getLowerBounds();
     method @NonNull public java.lang.reflect.Type[] getUpperBounds();
+  }
+
+}
+
+package java.lang.runtime {
+
+  public class ObjectMethods {
+    method @NonNull public static Object bootstrap(@NonNull java.lang.invoke.MethodHandles.Lookup, @NonNull String, @NonNull java.lang.invoke.TypeDescriptor, @NonNull Class<?>, @Nullable String, @NonNull java.lang.invoke.MethodHandle...) throws java.lang.Throwable;
   }
 
 }

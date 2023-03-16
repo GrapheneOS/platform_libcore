@@ -45,6 +45,7 @@ import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -637,4 +638,33 @@ public class ClassTest {
         }
     }
 
+    @Test
+    public void testComponentType() {
+        assertNull(int.class.componentType());
+        assertNull(String.class.componentType());
+        assertNull(Object.class.componentType());
+
+        assertEquals(int.class, int[].class.componentType());
+        assertEquals(int[].class, int[][].class.componentType());
+        assertEquals(String.class, String[].class.componentType());
+        assertEquals(Foo.class, Foo[].class.componentType());
+    }
+
+    @Test
+    public void testArrayType() {
+        assertEquals(int[].class, int.class.arrayType());
+        assertEquals(int[][].class, int[].class.arrayType());
+        assertEquals(String[].class, String.class.arrayType());
+        assertEquals(Foo[].class, Foo.class.arrayType());
+    }
+
+    @Test
+    public void testDescriptorString() {
+        assertEquals("I", int.class.descriptorString());
+        assertEquals("V", void.class.descriptorString());
+        assertEquals("[I", int[].class.descriptorString());
+        assertEquals("[[I", int[][].class.descriptorString());
+        assertEquals("Ljava/lang/String;", String.class.descriptorString());
+        assertEquals("[Ljava/lang/String;", String[].class.descriptorString());
+    }
 }

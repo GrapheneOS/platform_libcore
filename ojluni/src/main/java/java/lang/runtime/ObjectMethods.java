@@ -45,7 +45,6 @@ import java.util.Objects;
  * methods for record classes.
  *
  * @since 16
- * @hide
  */
 public class ObjectMethods {
 
@@ -330,7 +329,6 @@ public class ObjectMethods {
      * @throws IllegalArgumentException if the bootstrap arguments are invalid
      *                                  or inconsistent
      * @throws Throwable if any exception is thrown during call site construction
-     * @hide
      */
     public static Object bootstrap(MethodHandles.Lookup lookup, String methodName, TypeDescriptor type,
                                    Class<?> recordClass,

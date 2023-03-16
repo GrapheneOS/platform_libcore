@@ -1185,7 +1185,6 @@ class MethodType
      * @since 12
      * @jvms 4.3.3 Method Descriptors
      * @see <a href="#descriptor">Nominal Descriptor for {@code MethodType}</a>
-     * @hide
      */
     @Override
     public String descriptorString() {

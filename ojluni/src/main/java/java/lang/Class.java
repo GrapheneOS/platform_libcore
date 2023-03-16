@@ -1427,7 +1427,6 @@ public final class Class<T> implements java.io.Serializable,
      * @return a {@code Class} describing the component type, or {@code null}
      * if this {@code Class} does not describe an array type
      * @since 12
-     * @hide
      */
     @Override
     public Class<?> componentType() {
@@ -1440,7 +1439,6 @@ public final class Class<T> implements java.io.Serializable,
      *
      * @return a {@code Class} describing the array type
      * @since 12
-     * @hide
      */
     @Override
     public Class<?> arrayType() {
@@ -1480,7 +1478,6 @@ public final class Class<T> implements java.io.Serializable,
      * @return the descriptor string for this {@code Class} object
      * @jvms 4.3.2 Field Descriptors
      * @since 12
-     * @hide
      */
     @Override
     public String descriptorString() {
@@ -2644,7 +2641,6 @@ public final class Class<T> implements java.io.Serializable,
      *
      * @jls 8.10 Record Classes
      * @since 16
-     * @hide
      */
     @CallerSensitive
     public RecordComponent[] getRecordComponents() {
@@ -4024,7 +4020,6 @@ public final class Class<T> implements java.io.Serializable,
      * @return true if and only if this class is a record class, otherwise false
      * @jls 8.10 Record Classes
      * @since 16
-     * @hide
      */
     public boolean isRecord() {
         // this superclass and final modifier check is not strictly necessary
