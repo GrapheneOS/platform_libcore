@@ -27,7 +27,7 @@ fi
 
 OJLUNI_JAVA_ROOT=${ANDROID_BUILD_TOP}/libcore/ojluni/src/main/java
 
-NAWK=awk SCRIPTS=${ANDROID_BUILD_TOP}/libcore/ojluni/src/tools/scripts/ \
+AWK=awk SCRIPTS=${ANDROID_BUILD_TOP}/libcore/ojluni/src/tools/scripts/ \
 ${ANDROID_BUILD_TOP}/libcore/ojluni/src/tools/scripts/genExceptions.sh \
   ${OJLUNI_JAVA_ROOT}/java/nio/charset/exceptions \
   ${OJLUNI_JAVA_ROOT}/java/nio/charset

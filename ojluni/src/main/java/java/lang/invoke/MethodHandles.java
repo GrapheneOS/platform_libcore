@@ -1049,6 +1049,36 @@ assertEquals("[x, y, z]", pb.command().toString());
             return createMethodHandleForConstructor(constructor);
         }
 
+        // BEGIN Android-added: Add findClass(String) from OpenJDK 17. http://b/270028670
+        // TODO: Unhide this method.
+        /**
+         * Looks up a class by name from the lookup context defined by this {@code Lookup} object,
+         * <a href="MethodHandles.Lookup.html#equiv">as if resolved</a> by an {@code ldc} instruction.
+         * Such a resolution, as specified in JVMS 5.4.3.1 section, attempts to locate and load the class,
+         * and then determines whether the class is accessible to this lookup object.
+         * <p>
+         * The lookup context here is determined by the {@linkplain #lookupClass() lookup class},
+         * its class loader, and the {@linkplain #lookupModes() lookup modes}.
+         *
+         * @param targetName the fully qualified name of the class to be looked up.
+         * @return the requested class.
+         * @throws SecurityException if a security manager is present and it
+         *                           <a href="MethodHandles.Lookup.html#secmgr">refuses access</a>
+         * @throws LinkageError if the linkage fails
+         * @throws ClassNotFoundException if the class cannot be loaded by the lookup class' loader.
+         * @throws IllegalAccessException if the class is not accessible, using the allowed access
+         * modes.
+         * @throws NullPointerException if {@code targetName} is null
+         * @since 9
+         * @jvms 5.4.3.1 Class and Interface Resolution
+         * @hide
+         */
+        public Class<?> findClass(String targetName) throws ClassNotFoundException, IllegalAccessException {
+            Class<?> targetClass = Class.forName(targetName, false, lookupClass.getClassLoader());
+            return accessClass(targetClass);
+        }
+        // END Android-added: Add findClass(String) from OpenJDK 17. http://b/270028670
+
         private MethodHandle createMethodHandleForConstructor(Constructor constructor) {
             Class<?> refc = constructor.getDeclaringClass();
             MethodType constructorType =
@@ -1092,6 +1122,135 @@ assertEquals("[x, y, z]", pb.command().toString());
             // Set the return type for the <init> MethodType to be void.
             return MethodType.methodType(void.class, initPtypes);
         }
+
+        // BEGIN Android-added: Add accessClass(Class) from OpenJDK 17. http://b/270028670
+        /*
+         * Returns IllegalAccessException due to access violation to the given targetClass.
+         *
+         * This method is called by {@link Lookup#accessClass} and {@link Lookup#ensureInitialized}
+         * which verifies access to a class rather a member.
+         */
+        private IllegalAccessException makeAccessException(Class<?> targetClass) {
+            String message = "access violation: "+ targetClass;
+            if (this == MethodHandles.publicLookup()) {
+                message += ", from public Lookup";
+            } else {
+                // Android-changed: Remove unsupported module name.
+                // Module m = lookupClass().getModule();
+                // message += ", from " + lookupClass() + " (" + m + ")";
+                 message += ", from " + lookupClass();
+                // Android-removed: Remove prevLookupClass until supported by Lookup in OpenJDK 17.
+                // if (prevLookupClass != null) {
+                //    message += ", previous lookup " +
+                //            prevLookupClass.getName() + " (" + prevLookupClass.getModule() + ")";
+                // }
+            }
+            return new IllegalAccessException(message);
+        }
+
+        // TODO: Unhide this method.
+        /**
+         * Determines if a class can be accessed from the lookup context defined by
+         * this {@code Lookup} object. The static initializer of the class is not run.
+         * If {@code targetClass} is an array class, {@code targetClass} is accessible
+         * if the element type of the array class is accessible.  Otherwise,
+         * {@code targetClass} is determined as accessible as follows.
+         *
+         * <p>
+         * If {@code targetClass} is in the same module as the lookup class,
+         * the lookup class is {@code LC} in module {@code M1} and
+         * the previous lookup class is in module {@code M0} or
+         * {@code null} if not present,
+         * {@code targetClass} is accessible if and only if one of the following is true:
+         * <ul>
+         * <li>If this lookup has {@link #PRIVATE} access, {@code targetClass} is
+         *     {@code LC} or other class in the same nest of {@code LC}.</li>
+         * <li>If this lookup has {@link #PACKAGE} access, {@code targetClass} is
+         *     in the same runtime package of {@code LC}.</li>
+         * <li>If this lookup has {@link #MODULE} access, {@code targetClass} is
+         *     a public type in {@code M1}.</li>
+         * <li>If this lookup has {@link #PUBLIC} access, {@code targetClass} is
+         *     a public type in a package exported by {@code M1} to at least  {@code M0}
+         *     if the previous lookup class is present; otherwise, {@code targetClass}
+         *     is a public type in a package exported by {@code M1} unconditionally.</li>
+         * </ul>
+         *
+         * <p>
+         * Otherwise, if this lookup has {@link #UNCONDITIONAL} access, this lookup
+         * can access public types in all modules when the type is in a package
+         * that is exported unconditionally.
+         * <p>
+         * Otherwise, {@code targetClass} is in a different module from {@code lookupClass},
+         * and if this lookup does not have {@code PUBLIC} access, {@code lookupClass}
+         * is inaccessible.
+         * <p>
+         * Otherwise, if this lookup has no {@linkplain #previousLookupClass() previous lookup class},
+         * {@code M1} is the module containing {@code lookupClass} and
+         * {@code M2} is the module containing {@code targetClass},
+         * then {@code targetClass} is accessible if and only if
+         * <ul>
+         * <li>{@code M1} reads {@code M2}, and
+         * <li>{@code targetClass} is public and in a package exported by
+         *     {@code M2} at least to {@code M1}.
+         * </ul>
+         * <p>
+         * Otherwise, if this lookup has a {@linkplain #previousLookupClass() previous lookup class},
+         * {@code M1} and {@code M2} are as before, and {@code M0} is the module
+         * containing the previous lookup class, then {@code targetClass} is accessible
+         * if and only if one of the following is true:
+         * <ul>
+         * <li>{@code targetClass} is in {@code M0} and {@code M1}
+         *     {@linkplain Module#reads reads} {@code M0} and the type is
+         *     in a package that is exported to at least {@code M1}.
+         * <li>{@code targetClass} is in {@code M1} and {@code M0}
+         *     {@linkplain Module#reads reads} {@code M1} and the type is
+         *     in a package that is exported to at least {@code M0}.
+         * <li>{@code targetClass} is in a third module {@code M2} and both {@code M0}
+         *     and {@code M1} reads {@code M2} and the type is in a package
+         *     that is exported to at least both {@code M0} and {@code M2}.
+         * </ul>
+         * <p>
+         * Otherwise, {@code targetClass} is not accessible.
+         *
+         * @param targetClass the class to be access-checked
+         * @return the class that has been access-checked
+         * @throws IllegalAccessException if the class is not accessible from the lookup class
+         * and previous lookup class, if present, using the allowed access modes.
+         * @throws SecurityException if a security manager is present and it
+         *                           <a href="MethodHandles.Lookup.html#secmgr">refuses access</a>
+         * @throws NullPointerException if {@code targetClass} is {@code null}
+         * @since 9
+         * @see <a href="#cross-module-lookup">Cross-module lookups</a>
+         * @hide
+         */
+        public Class<?> accessClass(Class<?> targetClass) throws IllegalAccessException {
+            if (!isClassAccessible(targetClass)) {
+                throw makeAccessException(targetClass);
+            }
+            // Android-removed: SecurityManager is unnecessary on Android.
+            // checkSecurityManager(targetClass);
+            return targetClass;
+        }
+
+        boolean isClassAccessible(Class<?> refc) {
+            Objects.requireNonNull(refc);
+            Class<?> caller = lookupClassOrNull();
+            Class<?> type = refc;
+            while (type.isArray()) {
+                type = type.getComponentType();
+            }
+            // Android-removed: Remove prevLookupClass until supported by Lookup in OpenJDK 17.
+            // return caller == null || VerifyAccess.isClassAccessible(type, caller, prevLookupClass, allowedModes);
+            return caller == null || VerifyAccess.isClassAccessible(type, caller, allowedModes);
+        }
+
+        // This is just for calling out to MethodHandleImpl.
+        private Class<?> lookupClassOrNull() {
+            // Android-changed: Android always returns lookupClass and has no concept of TRUSTED.
+            // return (allowedModes == TRUSTED) ? null : lookupClass;
+            return lookupClass;
+        }
+        // END Android-added: Add accessClass(Class) from OpenJDK 17. http://b/270028670
 
         /**
          * Produces an early-bound method handle for a virtual method.

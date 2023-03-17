@@ -60,6 +60,10 @@ extern "C" void register_java_lang_Runtime(JNIEnv* env);
 extern "C" void register_java_lang_UNIXProcess(JNIEnv* env);
 void register_java_lang_Character(JNIEnv* env);
 void register_jdk_internal_misc_VM(JNIEnv* env);
+extern "C" void register_java_util_zip_CRC32(JNIEnv* env);
+extern "C" void register_java_util_zip_Adler32(JNIEnv* env);
+extern "C" void register_java_sun_nio_fs_UnixNativeDispatcher(JNIEnv* env);
+extern "C" void register_java_sun_nio_ch_PollArrayWrapper(JNIEnv* env);
 
 extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   jint version = JNI_VERSION_1_6;
@@ -129,6 +133,11 @@ extern "C" JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void*) {
   register_java_lang_UNIXProcess(env);
   register_java_lang_Character(env);
   register_jdk_internal_misc_VM(env);
+
+  register_java_util_zip_CRC32(env);
+  register_java_util_zip_Adler32(env);
+  register_java_sun_nio_fs_UnixNativeDispatcher(env);
+  register_java_sun_nio_ch_PollArrayWrapper(env);
 
   env->PopLocalFrame(/* result */ nullptr);  // Pop the local frame.
   return version;

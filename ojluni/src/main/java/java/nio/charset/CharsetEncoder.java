@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
- * Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,6 +36,7 @@ import java.nio.BufferUnderflowException;
 import java.lang.ref.WeakReference;
 import java.nio.charset.CoderMalfunctionError;                  // javadoc
 import java.util.Arrays;
+import java.util.Objects;
 
 
 /**
@@ -206,10 +207,12 @@ public abstract class CharsetEncoder {
         // END Android-added: A hidden constructor for the CharsetEncoderICU subclass.
 
         this.charset = cs;
-        if (averageBytesPerChar <= 0.0f)
+        // Use !(a > 0.0f) rather than (a <= 0.0f) to exclude NaN values
+        if (!(averageBytesPerChar > 0.0f))
             throw new IllegalArgumentException("Non-positive "
                                                + "averageBytesPerChar");
-        if (maxBytesPerChar <= 0.0f)
+        // Use !(a > 0.0f) rather than (a <= 0.0f) to exclude NaN values
+        if (!(maxBytesPerChar > 0.0f))
             throw new IllegalArgumentException("Non-positive "
                                                + "maxBytesPerChar");
         if (averageBytesPerChar > maxBytesPerChar)
@@ -482,7 +485,14 @@ public abstract class CharsetEncoder {
     /**
      * Returns the maximum number of bytes that will be produced for each
      * character of input.  This value may be used to compute the worst-case size
-     * of the output buffer required for a given input sequence.
+     * of the output buffer required for a given input sequence. This value
+     * accounts for any necessary content-independent prefix or suffix
+
+     * bytes, such as byte-order marks.
+
+
+
+
      *
      * @return  The maximum number of bytes that will be produced per
      *          character of input
@@ -491,6 +501,7 @@ public abstract class CharsetEncoder {
         return maxBytesPerChar;
     }
 
+    // Android-changed: Keep compat behavior. Document NPE thrown for null arguments.
     /**
      * Encodes as many characters as possible from the given input buffer,
      * writing the results to the given output buffer.
@@ -588,10 +599,16 @@ public abstract class CharsetEncoder {
      * @throws  CoderMalfunctionError
      *          If an invocation of the encodeLoop method threw
      *          an unexpected exception
+     *
+     * @throws  NullPointerException if input or output buffer is null
      */
     public final CoderResult encode(CharBuffer in, ByteBuffer out,
                                     boolean endOfInput)
     {
+        // Android-added: Keep compat behavior. libcore throws NPE for null arguments.
+        Objects.requireNonNull(in, "in");
+        Objects.requireNonNull(out, "out");
+
         int newState = endOfInput ? ST_END : ST_CODING;
         if ((state != ST_RESET) && (state != ST_CODING)
             && !(endOfInput && (state == ST_END)))
@@ -603,9 +620,7 @@ public abstract class CharsetEncoder {
             CoderResult cr;
             try {
                 cr = encodeLoop(in, out);
-            } catch (BufferUnderflowException x) {
-                throw new CoderMalfunctionError(x);
-            } catch (BufferOverflowException x) {
+            } catch (RuntimeException x) {
                 throw new CoderMalfunctionError(x);
             }
 
@@ -783,6 +798,7 @@ public abstract class CharsetEncoder {
     protected abstract CoderResult encodeLoop(CharBuffer in,
                                               ByteBuffer out);
 
+    // Android-changed: Document CoderMalfunctionError and NPE thrown for null input buffer.
     /**
      * Convenience method that encodes the remaining content of a single input
      * character buffer into a newly-allocated byte buffer.
@@ -813,6 +829,12 @@ public abstract class CharsetEncoder {
      *          position cannot be mapped to an equivalent byte sequence and
      *          the current unmappable-character action is {@link
      *          CodingErrorAction#REPORT}
+     *
+     * @throws  CoderMalfunctionError
+     *          If an invocation of the encodeLoop method threw
+     *          an unexpected exception
+     *
+     * @throws  NullPointerException if input buffer is null
      */
     public final ByteBuffer encode(CharBuffer in)
         throws CharacterCodingException

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2014 The Android Open Source Project
- * Copyright (c) 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+ * Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
  * This code is free software; you can redistribute it and/or modify it
@@ -36,6 +36,7 @@ import java.nio.BufferUnderflowException;
 import java.lang.ref.WeakReference;
 import java.nio.charset.CoderMalfunctionError;                  // javadoc
 import java.util.Arrays;
+import java.util.Objects;
 
 
 /**
@@ -206,10 +207,12 @@ public abstract class CharsetDecoder {
 
 
         this.charset = cs;
-        if (averageCharsPerByte <= 0.0f)
+        // Use !(a > 0.0f) rather than (a <= 0.0f) to exclude NaN values
+        if (!(averageCharsPerByte > 0.0f))
             throw new IllegalArgumentException("Non-positive "
                                                + "averageCharsPerByte");
-        if (maxCharsPerByte <= 0.0f)
+        // Use !(a > 0.0f) rather than (a <= 0.0f) to exclude NaN values
+        if (!(maxCharsPerByte > 0.0f))
             throw new IllegalArgumentException("Non-positive "
                                                + "maxCharsPerByte");
         if (averageCharsPerByte > maxCharsPerByte)
@@ -482,7 +485,14 @@ public abstract class CharsetDecoder {
     /**
      * Returns the maximum number of characters that will be produced for each
      * byte of input.  This value may be used to compute the worst-case size
-     * of the output buffer required for a given input sequence.
+     * of the output buffer required for a given input sequence. This value
+     * accounts for any necessary content-independent prefix or suffix
+
+
+
+
+     * characters.
+
      *
      * @return  The maximum number of characters that will be produced per
      *          byte of input
@@ -491,6 +501,7 @@ public abstract class CharsetDecoder {
         return maxCharsPerByte;
     }
 
+    // Android-changed: Keep compat behavior. Document NPE thrown for null arguments.
     /**
      * Decodes as many bytes as possible from the given input buffer,
      * writing the results to the given output buffer.
@@ -588,10 +599,16 @@ public abstract class CharsetDecoder {
      * @throws  CoderMalfunctionError
      *          If an invocation of the decodeLoop method threw
      *          an unexpected exception
+     *
+     * @throws  NullPointerException if input or output buffer is null
      */
     public final CoderResult decode(ByteBuffer in, CharBuffer out,
                                     boolean endOfInput)
     {
+        // Android-added: Keep compat behavior. libcore throws NPE for null arguments.
+        Objects.requireNonNull(in, "in");
+        Objects.requireNonNull(out, "out");
+
         int newState = endOfInput ? ST_END : ST_CODING;
         if ((state != ST_RESET) && (state != ST_CODING)
             && !(endOfInput && (state == ST_END)))
@@ -603,9 +620,7 @@ public abstract class CharsetDecoder {
             CoderResult cr;
             try {
                 cr = decodeLoop(in, out);
-            } catch (BufferUnderflowException x) {
-                throw new CoderMalfunctionError(x);
-            } catch (BufferOverflowException x) {
+            } catch (RuntimeException x) {
                 throw new CoderMalfunctionError(x);
             }
 
@@ -783,6 +798,7 @@ public abstract class CharsetDecoder {
     protected abstract CoderResult decodeLoop(ByteBuffer in,
                                               CharBuffer out);
 
+    // Android-changed: Document CoderMalfunctionError and NPE thrown for null input buffer.
     /**
      * Convenience method that decodes the remaining content of a single input
      * byte buffer into a newly-allocated character buffer.
@@ -813,6 +829,12 @@ public abstract class CharsetDecoder {
      *          position cannot be mapped to an equivalent character sequence and
      *          the current unmappable-character action is {@link
      *          CodingErrorAction#REPORT}
+     *
+     * @throws  CoderMalfunctionError
+     *          If an invocation of the decodeLoop method threw
+     *          an unexpected exception
+     *
+     * @throws  NullPointerException if input buffer is null
      */
     public final CharBuffer decode(ByteBuffer in)
         throws CharacterCodingException

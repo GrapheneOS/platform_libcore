@@ -31,6 +31,11 @@ import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.ObjectStreamException;
 import java.io.Serializable;
+import java.lang.constant.ClassDesc;
+import java.lang.constant.Constable;
+import java.lang.constant.ConstantDescs;
+import java.lang.constant.DynamicConstantDesc;
+import java.lang.invoke.MethodHandles;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import libcore.util.BasicLruCache;
@@ -350,8 +355,7 @@ public abstract class Enum<E extends Enum<E>>
         throw new InvalidObjectException("can't deserialize enum");
     }
 
-    // BEGIN Android-removed: dynamic constants not supported on Android.
-    /*
+    // Android-changed: Hide EnumDesc API until master switches away from Android U dev. b/270028670
     /**
      * A <a href="{@docRoot}/java.base/java/lang/constant/package-summary.html#nominal">nominal descriptor</a> for an
      * {@code enum} constant.
@@ -359,7 +363,8 @@ public abstract class Enum<E extends Enum<E>>
      * @param <E> the type of the enum constant
      *
      * @since 12
-     *
+     * @hide
+     */
     public static final class EnumDesc<E extends Enum<E>>
             extends DynamicConstantDesc<E> {
 
@@ -370,7 +375,7 @@ public abstract class Enum<E extends Enum<E>>
          * @param constantName the unqualified name of the enum constant
          * @throws NullPointerException if any argument is null
          * @jvms 4.2.2 Unqualified Names
-         *
+         */
         private EnumDesc(ClassDesc constantClass, String constantName) {
             super(ConstantDescs.BSM_ENUM_CONSTANT, requireNonNull(constantName), requireNonNull(constantClass));
         }
@@ -385,7 +390,7 @@ public abstract class Enum<E extends Enum<E>>
          * @throws NullPointerException if any argument is null
          * @jvms 4.2.2 Unqualified Names
          * @since 12
-         *
+         */
         public static<E extends Enum<E>> EnumDesc<E> of(ClassDesc enumClass,
                                                         String constantName) {
             return new EnumDesc<>(enumClass, constantName);
@@ -403,6 +408,4 @@ public abstract class Enum<E extends Enum<E>>
             return String.format("EnumDesc[%s.%s]", constantType().displayName(), constantName());
         }
     }
-     */
-    // END Android-removed: dynamic constants not supported on Android.
 }

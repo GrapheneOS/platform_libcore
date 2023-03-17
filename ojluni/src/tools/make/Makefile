@@ -32,7 +32,7 @@ ANDROID_BUILD_TOP := $(realpath $(shell pwd)/../../../../../)
 
 # Define command line tools
 MKDIR := mkdir
-RM := rm
+RM := rm -f # ignore if the file doesn't exist
 MV := mv
 JAVAC := javac
 
@@ -48,6 +48,9 @@ $(BUILD_TOOLS_JDK): $(SPP_SRC)
 	$(MKDIR) -p $(BUILD_TOOLS_JDK_DIR)
 	$(JAVAC) -d $(BUILD_TOOLS_JDK_DIR) $(SPP_SRC)
 
+ExecuteWithLog = $(2) | tee -a $(1)
+
+MakeTargetDir = mkdir -p $(dir $@)
 
 # Define variables only needed for GensrcCharsetEncoder.gmk
 GENSRC_CHARSETCODER_SRC := $(ANDROID_BUILD_TOP)/libcore/ojluni/src/main/java/java/nio

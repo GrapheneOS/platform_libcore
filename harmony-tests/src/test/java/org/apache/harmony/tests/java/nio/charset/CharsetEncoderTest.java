@@ -21,6 +21,7 @@ import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
+import java.nio.charset.CoderMalfunctionError;
 import java.nio.charset.CoderResult;
 import java.nio.charset.CodingErrorAction;
 import java.nio.charset.MalformedInputException;
@@ -29,6 +30,8 @@ import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 
 import junit.framework.TestCase;
+
+import org.junit.Assert;
 
 /**
  * API unit test for java.nio.charset.CharsetEncoder
@@ -676,12 +679,12 @@ public class CharsetEncoderTest extends TestCase {
 			assertByteArray(out, unibytesWithRep);
 		}
 
-		// RuntimeException
-		try {
-			encoder.encode(getExceptionCharBuffer());
-			fail("should throw runtime exception");
-		} catch (RuntimeException e) {
-		}
+		// CoderMalfunctionError
+		CharBuffer inBuffer = getExceptionCharBuffer();
+		Class<? extends Throwable> throwableClass = inBuffer == null
+				? NullPointerException.class
+				: CoderMalfunctionError.class;
+		Assert.assertThrows(throwableClass, () -> encoder.encode(inBuffer));
 	}
 
 	/*
@@ -887,12 +890,12 @@ public class CharsetEncoderTest extends TestCase {
 					+ cs.name());
 		}
 
-		// RuntimeException
-		try {
-			encoder.encode(getExceptionCharBuffer());
-			fail("should throw runtime exception");
-		} catch (RuntimeException e) {
-		}
+		// CoderMalfunctionError
+		CharBuffer inBuffer = getExceptionCharBuffer();
+		Class<? extends Throwable> throwableClass = inBuffer == null
+				? NullPointerException.class
+				: CoderMalfunctionError.class;
+		Assert.assertThrows(throwableClass, () -> encoder.encode(inBuffer));
 	}
 
 	private void assertCodingErrorAction(boolean endOfInput, ByteBuffer out,
