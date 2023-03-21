@@ -903,7 +903,7 @@ ojluni/src/main/java/java/util/ComparableTimSort.java,jdk17u/jdk-17.0.6-ga,src/j
 ojluni/src/main/java/java/util/Comparator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Comparator.java
 ojluni/src/main/java/java/util/Comparators.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Comparators.java
 ojluni/src/main/java/java/util/ConcurrentModificationException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/ConcurrentModificationException.java
-ojluni/src/main/java/java/util/Currency.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Currency.java
+ojluni/src/main/java/java/util/Currency.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Currency.java
 ojluni/src/main/java/java/util/Date.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Date.java
 ojluni/src/main/java/java/util/Deque.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Deque.java
 ojluni/src/main/java/java/util/Dictionary.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Dictionary.java
@@ -1000,7 +1000,7 @@ ojluni/src/main/java/java/util/Tripwire.java,jdk11u/jdk-11.0.13-ga,src/java.base
 ojluni/src/main/java/java/util/UUID.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/UUID.java
 ojluni/src/main/java/java/util/UnknownFormatConversionException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/UnknownFormatConversionException.java
 ojluni/src/main/java/java/util/UnknownFormatFlagsException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/UnknownFormatFlagsException.java
-ojluni/src/main/java/java/util/Vector.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Vector.java
+ojluni/src/main/java/java/util/Vector.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Vector.java
 ojluni/src/main/java/java/util/WeakHashMap.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/WeakHashMap.java
 ojluni/src/main/java/java/util/XMLUtils.java,jdk7u/jdk7u40-b60,jdk/src/share/classes/java/util/XMLUtils.java
 ojluni/src/main/java/java/util/concurrent/AbstractExecutorService.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/concurrent/AbstractExecutorService.java
