@@ -152,6 +152,10 @@ public final class Cleaner {
         impl = new CleanerImpl();
     }
 
+    private Cleaner(ReferenceQueue queue) {
+        impl = new CleanerImpl(queue);
+    }
+
     /**
      * Returns a new {@code Cleaner}.
      * <p>
@@ -202,6 +206,18 @@ public final class Cleaner {
         Objects.requireNonNull(threadFactory, "threadFactory");
         Cleaner cleaner = new Cleaner();
         cleaner.impl.start(cleaner, threadFactory);
+        return cleaner;
+    }
+
+    // Android-added: objects registered in the system cleaner are cleaned
+    // by the finalizer daemon thread, not in a InnocuousThread.
+    /**
+     * Returns a new {@code Cleaner} associated with the finalizer thread.
+     * @hide
+     */
+    public static Cleaner createSystemCleaner() {
+        Cleaner cleaner = new Cleaner(FinalizerReference.queue);
+        cleaner.impl.start(cleaner);
         return cleaner;
     }
 

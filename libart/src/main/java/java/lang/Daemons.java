@@ -20,6 +20,9 @@ import android.compat.annotation.UnsupportedAppUsage;
 import android.system.Os;
 import android.system.OsConstants;
 
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.VarHandle;
+import java.lang.ref.Cleaner;
 import java.lang.ref.FinalizerReference;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
@@ -30,6 +33,8 @@ import libcore.util.EmptyArray;
 
 import dalvik.system.VMRuntime;
 import dalvik.system.VMDebug;
+
+import jdk.internal.ref.CleanerImpl;
 
 /**
  * Calls Object.finalize() on objects in the finalizer reference queue. The VM
@@ -287,26 +292,37 @@ public final class Daemons {
                 try {
                     // Use non-blocking poll to avoid FinalizerWatchdogDaemon communication
                     // when busy.
-                    FinalizerReference<?> finalizingReference = (FinalizerReference<?>)queue.poll();
-                    if (finalizingReference != null) {
-                        finalizingObject = finalizingReference.get();
+                    Object nextReference = queue.poll();
+                    if (nextReference != null) {
                         progressCounter.lazySet(++localProgressCounter);
+                        processReference(nextReference);
                     } else {
                         finalizingObject = null;
                         progressCounter.lazySet(++localProgressCounter);
                         // Slow path; block.
                         FinalizerWatchdogDaemon.INSTANCE.monitoringNotNeeded(
                                 FinalizerWatchdogDaemon.FINALIZER_DAEMON);
-                        finalizingReference = (FinalizerReference<?>)queue.remove();
-                        finalizingObject = finalizingReference.get();
+                        nextReference = queue.remove();
                         progressCounter.set(++localProgressCounter);
                         FinalizerWatchdogDaemon.INSTANCE.monitoringNeeded(
                                 FinalizerWatchdogDaemon.FINALIZER_DAEMON);
+                        processReference(nextReference);
                     }
-                    doFinalize(finalizingReference);
                 } catch (InterruptedException ignored) {
                 } catch (OutOfMemoryError ignored) {
                 }
+            }
+        }
+
+        private void processReference(Object ref) {
+            if (ref instanceof FinalizerReference finalizingReference) {
+                finalizingObject = finalizingReference.get();
+                doFinalize(finalizingReference);
+            } else if (ref instanceof Cleaner.Cleanable cleanableReference) {
+                finalizingObject = cleanableReference;
+                doClean(cleanableReference);
+            } else {
+                throw new AssertionError("Unknown class was placed into queue: " + ref);
             }
         }
 
@@ -322,6 +338,17 @@ public final class Daemons {
                 System.logE("Uncaught exception thrown by finalizer", ex);
             } finally {
                 // Done finalizing, stop holding the object as live.
+                finalizingObject = null;
+            }
+        }
+
+        private void doClean(Cleaner.Cleanable cleanable) {
+            try {
+                cleanable.clean();
+            } catch (Throwable ex) {
+                System.logE("Uncaught exception thrown by cleaner", ex);
+            } finally {
+                // No need to hold cleaner object.
                 finalizingObject = null;
             }
         }
@@ -342,6 +369,18 @@ public final class Daemons {
 
         @UnsupportedAppUsage
         private static final FinalizerWatchdogDaemon INSTANCE = new FinalizerWatchdogDaemon();
+        private static final VarHandle VH_ACTION;
+        static {
+            try {
+                VH_ACTION = MethodHandles
+                        .privateLookupIn(
+                                CleanerImpl.PhantomCleanableRef.class, MethodHandles.lookup())
+                        .findVarHandle(
+                                CleanerImpl.PhantomCleanableRef.class, "action", Runnable.class);
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                throw new AssertionError("PhantomCleanableRef should have action field", e);
+            }
+        }
 
         private int activeWatchees;  // Only synchronized accesses.
 
@@ -512,8 +551,9 @@ public final class Daemons {
                 // the case which a very slow finalization just finished as we were timing out.
                 if (isActive(FINALIZER_DAEMON)
                         && FinalizerDaemon.INSTANCE.progressCounter.get() == finalizerStartCount) {
-                    System.logE("Was finalizing " + finalizing + ", now finalizing "
-                        + FinalizerDaemon.INSTANCE.finalizingObject);
+                    System.logE("Was finalizing " + finalizingObjectAsString(finalizing)
+                        + ", now finalizing "
+                        + finalizingObjectAsString(FinalizerDaemon.INSTANCE.finalizingObject));
                     System.logE("Total elapsed millis: "
                         + (System.currentTimeMillis() - startMillis));
                     System.logE("Total nanos: " + (System.nanoTime() - startNanos));
@@ -532,12 +572,29 @@ public final class Daemons {
         }
 
         private static TimeoutException finalizerTimeoutException(Object object) {
-            String message = object.getClass().getName() + ".finalize() timed out after "
-                    + VMRuntime.getRuntime().getFinalizerTimeoutMs() / 1000 + " seconds";
-            TimeoutException syntheticException = new TimeoutException(message);
+            StringBuilder messageBuilder = new StringBuilder();
+
+            if (object instanceof Cleaner.Cleanable) {
+                messageBuilder.append(VH_ACTION.get(object).getClass().getName());
+            } else {
+                messageBuilder.append(object.getClass().getName()).append(".finalize()");
+            }
+
+            messageBuilder.append(" timed out after ")
+                    .append(VMRuntime.getRuntime().getFinalizerTimeoutMs() / 1000)
+                    .append(" seconds");
+            TimeoutException syntheticException = new TimeoutException(messageBuilder.toString());
             // We use the stack from where finalize() was running to show where it was stuck.
             syntheticException.setStackTrace(FinalizerDaemon.INSTANCE.getStackTrace());
             return syntheticException;
+        }
+
+        private static String finalizingObjectAsString(Object obj) {
+            if (obj instanceof Cleaner.Cleanable) {
+                return VH_ACTION.get(obj).toString();
+            } else {
+                return obj.toString();
+            }
         }
 
         private static TimeoutException refQueueTimeoutException(ReferenceQueue rq) {

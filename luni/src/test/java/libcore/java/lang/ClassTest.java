@@ -499,6 +499,62 @@ public class ClassTest {
     }
 
     @Test
+    public void isSealed() {
+        assertTrue(SealedInterface.class.isSealed());
+        assertFalse(SealedFinalClass.class.isSealed());
+        assertTrue(SealedAbstractClass.class.isSealed());
+        assertFalse(NonSealedDerivedClass.class.isSealed());
+        assertFalse(DerivedClass.class.isSealed());
+    }
+
+    @Test
+    public void getPermittedSubclasses() {
+        assertNull(SealedFinalClass.class.getPermittedSubclasses());
+        assertNull(NonSealedDerivedClass.class.getPermittedSubclasses());
+        assertNull(DerivedClass.class.getPermittedSubclasses());
+
+        var sealedInterfaceSubclasses = SealedInterface.class.getPermittedSubclasses();
+        assertNotNull(sealedInterfaceSubclasses);
+        assertEquals(2, sealedInterfaceSubclasses.length);
+        assertTrue(Set.of(sealedInterfaceSubclasses).contains(SealedAbstractClass.class));
+        assertTrue(Set.of(sealedInterfaceSubclasses).contains(SealedFinalClass.class));
+
+        var sealedAbstractClass = SealedAbstractClass.class.getPermittedSubclasses();
+        assertNotNull(sealedAbstractClass);
+        assertEquals(1, sealedAbstractClass.length);
+        assertEquals(NonSealedDerivedClass.class, sealedAbstractClass[0]);
+    }
+
+    public static sealed interface SealedInterface permits SealedAbstractClass, SealedFinalClass {
+        int getNumber();
+    }
+
+    public static final class SealedFinalClass implements SealedInterface {
+        @Override
+        public int getNumber() {
+            return 1;
+        }
+    }
+
+    public static abstract sealed class SealedAbstractClass implements SealedInterface
+                                                                permits NonSealedDerivedClass {
+    }
+
+    public static non-sealed class NonSealedDerivedClass extends SealedAbstractClass {
+        @Override
+        public int getNumber() {
+            return 2;
+        }
+    }
+
+    public static class DerivedClass extends NonSealedDerivedClass {
+        @Override
+        public int getNumber() {
+            return 3;
+        }
+    }
+
+    @Test
     public void recordClass() {
         try {
             ClassLoader classLoader = createClassLoaderForResource("core-tests-smali.dex");
