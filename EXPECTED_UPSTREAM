@@ -896,7 +896,7 @@ ojluni/src/main/java/java/util/Arrays.java,jdk17u/jdk-17.0.6-ga,src/java.base/sh
 ojluni/src/main/java/java/util/ArraysParallelSortHelpers.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/ArraysParallelSortHelpers.java
 ojluni/src/main/java/java/util/Base64.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Base64.java
 ojluni/src/main/java/java/util/BitSet.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/BitSet.java
-ojluni/src/main/java/java/util/Calendar.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Calendar.java
+ojluni/src/main/java/java/util/Calendar.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Calendar.java
 ojluni/src/main/java/java/util/Collection.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Collection.java
 ojluni/src/main/java/java/util/Collections.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Collections.java
 ojluni/src/main/java/java/util/ComparableTimSort.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/ComparableTimSort.java
@@ -996,7 +996,7 @@ ojluni/src/main/java/java/util/TimerTask.java,jdk17u/jdk-17.0.6-ga,src/java.base
 ojluni/src/main/java/java/util/TooManyListenersException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/TooManyListenersException.java
 ojluni/src/main/java/java/util/TreeMap.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/TreeMap.java
 ojluni/src/main/java/java/util/TreeSet.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/TreeSet.java
-ojluni/src/main/java/java/util/Tripwire.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Tripwire.java
+ojluni/src/main/java/java/util/Tripwire.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Tripwire.java
 ojluni/src/main/java/java/util/UUID.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/UUID.java
 ojluni/src/main/java/java/util/UnknownFormatConversionException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/UnknownFormatConversionException.java
 ojluni/src/main/java/java/util/UnknownFormatFlagsException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/UnknownFormatFlagsException.java
