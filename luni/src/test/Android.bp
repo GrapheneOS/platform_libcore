@@ -28,4 +28,5 @@ java_test_host {
     static_libs: [
         "junit",
     ],
+    test_suites: ["general-tests"],
 }
