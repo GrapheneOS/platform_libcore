@@ -3847,12 +3847,17 @@ public final class Class<T> implements java.io.Serializable,
      * Note that this method returns non-null array on a class with
      * the Record attribute even if this class is not a record.
      */
-    // BEGIN Android-changed: Re-implement these Record-related methods on ART.
-    // TODO: Use dalvik.annotation.Record instead name parameters in the constructor.
+    // BEGIN Android-changed: Re-implement getRecordComponents0() on ART.
+    // TODO: Use dalvik.annotation.Record instead of named parameters in the constructor.
     // private native RecordComponent[] getRecordComponents0();
-    // private native boolean       isRecord0();
     private RecordComponent[] getRecordComponents0() {
-        Constructor<?> constructor = getRecordConstructor();
+        Constructor<?> constructor = getRecordCanonicalConstructor();
+        if (constructor == null) {
+            // Return non-null array as per getRecordComponent() javadoc if isRecord()
+            // returns true. However, it's not ideal, but the implementation will be replaced
+            // when reading it from dalvik.annotation.Record annotation.
+            return new RecordComponent[0];
+        }
         Parameter[] parameters = constructor.getParameters();
         RecordComponent[] components = new RecordComponent[parameters.length];
         Map<String, Field> fields = new HashMap<>(parameters.length);
@@ -3874,11 +3879,7 @@ public final class Class<T> implements java.io.Serializable,
         return components;
     }
 
-    private boolean isRecord0() {
-        return getRecordConstructor() != null;
-    }
-
-    private Constructor<?> getRecordConstructor() {
+    private Constructor<?> getRecordCanonicalConstructor() {
         for (Constructor<?> c : getDeclaredConstructors()) {
             boolean areAllNamed = true;
             Parameter[] parameters = c.getParameters();
@@ -3917,9 +3918,10 @@ public final class Class<T> implements java.io.Serializable,
         }
         return null;
     }
+    // END Android-changed: Re-implement getRecordComponents0() on ART.
 
-
-    // END Android-changed: Re-implement these Record-related methods on ART.
+    @FastNative
+    private native boolean       isRecord0();
 
     /**
      * Helper method to get the method name from arguments.

@@ -569,24 +569,6 @@ public final class VMDebug {
     @SystemApi(client = MODULE_LIBRARIES)
     public static native long[] countInstancesOfClasses(Class[] classes, boolean assignable);
 
-    /**
-     * Gets instances of classes on the Java heap.
-     * It is the caller's responsibility to do GC if they don't want unreachable
-     * objects to be included.
-     *
-     * @param classes the classes to get instances of.
-     * @param assignable if true, any instance whose class is assignable to
-     *                   {@code classes[i]}, as defined by {@link Class#isAssignableFrom},
-     *                   is included. If false, only instances whose class is
-     *                   equal to {@code classes[i]} are included.
-     * @return an array containing the list of matching instances. The value
-     *         for index {@code i} is an array containing the instances
-     *         of the class {@code classes[i]}
-     *
-     * @hide
-     */
-    public static native Object[][] getInstancesOfClasses(Class[] classes, boolean assignable);
-
     /* Map from the names of the runtime stats supported by getRuntimeStat() to their IDs */
     private static final HashMap<String, Integer> runtimeStatsMap = new HashMap<>();
 
