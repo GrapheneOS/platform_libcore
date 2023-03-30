@@ -808,8 +808,10 @@ public final class VMRuntime {
     public native void runHeapTasks();
 
     /**
-     * Let the heap know of the new process state. This can change allocation and garbage collection
-     * behavior regarding trimming and compaction.
+     * Let the heap know of the new "jank perceptibility" process state. This can change allocation
+     * and garbage collection behavior regarding trimming and compaction. Should be called when it
+     * appears likely that process response time will remain invisible to the user for an extended
+     * period, and then again immediately after slow process response becomes user-visible again.
      *
      * @param state The state of the process, as defined in art/runtime/process_state.h.
      *
