@@ -41,6 +41,7 @@ declare -A PATH_TO_CONFIG=(
     [luni/src/test/java/libcore/javax/security]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/libcore/javax/sql]=tools/checkstyle/asf-copyright.xml
     [luni/src/test/java/libcore/javax/xml]=tools/checkstyle/aosp-copyright.xml
+    [luni/src/test/java/libcore/jdk]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/libcore/libcore]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/libcore/sun]=tools/checkstyle/aosp-copyright.xml
     [luni/src/test/java/libcore/xml]=tools/checkstyle/aosp-copyright.xml

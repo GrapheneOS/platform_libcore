@@ -1548,7 +1548,6 @@ filegroup {
         "ojluni/src/main/java/sun/misc/RegexpPool.java",
         "ojluni/src/main/java/sun/misc/RegexpTarget.java",
         "ojluni/src/main/java/sun/misc/Resource.java",
-        "ojluni/src/main/java/sun/misc/SharedSecrets.java",
         "ojluni/src/main/java/sun/misc/URLClassPath.java",
         "ojluni/src/main/java/sun/misc/Version.java",
         "ojluni/src/main/java/sun/misc/VM.java",
