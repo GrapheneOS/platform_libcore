@@ -201,6 +201,10 @@ public class TCKLocalizedPrinterParser {
 
         DateTimeFormatter f = builder.appendLocalized(null, timeStyle).toFormatter(locale);
         String formatted = f.format(time);
+        // Android-added: DateFormat doesn't return '\u202f' in en-US. http://b/266731719
+        if (Locale.US.equals(locale)) {
+            formatted = formatted.replace('\u202f', ' ');
+        }
         assertEquals(formatted, text);
     }
 
@@ -210,6 +214,10 @@ public class TCKLocalizedPrinterParser {
         DateFormat old = DateFormat.getTimeInstance(timeStyleOld, locale);
         Date oldDate = new Date(1970 - 1900, 0, 0, time.getHour(), time.getMinute(), time.getSecond());
         String text = old.format(oldDate);
+        // Android-added: DateFormat doesn't return '\u202f' in en-US. http://b/266731719
+        if (Locale.US.equals(locale)) {
+            text = text.replace(' ', '\u202f');
+        }
 
         DateTimeFormatter f = builder.appendLocalized(null, timeStyle).toFormatter(locale);
         TemporalAccessor parsed = f.parse(text, pos);

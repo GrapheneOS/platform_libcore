@@ -45,11 +45,7 @@ public class Support_MessageFormat extends Support_Format {
 		new Support_MessageFormat("").runTest();
 	}
 
-	/**
-	 * ICU 72 started to use '\u202f' instead of ' ' before AM/PM.
-	 */
-	public static final char AM_PM_SPACE_CHAR = VersionInfo.ICU_VERSION.getMajor() >= 72
-			? '\u202f' : ' ';
+	public static final char AM_PM_SPACE_CHAR = ' ';
 
 	public void t_format_with_FieldPosition() {
 		// This test assumes a default DateFormat.is24Hour setting.

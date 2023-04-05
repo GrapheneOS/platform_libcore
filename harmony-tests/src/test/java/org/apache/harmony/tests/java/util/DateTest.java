@@ -484,11 +484,7 @@ public class DateTest extends junit.framework.TestCase {
                 0, 1, 0, 0, 0) == (long) 365 * 24 * 60 * 60 * 1000);
     }
 
-    /**
-     * ICU 72 started to use '\u202f' instead of ' ' before AM/PM.
-     */
-    private static final char AM_PM_SPACE_CHAR = VersionInfo.ICU_VERSION.getMajor() >= 72
-            ? '\u202f' : ' ';
+    private static final char AM_PM_SPACE_CHAR = ' ';
 
     /**
      * java.util.Date#toLocaleString() Test for method java.lang.String

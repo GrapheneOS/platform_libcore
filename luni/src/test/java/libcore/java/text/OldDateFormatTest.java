@@ -102,11 +102,7 @@ public class OldDateFormatTest extends junit.framework.TestCase {
         }
     }
 
-    /**
-     * ICU 72 started to use '\u202f' instead of ' ' before AM/PM.
-     */
-    public static final char AM_PM_SPACE_CHAR = VersionInfo.ICU_VERSION.getMajor() >= 72
-            ? '\u202f' : ' ';
+    public static final char AM_PM_SPACE_CHAR = ' ';
 
     /**
      * java.text.DateFormat#format(Object, StringBuffer, FieldPosition)

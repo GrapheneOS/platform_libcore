@@ -174,12 +174,14 @@ public final class StringBuilder
     }
 
     @Override
+    @NeverInline
     public StringBuilder append(Object obj) {
         return append(String.valueOf(obj));
     }
 
     @Override
     @HotSpotIntrinsicCandidate
+    @NeverInline
     public StringBuilder append(String str) {
         super.append(str);
         return this;
@@ -204,12 +206,14 @@ public final class StringBuilder
      * @param   sb   the {@code StringBuffer} to append.
      * @return  a reference to this object.
      */
+     @NeverInline
     public StringBuilder append(StringBuffer sb) {
         super.append(sb);
         return this;
     }
 
     @Override
+    @NeverInline
     public StringBuilder append(CharSequence s) {
         super.append(s);
         return this;
@@ -219,12 +223,14 @@ public final class StringBuilder
      * @throws     IndexOutOfBoundsException {@inheritDoc}
      */
     @Override
+    @NeverInline
     public StringBuilder append(CharSequence s, int start, int end) {
         super.append(s, start, end);
         return this;
     }
 
     @Override
+    @NeverInline
     public StringBuilder append(char[] str) {
         super.append(str);
         return this;
@@ -234,12 +240,14 @@ public final class StringBuilder
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     @Override
+    @NeverInline
     public StringBuilder append(char[] str, int offset, int len) {
         super.append(str, offset, len);
         return this;
     }
 
     @Override
+    @NeverInline
     public StringBuilder append(boolean b) {
         super.append(b);
         return this;
@@ -247,6 +255,7 @@ public final class StringBuilder
 
     @Override
     @HotSpotIntrinsicCandidate
+    @NeverInline
     public StringBuilder append(char c) {
         super.append(c);
         return this;
@@ -254,24 +263,28 @@ public final class StringBuilder
 
     @Override
     @HotSpotIntrinsicCandidate
+    @NeverInline
     public StringBuilder append(int i) {
         super.append(i);
         return this;
     }
 
     @Override
+    @NeverInline
     public StringBuilder append(long lng) {
         super.append(lng);
         return this;
     }
 
     @Override
+    @NeverInline
     public StringBuilder append(float f) {
         super.append(f);
         return this;
     }
 
     @Override
+    @NeverInline
     public StringBuilder append(double d) {
         super.append(d);
         return this;
@@ -281,6 +294,7 @@ public final class StringBuilder
      * @since 1.5
      */
     @Override
+    @NeverInline
     public StringBuilder appendCodePoint(int codePoint) {
         super.appendCodePoint(codePoint);
         return this;
@@ -453,6 +467,7 @@ public final class StringBuilder
 
     @Override
     @HotSpotIntrinsicCandidate
+    @NeverInline
     public String toString() {
         // BEGIN Android-added: Return a constant "" for an empty buffer to keep historic behavior.
         if (count == 0) {

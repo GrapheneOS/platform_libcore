@@ -35,7 +35,7 @@ public class SimpleDateFormatDataTest {
     // http://b/7924970
     @Test
     public void testTimeFormat12And24() {
-        char sep = VersionInfo.ICU_VERSION.getMajor() >= 72 ? '\u202f' : ' ';
+        char sep = ' ';
 
         Boolean originalSetting = DateFormat.is24Hour;
         try {

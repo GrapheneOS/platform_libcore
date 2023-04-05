@@ -1,10 +1,10 @@
 .class final Llibcore/java/lang/recordclasses/EmptyRecordClass;
-.super Ljava/lang/Object;
+.super Ljava/lang/Record;
 .source "EmptyRecordClass.java"
 
 
 # annotations
-.annotation runtime Ldalvik/annotation/Record;
+.annotation system Ldalvik/annotation/Record;
     componentNames = {}
     componentTypes = {}
 .end annotation

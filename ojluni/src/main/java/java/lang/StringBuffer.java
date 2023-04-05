@@ -25,6 +25,7 @@
 
 package java.lang;
 
+import dalvik.annotation.optimization.NeverInline;
 import java.util.Arrays;
 import jdk.internal.HotSpotIntrinsicCandidate;
 
@@ -709,6 +710,7 @@ import jdk.internal.HotSpotIntrinsicCandidate;
 
     @Override
     @HotSpotIntrinsicCandidate
+    @NeverInline
     public synchronized String toString() {
         if (toStringCache == null) {
             return toStringCache =

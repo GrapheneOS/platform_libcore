@@ -25,6 +25,8 @@
 
 package java.lang.reflect;
 
+import libcore.reflect.GenericSignatureParser;
+import libcore.reflect.RecordComponents;
 import libcore.util.EmptyArray;
 
 import java.lang.annotation.Annotation;
@@ -47,31 +49,42 @@ public final class RecordComponent implements AnnotatedElement {
     private String name;
     private Class<?> type;
     private Method accessor;
+    private String signature;
     // generic info repository; lazily initialized
     // Android-remove: Remove unused fields.
-    // private String signature;
     // private transient FieldRepository genericInfo;
     // private byte[] annotations;
     // private byte[] typeAnnotations;
     // private RecordComponent root;
 
-    // Android-added: field for annotations
-    private Field field;
+    // Android-added: Add parent and selfIndex to read generic signature and annotations lazily.
+    private RecordComponents parent;
+    private int selfIndex;
 
     // only the JVM can create record components
-    private RecordComponent() {}
+    // Android-remove: Remove unused constructor
+    // private RecordComponent() {}
 
     // Android-added: Constructor used by libcore.
     /**
      * @hide
      */
-    public RecordComponent(Class<?> clazz, String name, Class<?> type, Method accessor,
-            Field field) {
+    public RecordComponent(Class<?> clazz, String name, Class<?> type, RecordComponents parent,
+            int selfIndex) {
         this.clazz = clazz;
         this.name = name;
         this.type = type;
-        this.accessor = accessor;
-        this.field = field;
+        this.parent = parent;
+        this.selfIndex = selfIndex;
+        this.signature = parent.getGenericSignature(selfIndex);
+
+        if (name != null) {
+            try {
+                accessor = clazz.getDeclaredMethod(name);
+            } catch (NoSuchMethodException e) {
+                // Keep this.accessor = null
+            }
+        }
     }
 
     /**
@@ -104,9 +117,7 @@ public final class RecordComponent implements AnnotatedElement {
      * @jvms 4.7.9.1 Signatures
      */
     public String getGenericSignature() {
-        // Android-changed: Re-implement on top of ART.
-        // return signature;
-        return field.getSignatureAttribute();
+        return signature;
     }
 
     /**
@@ -133,14 +144,22 @@ public final class RecordComponent implements AnnotatedElement {
      *         type that cannot be instantiated for any reason
      */
     public Type getGenericType() {
-        // Android-changed: Re-implement on top of ART.
+        // Android-changed: getGenericType() implemented differently.
         /*
         if (getGenericSignature() != null)
             return getGenericInfo().getGenericType();
         else
             return getType();
         */
-        return field.getGenericType();
+        String signatureAttribute = getGenericSignature();
+        ClassLoader cl = clazz.getClassLoader();
+        GenericSignatureParser parser = new GenericSignatureParser(cl);
+        parser.parseForField(clazz, signatureAttribute);
+        Type genericType = parser.fieldType;
+        if (genericType == null) {
+            genericType = getType();
+        }
+        return genericType;
     }
 
     // BEGIN Android-removed: Unused code on ART.
@@ -226,7 +245,10 @@ public final class RecordComponent implements AnnotatedElement {
                                 getDeclaringRecord());
                     }
                     */
-                    Annotation[] annotations = field.getDeclaredAnnotations();
+                    Annotation[] annotations = parent.getVisibleAnnotations(selfIndex);
+                    if (annotations == null) {
+                        annotations = EmptyArray.ANNOTATION;
+                    }
                     declAnnos = new HashMap<>(annotations.length);
                     for (Annotation a : annotations) {
                         declAnnos.put(a.annotationType(), a);

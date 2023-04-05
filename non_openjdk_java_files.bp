@@ -386,6 +386,7 @@ filegroup {
         "luni/src/main/java/libcore/reflect/ListOfTypes.java",
         "luni/src/main/java/libcore/reflect/ListOfVariables.java",
         "luni/src/main/java/libcore/reflect/ParameterizedTypeImpl.java",
+        "luni/src/main/java/libcore/reflect/RecordComponents.java",
         "luni/src/main/java/libcore/reflect/TypeVariableImpl.java",
         "luni/src/main/java/libcore/reflect/Types.java",
         "luni/src/main/java/libcore/reflect/WildcardTypeImpl.java",

@@ -47,13 +47,29 @@ import java.lang.reflect.Parameter;
      * empty. Also all values in the array must be non-null, non-empty and not contain '.', ';', '['
      * or '/', otherwise a java.lang.reflect.MalformedParametersException will be thrown at runtime.
      */
-    String[] componentNames();
+    // String[] componentNames();
 
     /*
      * The array of component types for the record class. The array cannot be null, but can be
      * empty. All values in the array must be non-null, otherwise a
      * java.lang.reflect.MalformedParametersException will be thrown at runtime.
      */
-    Class<?>[] componentTypes();
+    // Class<?>[] componentTypes();
+
+    /*
+     * The array of {@link dalvik.annotation.Signature} attribute for each record component.
+     */
+    // Signature[] componentSignatures();
+
+    /*
+     * The 2D array of annotation visibilities for annotations in record component.
+     */
+
+    // byte[][] componentVisibilities();
+
+    /*
+     * The 2D array of annotations. Each component can have multiple annotations.
+     */
+    // Annotation[][] componentAnnotations();
 }
 

@@ -72,6 +72,7 @@ import jdk.internal.misc.Unsafe;
 import jdk.internal.misc.VM;
 import libcore.reflect.GenericSignatureParser;
 import libcore.reflect.InternalNames;
+import libcore.reflect.RecordComponents;
 import libcore.reflect.Types;
 import libcore.util.BasicLruCache;
 import libcore.util.CollectionUtils;
@@ -3848,76 +3849,44 @@ public final class Class<T> implements java.io.Serializable,
      * the Record attribute even if this class is not a record.
      */
     // BEGIN Android-changed: Re-implement getRecordComponents0() on ART.
-    // TODO: Use dalvik.annotation.Record instead of named parameters in the constructor.
     // private native RecordComponent[] getRecordComponents0();
     private RecordComponent[] getRecordComponents0() {
-        Constructor<?> constructor = getRecordCanonicalConstructor();
-        if (constructor == null) {
+        RecordComponents libcoreComponents = new RecordComponents(this);
+
+        // Every component should have a type and a name.
+        String[] names = libcoreComponents.getNames();
+        Class<?>[] types = libcoreComponents.getTypes();
+        if (names == null || types == null) {
             // Return non-null array as per getRecordComponent() javadoc if isRecord()
-            // returns true. However, it's not ideal, but the implementation will be replaced
-            // when reading it from dalvik.annotation.Record annotation.
+            // returns true.
             return new RecordComponent[0];
         }
-        Parameter[] parameters = constructor.getParameters();
-        RecordComponent[] components = new RecordComponent[parameters.length];
-        Map<String, Field> fields = new HashMap<>(parameters.length);
-        for (Field f : getDeclaredFields()) {
-            fields.put(f.getName(), f);
-        }
-        int i = 0;
-        for (Parameter p : parameters) {
-            String name = p.getName();
-            Method accessor = null;
-            try {
-                accessor = getDeclaredMethod(name);
-            } catch (NoSuchMethodException e) {
-            }
-            Field field = fields.get(name);
-            components[i] = new RecordComponent(this, name, p.getType(), accessor, field);
-            i++;
+
+        // JLS 8.10.3 and JLS 8.10.4.1 implies that every record component in the record header
+        // should have a parameter in the canonical constructor and a field in the same type and
+        // same name.
+        // If a name or type or accessor is missing in the header, i.e. @Record annotation on
+        // Android, it should not be possible according to the language spec. If the header is
+        // malformed here, we don't return such component or return a component with null name
+        // or type or accessor, because Class#getRecordComponents() javadoc doesn't specify
+        // an appropriate Exception type thrown for a malformed header.
+        int size = Math.min(names.length, types.length);
+        RecordComponent[] components = new RecordComponent[size];
+        for (int i = 0; i < size; i++) {
+            String name = names[i];
+            Class<?> type = types[i];
+            components[i] = new RecordComponent(this, name, type, libcoreComponents, i);
         }
         return components;
     }
 
-    private Constructor<?> getRecordCanonicalConstructor() {
-        for (Constructor<?> c : getDeclaredConstructors()) {
-            boolean areAllNamed = true;
-            Parameter[] parameters = c.getParameters();
-            for (Parameter p : parameters) {
-                if (!p.isNamePresent()) {
-                    areAllNamed = false;
-                    break;
-                }
-            }
-            if (!areAllNamed) {
-                continue;
-            }
-
-            // Record has the same number of fields and parameters in constructor.
-            Field[] fields = getDeclaredFields();
-            if (fields.length != parameters.length) {
-                continue;
-            }
-
-            // Record should have the same list param
-            HashMap<String, Parameter> parameterMap = new HashMap<>(parameters.length);
-            for (Parameter p : parameters) {
-                parameterMap.put(p.getName(), p);
-            }
-            for (Field f : fields) {
-                String name = f.getName();
-                Parameter p = parameterMap.get(name);
-                if (p == null || !name.equals(p.getName())) {
-                    areAllNamed = false;
-                    break;
-                }
-            }
-            if (areAllNamed) {
-                return c;
-            }
-        }
-        return null;
-    }
+    /**
+     * Used by {@link libcore.reflect.RecordComponents}
+     *
+     * @hide
+     */
+    @FastNative
+    public native <T2> T2[] getRecordAnnotationElement(String elementName, Class<T2[]> arrayClass);
     // END Android-changed: Re-implement getRecordComponents0() on ART.
 
     @FastNative

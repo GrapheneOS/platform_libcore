@@ -95,8 +95,14 @@ public class RecordTest {
 
     @Test
     public void testIsRecord() throws Exception {
+        assertFalse(Object.class.isRecord());
+        assertFalse(Record.class.isRecord());
+        assertFalse(String.class.isRecord());
+        assertFalse(NonRecordInteger.class.isRecord());
+
         RecordInteger a = new RecordInteger(9);
         assertTrue(a.getClass().isRecord());
+        assertTrue(RecordInteger2.class.isRecord());
     }
 
     @Test

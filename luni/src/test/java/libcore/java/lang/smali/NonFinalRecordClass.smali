@@ -1,10 +1,10 @@
 .class Llibcore/java/lang/recordclasses/NonFinalRecordClass;
-.super Ljava/lang/Object;
+.super Ljava/lang/Record;
 .source "NonFinalRecordClass.java"
 
 
 # annotations
-.annotation runtime Ldalvik/annotation/Record;
+.annotation system Ldalvik/annotation/Record;
     componentNames = {
         "x",
         "y"

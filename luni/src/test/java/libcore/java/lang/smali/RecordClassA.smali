@@ -1,10 +1,10 @@
 .class final Llibcore/java/lang/recordclasses/RecordClassA;
-.super Ljava/lang/Object;
+.super Ljava/lang/Record;
 .source "RecordClassA.java"
 
 
 # annotations
-.annotation runtime Ldalvik/annotation/Record;
+.annotation system Ldalvik/annotation/Record;
     componentNames = {
         "x",
         "y"

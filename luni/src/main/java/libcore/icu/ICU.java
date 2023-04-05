@@ -320,6 +320,10 @@ public final class ICU {
     return availableLocalesCache.clone();
   }
 
+  /**
+   * DO NOT USE this method directly.
+   * Please use {@link SimpleDateFormatData.DateTimeFormatStringGenerator#getTimePattern}
+   */
   /* package */ static String getTimePattern(Locale locale, boolean is24Hour, boolean withSecond) {
     final String skeleton;
     if (withSecond) {
@@ -329,7 +333,10 @@ public final class ICU {
     }
     return getBestDateTimePattern(skeleton, locale);
   }
-
+  /**
+   * DO NOT USE this method directly.
+   * Please use {@link SimpleDateFormatData.DateTimeFormatStringGenerator#getTimePattern}
+   */
   @UnsupportedAppUsage
   public static String getBestDateTimePattern(String skeleton, Locale locale) {
     String languageTag = locale.toLanguageTag();
