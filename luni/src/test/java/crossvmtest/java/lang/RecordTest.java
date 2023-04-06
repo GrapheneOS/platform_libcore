@@ -61,6 +61,12 @@ public class RecordTest {
     record RecordInteger2(@CustomAnnotation2(customAnnotations = {@CustomAnnotation("a")})
                           @CustomAnnotation("b") int x) {}
 
+    record RecordString(String s) {
+        public static final int Y = 1;
+        public static final String A = "A";
+
+    }
+
     @Test
     public void testHashCode() {
         RecordInteger a = new RecordInteger(9);
@@ -143,9 +149,34 @@ public class RecordTest {
         RecordInteger b = new RecordInteger(8);
 
         Field fieldB = RecordInteger.class.getDeclaredField("x");
+        assertThrows(IllegalAccessException.class, () -> fieldB.setInt(b, 7));
+        assertThrows(IllegalAccessException.class, () -> fieldB.set(b, 7));
         fieldB.setAccessible(true);
+        assertThrows(IllegalAccessException.class, () -> fieldB.setInt(b, 7));
         assertThrows(IllegalAccessException.class, () -> fieldB.set(b, 7));
         assertEquals(8, b.x);
+
+        Field fieldC = RecordString.class.getDeclaredField("s");
+        RecordString c = new RecordString("a");
+        assertThrows(IllegalAccessException.class, () -> fieldC.set(c, "b"));
+        fieldC.setAccessible(true);
+        assertThrows(IllegalAccessException.class, () -> fieldC.set(c, "b"));
+        assertEquals("a", c.s);
+    }
+
+    @Test
+    public void testWriteStaticField() throws ReflectiveOperationException {
+        Field field = RecordString.class.getField("A");
+        assertThrows(IllegalAccessException.class, () -> field.set(null, "B"));
+        field.setAccessible(true);
+        assertThrows(IllegalAccessException.class, () -> field.set(null, "B"));
+        assertEquals("A", field.get(null));
+
+        Field fieldB = RecordString.class.getDeclaredField("Y");
+        assertThrows(IllegalAccessException.class, () -> fieldB.setInt(null, 0));
+        fieldB.setAccessible(true);
+        assertThrows(IllegalAccessException.class, () -> fieldB.setInt(null, 0));
+        assertEquals(1, fieldB.getInt(null));
     }
 
     @Test

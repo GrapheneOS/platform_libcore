@@ -36,7 +36,10 @@ public class SimpleDateFormatData {
     private static final ConcurrentHashMap<String, SimpleDateFormatData> CACHE =
             new ConcurrentHashMap<>(/* initialCapacity */ 3);
 
-    private final DateTimeFormatStringGenerator generator;
+
+    private final Locale locale;
+    /** See {@link #isBug266731719Locale} for details */
+    private final boolean usesAsciiSpace;
 
     private final String fullTimeFormat;
     private final String longTimeFormat;
@@ -49,9 +52,12 @@ public class SimpleDateFormatData {
     private final String shortDateFormat;
 
     private SimpleDateFormatData(Locale locale) {
-        this.generator = new DateTimeFormatStringGenerator(locale);
+        this.locale = locale;
+        this.usesAsciiSpace = isBug266731719Locale(locale);
+        // libcore's java.text supports Gregorian calendar only.
+        ExtendedCalendar calendar = ICU.getExtendedCalendar(locale, "gregorian");
 
-        String tmpFullTimeFormat = generator.getFormatString(
+        String tmpFullTimeFormat = getDateTimePattern(calendar,
                 android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.FULL);
 
         // Fix up a couple of patterns.
@@ -65,19 +71,19 @@ public class SimpleDateFormatData {
         }
         fullTimeFormat = tmpFullTimeFormat;
 
-        longTimeFormat = generator.getFormatString(
+        longTimeFormat = getDateTimePattern(calendar,
                 android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.LONG);
-        mediumTimeFormat = generator.getFormatString(
+        mediumTimeFormat = getDateTimePattern(calendar,
                 android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.MEDIUM);
-        shortTimeFormat = generator.getFormatString(
+        shortTimeFormat = getDateTimePattern(calendar,
                 android.icu.text.DateFormat.NONE, android.icu.text.DateFormat.SHORT);
-        fullDateFormat = generator.getFormatString(
+        fullDateFormat = getDateTimePattern(calendar,
                 android.icu.text.DateFormat.FULL, android.icu.text.DateFormat.NONE);
-        longDateFormat = generator.getFormatString(
+        longDateFormat = getDateTimePattern(calendar,
                 android.icu.text.DateFormat.LONG, android.icu.text.DateFormat.NONE);
-        mediumDateFormat = generator.getFormatString(
+        mediumDateFormat = getDateTimePattern(calendar,
                 android.icu.text.DateFormat.MEDIUM, android.icu.text.DateFormat.NONE);
-        shortDateFormat = generator.getFormatString(
+        shortDateFormat = getDateTimePattern(calendar,
                 android.icu.text.DateFormat.SHORT, android.icu.text.DateFormat.NONE);
     }
 
@@ -154,13 +160,13 @@ public class SimpleDateFormatData {
                 if (DateFormat.is24Hour == null) {
                     return shortTimeFormat;
                 } else {
-                    return generator.getTimePattern(DateFormat.is24Hour, false);
+                    return getTimePattern(DateFormat.is24Hour, false);
                 }
             case DateFormat.MEDIUM:
                 if (DateFormat.is24Hour == null) {
                     return mediumTimeFormat;
                 } else {
-                    return generator.getTimePattern(DateFormat.is24Hour, true);
+                    return getTimePattern(DateFormat.is24Hour, true);
                 }
             case DateFormat.LONG:
                 // CLDR doesn't really have anything we can use to obey the 12-/24-hour preference.
@@ -174,87 +180,72 @@ public class SimpleDateFormatData {
         throw new AssertionError();
     }
 
-    private static class DateTimeFormatStringGenerator {
+    /**
+     * Returns the date and/or time pattern.
+     *
+     * @param dateStyle {@link android.icu.text.DateFormat} date style
+     * @param timeStyle {@link android.icu.text.DateFormat} time style
+     */
+    private String getDateTimePattern(ExtendedCalendar calendar, int dateStyle, int timeStyle) {
+        String pattern = ICU.transformIcuDateTimePattern_forJavaText(
+                calendar.getDateTimePattern(dateStyle, timeStyle));
 
-        private final Locale locale;
-        private final ExtendedCalendar extendedCalendar;
+        return postProcessPattern(pattern);
+    }
 
-        private final boolean usesAsciiSpace;
+    private String getTimePattern(boolean is24Hour, boolean withSecond) {
+        String pattern = ICU.getTimePattern(locale, is24Hour, withSecond);
 
-        private DateTimeFormatStringGenerator(Locale locale) {
-            this.locale = locale;
-            // libcore's java.text supports Gregorian calendar only.
-            this.extendedCalendar = ICU.getExtendedCalendar(locale, "gregorian");
-            this.usesAsciiSpace = isBug266731719Locale(locale);
+        return postProcessPattern(pattern);
+    }
+
+    private String postProcessPattern(String pattern) {
+        if (pattern == null || !usesAsciiSpace) {
+            return pattern;
         }
 
-        /**
-         * Returns the date and/or time pattern.
-         *
-         * @param dateStyle {@link android.icu.text.DateFormat} date style
-         * @param timeStyle {@link android.icu.text.DateFormat} time style
-         */
-        private String getFormatString(int dateStyle, int timeStyle) {
-            String pattern = ICU.transformIcuDateTimePattern_forJavaText(
-                    extendedCalendar.getDateTimePattern(dateStyle, timeStyle));
+        return pattern.replace('\u202f', ' ');
+    }
 
-            return postProcessPattern(pattern);
+    /**
+     * Returns {@code true} if the locale is "en" or "en-US" or "en-US-*" or
+     * "en-<unknown_region>-*"
+     *
+     * The first 2 locales, i.e. {@link Locale#ENGLISH} and {@link Locale#US}, are commonly
+     * hard-coded by developers for serialization and deserialization as shown in
+     * the bug http://b/266731719. The date time formats in these locales are basically frozen
+     * because they should be both backward and forward-compatible.
+     *
+     * We change both formatting and parsing behavior because the serialized string could be
+     * parsed via a network request and thus breaking Android apps. We could consider changing
+     * the formatted date / time, but the parser has to be compatible with both the old and new
+     * formatted string.
+     *
+     * This method returns true for "en-US-*" and "en-<unknown_region>-*" because the behavior
+     * should be consistent with the locale "en-US" and "en". The other English locales are not
+     * expected to be stable in this bug.
+     */
+    private static boolean isBug266731719Locale(Locale locale) {
+        if (locale == null) {
+            return false;
         }
 
-        private String getTimePattern(boolean is24Hour, boolean withSecond) {
-            String pattern = ICU.getTimePattern(locale, is24Hour, withSecond);
-
-            return postProcessPattern(pattern);
+        String language = locale.getLanguage();
+        if (language == null) {
+            return false;
+        }
+        // Use LanguageTag.canonicalizeLanguage(s) instead of String.toUpperCase(s) to avoid
+        // non-ASCII character conversion.
+        language = LanguageTag.canonicalizeLanguage(language);
+        if (!("en".equals(language))) {
+            return false;
         }
 
-        private String postProcessPattern(String pattern) {
-            if (pattern == null || !usesAsciiSpace) {
-                return pattern;
-            }
-
-            return pattern.replace('\u202f', ' ');
+        String region = locale.getCountry();
+        if (region == null || region.isEmpty()) {
+            return true;
         }
-
-        /**
-         * Returns {@code true} if the locale is "en" or "en-US" or "en-US-*" or
-         * "en-<unknown_region>-*"
-         *
-         * The first 2 locales, i.e. {@link Locale#ENGLISH} and {@link Locale#US}, are commonly
-         * hard-coded by developers for serialization and deserialization as shown in
-         * the bug http://b/266731719. The date time formats in these locales are basically frozen
-         * because they should be both backward and forward-compatible.
-         *
-         * We change both formatting and parsing behavior because the serialized string could be
-         * parsed via a network request and thus breaking Android apps. We could consider changing
-         * the formatted date / time, but the parser has to be compatible with both the old and new
-         * formatted string.
-         *
-         * This method returns true for "en-US-*" and "en-<unknown_region>-*" because the behavior
-         * should be consistent with the locale "en-US" and "en". The other English locales are not
-         * expected to be stable in this bug.
-         */
-        private static boolean isBug266731719Locale(Locale locale) {
-            if (locale == null) {
-                return false;
-            }
-
-            String language = locale.getLanguage();
-            if (language == null) {
-                return false;
-            }
-            // Use LanguageTag.canonicalizeLanguage(s) instead of String.toUpperCase(s) to avoid
-            // non-ASCII character conversion.
-            language = LanguageTag.canonicalizeLanguage(language);
-            if (!("en".equals(language))) {
-                return false;
-            }
-
-            String region = locale.getCountry();
-            if (region == null || region.isEmpty()) {
-                return true;
-            }
-            region = LanguageTag.canonicalizeRegion(region);
-            return "US".equals(region);
-        }
+        region = LanguageTag.canonicalizeRegion(region);
+        return "US".equals(region);
     }
 }
