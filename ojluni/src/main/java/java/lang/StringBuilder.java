@@ -206,7 +206,6 @@ public final class StringBuilder
      * @param   sb   the {@code StringBuffer} to append.
      * @return  a reference to this object.
      */
-     @NeverInline
     public StringBuilder append(StringBuffer sb) {
         super.append(sb);
         return this;
@@ -223,7 +222,6 @@ public final class StringBuilder
      * @throws     IndexOutOfBoundsException {@inheritDoc}
      */
     @Override
-    @NeverInline
     public StringBuilder append(CharSequence s, int start, int end) {
         super.append(s, start, end);
         return this;
@@ -240,7 +238,6 @@ public final class StringBuilder
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     @Override
-    @NeverInline
     public StringBuilder append(char[] str, int offset, int len) {
         super.append(str, offset, len);
         return this;
@@ -294,7 +291,6 @@ public final class StringBuilder
      * @since 1.5
      */
     @Override
-    @NeverInline
     public StringBuilder appendCodePoint(int codePoint) {
         super.appendCodePoint(codePoint);
         return this;
