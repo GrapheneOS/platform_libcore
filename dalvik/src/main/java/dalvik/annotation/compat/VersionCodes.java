@@ -88,5 +88,5 @@ public class VersionCodes {
      * Upside Down Cake.
      */
     @IntraCoreApi
-    public static final int UPSIDE_DOWN_CAKE = CUR_DEVELOPMENT;
+    public static final int UPSIDE_DOWN_CAKE = 34;
 }

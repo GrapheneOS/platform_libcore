@@ -16,6 +16,9 @@
 
 package org.apache.harmony.tests.java.nio.channels;
 
+import dalvik.annotation.compat.VersionCodes;
+import dalvik.system.VMRuntime;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -68,13 +71,21 @@ public class FileLockTest extends TestCase {
 	    }
 	}
 
+	private void assertUpsideDownCakeOrGreater() {
+		assertTrue(VMRuntime.getSdkVersion() >= VersionCodes.UPSIDE_DOWN_CAKE);
+	}
+
 	/**
 	 * @tests java.nio.channels.FileLock#FileLock(FileChannel, long, long,
 	 *        boolean)
 	 */
 	public void test_Constructor_Ljava_nio_channels_FileChannelJJZ() {
-		FileLock fileLock1 = new MockFileLock(null, 0, 0, false);
-		assertNull(fileLock1.channel());
+		try {
+			FileLock fileLock1 = new MockFileLock(null, 0, 0, false);
+			assertNull(fileLock1.channel());
+		} catch (NullPointerException e) {
+			assertUpsideDownCakeOrGreater();
+		}
 
 		try {
 			new MockFileLock(readWriteChannel, -1, 0, false);
@@ -102,8 +113,12 @@ public class FileLockTest extends TestCase {
 	 */
 	public void test_channel() {
 		assertSame(readWriteChannel, mockLock.channel());
-		FileLock lock = new MockFileLock(null, 0, 10, true);
-		assertNull(lock.channel());
+		try {
+			FileLock lock = new MockFileLock(null, 0, 10, true);
+			assertNull(lock.channel());
+		} catch (NullPointerException e) {
+			assertUpsideDownCakeOrGreater();
+		}
 	}
 
 	/**
@@ -138,8 +153,12 @@ public class FileLockTest extends TestCase {
 	 */
 	public void test_isShared() {
 		assertFalse(mockLock.isShared());
-		FileLock lock = new MockFileLock(null, 0, 10, true);
-		assertTrue(lock.isShared());
+		try {
+			FileLock lock = new MockFileLock(null, 0, 10, true);
+			assertTrue(lock.isShared());
+		} catch (NullPointerException e) {
+			assertUpsideDownCakeOrGreater();
+		}
 	}
 
 	/**
