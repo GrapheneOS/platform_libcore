@@ -54,7 +54,7 @@ public class UUIDTest extends TestCase {
 
   public void testJava8Implementation_allowsLongInputs() {
     var uuid = UUID.randomUUID();
-    var parsedBackWithLeadingZero = UUID.fromString("0" + uuid);
+    var parsedBackWithLeadingZero = UUID.fromStringJava8("0" + uuid);
 
     assertEquals(uuid, parsedBackWithLeadingZero);
 
