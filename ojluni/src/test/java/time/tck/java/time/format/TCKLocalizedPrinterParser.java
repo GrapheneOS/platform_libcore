@@ -61,6 +61,8 @@ package tck.java.time.format;
 
 import static org.testng.Assert.assertEquals;
 
+import android.icu.util.VersionInfo;
+
 import java.text.DateFormat;
 import java.text.ParsePosition;
 import java.time.LocalDate;
@@ -215,7 +217,7 @@ public class TCKLocalizedPrinterParser {
         Date oldDate = new Date(1970 - 1900, 0, 0, time.getHour(), time.getMinute(), time.getSecond());
         String text = old.format(oldDate);
         // Android-added: DateFormat doesn't return '\u202f' in en-US. http://b/266731719
-        if (Locale.US.equals(locale)) {
+        if (Locale.US.equals(locale) && VersionInfo.ICU_VERSION.getMajor() >= 72) {
             text = text.replace(' ', '\u202f');
         }
 
