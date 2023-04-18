@@ -2265,6 +2265,9 @@ ojluni/src/test/java/util/regex/PatternStreamTest.java,jdk17u/jdk-17.0.6-ga,test
 ojluni/src/test/java/util/regex/RegExTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/RegExTest.java
 ojluni/src/test/java/util/regex/SupplementaryTestCases.txt,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/SupplementaryTestCases.txt
 ojluni/src/test/java/util/regex/TestCases.txt,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/regex/TestCases.txt
+ojluni/src/test/java/util/stream/test/org/openjdk/tests/java/util/stream/MapMultiOpTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/stream/test/org/openjdk/tests/java/util/stream/mapMultiOpTest.java
+ojluni/src/test/java/util/stream/testlib/org/openjdk/testlib/java/util/stream/DefaultMethodStreams.java,jdk17u/jdk-17.0.6-ga,test/jdk/lib/testlibrary/bootlib/java.base/java/util/stream/DefaultMethodStreams.java
+ojluni/src/test/java/util/stream/testlib/org/openjdk/testlib/java/util/stream/ThrowableHelper.java,jdk17u/jdk-17.0.6-ga,test/jdk/lib/testlibrary/bootlib/java.base/java/util/stream/ThrowableHelper.java
 ojluni/src/test/java/util/zip/ChecksumBase.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/zip/ChecksumBase.java
 ojluni/src/test/java/util/zip/TestCRC32.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/zip/TestCRC32.java
 ojluni/src/test/java/util/zip/TestCRC32C.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/zip/TestCRC32C.java

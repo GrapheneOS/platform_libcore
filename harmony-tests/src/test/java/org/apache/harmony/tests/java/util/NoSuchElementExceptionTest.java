@@ -57,6 +57,22 @@ public class NoSuchElementExceptionTest extends junit.framework.TestCase {
         }
     }
 
+    public void test_ConstructorLjava_lang_Throwable() {
+        var cause = new Throwable();
+        var e = new NoSuchElementException(cause);
+
+        assertEquals(cause.toString(), e.getMessage());
+        assertSame(cause, e.getCause());
+    }
+
+    public void test_ConstructorLjava_langStringLjava_lang_Throwable() {
+        var cause = new Throwable();
+        var e = new NoSuchElementException("message", cause);
+
+        assertEquals("message", e.getMessage());
+        assertSame(cause, e.getCause());
+    }
+
     /**
      * Sets up the fixture, for example, open a network connection. This method
      * is called before a test is executed.

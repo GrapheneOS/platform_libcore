@@ -39,4 +39,16 @@ public class IndexOutOfBoundsExceptionTest extends TestCase {
         assertEquals("fixture", e.getMessage());
         assertNull(e.getCause());
     }
+
+    public void test_ConstructorI() {
+        IndexOutOfBoundsException e = new IndexOutOfBoundsException(Integer.MAX_VALUE);
+        assertEquals("Index out of range: " + Integer.MAX_VALUE, e.getMessage());
+        assertNull(e.getCause());
+    }
+
+    public void test_ConstructorJ() {
+        IndexOutOfBoundsException e = new IndexOutOfBoundsException(Long.MAX_VALUE);
+        assertEquals("Index out of range: " + Long.MAX_VALUE, e.getMessage());
+        assertNull(e.getCause());
+    }
 }

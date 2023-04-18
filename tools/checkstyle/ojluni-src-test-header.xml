@@ -47,6 +47,8 @@
   -->
   <module name="BeforeExecutionExclusionFileFilter">
     <property name="fileNamePattern"
+      value="ojluni/src/test/java/lang/reflect/records/CheckEqualityIsBasedOnFields.java" />
+    <property name="fileNamePattern"
       value="ojluni/src/test/java/lang/reflect/records/RecordReflectionTest.java" />
   </module>
 
