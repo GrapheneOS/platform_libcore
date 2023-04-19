@@ -51,6 +51,10 @@
     <property name="fileNamePattern"
       value="ojluni/src/test/java/lang/reflect/records/RecordReflectionTest.java" />
   </module>
+  <module name="BeforeExecutionExclusionFileFilter">
+    <property name="fileNamePattern"
+              value="ojluni/src/test/java/io/Serializable/records/" />
+  </module>
 
   <module name="TreeWalker">
     <module name="RegexpSinglelineJava">

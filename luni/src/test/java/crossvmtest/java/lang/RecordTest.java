@@ -21,10 +21,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.NotSerializableException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -66,6 +74,8 @@ public class RecordTest {
         public static final String A = "A";
 
     }
+
+    public record SerializableRecord(int x, String s) implements Serializable {}
 
     @Test
     public void testHashCode() {
@@ -196,5 +206,35 @@ public class RecordTest {
         VarHandle varHandleB = lookup.findVarHandle(RecordInteger.class, "x", int.class);
         assertThrows(UnsupportedOperationException.class, () -> varHandleB.set(b, 7));
         assertEquals(8, b.x);
+    }
+
+    @Test
+    public void testSerializedNonSerializableRecordFailure()
+            throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        RecordInteger recordInteger = new RecordInteger(9);
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(recordInteger);
+            fail("Expect NotSerializableException");
+        } catch (NotSerializableException e) {
+            // expected
+        }
+    }
+
+    @Test
+    public void testSerializedSimpleRecords() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        SerializableRecord recordInteger = new SerializableRecord(9, "abc");
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(recordInteger);
+        }
+        byte[] bytes = baos.toByteArray();
+        try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(bytes))) {
+            Object obj = ois.readObject();
+            assertEquals(SerializableRecord.class, obj.getClass());
+            SerializableRecord r = (SerializableRecord) obj;
+            assertEquals(9, r.x());
+            assertEquals("abc", r.s());
+        }
     }
 }
