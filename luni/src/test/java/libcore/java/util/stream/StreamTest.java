@@ -67,6 +67,21 @@ public class StreamTest {
     }
   }
 
+  @Test
+  public void ofNullable_ofNull_isEmpty() {
+    assertEquals(0, Stream.ofNullable(null).count());
+  }
+
+  @Test
+  public void ofNullable_ofNonNull() {
+    assertArrayEquals(new Integer[] {10}, Stream.ofNullable(10).toArray());
+  }
+
+  @Test
+  public void ofNullable_ofNonNullStream() {
+    assertEquals(1, Stream.ofNullable(Stream.of(10, 20, 30)).count());
+  }
+
   private String[] stringTestArray(int size) {
     String[] array = new String[size];
     for (int i = 0; i < size; i++) {
