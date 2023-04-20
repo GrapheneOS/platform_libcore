@@ -28,6 +28,7 @@
  * @run testng CycleTest
  * @run testng/othervm/java.security.policy=empty_security.policy CycleTest
  */
+package test.java.io.Serializable.records;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
