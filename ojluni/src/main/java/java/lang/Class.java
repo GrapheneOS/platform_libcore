@@ -3862,14 +3862,8 @@ public final class Class<T> implements java.io.Serializable,
             return new RecordComponent[0];
         }
 
-        // JLS 8.10.3 and JLS 8.10.4.1 implies that every record component in the record header
-        // should have a parameter in the canonical constructor and a field in the same type and
-        // same name.
-        // If a name or type or accessor is missing in the header, i.e. @Record annotation on
-        // Android, it should not be possible according to the language spec. If the header is
-        // malformed here, we don't return such component or return a component with null name
-        // or type or accessor, because Class#getRecordComponents() javadoc doesn't specify
-        // an appropriate Exception type thrown for a malformed header.
+        // class_linker.cc should verify that names and types have the same length, or otherwise,
+        // the class isn't loaded.
         int size = Math.min(names.length, types.length);
         RecordComponent[] components = new RecordComponent[size];
         for (int i = 0; i < size; i++) {
