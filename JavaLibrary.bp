@@ -92,7 +92,15 @@ filegroup {
 rewrite_openjdk_doc_links = "sed 's" +
     "!\\({@docRoot}/\\.\\.\\/\\|[./]\\+\\)\\(\\(platform\\|technotes\\).\\+\\)\">" +
     "!https://docs.oracle.com/javase/8/docs/\\2\">!' " +
-    "$(in) > $(out)"
+    "$(in) " +
+    "| sed 's" + // Android doesn't have java.base in the API docs
+    "!\\({@docRoot}/\\)\\(java\\.base/\\)\\(.\\+\\)\">" +
+    "!\\1reference/\\3\">!' " +
+    "| sed 's" +
+    "!\\({@docRoot}/\\.\\.\\/\\)\\(specs/.\\+\\)\">" +
+    "!https://docs.oracle.com/en/java/javase/17/docs/\\2\">!' " +
+    " > $(out) " +
+    "&& ! grep '{@docRoot}/../' $(out)" // exit with 1 if "{@docRoot}/../" still exists.
 
 // OpenJDK source is not annotated with @hide so we need this separate
 // filegroup for just the parts that contribute to the API.

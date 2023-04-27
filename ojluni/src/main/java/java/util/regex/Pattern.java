@@ -46,6 +46,7 @@ import libcore.util.EmptyArray;
 // Android-changed: Throw PatternSyntaxException for non-existent back references.
 // Android-changed: Remove "Compatibility Properties of Unicode Regular Expression" table.
 // Android-changed: Remove supported \b{g} Unicode extended grapheme cluster boundary.
+// Android-changed: Prefix "Is" is supported since Android 10. http://b/110364810
 /**
  * A compiled representation of a regular expression.
  *
@@ -577,8 +578,8 @@ import libcore.util.EmptyArray;
  * and outside of a character class.
  *
  * <p>
- * <b><a id="usc">Scripts</a></b> are specified either with the prefix {@code Is}, as in
- * {@code IsHiragana}, or by using  the {@code script} keyword (or its short
+ * <b><a id="usc">Scripts</a></b> are specified either with the prefix {@code Is} supported since
+ * Android 10, as in {@code IsHiragana}, or by using the {@code script} keyword (or its short
  * form {@code sc}) as in {@code script=Hiragana} or {@code sc=Hiragana}.
  * <p>
  * The script names supported by {@code Pattern} are the valid script names
@@ -596,7 +597,7 @@ import libcore.util.EmptyArray;
  * <p>
  *
  * <b><a id="ucc">Categories</a></b> may be specified with the optional prefix {@code Is}:
- * Both {@code \p{L}} and {@code \p{IsL}} denote the category of Unicode
+ * Both {@code \p{IsL}} supported since Android 10 and {@code \p{L}} denote the category of Unicode
  * letters. Same as scripts and blocks, categories can also be specified
  * by using the keyword {@code general_category} (or its short form
  * {@code gc}) as in {@code general_category=Lu} or {@code gc=Lu}.
@@ -608,8 +609,9 @@ import libcore.util.EmptyArray;
  * defined in the Standard, both normative and informative.
  * <p>
  *
- * <b><a id="ubpc">Binary properties</a></b> are specified with the prefix {@code Is}, as in
- * {@code IsAlphabetic}. The supported binary properties by {@code Pattern}
+ * <b><a id="ubpc">Binary properties</a></b> are specified with the prefix {@code Is} since
+ * Android 10, as in {@code IsAlphabetic}. The prefix {@code Is} isn't needed before Android 10,
+ * as in {@code Alphabetic}. The supported binary properties by {@code Pattern}
  * are
  * <ul>
  *   <li> Alphabetic

@@ -45,10 +45,6 @@ public class CurrencyTest {
 
     @Test
     public void test_currencyCodeIcuConsistency() {
-        // TODO(http://b/235075746): Remove this test patch when ICU is fixed.
-        if ("SL".equals(locale.getCountry())) {
-            return;
-        }
         // java.util.Currency.getCurrency is time-sensitive. And Croatia doesn't use Euro until
         // 2023/1/1. https://unicode-org.atlassian.net/browse/CLDR-16061
         // We skip the test until Feb 2023.
