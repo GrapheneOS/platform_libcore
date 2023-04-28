@@ -21,6 +21,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -562,14 +563,22 @@ public class ClassTest {
 
             Class recordClassA = classLoader.loadClass(
                     "libcore.java.lang.recordclasses.RecordClassA");
+            Class recordClassB = classLoader.loadClass(
+                    "libcore.java.lang.recordclasses.RecordClassB");
             Class nonFinalRecordClass = classLoader.loadClass(
                     "libcore.java.lang.recordclasses.NonFinalRecordClass");
             Class emptyRecordClass = classLoader.loadClass(
                     "libcore.java.lang.recordclasses.EmptyRecordClass");
-            Class unequalComponentArraysRecordClass = classLoader.loadClass(
-                    "libcore.java.lang.recordclasses.UnequalComponentArraysRecordClass");
+            Class validAbstractEmptyClass = classLoader.loadClass(
+                    "libcore.java.lang.recordclasses.ValidAbstractEmptyRecord");
+            Class validNonFinalEmptyClass = classLoader.loadClass(
+                    "libcore.java.lang.recordclasses.ValidNonFinalEmptyRecord");
+            Class validRecordWithExtraElement = classLoader.loadClass(
+                    "libcore.java.lang.recordclasses.ValidRecordWithExtraElement");
+            Class validEmptyRecordWithoutRecordAnnotation = classLoader.loadClass(
+                    "libcore.java.lang.recordclasses.ValidEmptyRecordWithoutRecordAnnotation");
 
-            assertTrue(getIsRecord(recordClassA));
+            assertTrue(recordClassA.isRecord());
             RecordComponent[] components = recordClassA.getRecordComponents();
             assertNotNull(components);
             assertEquals(2, components.length);
@@ -578,36 +587,40 @@ public class ClassTest {
             assertEquals("y", components[1].getName());
             assertEquals(Integer.class, components[1].getType());
 
-            assertFalse(getIsRecord(nonFinalRecordClass));
+            assertTrue(recordClassB.isRecord());
+            assertEquals(2, recordClassB.getRecordComponents().length);
+
+            assertFalse(nonFinalRecordClass.isRecord());
             assertNull(nonFinalRecordClass.getRecordComponents());
 
-            assertTrue(getIsRecord(emptyRecordClass));
+            assertTrue(emptyRecordClass.isRecord());
             assertEquals(new RecordComponent[0], emptyRecordClass.getRecordComponents());
+            assertFalse(validAbstractEmptyClass.isRecord());
+            assertFalse(validNonFinalEmptyClass.isRecord());
+            assertTrue(validRecordWithExtraElement.isRecord());
+            assertFalse(validEmptyRecordWithoutRecordAnnotation.isRecord());
 
-            assertTrue(getIsRecord(unequalComponentArraysRecordClass));
-            components = unequalComponentArraysRecordClass.getRecordComponents();
-            assertEquals(1, components.length);
-            assertEquals("x", components[0].getName());
-            assertEquals(int.class, components[0].getType());
-
+            assertClassFormatError(classLoader,
+                    "libcore.java.lang.recordclasses.UnequalComponentArraysRecordClass");
+            assertClassFormatError(classLoader,
+                    "libcore.java.lang.recordclasses.InvalidEmptyRecord1");
+            assertClassFormatError(classLoader,
+                    "libcore.java.lang.recordclasses.InvalidEmptyRecord2");
+            assertClassFormatError(classLoader,
+                    "libcore.java.lang.recordclasses.InvalidEmptyRecord3");
+            assertClassFormatError(classLoader,
+                    "libcore.java.lang.recordclasses.InvalidEmptyRecord4");
+            assertClassFormatError(classLoader,
+                    "libcore.java.lang.recordclasses.InvalidEmptyRecord5");
+            assertClassFormatError(classLoader,
+                    "libcore.java.lang.recordclasses.InvalidEmptyRecord6");
         } catch (Throwable t) {
             throw new RuntimeException(t);
         }
     }
 
-    static boolean getIsRecord(Class<?> clazz) {
-        return clazz.isRecord();
-    }
-
-    static boolean canClassBeRecord(Class<?> clazz) {
-        if (clazz.isPrimitive() || clazz.isArray() || Void.TYPE.equals(clazz)) {
-            return false;
-        }
-        if (!Modifier.isFinal( clazz.getModifiers() )) {
-            return false;
-        }
-        // TODO: Check it extends java.lang.Record
-        return true;
+    private static void assertClassFormatError(ClassLoader cl, String className) {
+        assertThrows(ClassFormatError.class, () -> cl.loadClass(className));
     }
 
     @Test

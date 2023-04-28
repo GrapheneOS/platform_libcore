@@ -65,7 +65,7 @@ import java.lang.reflect.Parameter;
      * The 2D array of annotation visibilities for annotations in record component.
      */
 
-    // byte[][] componentVisibilities();
+    // byte[][] componentAnnotationVisibilities();
 
     /*
      * The 2D array of annotations. Each component can have multiple annotations.

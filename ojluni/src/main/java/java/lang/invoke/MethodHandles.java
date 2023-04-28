@@ -734,6 +734,7 @@ public class MethodHandles {
             if (allowedModes == ALL_MODES &&
                     lookupClass.getClassLoader() == Object.class.getClassLoader()) {
                 if ((name.startsWith("java.")
+                            && !name.startsWith("java.io.ObjectStreamClass")
                             && !name.startsWith("java.util.concurrent.")
                             && !name.equals("java.lang.Daemons$FinalizerWatchdogDaemon")
                             && !name.equals("java.lang.runtime.ObjectMethods")

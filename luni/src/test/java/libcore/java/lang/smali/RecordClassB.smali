@@ -1,6 +1,6 @@
-.class final Llibcore/java/lang/recordclasses/UnequalComponentArraysRecordClass;
+.class final Llibcore/java/lang/recordclasses/RecordClassB;
 .super Ljava/lang/Record;
-.source "UnequalComponentArraysRecordClass.java"
+.source "RecordClassB.java"
 
 
 # annotations
@@ -10,9 +10,12 @@
         "y"
     }
     componentTypes = {
-        I
+        I,
+        Ljava/lang/Integer;
     }
+    newFutureElement = "XYZ"
 .end annotation
+
 
 # direct methods
 .method constructor <init>()V

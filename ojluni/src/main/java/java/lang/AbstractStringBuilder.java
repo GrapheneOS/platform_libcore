@@ -25,6 +25,7 @@
 
 package java.lang;
 
+import dalvik.annotation.optimization.NeverInline;
 import jdk.internal.math.FloatingDecimal;
 import java.util.Arrays;
 import java.util.Spliterator;
@@ -122,6 +123,9 @@ abstract class AbstractStringBuilder implements Appendable, CharSequence {
      *          represented by this object
      */
     @Override
+    // We don't want to inline this method to be able to perform String-related
+    // optimizations with intrinsics.
+    @NeverInline
     public int length() {
         return count;
     }
