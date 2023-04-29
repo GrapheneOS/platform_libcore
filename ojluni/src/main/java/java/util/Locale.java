@@ -1277,9 +1277,10 @@ public final class Locale implements Cloneable, Serializable {
         return IsoCountryCode.retrieveISOCountryCodes(type);
     }
 
+    // Android-changed: Changed javadoc because Android includes 3-letter codes.
     /**
-     * Returns a list of all 2-letter language codes defined in ISO 639.
-     * Can be used to create Locales.
+     * Returns a list of all 2-letter language codes and some of 3-letter codes
+     * defined in ISO 639. Can be used to create Locales.
      * <p>
      * <b>Note:</b>
      * <ul>
@@ -1291,7 +1292,7 @@ public final class Locale implements Cloneable, Serializable {
      * not contain ALL valid codes that can be used to create Locales.
      * </ul>
      *
-     * @return An array of ISO 639 two-letter language codes.
+     * @return An array of ISO 639 language codes.
      */
     public static String[] getISOLanguages() {
         // Android-changed: Use ICU.
