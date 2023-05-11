@@ -125,6 +125,9 @@ class ZipFile implements ZipConstants, Closeable {
 
     private static final boolean usemmap;
 
+    // Android-added: An instance variable that determines if zip path validation should be enabled.
+    private final boolean isZipPathValidatorEnabled;
+
     static {
         // Android-changed: Always use mmap.
         /*
@@ -211,6 +214,7 @@ class ZipFile implements ZipConstants, Closeable {
 
     private ZipCoder zc;
 
+    // Android-changed: Use of the hidden constructor with a new argument for zip path validation.
     /**
      * Opens a new <code>ZipFile</code> to read from the specified
      * <code>File</code> object in the specified mode.  The mode argument
@@ -245,6 +249,22 @@ class ZipFile implements ZipConstants, Closeable {
      */
     public ZipFile(File file, int mode, Charset charset) throws IOException
     {
+        this(file, mode, charset, /* enableZipPathValidator */ true);
+    }
+
+    // Android-added: New hidden constructor with an argument for zip path validation.
+    /** @hide */
+    public ZipFile(File file, int mode, boolean enableZipPathValidator) throws IOException {
+        this(file, mode, StandardCharsets.UTF_8, enableZipPathValidator);
+    }
+
+    // Android-changed: Change existing constructor ZipFile(File file, int mode, Charset charset)
+    // to have a new argument enableZipPathValidator in order to set the isZipPathValidatorEnabled
+    // variable before calling the native method open().
+    /** @hide */
+    public ZipFile(File file, int mode, Charset charset, boolean enableZipPathValidator)
+            throws IOException {
+        isZipPathValidatorEnabled = enableZipPathValidator;
         if (((mode & OPEN_READ) == 0) ||
             ((mode & ~(OPEN_READ | OPEN_DELETE)) != 0)) {
             throw new IllegalArgumentException("Illegal mode: 0x"+
