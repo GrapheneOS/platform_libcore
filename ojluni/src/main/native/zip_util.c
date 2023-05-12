@@ -574,6 +574,13 @@ countCENHeaders(unsigned char *beg, unsigned char *end)
 #define ZIP_FORMAT_ERROR(message) \
 if (1) { zip->msg = message; goto Catch; } else ((void)0)
 
+// Android-added: Retrieve ZipFile's variable that determines if zip path validation is enabled.
+static jboolean isZipPathValidatorEnabled(JNIEnv *env, jobject thiz) {
+    jclass cls = (*env)->FindClass(env, "java/util/zip/ZipFile");
+    jfieldID fid = (*env)->GetFieldID(env, cls, "isZipPathValidatorEnabled", "Z");
+    return (*env)->GetBooleanField(env, thiz, fid);
+}
+
 /*
  * Reads zip file central directory. Returns the file position of first
  * CEN header, otherwise returns -1 if an error occurred. If zip->msg != NULL
@@ -707,7 +714,8 @@ readCEN(JNIEnv *env, jobject thiz, jzfile *zip, jint knownTotal)
     if ((entries == NULL && total != 0) || table == NULL) goto Catch;
     for (j = 0; j < tablelen; j++)
         table[j] = ZIP_ENDCHAIN;
-
+    // Android-added: Retrieve ZipFile's variable that determines if zip path validation is enabled.
+    jboolean isZipFilePathValidatorEnabled = isZipPathValidatorEnabled(env, thiz);
     /* Iterate through the entries in the central directory */
     for (i = 0, cp = cenbuf; cp <= cenend - CENHDR; i++, cp += CENSIZE(cp)) {
         /* Following are unsigned 16-bit */
@@ -745,7 +753,7 @@ readCEN(JNIEnv *env, jobject thiz, jzfile *zip, jint knownTotal)
         if (!isValidEntryName(entryName, nlen)) {
             ZIP_FORMAT_ERROR("invalid CEN header (invalid entry name)");
         }
-        if (ZIP_OnZipEntryAccess(env, thiz, entryName, nlen)) {
+        if (isZipFilePathValidatorEnabled && ZIP_OnZipEntryAccess(env, thiz, entryName, nlen)) {
             ZIP_FORMAT_ERROR("restricted zip entry name");
         }
         // END Android-changed: Use strict mode to validate zip entry name,
