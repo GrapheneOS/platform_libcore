@@ -490,6 +490,9 @@ java_library {
         ":openjdk_lambda_stub_files",
     ],
     include_srcs: true,
+    // This jar is packaged as part of the SDK, use -target 8 so that it works
+    // with old JDKs.
+    java_version: "1.8",
 }
 
 // This is an empty jar that exists for backwards compatibility with T (and below).
