@@ -264,7 +264,7 @@ class ZipFile implements ZipConstants, Closeable {
     /** @hide */
     public ZipFile(File file, int mode, Charset charset, boolean enableZipPathValidator)
             throws IOException {
-        isZipPathValidatorEnabled = enableZipPathValidator;
+        isZipPathValidatorEnabled = enableZipPathValidator && !ZipPathValidator.isClear();
         if (((mode & OPEN_READ) == 0) ||
             ((mode & ~(OPEN_READ | OPEN_DELETE)) != 0)) {
             throw new IllegalArgumentException("Illegal mode: 0x"+

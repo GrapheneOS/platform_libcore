@@ -77,6 +77,16 @@ public final class ZipPathValidator {
     }
 
     /**
+     * Returns true if the current validator is the default implementation {@link DEFAULT},
+     * otherwise false.
+     *
+     * @hide
+     */
+    public static boolean isClear() {
+        return sInstance.equals(DEFAULT);
+    }
+
+    /**
      * Interface that defines the core validation mechanism when accessing zip file entry paths.
      */
     public interface Callback {
