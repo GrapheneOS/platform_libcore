@@ -291,5 +291,5 @@ JNIEXPORT jboolean
 ZIP_InflateFully(void *inBuf, jlong inLen, void *outBuf, jlong outLen, char **pmsg);
 */
 
-jboolean ZIP_OnZipEntryAccess(JNIEnv *env, jobject thiz, const char* entryName, int len);
+jboolean ZIP_OnZipEntryAccess(JNIEnv *env, jobject thiz, const char* entryName, int len, jint flag);
 #endif /* !_ZIP_H_ */
