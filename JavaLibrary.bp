@@ -517,6 +517,9 @@ java_library {
     patch_module: "java.base",
     installable: false,
     include_srcs: true,
+    // This jar is packaged as part of the SDK, use -target 8 so that it works
+    // with old JDKs.
+    java_version: "1.8",
 }
 
 // Builds libcore test rules
@@ -1083,6 +1086,9 @@ java_library {
     sdk_version: "none",
     system_modules: "api-annotations-system-modules",
     patch_module: "java.base",
+    // This jar is packaged as part of the SDK, use -target 8 so that it works
+    // with old JDKs.
+    java_version: "1.8",
 }
 
 // Create a library containing the api surface annotations, built against
