@@ -76,6 +76,10 @@ java_sdk_library {
     system_modules: "none",
     patch_module: "java.base",
 
+    // This jar is packaged as part of the SDK, use -target 8 so that it works
+    // with old JDKs.
+    java_version: "1.8",
+
     // Don't copy any output files to the dist.
     no_dist: true,
 }
@@ -110,6 +114,10 @@ java_library {
     system_modules: "art-module-intra-core-api-stubs-bootstrap-system-modules",
     sdk_version: "none",
     patch_module: "java.base",
+
+    // This jar is packaged as part of the SDK, use -target 8 so that it works
+    // with old JDKs.
+    java_version: "1.8",
 }
 
 java_api_contribution {
