@@ -230,9 +230,11 @@ public final class Daemons {
                 try {
                     synchronized (ReferenceQueue.class) {
                         if (ReferenceQueue.unenqueued == null) {
-                            progressCounter.incrementAndGet();
                             FinalizerWatchdogDaemon.INSTANCE.monitoringNotNeeded(
                                     FinalizerWatchdogDaemon.RQ_DAEMON);
+                            // Increment after above call. If watchdog saw it active, it should see
+                            // the counter update.
+                            progressCounter.incrementAndGet();
                             do {
                                ReferenceQueue.class.wait();
                             } while (ReferenceQueue.unenqueued == null);
@@ -253,8 +255,8 @@ public final class Daemons {
             }
         }
 
-        ReferenceQueue currentlyProcessing() {
-          return ReferenceQueue.getCurrentQueue();
+        Object currentlyProcessing() {
+          return ReferenceQueue.getCurrentTarget();
         }
     }
 
@@ -298,10 +300,12 @@ public final class Daemons {
                         processReference(nextReference);
                     } else {
                         finalizingObject = null;
-                        progressCounter.lazySet(++localProgressCounter);
                         // Slow path; block.
                         FinalizerWatchdogDaemon.INSTANCE.monitoringNotNeeded(
                                 FinalizerWatchdogDaemon.FINALIZER_DAEMON);
+                        // Increment after above call. If watchdog saw it active, it should see
+                        // the counter update.
+                        progressCounter.set(++localProgressCounter);
                         nextReference = queue.remove();
                         progressCounter.set(++localProgressCounter);
                         FinalizerWatchdogDaemon.INSTANCE.monitoringNeeded(
@@ -502,70 +506,75 @@ public final class Daemons {
                 // Temporary app backward compatibility. Remove eventually.
                 MAX_FINALIZE_NANOS = finalizerTimeoutNs;
             }
-            boolean monitorFinalizer = false;
-            int finalizerStartCount = 0;
-            if (isActive(FINALIZER_DAEMON)) {
-                monitorFinalizer = true;
-                finalizerStartCount = FinalizerDaemon.INSTANCE.progressCounter.get();
-            }
-            boolean monitorRefQueue = false;
-            int refQueueStartCount = 0;
-            if (isActive(RQ_DAEMON)) {
-                monitorRefQueue = true;
-                refQueueStartCount = ReferenceQueueDaemon.INSTANCE.progressCounter.get();
-            }
+            // Read the counter before we read the "active" state the first time, and after
+            // we read it the last time, to guarantee that if the state was ever inactive,
+            // we'll see a changed counter.
+            int finalizerStartCount = FinalizerDaemon.INSTANCE.progressCounter.get();
+            boolean monitorFinalizer = isActive(FINALIZER_DAEMON);
+            int refQueueStartCount = ReferenceQueueDaemon.INSTANCE.progressCounter.get();
+            boolean monitorRefQueue = isActive(RQ_DAEMON);
             // Avoid remembering object being finalized, so as not to keep it alive.
             final long startMillis = System.currentTimeMillis();
             final long startNanos = System.nanoTime();
 
-            if (!sleepForNanos(finalizerTimeoutNs)) {
-                // Don't report possibly spurious timeout if we are interrupted.
-                return null;
-            }
-            if (FinalizerDaemon.INSTANCE.progressCounter.get() == finalizerStartCount
-                && monitorFinalizer && isActive(FINALIZER_DAEMON)) {
-                // We assume that only remove() and doFinalize() may take time comparable to the
-                // finalizer timeout.
-                // We observed neither the effect of the monitoringNotNeeded() nor the increment
-                // preceding a later wakeUp. Any remove() call by the FinalizerDaemon during our
-                // sleep interval must have been followed by a monitoringNeeded() call before we
-                // checked activeCallees.  But then we would have seen the counter increment.
-                // Thus there cannot have been such a remove() call.
-                // The FinalizerDaemon must not have progressed (from either the beginning or the
-                // last progressCounter increment) to either the next increment or
-                // monitoringNotNeeded() call.
-                // Thus we must have taken essentially the whole finalizerTimeoutMs in a single
-                // doFinalize() call.  Thus it's OK to time out.  finalizingObject was set just
-                // before the counter increment, which preceded the doFinalize() call.  Thus we
-                // are guaranteed to get the correct finalizing value below, unless doFinalize()
-                // just finished as we were timing out, in which case we may get null or a later
-                // one.  In this last case, we are very likely to discard it below.
-                Object finalizing = FinalizerDaemon.INSTANCE.finalizingObject;
-                System.logW("Watchdog: Considering throwing exception",
-                    finalizerTimeoutException(finalizing));
-                System.logW("Watchdog: Millis elapsed so far: "
-                    + (System.currentTimeMillis() - startMillis));
-                System.logW("Watchdog: Nanos so far: " + (System.nanoTime() - startNanos));
-                sleepForNanos(500 * NANOS_PER_MILLI);
-                // Recheck to make it even less likely we report the wrong finalizing object in
-                // the case which a very slow finalization just finished as we were timing out.
-                if (isActive(FINALIZER_DAEMON)
-                        && FinalizerDaemon.INSTANCE.progressCounter.get() == finalizerStartCount) {
-                    System.logE("Was finalizing " + finalizingObjectAsString(finalizing)
-                        + ", now finalizing "
-                        + finalizingObjectAsString(FinalizerDaemon.INSTANCE.finalizingObject));
-                    System.logE("Total elapsed millis: "
-                        + (System.currentTimeMillis() - startMillis));
-                    System.logE("Total nanos: " + (System.nanoTime() - startNanos));
-                    return finalizerTimeoutException(finalizing);
+            // Rather than just sleeping for finalizerTimeoutNs and checking whether we made
+            // progress, we sleep repeatedly. This means that if our process makes no progress,
+            // e.g. because it is frozen, the watchdog also won't, making it less likely we will
+            // spuriously time out. It does mean that in the normal case, we will go to sleep
+            // and wake up twice per timeout period, rather than once.
+            final int NUM_WAKEUPS = 5;
+            for (int i = 1; i <= NUM_WAKEUPS; ++i) {
+                if (!sleepForNanos(finalizerTimeoutNs / NUM_WAKEUPS)) {
+                    // Don't report possibly spurious timeout if we are interrupted.
+                    return null;
+                }
+                if (monitorFinalizer && isActive(FINALIZER_DAEMON)
+                    && FinalizerDaemon.INSTANCE.progressCounter.get() == finalizerStartCount) {
+                    // Still working on same finalizer or Java 9 Cleaner.
+                    continue;
+                }
+                if (monitorRefQueue && isActive(RQ_DAEMON)
+                    && ReferenceQueueDaemon.INSTANCE.progressCounter.get() == refQueueStartCount) {
+                    // Still working on same ReferenceQueue or sun.misc.Cleaner.
+                    continue;
+                }
+                // Everything that could make progress, already did. Just sleep for the rest of the
+                // timeout interval.
+                if (i < NUM_WAKEUPS) {
+                    sleepForNanos((finalizerTimeoutNs  / NUM_WAKEUPS) * (NUM_WAKEUPS - i));
+                    return null;
                 }
             }
-            if (ReferenceQueueDaemon.INSTANCE.progressCounter.get() == refQueueStartCount
-                && monitorRefQueue && isActive(RQ_DAEMON)) {
+            // Either a state change to inactive, or a task completion would have caused us to see a
+            // counter change. Thus at least one of the daemons appears stuck.
+            if (monitorFinalizer && isActive(FINALIZER_DAEMON)
+                && FinalizerDaemon.INSTANCE.progressCounter.get() == finalizerStartCount) {
+                // The finalizingObject field was set just before the counter increment, which
+                // preceded the doFinalize() or doClean() call.  Thus we are guaranteed to get the
+                // correct finalizing value below, unless doFinalize() just finished as we were
+                // timing out, in which case we may get null or a later one.
+                Object finalizing = FinalizerDaemon.INSTANCE.finalizingObject;
+                System.logE("Was finalizing " + finalizingObjectAsString(finalizing)
+                    + ", now finalizing "
+                    + finalizingObjectAsString(FinalizerDaemon.INSTANCE.finalizingObject));
+                // Print both time of day and monotonic time differences:
+                System.logE("Total elapsed millis: "
+                    + (System.currentTimeMillis() - startMillis));
+                System.logE("Total elapsed nanos: " + (System.nanoTime() - startNanos));
+                return finalizerTimeoutException(finalizing);
+            }
+            if (monitorRefQueue && isActive(RQ_DAEMON)
+                && ReferenceQueueDaemon.INSTANCE.progressCounter.get() == refQueueStartCount) {
+                // Report RQD timeouts only if they occur repeatedly.
+                // TODO: Consider changing that, but we have historically been more tolerant here,
+                // since we may not increment the reference counter for every processed queue
+                // element.
+                String currentTarget = ReferenceQueueDaemon.INSTANCE.currentlyProcessing().toString();
+                System.logE("ReferenceQueueDaemon timed out while targeting " + currentTarget
+                        + ". Total nanos: " + (System.nanoTime() - startNanos));
                 if (observedReferenceQueueTimeouts.incrementAndGet()
                         > TOLERATED_REFERENCE_QUEUE_TIMEOUTS) {
-                    return refQueueTimeoutException(
-                            ReferenceQueueDaemon.INSTANCE.currentlyProcessing());
+                    return refQueueTimeoutException(currentTarget);
                 }
             }
             return null;
@@ -597,8 +606,8 @@ public final class Daemons {
             }
         }
 
-        private static TimeoutException refQueueTimeoutException(ReferenceQueue rq) {
-            String message = "ReferenceQueueDaemon timed out while targeting " + rq;
+        private static TimeoutException refQueueTimeoutException(String target) {
+            String message = "ReferenceQueueDaemon timed out while targeting " + target;
             return new TimeoutException(message);
         }
 
