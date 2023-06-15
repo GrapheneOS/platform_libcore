@@ -50,4 +50,7 @@ droidstubs {
     // LambdaMetaFactory depends on CallSite etc. which are part of ART's
     // Public API surface
     sdk_version: "current",
+
+    // Use -target 8 so that it works with old JDKs.
+    java_version: "1.8",
 }

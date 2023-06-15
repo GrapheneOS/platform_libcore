@@ -1108,6 +1108,9 @@ java_library {
     sdk_version: "core_current",
     // Make sure that this will be added to the sdk snapshot for S.
     min_sdk_version: "S",
+    // This jar is packaged as part of the ART module host exports, use -target 8 so that it works
+    // with old JDKs.
+    java_version: "1.8",
 }
 
 java_api_contribution {
