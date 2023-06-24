@@ -9,6 +9,9 @@
       "name": "CtsLibcoreTestCases",
       "options": [
         {
+          "instrumentation-arg": "core-test-mode:=presubmit"
+        },
+        {
           "exclude-filter": "com.android.org.conscrypt.java.security.AlgorithmParameterGeneratorTestDH"
         },
         {
