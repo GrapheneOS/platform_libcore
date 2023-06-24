@@ -1,0 +1,67 @@
+[
+{
+  bug: 287231726,
+  description: "This test doesn't test public APIs.",
+  result: EXEC_FAILED,
+  names: [
+    "libcore.libcore.icu.DateIntervalFormatTest",
+    "libcore.libcore.icu.ICUTest",
+    "libcore.libcore.icu.LocaleDataTest",
+    "libcore.sun.misc.SharedSecretsTest"
+  ]
+},
+{
+  bug: 287231726,
+  description: "The test asserts buggy or non-breaking behaviors, but the behavior has been fixed / changed in the future ART module version.",
+  result: EXEC_FAILED,
+  names: [
+    "libcore.java.lang.ClassTest#test_toGenericString",
+    "libcore.java.util.CurrencyTest#test_localeExtension",
+    "libcore.java.text.OldDecimalFormatSymbolsTest#test_RIHarmony_compatible",
+    "libcore.java.text.OldNumberFormatTest#test_getCurrencyInstanceLjava_util_Locale",
+    "org.apache.harmony.tests.java.util.ArrayDequeTest#test_forEachRemaining_CME",
+    "org.apache.harmony.tests.java.util.ArrayDequeTest#test_iterator",
+    "org.apache.harmony.tests.java.lang.Character_UnicodeBlockTest#test_ofC",
+    "org.apache.harmony.tests.java.lang.Character_UnicodeBlockTest#test_ofI",
+    "org.apache.harmony.tests.java.util.PriorityQueueTest#test_remove_Ljava_lang_Object_not_Compatible",
+    "org.apache.harmony.tests.java.util.PriorityQueueTest#test_spliterator_CME",
+    "org.apache.harmony.regex.tests.java.util.regex.PatternTest#testSplitAsStream"
+  ]
+},
+{
+  bug: 287231726,
+  description: "The test depends on locale, but manufacturers / CLDR improves the locale data over time",
+  result: EXEC_FAILED,
+  names: [
+    "libcore.java.text.DecimalFormatTest#testLocaleGroupingSeparator",
+    "libcore.java.text.DecimalFormatTest#testSetGroupingSeparator"
+  ]
+},
+{
+  bug: 286802267,
+  description: "The test depends on internal APIs.",
+  result: EXEC_FAILED,
+  names: [
+    "test.java.time.TestClock_System#test_OffsetLimits",
+    "test.java.time.TestClock_System#test_OffsetRegular"
+  ]
+},
+{
+  bug: 286802267,
+  description: "The test asserts buggy or non-breaking behaviors, but the behavior has been fixed / changed in the future ART module version.",
+  result: EXEC_FAILED,
+  names: [
+    "tck.java.time.TCKYear#factory_parse_fail",
+    "tck.java.time.format.TCKDateTimeParseResolver#test_resolveAmPm"
+  ]
+},
+{
+  bug: 286802267,
+  description: "The test depends on locale, but manufacturers / CLDR improves the locale data over time",
+  result: EXEC_FAILED,
+  names: [
+    "test.java.time.format.TestUnicodeExtension#test_localizedBy",
+    "test.java.util.TestFormatter#test"
+  ]
+}
+]
