@@ -33,6 +33,11 @@ import org.junit.rules.TestRule;
 
 import static java.util.Arrays.asList;
 
+import android.compat.Compatibility;
+
+import dalvik.annotation.compat.VersionCodes;
+import dalvik.system.VMRuntime;
+
 public class PatternTest extends TestCaseWithRules {
     @Rule
     public TestRule switchTargetSdkVersionRule = SwitchTargetSdkVersionRule.getInstance();
@@ -2199,21 +2204,37 @@ public class PatternTest extends TestCaseWithRules {
 
         pat = Pattern.compile("b");
         s = pat.splitAsStream("").toArray(String[]::new);
-        // The length is 1 because the javadoc says "If this pattern does not match any subsequence
-        // of the input then the resulting stream has just one element, namely the input sequence
-        // in string form.
-        assertEquals(1, s.length);
-        assertEquals(s[0], "");
+        assertEquals(getExpectedEmptyStringSplitLength(), s.length);
+        checkContainsOnlyEmptyStrings(s);
 
         pat = Pattern.compile("");
         s = pat.splitAsStream("").toArray(String[]::new);
-        assertEquals(1, s.length);
-        assertEquals(s[0], "");
+        assertEquals(getExpectedEmptyStringSplitLength(), s.length);
+        checkContainsOnlyEmptyStrings(s);
 
         pat = Pattern.compile("");
         s = pat.splitAsStream("abccbadfe").toArray(String[]::new);
         assertEquals(9, s.length);
         assertEquals(s[0], "a");
         assertEquals(s[8], "e");
+    }
+
+    private int getExpectedEmptyStringSplitLength() {
+        if (VMRuntime.getSdkVersion() >= VersionCodes.UPSIDE_DOWN_CAKE
+                && Compatibility.isChangeEnabled(
+                Pattern.SPLIT_AS_STREAM_RETURNS_SINGLE_EMPTY_STRING)) {
+            // The length is 1 because the javadoc says "If this pattern does not match any
+            // subsequence of the input then the resulting stream has just one element,
+            // namely the input sequence in string form.
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    private void checkContainsOnlyEmptyStrings(String[] sArray) {
+        for (String s : sArray) {
+            assertEquals(s, "");
+        }
     }
 }
