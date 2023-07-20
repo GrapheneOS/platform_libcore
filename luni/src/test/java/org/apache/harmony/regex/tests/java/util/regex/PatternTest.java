@@ -2220,7 +2220,7 @@ public class PatternTest extends TestCaseWithRules {
     }
 
     private int getExpectedEmptyStringSplitLength() {
-        if (VMRuntime.getSdkVersion() >= VersionCodes.UPSIDE_DOWN_CAKE
+        if (VMRuntime.getSdkVersion() > VersionCodes.TIRAMISU
                 && Compatibility.isChangeEnabled(
                 Pattern.SPLIT_AS_STREAM_RETURNS_SINGLE_EMPTY_STRING)) {
             // The length is 1 because the javadoc says "If this pattern does not match any
