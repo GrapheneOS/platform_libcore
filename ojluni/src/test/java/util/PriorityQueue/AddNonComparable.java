@@ -46,6 +46,11 @@ import java.util.function.Supplier;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import android.compat.Compatibility;
+
+import dalvik.annotation.compat.VersionCodes;
+import dalvik.system.VMRuntime;
+
 public class AddNonComparable {
 
     static <E> void test(Queue<E> queue, Supplier<E> supplier,
@@ -58,11 +63,23 @@ public class AddNonComparable {
 
     @Test
     public void queues() {
-        test(new PriorityQueue<>(), NonComparable::new,
-             (q, e) -> {
-                 assertEquals(q.size(), 0);
-                 assertTrue(e instanceof ClassCastException);
-             });
+        // Android-added: test old behavior in < U.
+        boolean testPreAndroidUBehavior = VMRuntime.getSdkVersion() < VersionCodes.UPSIDE_DOWN_CAKE
+            || !Compatibility.isChangeEnabled(PriorityQueue.PRIORITY_QUEUE_OFFER_NON_COMPARABLE_ONE_ELEMENT);
+
+        if (testPreAndroidUBehavior) {
+            test(new PriorityQueue<>(), NonComparable::new,
+                 (q, e) -> {
+                     assertEquals(q.size(), 1);
+                     assertTrue(e == null);
+                 });
+        } else {
+            test(new PriorityQueue<>(), NonComparable::new,
+                 (q, e) -> {
+                     assertEquals(q.size(), 0);
+                     assertTrue(e instanceof ClassCastException);
+                 });
+        }
         test(new PriorityQueue<>(), AComparable::new,
              (q, e) -> {
                  assertEquals(q.size(), 1);
