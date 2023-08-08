@@ -33,24 +33,25 @@ import java.nio.channels.MembershipKey;
 
 public class MembershipKeyTest extends TestCase {
 
-    private MembershipKey key;
-    private final int PORT = 5000;
     private final String TEST_MESSAGE = "hello";
+    private static final InetAddress MULTICAST_ADDRESS = getMulticastAddress();
+    private static final NetworkInterface NETWORK_INTERFACE = getNetworkInterface();
+
+    private MembershipKey key;
+    private int port = -1;
     private DatagramChannel client;
-    private InetAddress sourceAddress = Inet4Address.LOOPBACK;
-    private final static InetAddress MULTICAST_ADDRESS = getMulticastAddress();
-    private final static NetworkInterface NETWORK_INTERFACE = getNetworkInterface();
+    private final InetAddress sourceAddress = Inet4Address.LOOPBACK;
 
     private void init(boolean withSource) throws Exception {
         client = DatagramChannel.open(StandardProtocolFamily.INET)
-                .bind(new InetSocketAddress(Inet4Address.ANY, PORT));
+                .bind(new InetSocketAddress(Inet4Address.ANY, 0));
         client.configureBlocking(false);
-
         if (withSource) {
             key = client.join(MULTICAST_ADDRESS, NETWORK_INTERFACE, sourceAddress);
         } else {
             key = client.join(MULTICAST_ADDRESS, NETWORK_INTERFACE);
         }
+        port = client.socket().getLocalPort();
     }
 
     @Override
@@ -107,7 +108,7 @@ public class MembershipKeyTest extends TestCase {
             assertEquals(TEST_MESSAGE.length(), dc
                     .bind(new InetSocketAddress(Inet4Address.LOOPBACK, 0))
                     .send(ByteBuffer.wrap(TEST_MESSAGE.getBytes()),
-                            new InetSocketAddress(MULTICAST_ADDRESS, PORT)));
+                            new InetSocketAddress(MULTICAST_ADDRESS, port)));
         }
 
         ByteBuffer buffer = ByteBuffer.allocate(1048);
@@ -173,7 +174,7 @@ public class MembershipKeyTest extends TestCase {
             assertEquals(TEST_MESSAGE.length(), dc
                     .bind(new InetSocketAddress(Inet4Address.LOOPBACK, 0))
                     .send(ByteBuffer.wrap(TEST_MESSAGE.getBytes()),
-                            new InetSocketAddress(MULTICAST_ADDRESS, PORT)));
+                            new InetSocketAddress(MULTICAST_ADDRESS, port)));
         }
 
         ByteBuffer buffer = ByteBuffer.allocate(1048);
@@ -223,14 +224,14 @@ public class MembershipKeyTest extends TestCase {
                     .bind(new InetSocketAddress(Inet4Address.LOOPBACK, 0))
                     .setOption(StandardSocketOptions.IP_MULTICAST_LOOP, true /* enable loop */)
                     .send(ByteBuffer.wrap(TEST_MESSAGE.getBytes()),
-                            new InetSocketAddress(MULTICAST_ADDRESS, PORT)));
+                            new InetSocketAddress(MULTICAST_ADDRESS, port)));
         }
 
         ByteBuffer buffer = ByteBuffer.allocate(1048);
         client.receive(buffer);
         buffer.flip();
         int limits = buffer.limit();
-        byte bytes[] = new byte[limits];
+        byte[] bytes = new byte[limits];
         buffer.get(bytes, 0, limits);
         String receivedMessage = new String(bytes);
         assertEquals(TEST_MESSAGE, receivedMessage);
