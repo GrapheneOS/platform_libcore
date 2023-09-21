@@ -34,6 +34,8 @@
 
 package test.java.util.Base64;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -52,6 +54,7 @@ public class TestBase64 {
 
     private static final Random rnd = RandomFactory.getRandom();
 
+    @LargeTest
     public static void main(String args[]) throws Throwable {
         int numRuns  = 10;
         int numBytes = 200;

@@ -45,6 +45,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.assertCountSum;
 
+import android.platform.test.annotations.LargeTest;
+
 /**
  * SliceOpTest
  *
@@ -134,6 +136,7 @@ public class IntSliceOpTest extends OpTestCase {
         return Math.max(0, dataSize - skip);
     }
 
+    @LargeTest
     @Test(dataProvider = "IntStreamTestData", dataProviderClass = IntStreamTestDataProvider.class)
     public void testSkipOps(String name, TestData.OfInt data) {
         List<Integer> skips = sizes(data.size());
@@ -148,6 +151,7 @@ public class IntSliceOpTest extends OpTestCase {
         }
     }
 
+    @LargeTest
     @Test(dataProvider = "IntStreamTestData", dataProviderClass = IntStreamTestDataProvider.class)
     public void testSkipLimitOps(String name, TestData.OfInt data) {
         List<Integer> skips = sizes(data.size());
@@ -166,6 +170,7 @@ public class IntSliceOpTest extends OpTestCase {
         }
     }
 
+    @LargeTest
     @Test(dataProvider = "IntStreamTestData", dataProviderClass = IntStreamTestDataProvider.class)
     public void testLimitOps(String name, TestData.OfInt data) {
         List<Integer> limits = sizes(data.size());

@@ -90,6 +90,14 @@
           "exclude-filter": "org.apache.harmony.tests.javax.net.ssl.SSLSessionTest"
         }
       ]
+    },
+    {
+      "name": "CtsLibcoreOjTestCases",
+      "options": [
+        {
+          "instrumentation-arg": "core-test-mode:=presubmit"
+        }
+      ]
     }
   ],
   "kernel-presubmit": [

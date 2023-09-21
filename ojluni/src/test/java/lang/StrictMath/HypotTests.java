@@ -36,6 +36,8 @@
  */
 package test.java.lang.StrictMath;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.util.Random;
 import org.testng.annotations.Test;
 
@@ -726,21 +728,25 @@ public class HypotTests {
         }
     }
     */
+    @LargeTest
     @Test
     public void testAgainstTranslit_shard1() {
         testAgainstTranslit(0, 50);
     }
 
+    @LargeTest
     @Test
     public void testAgainstTranslit_shard2() {
         testAgainstTranslit(50, 100);
     }
 
+    @LargeTest
     @Test
     public void testAgainstTranslit_shard3() {
         testAgainstTranslit(100, 150);
     }
 
+    @LargeTest
     @Test
     public void testAgainstTranslit_shard4() {
         testAgainstTranslit(150, 200);

@@ -49,6 +49,8 @@ import java.util.function.BooleanSupplier;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
+import android.platform.test.annotations.LargeTest;
+
 public class GCDuringIteration {
 
     /** No guarantees, but effective in practice. */
@@ -262,6 +264,7 @@ public class GCDuringIteration {
     void equal(Object x, Object y) {
         if (x == null ? y == null : x.equals(y)) pass();
         else fail(x + " not equal to " + y);}
+    @LargeTest
     public static void main(String[] args) throws Throwable {
         new GCDuringIteration().instanceMain(args);}
     void instanceMain(String[] args) throws Throwable {

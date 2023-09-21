@@ -66,12 +66,15 @@ import javax.crypto.interfaces.DHPublicKey;
 import org.testng.annotations.Test;
 import static org.junit.Assert.fail;
 
+import android.platform.test.annotations.LargeTest;
+
 public class KeySizeTest {
 
     List<Integer> sizesDH = Arrays.asList(512, 768, 832, 1024, 2048);
     List<Integer> sizesECDH = Arrays.asList(224, 256, 384, 521);
     List<Integer> sizesXDH = Arrays.asList(512, 768, 832, 1024, 2048, 3072, 4096, 6144, 8192);
 
+    @LargeTest
     @Test
     public void testDHKeySize() throws Exception {
         for (int i = 0; i < sizesDH.size(); i++) {

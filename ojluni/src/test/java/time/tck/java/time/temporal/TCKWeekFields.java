@@ -70,6 +70,8 @@ import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertSame;
 import static org.testng.Assert.assertTrue;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.DayOfWeek;
@@ -621,6 +623,7 @@ public class TCKWeekFields extends AbstractTCKTest {
         }
     }
 
+    @LargeTest
     @Test(dataProvider="weekFields")
     public void test_parse_resolve_localizedWoWBY_lenient(DayOfWeek firstDayOfWeek, int minDays) {
         LocalDate date = LocalDate.of(2012, 12, 31);

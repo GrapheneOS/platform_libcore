@@ -43,6 +43,8 @@ import java.util.TreeSet;
 import static java.util.stream.Collectors.toCollection;
 import static java.util.stream.Collectors.toList;
 
+import android.platform.test.annotations.LargeTest;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -53,6 +55,7 @@ public class PrimeTest {
     private static final int DEFAULT_CERTAINTY = 100;
     private static final int NUM_NON_PRIMES = 10000;
 
+    @LargeTest
     @Test
     public void testPrimes() throws Exception {
         // Get primes through specified bound (inclusive) and Integer.MAX_VALUE

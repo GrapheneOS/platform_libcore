@@ -29,6 +29,8 @@
 package test.java.lang.String;
 
 // Android-added: support for wrapper to avoid d8 backporting of String.isBlank (b/191859202).
+import android.platform.test.annotations.LargeTest;
+
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
@@ -59,6 +61,7 @@ public class StringRepeat {
     /*
      * Repeat String function tests.
      */
+    @LargeTest
     @Test
     public void test1() {
         for (int repeat : REPEATS) {

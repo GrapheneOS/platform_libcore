@@ -36,6 +36,8 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -813,6 +815,7 @@ public class ScheduledExecutorSubclassTest extends JSR166TestCase {
      * - setExecuteExistingDelayedTasksAfterShutdownPolicy
      * - setContinueExistingPeriodicTasksAfterShutdownPolicy
      */
+    @LargeTest
     public void testShutdown_cancellation() throws Exception {
         Boolean[] allBooleans = { null, Boolean.FALSE, Boolean.TRUE };
         for (Boolean policy : allBooleans)

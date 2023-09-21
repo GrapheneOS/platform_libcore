@@ -59,6 +59,16 @@ jmethodID jzOnZipEntryAccessID;
 static int OPEN_READ = java_util_zip_ZipFile_OPEN_READ;
 static int OPEN_DELETE = java_util_zip_ZipFile_OPEN_DELETE;
 
+static void ZipFile_initIDs(JNIEnv *env)
+{
+    jclass cls = (*env)->FindClass(env, "java/util/zip/ZipFile");
+    jzfileID = (*env)->GetFieldID(env, cls, "jzfile", "J");
+    assert(jzfileID != 0);
+    jzOnZipEntryAccessID = (*env)->GetMethodID(env, cls, "onZipEntryAccess", "([BI)V");
+    assert(jzOnZipEntryAccessID != 0);
+}
+
+
 static void
 ThrowZipException(JNIEnv *env, const char *msg)
 {
@@ -413,4 +423,9 @@ static JNINativeMethod gJarFileMethods[] = {
   NATIVE_METHOD(JarFile, getMetaInfEntryNames, "()[Ljava/lang/String;"),
 };
 
-void register_java_util_zip_ZipFile(JNIEnv* env) {}
+void register_java_util_zip_ZipFile(JNIEnv* env) {
+  jniRegisterNativeMethods(env, "java/util/zip/ZipFile", gMethods, NELEM(gMethods));
+  ZipFile_initIDs(env);
+
+  jniRegisterNativeMethods(env, "java/util/jar/JarFile", gJarFileMethods, NELEM(gJarFileMethods));
+}

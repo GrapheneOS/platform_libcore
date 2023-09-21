@@ -35,6 +35,9 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
+import android.platform.test.annotations.LargeTest;
+
+@LargeTest
 @Test
 public class CountLargeTest {
 

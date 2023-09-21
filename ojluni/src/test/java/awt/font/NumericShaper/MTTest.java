@@ -35,6 +35,8 @@ import java.util.Arrays;
 import java.util.EnumSet;
 import static java.awt.font.NumericShaper.*;
 
+import android.platform.test.annotations.LargeTest;
+
 import org.testng.annotations.Test;
 
 public class MTTest {
@@ -48,6 +50,7 @@ public class MTTest {
     static NumericShaper ns1, ns2, ns3, ns4;
 
     // Android-changed: Removed args & added @Test
+    @LargeTest
     @Test
     public static void main() {
         System.out.println("original: " + text);

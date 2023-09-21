@@ -22,6 +22,8 @@
  */
 package org.openjdk.tests.java.util.stream;
 
+import android.platform.test.annotations.LargeTest;
+
 import org.openjdk.testlib.java.util.stream.DoubleStreamTestDataProvider;
 import org.openjdk.testlib.java.util.stream.IntStreamTestDataProvider;
 import org.openjdk.testlib.java.util.stream.LambdaTestHelpers;
@@ -43,6 +45,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
+@LargeTest
 @Test
 public class StreamLinkTest extends OpTestCase {
 

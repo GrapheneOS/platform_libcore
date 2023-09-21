@@ -29,6 +29,8 @@
  */
 package test.java.text.Format.DateFormat;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.lang.IllegalArgumentException;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -124,7 +126,7 @@ public class SimpleDateFormatPatternTest {
         return objArray;
     }
 
-    private static Object[][] createPatternObj(String[] pattern){
+    private static Object[][] createPatternObj(String[] pattern) {
         Object[][] objArray = new Object[locales.length * pattern.length][];
         int k = 0;
         for (int i = 0; i < locales.length; i++) {
@@ -154,6 +156,7 @@ public class SimpleDateFormatPatternTest {
     }
 
     //check Constructors for invalid pattern
+    @LargeTest
     @Test(dataProvider = "invalidPatternObj",
             expectedExceptions = IllegalArgumentException.class)
     public void testIllegalArgumentException1(String pattern, Locale loc)
@@ -162,6 +165,7 @@ public class SimpleDateFormatPatternTest {
         new SimpleDateFormat(pattern);
     }
 
+    @LargeTest
     @Test(dataProvider = "invalidPatternObj",
             expectedExceptions = IllegalArgumentException.class)
     public void testIllegalArgumentException2(String pattern, Locale loc)
@@ -170,20 +174,33 @@ public class SimpleDateFormatPatternTest {
         new SimpleDateFormat(pattern, new DateFormatSymbols());
     }
 
+    @LargeTest
     @Test(dataProvider = "invalidPatternObj",
             expectedExceptions = IllegalArgumentException.class)
-    public void testIllegalArgumentException3 (String pattern, Locale loc)
+    public void testIllegalArgumentException3(String pattern, Locale loc)
             throws IllegalArgumentException {
         Locale.setDefault(loc);
         new SimpleDateFormat(pattern, Locale.getDefault());
     }
 
+    @LargeTest
     @Test(dataProvider = "invalidPatternObj",
             expectedExceptions = IllegalArgumentException.class)
     public void testIllegalArgumentException4(String pattern, Locale loc)
             throws IllegalArgumentException {
         Locale.setDefault(loc);
         new SimpleDateFormat().applyPattern(pattern);
+    }
+
+    // Android-added: Add a smaller test for IllegalArgumentException
+    @Test(dataProvider = "invalidPat", expectedExceptions = IllegalArgumentException.class)
+    public void testIllegalArgumentException_enUS(String pattern) {
+        Locale.setDefault(Locale.US);
+        new SimpleDateFormat(pattern);
+        new SimpleDateFormat(pattern, new DateFormatSymbols());
+        new SimpleDateFormat(pattern, Locale.getDefault());
+        new SimpleDateFormat().applyPattern(pattern);
+
     }
 
     //check Constructors for null pattern
@@ -219,10 +236,22 @@ public class SimpleDateFormatPatternTest {
         new SimpleDateFormat().applyPattern(null);
     }
 
+    // Shard the testValidPattern test.
+    @LargeTest
     @Test(dataProvider = "validPatternObj")
     //check Constructors for valid pattern
     public void testValidPattern(String pattern, Locale loc) {
         Locale.setDefault(loc);
+        new SimpleDateFormat(pattern);
+        new SimpleDateFormat(pattern, new DateFormatSymbols());
+        new SimpleDateFormat(pattern, Locale.getDefault());
+        new SimpleDateFormat().applyPattern(pattern);
+    }
+
+    // Android-added: Add a smaller test for testValidPattern
+    @Test(dataProvider = "validPat")
+    public void testValidPattern_enUS(String pattern) {
+        Locale.setDefault(Locale.US);
         new SimpleDateFormat(pattern);
         new SimpleDateFormat(pattern, new DateFormatSymbols());
         new SimpleDateFormat(pattern, Locale.getDefault());

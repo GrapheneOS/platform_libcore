@@ -58,6 +58,8 @@ package test.java.time.chrono;
 
 import static org.testng.Assert.assertEquals;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
@@ -93,6 +95,7 @@ public class TestJapaneseChronoImpl {
     //-----------------------------------------------------------------------
     // Verify  Japanese Calendar matches java.util.Calendar for range
     //-----------------------------------------------------------------------
+    @LargeTest
     @Test(dataProvider="RangeVersusCalendar")
     public void test_JapaneseChrono_vsCalendar(LocalDate isoStartDate, LocalDate isoEndDate) {
         Locale locale = Locale.forLanguageTag("ja-JP-u-ca-japanese");

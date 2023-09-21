@@ -50,6 +50,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
+import android.platform.test.annotations.LargeTest;
+
 @Test
 public class SelectWithConsumer {
 
@@ -340,6 +342,7 @@ public class SelectWithConsumer {
     /**
      * Test wakeup during select
      */
+    @LargeTest
     public void testWakeupDuringSelect() throws Exception {
         // select(Consumer)
         try (Selector sel = Selector.open()) {
@@ -444,6 +447,7 @@ public class SelectWithConsumer {
     /**
      * Test closing selector while in a selection operation
      */
+    @LargeTest
     public void testCloseDuringSelect() throws Exception {
         // select(Consumer)
         try (Selector sel = Selector.open()) {

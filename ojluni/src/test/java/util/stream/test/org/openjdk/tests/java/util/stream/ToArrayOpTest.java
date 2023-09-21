@@ -43,6 +43,8 @@ import java.util.stream.DoubleStream;
 import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.*;
 import static org.testng.Assert.assertEquals;
 
+import android.platform.test.annotations.LargeTest;
+
 
 /**
  * ToArrayOpTest
@@ -116,6 +118,7 @@ public class ToArrayOpTest extends OpTestCase {
                     s -> s.sorted()
             ));
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class)
     public void testDistinctAndSortedPermutations(String name, TestData.OfRef<Integer> data) {
         for (Function<Stream<Integer>, Stream<Integer>> f : uniqueAndSortedPermutations) {

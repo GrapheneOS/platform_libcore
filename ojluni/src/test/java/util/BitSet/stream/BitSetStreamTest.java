@@ -47,6 +47,8 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertThrows;
 import static org.testng.Assert.assertTrue;
 
+import android.platform.test.annotations.LargeTest;
+
 /**
  * @test
  * @summary test BitSet stream
@@ -216,6 +218,7 @@ public class BitSetStreamTest extends SpliteratorTestHelper {
         testSplitUntilNull(exp, s, intBoxingConsumer());
     }
 
+    @LargeTest
     @Test
     public void testRandomStream() {
         final int size = 1024 * 1024;

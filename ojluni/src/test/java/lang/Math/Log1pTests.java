@@ -33,6 +33,8 @@
  */
 package test.java.lang.Math;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.util.Random;
 
 import org.testng.annotations.Test;
@@ -66,6 +68,7 @@ public class Log1pTests {
      * Also x/(x+1) < ln(1+x) < x
      */
 
+    @LargeTest
     @Test
     public void testLog1p() {
         double[][] testCases = {

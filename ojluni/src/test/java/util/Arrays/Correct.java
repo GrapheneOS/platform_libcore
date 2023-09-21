@@ -38,6 +38,8 @@ import org.testng.annotations.DataProvider;
 import static org.testng.Assert.fail;
 import static org.testng.Assert.assertEquals;
 
+import android.platform.test.annotations.LargeTest;
+
 public class Correct {
 
     static final Random rnd = new Random();
@@ -56,6 +58,7 @@ public class Correct {
         }
     }
 
+    @LargeTest
     @Test(dataProvider = "Comparators")
     public void testComparatorSort(Comparator<Integer> comparator) {
         for (int i=0; i<ITERATIONS; i++) {

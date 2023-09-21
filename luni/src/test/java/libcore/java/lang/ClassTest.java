@@ -34,6 +34,7 @@ import libcore.io.Streams;
 import libcore.test.annotation.NonCts;
 import libcore.test.reasons.NonCtsReasons;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -365,6 +366,14 @@ public class ClassTest {
 
     private void assertGetTypeName(String expected, Class<?> clazz) {
         assertEquals(expected, clazz.getTypeName());
+    }
+
+    @NonCts(bug = 287231726, reason = NonCtsReasons.NON_BREAKING_BEHAVIOR_FIX)
+    @Ignore
+    public void test_toGenericString() {
+        // This test method has been renamed to toGenericString().
+        // Keep this empty method in order to generate the method name into skippedCtsTest.txt
+        // and skip the test in aosp/android12-tests-dev.
     }
 
     @NonCts(bug = 287231726, reason = NonCtsReasons.NON_BREAKING_BEHAVIOR_FIX)

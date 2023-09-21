@@ -51,9 +51,31 @@ public class EnumSetBash {
         bash(Silly63.class);
         bash(Silly64.class);
         bash(Silly65.class);
+        // Android-changed: shard this test.
+        // bash(Silly127.class);
+        // bash(Silly128.class);
+        // bash(Silly129.class);
+        // bash(Silly500.class);
+    }
+
+    // Android-added: shard the testEnumSetBash test.
+    @Test
+    public void testEnumSetBash127() {
         bash(Silly127.class);
+    }
+
+    @Test
+    public void testEnumSetBash128() {
         bash(Silly128.class);
+    }
+
+    @Test
+    public void testEnumSetBash129() {
         bash(Silly129.class);
+    }
+
+    @Test
+    public void testEnumSetBash500() {
         bash(Silly500.class);
     }
 

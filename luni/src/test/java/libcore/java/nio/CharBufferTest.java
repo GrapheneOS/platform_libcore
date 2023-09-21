@@ -54,4 +54,12 @@ public class CharBufferTest extends TestCase {
         assertEquals((int) low, cb.codePoints().toArray()[1]); // Unmatched surrogate.
         assertEquals((int) '0', cb.codePoints().toArray()[2]);
     }
+
+    public void testEmpty() {
+        String s = "Hello\n\tworld";
+        CharBuffer cb = CharBuffer.allocate(0);
+        assertTrue(cb.isEmpty());
+        cb = cb.allocate(32).append(s);
+        assertFalse(cb.isEmpty());
+    }
 }

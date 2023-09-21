@@ -33,6 +33,8 @@
  */
 package test.java.lang.Math;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.util.Random;
 
 import org.testng.annotations.Test;
@@ -1399,6 +1401,7 @@ public class IeeeRecommendedTests {
         }
     }
 
+    @LargeTest
     @Test
     public void testDoubleUlp() {
         double[] specialValues = {NaNd,

@@ -84,29 +84,6 @@ public class InflaterInputStream extends FilterInputStream {
         }
     }
 
-    // Android-added: constructor which explicitly sets whether Inflater is owned by this stream.
-    /**
-     * Creates a new input stream with the specified decompressor and
-     * buffer size.
-     * @param in the input stream
-     * @param inf the decompressor ("inflater")
-     * @param size the input buffer size
-     * @param ownsInflater whether this {@code InflaterInputStream} controls its inflater
-     *                     lifetime and should call {@link Inflater#end} when it is closed.
-     * @throws    IllegalArgumentException if {@code size <= 0}
-     * @hide
-     */
-    InflaterInputStream(InputStream in, Inflater inf, int size, boolean ownsInflater) {
-        super(in);
-        if (in == null || inf == null) {
-            throw new NullPointerException();
-        } else if (size <= 0) {
-            throw new IllegalArgumentException("buffer size <= 0");
-        }
-        this.inf = inf;
-        buf = new byte[size];
-        this.ownsInflater = ownsInflater;
-    }
 
     /**
      * Creates a new input stream with the specified decompressor and
@@ -117,8 +94,6 @@ public class InflaterInputStream extends FilterInputStream {
      * @throws    IllegalArgumentException if {@code size <= 0}
      */
     public InflaterInputStream(InputStream in, Inflater inf, int size) {
-        // Android-changed: refer initialization to constructor which specifies ownInflater.
-        /*
         super(in);
         if (in == null || inf == null) {
             throw new NullPointerException();
@@ -127,8 +102,6 @@ public class InflaterInputStream extends FilterInputStream {
         }
         this.inf = inf;
         buf = new byte[size];
-        */
-        this(in, inf, size, /* ownsInflater= */ true);
     }
 
     /**
@@ -144,12 +117,6 @@ public class InflaterInputStream extends FilterInputStream {
     // Android-changed: Unconditionally close external inflaters (b/26462400)
     // See http://b/111630946 for more details.
     // boolean usesDefaultInflater = false;
-
-    // Android-added: functionally this is identical to usesDefaultInflater, but re-using
-    // it will be confusing. Setting it to true keeps old Android behaviour.
-    // This is added just for ZipFileInflaterInputStream - moving to usesDefaultInflater
-    // is trickier.
-    private final boolean ownsInflater;
 
     /**
      * Creates a new input stream with a default decompressor and buffer size.
@@ -278,17 +245,9 @@ public class InflaterInputStream extends FilterInputStream {
      */
     public void close() throws IOException {
         if (!closed) {
-            // BEGIN Android-changed: close inflater only if it is owned by this
-            // InflaterInputStream. (b/26462400)
-            /*
-            if (usesDefaultInflater)
-                inf.end();
-            */
-            if (ownsInflater) {
-                inf.end();
-            }
-            // END Android-changed: close inflater only if it is owned by this
-            // InflaterInputStream. (b/26462400)
+            // Android-changed: Unconditionally close external inflaters (b/26462400)
+            //if (usesDefaultInflater)
+            inf.end();
             in.close();
             closed = true;
         }

@@ -31,6 +31,8 @@ package test.java.math.BigDecimal;
  * @author Sergey V. Kuksenko
  */
 
+import android.platform.test.annotations.LargeTest;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -5755,6 +5757,7 @@ public class DivideMcTests {
         results[74][74]="1";
     }
 
+    @LargeTest
     @Test
     public void mcDivideTests() {
         for(int i=0; i<value.length; i++) {

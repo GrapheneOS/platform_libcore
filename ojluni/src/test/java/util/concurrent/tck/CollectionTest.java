@@ -48,6 +48,10 @@ public class CollectionTest extends JSR166TestCase {
     }
 
     public static Test testSuite(CollectionImplementation impl) {
+        // Android-changed: Ignore CollectionTest. http://b/285113029
+        // This method apparently creates a new test suite without a test case,
+        // e.g. testCollectionDebugFail() is commented out.
+        /*
         return newTestSuite
             (parameterizedTestSuite(CollectionTest.class,
                                     CollectionImplementation.class,
@@ -55,6 +59,9 @@ public class CollectionTest extends JSR166TestCase {
              jdk8ParameterizedTestSuite(CollectionTest.class,
                                         CollectionImplementation.class,
                                         impl));
+
+         */
+        return null;
     }
 
 //     public void testCollectionDebugFail() {

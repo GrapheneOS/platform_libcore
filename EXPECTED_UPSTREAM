@@ -1226,12 +1226,12 @@ ojluni/src/main/java/java/util/zip/CheckedInputStream.java,jdk17u/jdk-17.0.6-ga,
 ojluni/src/main/java/java/util/zip/CheckedOutputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/CheckedOutputStream.java
 ojluni/src/main/java/java/util/zip/Checksum.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/Checksum.java
 ojluni/src/main/java/java/util/zip/DataFormatException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/DataFormatException.java
-ojluni/src/main/java/java/util/zip/Deflater.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/Deflater.java
+ojluni/src/main/java/java/util/zip/Deflater.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/Deflater.java
 ojluni/src/main/java/java/util/zip/DeflaterInputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/DeflaterInputStream.java
 ojluni/src/main/java/java/util/zip/DeflaterOutputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/DeflaterOutputStream.java
 ojluni/src/main/java/java/util/zip/GZIPInputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/GZIPInputStream.java
 ojluni/src/main/java/java/util/zip/GZIPOutputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/GZIPOutputStream.java
-ojluni/src/main/java/java/util/zip/Inflater.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/Inflater.java
+ojluni/src/main/java/java/util/zip/Inflater.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/Inflater.java
 ojluni/src/main/java/java/util/zip/InflaterInputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/InflaterInputStream.java
 ojluni/src/main/java/java/util/zip/InflaterOutputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/InflaterOutputStream.java
 ojluni/src/main/java/java/util/zip/ZStreamRef.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/ZStreamRef.java
@@ -1241,7 +1241,7 @@ ojluni/src/main/java/java/util/zip/ZipConstants64.java,jdk17u/jdk-17.0.6-ga,src/
 ojluni/src/main/java/java/util/zip/ZipEntry.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/ZipEntry.java
 ojluni/src/main/java/java/util/zip/ZipError.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/ZipError.java
 ojluni/src/main/java/java/util/zip/ZipException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/ZipException.java
-ojluni/src/main/java/java/util/zip/ZipFile.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/ZipFile.java
+ojluni/src/main/java/java/util/zip/ZipFile.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/zip/ZipFile.java
 ojluni/src/main/java/java/util/zip/ZipInputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/ZipInputStream.java
 ojluni/src/main/java/java/util/zip/ZipOutputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/ZipOutputStream.java
 ojluni/src/main/java/java/util/zip/ZipUtils.java,jdk17u/jdk-17.0.5-ga,src/java.base/share/classes/java/util/zip/ZipUtils.java
@@ -1797,7 +1797,7 @@ ojluni/src/main/native/CRC32.c,jdk17u/jdk-17.0.6-ga,src/java.base/share/native/l
 ojluni/src/main/native/Console_md.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/java/io/Console_md.c
 ojluni/src/main/native/DatagramChannelImpl.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/DatagramChannelImpl.c
 ojluni/src/main/native/DatagramDispatcher.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/DatagramDispatcher.c
-ojluni/src/main/native/Deflater.c,jdk17u/jdk-17.0.6-ga,src/java.base/share/native/libzip/Deflater.c
+ojluni/src/main/native/Deflater.c,jdk8u/jdk8u60-b31,jdk/src/share/native/java/util/zip/Deflater.c
 ojluni/src/main/native/Double.c,jdk8u/jdk8u121-b13,jdk/src/share/native/java/lang/Double.c
 ojluni/src/main/native/EPoll.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/EPoll.c
 ojluni/src/main/native/EPollPort.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/ch/EPollPort.c
@@ -1812,7 +1812,7 @@ ojluni/src/main/native/IOUtil.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/ni
 ojluni/src/main/native/Inet4Address.c,jdk7u/jdk7u40-b60,jdk/src/share/native/java/net/Inet4Address.c
 ojluni/src/main/native/Inet6Address.c,jdk8u/jdk8u121-b13,jdk/src/share/native/java/net/Inet6Address.c
 ojluni/src/main/native/InetAddress.c,jdk8u/jdk8u60-b31,jdk/src/share/native/java/net/InetAddress.c
-ojluni/src/main/native/Inflater.c,jdk17u/jdk-17.0.6-ga,src/java.base/share/native/libzip/Inflater.c
+ojluni/src/main/native/Inflater.c,jdk8u/jdk8u60-b31,jdk/src/share/native/java/util/zip/Inflater.c
 # JniConstants.cpp doesn’t come from the upstream OpenJDK.
 ojluni/src/main/native/LinuxNativeDispatcher.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/fs/LinuxNativeDispatcher.c
 ojluni/src/main/native/LinuxWatchService.c,jdk8u/jdk8u121-b13,jdk/src/solaris/native/sun/nio/fs/LinuxWatchService.c
@@ -1982,11 +1982,14 @@ ojluni/src/test/java/lang/reflect/records/RecordReflectionTest.java,jdk17u/jdk-1
 ojluni/src/test/java/math/BigDecimal/AddTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/AddTests.java
 ojluni/src/test/java/math/BigDecimal/CompareToTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/CompareToTests.java
 ojluni/src/test/java/math/BigDecimal/Constructor.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/Constructor.java
+ojluni/src/test/java/math/BigDecimal/ConstructorUnscaledValue.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/ConstructorUnscaledValue.java
 ojluni/src/test/java/math/BigDecimal/DivideMcTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/DivideMcTests.java
 ojluni/src/test/java/math/BigDecimal/DivideTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/DivideTests.java
 ojluni/src/test/java/math/BigDecimal/EqualsTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/EqualsTests.java
 ojluni/src/test/java/math/BigDecimal/FloatDoubleValueTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/FloatDoubleValueTests.java
+ojluni/src/test/java/math/BigDecimal/IntValueExactTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/IntValueExactTests.java
 ojluni/src/test/java/math/BigDecimal/IntegralDivisionTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/IntegralDivisionTests.java
+ojluni/src/test/java/math/BigDecimal/IntegralValueTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/IntegralValueTests.java
 ojluni/src/test/java/math/BigDecimal/LongValueExactTests.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/math/BigDecimal/LongValueExactTests.java
 ojluni/src/test/java/math/BigDecimal/MultiplyTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/MultiplyTests.java
 ojluni/src/test/java/math/BigDecimal/NegateTests.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/math/BigDecimal/NegateTests.java

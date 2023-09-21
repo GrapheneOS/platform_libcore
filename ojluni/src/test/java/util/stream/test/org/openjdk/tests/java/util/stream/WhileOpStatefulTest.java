@@ -42,10 +42,13 @@ import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.toCollection;
 
+import android.platform.test.annotations.LargeTest;
+
 /*
  * @test
  * @bug 8071597
  */
+@LargeTest
 @Test
 // Android-changed: this test checks while/drop ops on reference and primitive streams.
 // But in Android U only reference streams have those APIs, hence primitive streams part

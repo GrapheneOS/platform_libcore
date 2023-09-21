@@ -29,6 +29,8 @@ package test.java.util.Arrays;
  * @run testng ArraysEqCmpTest
 */
 
+import android.platform.test.annotations.LargeTest;
+
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -662,6 +664,7 @@ public class ArraysEqCmpTest {
 
     // Equality and comparison tests
 
+    @LargeTest
     @Test(dataProvider = "arrayTypesProvider")
     public void testArray(ArrayType<?> arrayType) {
         BiFunction<ArrayType<?>, Integer, Object> constructor = (at, s) -> {
@@ -678,6 +681,7 @@ public class ArraysEqCmpTest {
         testArrayType(arrayType, constructor, cloner);
     }
 
+    @LargeTest
     @Test(dataProvider = "floatArrayTypesProvider")
     public void testPrimitiveFloatArray(
             ArrayType<?> arrayType,
@@ -723,6 +727,7 @@ public class ArraysEqCmpTest {
         testArrayType(arrayType, canonicalNaNs, halfNonCanonicalNaNs);
     }
 
+    @LargeTest
     @Test(dataProvider = "objectArrayTypesProvider")
     public void testNullElementsInObjectArray(ArrayType<?> arrayType) {
         BiFunction<ArrayType<?>, Object, Object> cloner = ArrayType::copyOf;
@@ -757,6 +762,7 @@ public class ArraysEqCmpTest {
         Assert.assertTrue(Arrays.compare(b, a) > 0);
     }
 
+    @LargeTest
     @Test(dataProvider = "objectArrayTypesProvider")
     public void testSameRefElementsInObjectArray(ArrayType<?> arrayType) {
         BiFunction<ArrayType<?>, Object, Object> cloner = ArrayType::copyOf;

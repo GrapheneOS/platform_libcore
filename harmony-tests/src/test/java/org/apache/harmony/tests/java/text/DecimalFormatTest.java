@@ -2053,7 +2053,8 @@ public class DecimalFormatTest extends TestCase {
         char current;
 
         // BigInteger.
-        iterator = new DecimalFormat().formatToCharacterIterator(new BigInteger("123456789"));
+        iterator = NumberFormat.getInstance(Locale.US)
+            .formatToCharacterIterator(new BigInteger("123456789"));
         runStarts = new int[] { 0, 0, 0, 3, 4, 4, 4, 7, 8, 8, 8 };
         runLimits = new int[] { 3, 3, 3, 4, 7, 7, 7, 8, 11, 11, 11 };
         result = "123,456,789";
@@ -2068,7 +2069,7 @@ public class DecimalFormatTest extends TestCase {
         assertEquals(11, iterator.getEndIndex());
 
         // For BigDecimal with multiplier test.
-        DecimalFormat df = new DecimalFormat();
+        DecimalFormat df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         df.setMultiplier(10);
         iterator = df.formatToCharacterIterator(new BigDecimal("12345678901234567890"));
         result = "123,456,789,012,345,678,900";
@@ -2079,7 +2080,7 @@ public class DecimalFormatTest extends TestCase {
         }
 
         // For BigDecimal with multiplier test.
-        df = new DecimalFormat();
+        df = (DecimalFormat) NumberFormat.getInstance(Locale.US);
         df.setMultiplier(-1);
         df.setMaximumFractionDigits(20);
         iterator = df.formatToCharacterIterator(new BigDecimal("1.23456789012345678901"));
@@ -2090,7 +2091,8 @@ public class DecimalFormatTest extends TestCase {
             current = iterator.next();
         }
 
-        iterator = new DecimalFormat().formatToCharacterIterator(new BigDecimal("1.23456789E301"));
+        iterator = NumberFormat.getInstance(Locale.US)
+            .formatToCharacterIterator(new BigDecimal("1.23456789E301"));
         runStarts = new int[] { 0, 0, 2, 3, 3, 3, 6, 7, 7, 7, 10, 11, 11, 11, 14 };
         runLimits = new int[] { 2, 2, 3, 6, 6, 6, 7, 10, 10, 10, 11, 14, 14, 14, 15 };
         result = "12,345,678,900,"; // 000,000,000,000....
@@ -2104,7 +2106,8 @@ public class DecimalFormatTest extends TestCase {
         assertEquals(0, iterator.getBeginIndex());
         assertEquals(402, iterator.getEndIndex());
 
-        iterator = new DecimalFormat().formatToCharacterIterator(new BigDecimal("1.2345678E4"));
+        iterator = NumberFormat.getInstance(Locale.US)
+            .formatToCharacterIterator(new BigDecimal("1.2345678E4"));
         runStarts = new int[] { 0, 0, 2, 3, 3, 3, 6, 7, 7, 7 };
         runLimits = new int[] { 2, 2, 3, 6, 6, 6, 7, 10, 10, 10 };
         result = "12,345.678";
@@ -2128,7 +2131,8 @@ public class DecimalFormatTest extends TestCase {
 
         Number number = new BigDecimal("1.23456789E1234");
         assertEquals("1.23456789E+1234", number.toString());
-        iterator = new DecimalFormat().formatToCharacterIterator(number);
+        iterator = NumberFormat.getInstance(Locale.US)
+            .formatToCharacterIterator(number);
         runStarts = new int[] { 0, 0, 2, 3, 3, 3, 6, 7, 7, 7, 10, 11, 11, 11, 14 };
         runLimits = new int[] { 2, 2, 3, 6, 6, 6, 7, 10, 10, 10, 11, 14, 14, 14, 15 };
         result = "12,345,678,900,"; // 000,000,000,000....

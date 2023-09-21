@@ -255,7 +255,10 @@ public class VerifyStackTrace {
                     // invoke frames may or may not have basic method type
                     // information encoded for diagnostic purposes
                     .replaceAll("xx\\.invoke([A-Za-z]*)_[A-Z_]+", "xx.invoke$1")
-                    .replaceAll("\\$[0-9]+", "\\$??");
+                    .replaceAll("\\$[0-9]+", "\\$??")
+                    // Android-changed: Replace lambda index emitted by R8.
+                    .replaceAll("\\$ExternalSyntheticLambda[0-9]+",
+                            "\\$ExternalSyntheticLambda$??");
         } else {
             return produced;
         }

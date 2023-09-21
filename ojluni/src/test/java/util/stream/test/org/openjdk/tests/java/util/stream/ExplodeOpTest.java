@@ -44,11 +44,14 @@ import java.util.stream.DoubleStream;
 
 import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.*;
 
+import android.platform.test.annotations.LargeTest;
+
 /**
  * ExplodeOpTest
  *
  * @author Brian Goetz
  */
+@LargeTest
 @Test
 public class ExplodeOpTest extends OpTestCase {
 

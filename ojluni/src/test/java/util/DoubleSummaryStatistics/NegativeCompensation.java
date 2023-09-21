@@ -36,10 +36,13 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import android.platform.test.annotations.LargeTest;
+
 public class NegativeCompensation {
     static final double VAL = 1.000000001;
     static final int LOG_ITER = 21;
 
+    @LargeTest
     @Test
     public static void testErrorComparision() {
         DoubleSummaryStatistics stat0 = new DoubleSummaryStatistics();

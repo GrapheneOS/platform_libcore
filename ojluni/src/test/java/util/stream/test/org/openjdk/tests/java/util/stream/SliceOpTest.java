@@ -42,6 +42,8 @@ import java.util.stream.StreamSupport;
 
 import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.*;
 
+import android.platform.test.annotations.LargeTest;
+
 /*
  * @test
  * @bug 8148250 8265029
@@ -147,6 +149,7 @@ public class SliceOpTest extends OpTestCase {
         return Math.max(0, dataSize - skip);
     }
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class,
           groups = { "serialization-hostile" })
     public void testSkipOps(String name, TestData.OfRef<Integer> data) {
@@ -170,6 +173,7 @@ public class SliceOpTest extends OpTestCase {
         }
     }
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class,
           groups = { "serialization-hostile" })
     public void testSkipLimitOps(String name, TestData.OfRef<Integer> data) {
@@ -238,6 +242,7 @@ public class SliceOpTest extends OpTestCase {
         testSkipLimitOps("testSkipLimitOpsWithNonSplittingSpliterator", data);
     }
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class,
           groups = { "serialization-hostile" })
     public void testLimitOps(String name, TestData.OfRef<Integer> data) {

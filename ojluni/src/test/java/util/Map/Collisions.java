@@ -40,6 +40,9 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
+import android.platform.test.annotations.LargeTest;
+
+@LargeTest
 public class Collisions extends MapWithCollisionsProviders {
 
     @Test(dataProvider = "mapsWithObjects")

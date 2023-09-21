@@ -22,6 +22,8 @@
  */
 package org.openjdk.tests.java.util.stream;
 
+import android.platform.test.annotations.LargeTest;
+
 import org.openjdk.testlib.java.util.stream.DefaultMethodStreams;
 import org.openjdk.testlib.java.util.stream.LambdaTestHelpers;
 import org.openjdk.testlib.java.util.stream.OpTestCase;
@@ -52,6 +54,7 @@ import java.util.stream.Stream;
 @Test
 public class WhileOpTest extends OpTestCase {
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class,
           groups = { "serialization-hostile" })
     public void testTakeWhileOps(String name, TestData.OfRef<Integer> data) {
@@ -75,6 +78,7 @@ public class WhileOpTest extends OpTestCase {
         }
     }
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class,
           groups = { "serialization-hostile" })
     public void testDropWhileOps(String name, TestData.OfRef<Integer> data) {
@@ -97,6 +101,7 @@ public class WhileOpTest extends OpTestCase {
         }
     }
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class,
           groups = { "serialization-hostile" })
     public void testDropTakeWhileOps(String name, TestData.OfRef<Integer> data) {

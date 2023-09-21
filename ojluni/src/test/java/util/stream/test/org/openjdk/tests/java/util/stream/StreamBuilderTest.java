@@ -42,6 +42,8 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toList;
 import static org.openjdk.testlib.java.util.stream.ThrowableHelper.checkISE;
 
+import android.platform.test.annotations.LargeTest;
+
 @Test
 public class StreamBuilderTest extends OpTestCase {
 
@@ -104,6 +106,7 @@ public class StreamBuilderTest extends OpTestCase {
         checkISE(() -> sb.build());
     }
 
+    @LargeTest
     @Test(dataProvider = "sizes", groups = { "serialization-hostile" })
     public void testStreamBuilder(int size) {
         testStreamBuilder(size, (s) -> {
@@ -166,6 +169,7 @@ public class StreamBuilderTest extends OpTestCase {
         checkISE(() -> sb.build());
     }
 
+    @LargeTest
     @Test(dataProvider = "sizes", groups = { "serialization-hostile" })
     public void testIntStreamBuilder(int size) {
         testIntStreamBuilder(size, (s) -> {
@@ -228,6 +232,7 @@ public class StreamBuilderTest extends OpTestCase {
         checkISE(() -> sb.build());
     }
 
+    @LargeTest
     @Test(dataProvider = "sizes", groups = { "serialization-hostile" })
     public void testLongStreamBuilder(int size) {
         testLongStreamBuilder(size, (s) -> {
@@ -289,6 +294,7 @@ public class StreamBuilderTest extends OpTestCase {
         checkISE(() -> sb.build());
     }
 
+    @LargeTest
     @Test(dataProvider = "sizes", groups = { "serialization-hostile" })
     public void testDoubleStreamBuilder(int size) {
         testDoubleStreamBuilder(size, (s) -> {

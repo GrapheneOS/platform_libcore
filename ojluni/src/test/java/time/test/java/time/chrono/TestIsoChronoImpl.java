@@ -62,6 +62,8 @@ import static java.time.temporal.ChronoField.YEAR;
 import static java.time.temporal.ChronoField.YEAR_OF_ERA;
 import static org.testng.Assert.assertEquals;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.chrono.IsoChronology;
@@ -77,6 +79,7 @@ import org.testng.annotations.Test;
 /**
  * Test.
  */
+@LargeTest
 @Test
 public class TestIsoChronoImpl {
 

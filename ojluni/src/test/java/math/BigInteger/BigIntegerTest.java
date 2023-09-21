@@ -34,6 +34,8 @@
  */
 package test.java.math.BigInteger;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
@@ -1087,6 +1089,7 @@ public class BigIntegerTest {
 
     // String conversion straddling the Schoenhage algorithm crossover
     // threshold.
+    @LargeTest
     @Test
     public void testStringConv_schoenhage_threshold_pow0() {
         stringConv_schoenhage(0, 50);
@@ -1094,6 +1097,7 @@ public class BigIntegerTest {
 
     // String conversion straddling the Schoenhage algorithm crossover
     // at twice times the threshold.
+    @LargeTest
     @Test
     public void testStringConv_schoenhage_threshold_pow1() {
         stringConv_schoenhage(1, 50);
@@ -1101,6 +1105,7 @@ public class BigIntegerTest {
 
     // String conversion straddling the Schoenhage algorithm crossover
     // at four times the threshold.
+    @LargeTest
     @Test
     public void testStringConv_schoenhage_threshold_pow2() {
         stringConv_schoenhage(2, 15);

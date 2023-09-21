@@ -22,6 +22,8 @@
  */
 package test.java.util.TimeZone;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
@@ -38,6 +40,7 @@ import org.testng.annotations.Test;
  */
 public class SimpleTimeZoneCloneRaceTest {
 
+    @LargeTest
     @Test
     public void testSimpleTimeZone() throws InterruptedException {
 

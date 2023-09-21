@@ -29,6 +29,8 @@
  */
 package test.java.lang.Math;
 
+import android.platform.test.annotations.LargeTest;
+
 import org.testng.annotations.Test;
 import org.testng.Assert;
 
@@ -58,6 +60,7 @@ public class HyperbolicTests {
      *
      * Additionally, sinh is an odd function; sinh(-x) = -sinh(x).
      */
+    @LargeTest
     @Test
     public void testSinh() {
         /*
@@ -406,6 +409,7 @@ public class HyperbolicTests {
      *
      * Additionally, cosh is an even function; cosh(-x) = cosh(x).
      */
+    @LargeTest
     @Test
     public void testCosh() {
         /*

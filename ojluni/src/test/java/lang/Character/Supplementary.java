@@ -31,6 +31,8 @@
 
 package test.java.lang.Character;
 
+import android.platform.test.annotations.LargeTest;
+
 public class Supplementary {
     private static final char MIN_HIGH = '\uD800';
     private static final char MAX_HIGH = '\uDBFF';
@@ -40,6 +42,7 @@ public class Supplementary {
     private static final int MIN_SUPPLEMENTARY = 0x010000;
     private static final int MAX_SUPPLEMENTARY = 0x10ffff;
 
+    @LargeTest
     public static void main(String[] args) {
         // Do not change the order of test method calls since there
         // are some interdependencies.

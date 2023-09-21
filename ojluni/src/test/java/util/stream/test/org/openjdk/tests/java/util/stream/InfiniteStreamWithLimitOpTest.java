@@ -50,7 +50,10 @@ import java.util.stream.StreamSupport;
 
 import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.assertUnique;
 
+import android.platform.test.annotations.LargeTest;
 
+
+@LargeTest
 @Test
 public class InfiniteStreamWithLimitOpTest extends OpTestCase {
 

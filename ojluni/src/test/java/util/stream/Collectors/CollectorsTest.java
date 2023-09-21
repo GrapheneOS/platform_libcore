@@ -74,6 +74,8 @@ import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.assertConte
 import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.assertContentsUnordered;
 import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.mDoubler;
 
+import android.platform.test.annotations.LargeTest;
+
 /*
  * @test
  * @bug 8071600 8144675
@@ -601,6 +603,7 @@ public class CollectorsTest extends OpTestCase {
                                 new ToListAssertion<>())));
     }
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class)
     public void testTwoLevelGroupingBy(String name, TestData.OfRef<Integer> data) throws ReflectiveOperationException {
         Function<Integer, Integer> classifier = i -> i % 6;

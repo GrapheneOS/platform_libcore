@@ -47,13 +47,14 @@ public class NonCtsReasons {
      * If a bug has been fixed, and the fix doesn't change the API contract,
      * you can annotate the test with {@link libcore.test.annotation.NonCts} and this reason.
      *
-     * This is mainly needed to fix a bug in the future ART module versions and skip this test.
+     * This is mainly needed to fix a bug in an ART / Conscrypt / Time Zone module version
+     * and skip this test.
      *
      * Note that you still need a test for the basic API behavior, because every public API
      * needs to be tested in CTS.
      */
     public static final String NON_BREAKING_BEHAVIOR_FIX = "The test asserts buggy or non-breaking "
-            + "behaviors, but the behavior has been fixed in the future ART module version.";
+            + "behaviors, but the behavior has been fixed in a new mainline module version.";
 
 
     private NonCtsReasons() {}

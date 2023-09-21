@@ -33,6 +33,8 @@
 
 package test.java.util.DoubleStreamSums;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.util.Random;
 import java.util.function.BiConsumer;
 import java.util.function.ObjDoubleConsumer;
@@ -45,6 +47,7 @@ import org.testng.annotations.Test;
 
 public class CompensatedSums {
 
+    @LargeTest
     @Test
     public void testCompensatedSums() {
         Random r = RandomFactory.getRandom();

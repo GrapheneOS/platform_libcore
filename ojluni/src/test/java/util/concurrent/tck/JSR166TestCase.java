@@ -426,6 +426,11 @@ public class JSR166TestCase extends TestCase {
     public static TestSuite newTestSuite(Object... suiteOrClasses) {
         TestSuite suite = new TestSuite();
         for (Object suiteOrClass : suiteOrClasses) {
+            // Android-added: Ignore null and CollectionTest. http://b/285113029
+            if (suiteOrClass == null) {
+                continue;
+            }
+
             if (suiteOrClass instanceof TestSuite)
                 suite.addTest((TestSuite) suiteOrClass);
             else if (suiteOrClass instanceof Class)

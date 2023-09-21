@@ -69,6 +69,7 @@ public class Sorting {
     private static final int A380 = 0xA380;
     private static final int B747 = 0xB747;
 
+    @LargeTest
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         // Android-changed: coverage run with this flag set to true takes too

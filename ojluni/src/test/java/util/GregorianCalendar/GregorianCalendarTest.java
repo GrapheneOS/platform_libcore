@@ -29,6 +29,8 @@
  */
 package test.java.util.GregorianCalendar;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.util.*;
 
 import org.testng.annotations.Test;
@@ -37,6 +39,7 @@ public class GregorianCalendarTest {
     static volatile boolean runrun = true;
     static int nThreads;
 
+    @LargeTest
     @Test
     public void testGregorianCalendar() {
         int duration = 600;

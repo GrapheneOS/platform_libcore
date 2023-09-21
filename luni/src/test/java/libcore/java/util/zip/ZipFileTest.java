@@ -24,7 +24,6 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -40,6 +39,44 @@ public final class ZipFileTest extends AbstractZipFileTest {
         return new ZipOutputStream(wrapped);
     }
 
+    // http://b/30407219
+    public void testZipFileOffsetNeverChangesAfterInit() throws Exception {
+        final File f = createTemporaryZipFile();
+        writeEntries(createZipOutputStream(new BufferedOutputStream(new FileOutputStream(f))),
+                2 /* number of entries */, 1024 /* entry size */, true /* setEntrySize */);
+
+        ZipFile zipFile = new ZipFile(f);
+        FileDescriptor fd = new FileDescriptor();
+        fd.setInt$(zipFile.getFileDescriptor());
+
+        long initialOffset = android.system.Os.lseek(fd, 0, OsConstants.SEEK_CUR);
+
+        Enumeration<? extends ZipEntry> entries = zipFile.entries();
+        assertOffset(initialOffset, fd);
+
+        // Get references to the two elements in the file.
+        ZipEntry entry1 = entries.nextElement();
+        ZipEntry entry2 = entries.nextElement();
+        assertFalse(entries.hasMoreElements());
+        assertOffset(initialOffset, fd);
+
+        InputStream is1 = zipFile.getInputStream(entry1);
+        assertOffset(initialOffset, fd);
+        is1.read(new byte[256]);
+        assertOffset(initialOffset, fd);
+        is1.close();
+
+        assertNotNull(zipFile.getEntry(entry2.getName()));
+        assertOffset(initialOffset, fd);
+
+        zipFile.close();
+    }
+
+    private static void assertOffset(long initialOffset, FileDescriptor fd) throws Exception {
+        long currentOffset = android.system.Os.lseek(fd, 0, OsConstants.SEEK_CUR);
+        assertEquals(initialOffset, currentOffset);
+    }
+
     // b/31077136
     public void test_FileNotFound() throws Exception {
         File nonExistentFile = new File("fileThatDefinitelyDoesntExist.zip");
@@ -47,7 +84,7 @@ public final class ZipFileTest extends AbstractZipFileTest {
 
         try (ZipFile zipFile = new ZipFile(nonExistentFile, ZipFile.OPEN_READ)) {
             fail();
-        } catch(IOException expected) {}
+        } catch(FileNotFoundException expected) {}
     }
 
     /**

@@ -29,6 +29,8 @@
 
 package test.java.lang.Character;
 
+import android.platform.test.annotations.LargeTest;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -36,6 +38,7 @@ import org.junit.runners.JUnit4;
 import java.util.Locale;
 
 // Android-changed: Shard the test.
+@LargeTest
 @RunWith(JUnit4.class)
 public class CharacterName {
 

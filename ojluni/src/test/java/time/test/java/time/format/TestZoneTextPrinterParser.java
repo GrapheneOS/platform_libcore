@@ -25,6 +25,8 @@ package test.java.time.format;
 
 import static org.testng.Assert.assertEquals;
 
+import android.platform.test.annotations.LargeTest;
+
 import java.text.DateFormatSymbols;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -65,6 +67,7 @@ public class TestZoneTextPrinterParser extends AbstractTestPrinterParser {
                                              .withDecimalStyle(DecimalStyle.of(locale));
     }
 
+    @LargeTest
     public void test_printText() {
         Random r = RandomFactory.getRandom();
         // Android-changed: only run one iteration.

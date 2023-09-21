@@ -41,6 +41,8 @@ import static org.testng.Assert.assertThrows;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.expectThrows;
 
+import android.platform.test.annotations.LargeTest;
+
 /*
  * @test
  * @summary Check HexFormat formatting and parsing
@@ -623,6 +625,7 @@ public class HexFormatTest {
                 () -> hex.toHexDigits(throwingAppendable, (byte)1));
     }
 
+    @LargeTest
     @Test(dataProvider="HexFormattersParsers")
     public void testOOME(String delimiter, String prefix, String suffix, boolean uppercase,
                          HexFormat hex) {

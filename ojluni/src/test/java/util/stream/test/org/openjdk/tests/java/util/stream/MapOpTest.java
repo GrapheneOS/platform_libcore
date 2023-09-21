@@ -41,6 +41,8 @@ import java.util.stream.DoubleStream;
 
 import static org.openjdk.testlib.java.util.stream.LambdaTestHelpers.*;
 
+import android.platform.test.annotations.LargeTest;
+
 /**
  * MapOpTest
  *
@@ -82,6 +84,7 @@ public class MapOpTest extends OpTestCase {
                        1000, countTo(1000).stream().mapToInt(i -> i).sum());
     }
 
+    @LargeTest
     @Test(dataProvider = "StreamTestData<Integer>", dataProviderClass = StreamTestDataProvider.class)
     public void testOps(String name, TestData.OfRef<Integer> data) {
         exerciseOpsInt(data, s -> s.map(mId), s -> s.map(e -> e), s -> s.map(e -> e), s -> s.map(e -> e));
@@ -96,6 +99,7 @@ public class MapOpTest extends OpTestCase {
 
     //
 
+    @LargeTest
     @Test(dataProvider = "IntStreamTestData", dataProviderClass = IntStreamTestDataProvider.class)
     public void testIntOps(String name, TestData.OfInt data) {
         exerciseOps(data, s -> s.mapToObj(i -> i));
@@ -111,6 +115,7 @@ public class MapOpTest extends OpTestCase {
 
     //
 
+    @LargeTest
     @Test(dataProvider = "LongStreamTestData", dataProviderClass = LongStreamTestDataProvider.class)
     public void testLongOps(String name, TestData.OfLong data) {
         exerciseOps(data, s -> s.mapToObj(i -> i));
@@ -125,6 +130,7 @@ public class MapOpTest extends OpTestCase {
 
     //
 
+    @LargeTest
     @Test(dataProvider = "DoubleStreamTestData", dataProviderClass = DoubleStreamTestDataProvider.class)
     public void testDoubleOps(String name, TestData.OfDouble data) {
         exerciseOps(data, s -> s.mapToObj(i -> i));

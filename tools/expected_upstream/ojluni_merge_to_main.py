@@ -108,9 +108,9 @@ MSG_SECOND_COMMIT = ("Merge {summary} into the "
 
 INVALID_DIFF = (None, None)
 
-LICENSE_BLOCK = r"\/\*(?:\*(?!\/)|[^*])*\*\/[ ]*\n"
+LICENSE_BLOCK = r"\/\*(?:\*(?!\/)|[^*])*\*\/[ ]*\n+"
 REGEX_LICENSE_AND_IMPORT = re.compile(
-    r"^(" + LICENSE_BLOCK + "\n+)(import .+;)$", re.MULTILINE)
+    r"^(" + LICENSE_BLOCK + ")(import .+;)$", re.MULTILINE)
 
 
 def create_commit_staging_diff(repo: Repo) -> None:

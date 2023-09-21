@@ -71,6 +71,8 @@ import static java.util.Collections.unmodifiableList;
 import static java.util.Collections.unmodifiableMap;
 import static java.util.Collections.unmodifiableSet;
 
+import android.platform.test.annotations.LargeTest;
+
 public class RacingCollections {
     /**
      * How long to run each "race" (in milliseconds).
@@ -375,6 +377,7 @@ public class RacingCollections {
         if (x == null ? y == null : x.equals(y))
             fail(toString(x) + " equal to " + toString(y));
         else pass();}
+    @LargeTest
     public static void main(String[] args) throws Throwable {
         try {realMain(args);} catch (Throwable t) {unexpected(t);}
         System.out.printf("%nPassed = %d, failed = %d%n%n", passed, failed);
