@@ -28,6 +28,8 @@ import java.security.cert.PKIXRevocationChecker;
 import java.security.cert.TrustAnchor;
 import java.security.cert.X509Certificate;
 import java.security.cert.PKIXRevocationChecker.Option;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -126,7 +128,11 @@ public class CertPathValidatorTest extends TestCaseWithRules {
     }
 
     public void test_OCSP_EndEntity_KeyCompromise_Failure() throws Exception {
-        runOCSPStapledTest(new RevokedStatus(new Date(), CRLReason.keyCompromise), false);
+        // RFC 6960 isn't specific about what happens if the revocation time is the
+        // current second but RevocationChecker checks whether it's strictly before,
+        // so we subtract one second from now to be sure of the revocation check triggering.
+        Date date = Date.from(Instant.now().minus(1, ChronoUnit.SECONDS));
+        runOCSPStapledTest(new RevokedStatus(date, CRLReason.keyCompromise), false);
     }
 
     public void test_OCSP_EndEntity_Good_Success() throws Exception {
