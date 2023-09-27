@@ -53,4 +53,9 @@ droidstubs {
 
     // Use -target 8 so that it works with old JDKs.
     java_version: "1.8",
+
+    // The module does not specifically contribute to the public api surface,
+    // but the api_surface property must be one of the allApiScopes defined in
+    // sdk_library.go, and the property is used only to sort the api files.
+    api_surface: "public",
 }
