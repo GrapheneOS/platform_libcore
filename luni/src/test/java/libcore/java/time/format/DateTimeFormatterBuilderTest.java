@@ -25,8 +25,10 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.TextStyle;
 import java.time.temporal.TemporalQueries;
 import java.util.Locale;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -88,5 +90,30 @@ public class DateTimeFormatterBuilderTest {
         // Parsing a "bare metal" offset without prefix will return a ZoneOffset.
         assertEquals(ZoneOffset.ofHours(1),
                 formatter.parse("+01:00").query(TemporalQueries.zoneId()));
+    }
+
+    @Test
+    public void test_appendGenericZoneText() {
+        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                .appendGenericZoneText(TextStyle.FULL)
+                .toFormatter(Locale.US);
+
+        assertEquals("Pacific Time", formatter.format(
+                ZonedDateTime.now(ZoneId.of("America/Los_Angeles"))));
+
+        formatter = new DateTimeFormatterBuilder()
+                .appendGenericZoneText(TextStyle.SHORT)
+                .toFormatter(Locale.US);
+
+        assertEquals("PT", formatter.format(
+                ZonedDateTime.now(ZoneId.of("America/Los_Angeles"))));
+
+        formatter = new DateTimeFormatterBuilder()
+                .appendGenericZoneText(TextStyle.FULL, Set.of(ZoneId.of("America/Los_Angeles")))
+                .toFormatter(Locale.US);
+
+        // "America/Los_Angeles" is expected because the zone is in the preferred set.
+        assertEquals(ZoneId.of("America/Los_Angeles"),
+                formatter.parse("Pacific Time").query(TemporalQueries.zoneId()));
     }
 }
