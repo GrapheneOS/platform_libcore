@@ -199,7 +199,9 @@ public class ThreadLocalRandom extends Random {
     public static ThreadLocalRandom current() {
         if (U.getInt(Thread.currentThread(), PROBE) == 0)
             localInit();
-        return instance;
+        // Android-changed: initialize instance field lazily.
+        // return instance;
+        return InstanceHolder.instance;
     }
 
     /**
@@ -418,7 +420,11 @@ public class ThreadLocalRandom extends Random {
     private static final AtomicInteger probeGenerator = new AtomicInteger();
 
     /** The common ThreadLocalRandom */
-    private static final ThreadLocalRandom instance = new ThreadLocalRandom();
+    // Android-changed: initialize instance field lazily.
+    // private static final ThreadLocalRandom instance = new ThreadLocalRandom();
+    private static final class InstanceHolder {
+        private static final ThreadLocalRandom instance = new ThreadLocalRandom();
+    }
 
     /**
      * The next seed for default constructors.
