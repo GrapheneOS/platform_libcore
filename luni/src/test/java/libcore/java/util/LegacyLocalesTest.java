@@ -27,6 +27,8 @@ import libcore.junit.util.compat.CoreCompatChangeRule;
 import libcore.junit.util.compat.CoreCompatChangeRule.DisableCompatChanges;
 import libcore.junit.util.compat.CoreCompatChangeRule.EnableCompatChanges;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -38,6 +40,7 @@ import java.text.DateFormatSymbols;
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 
 import sun.util.locale.BaseLocale;
 
@@ -58,7 +61,7 @@ public class LegacyLocalesTest {
 
     @Test
     @EnableCompatChanges({BaseLocale.USE_NEW_ISO_LOCALE_CODES})
-    public void obsoleteLocales_withFlagEnabled() throws Exception {
+    public void obsoleteLocales_withFlagEnabled() {
         var msg = "Test should run on V+ only, current SDK level=" + VMRuntime.getSdkVersion();
         assumeTrue(msg, VMRuntime.getSdkVersion() >= VersionCodes.VANILLA_ICE_CREAM);
 
@@ -108,15 +111,12 @@ public class LegacyLocalesTest {
         assertEquals(displayName, oldLocale.getDisplayLanguage(oldLocale));
 
         assertOnce(newLocale, BreakIterator.getAvailableLocales());
-        // getAvailableLocales() methods below return cached data, which is initialized
-        // in Zygote, where compatibility flags are not available, so in Zygote
-        // BaseLocale.USE_NEW_ISO_LOCALES is false.
-        // assertOnce(newLocale, Calendar.getAvailableLocales());
-        // assertOnce(newLocale, Collator.getAvailableLocales());
-        // assertOnce(newLocale, DateFormat.getAvailableLocales());
-        // assertOnce(newLocale, DateFormatSymbols.getAvailableLocales());
-        // assertOnce(newLocale, NumberFormat.getAvailableLocales());
-        // assertOnce(newLocale, Locale.getAvailableLocales());
+        assertOnce(newLocale, Calendar.getAvailableLocales());
+        assertOnce(newLocale, Collator.getAvailableLocales());
+        assertOnce(newLocale, DateFormat.getAvailableLocales());
+        assertOnce(newLocale, DateFormatSymbols.getAvailableLocales());
+        assertOnce(newLocale, NumberFormat.getAvailableLocales());
+        assertOnce(newLocale, Locale.getAvailableLocales());
     }
 
     private static void assertOnce(Locale element, Locale[] array) {
@@ -127,5 +127,45 @@ public class LegacyLocalesTest {
             }
         }
         assertEquals(element + " was not found", 1, count);
+    }
+
+    @Before
+    public void setup() throws Exception {
+        clearLocalesCache();
+        clearCollator();
+    }
+
+    @After
+    public void cleanup() throws Exception {
+        clearLocalesCache();
+        clearCollator();
+    }
+
+    // There are 2 test cases. Both of them rely on ICU caches. So depending on the execution
+    // order caches might be initialized with USE_NEW_ISO_LOCALE_CODES set to true (or false)
+    // and other test case assumes that its value was false (or true). Resetting caches to
+    // make them consistent. Such functionality is not assumed by ICU hence reflection is used
+    // heavily. Future ICU updates might break cleanup methods.
+    // Cleaning before execution as they might have been already initialized with the opposite
+    // state.
+    public void clearLocalesCache() {
+        libcore.icu.ICU.clearAvailableLocales();
+    }
+
+    public void clearCollator() throws Exception {
+        var collatorClass = android.icu.text.Collator.class;
+        var shimField = collatorClass.getDeclaredField("shim");
+        shimField.setAccessible(true);
+        shimField.set(null, null);
+
+        var icuResourceBundleClass = Class.forName("android.icu.impl.ICUResourceBundle");
+        var cacheField = icuResourceBundleClass.getDeclaredField("GET_AVAILABLE_CACHE");
+        cacheField.setAccessible(true);
+        var cache = cacheField.get(null);
+
+        var mapField = Class.forName("android.icu.impl.SoftCache").getDeclaredField("map");
+        mapField.setAccessible(true);
+        var map = (Map) mapField.get(cache);
+        map.clear();
     }
 }

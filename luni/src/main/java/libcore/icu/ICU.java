@@ -337,6 +337,16 @@ public final class ICU {
   }
 
   /**
+   * Content of {@link #availableLocalesCache} depends on the USE_NEW_ISO_LOCALE_CODES flag value.
+   * Resetting it so a following {@link #getAvailableLocales()} call will fill it with the right
+   * values.
+   */
+  // VisibleForTesting
+  public static void clearAvailableLocales() {
+    availableLocalesCache = null;
+  }
+
+  /**
    * DO NOT USE this method directly.
    * Please use {@link SimpleDateFormatData.DateTimeFormatStringGenerator#getTimePattern}
    */

@@ -96,11 +96,11 @@ public class Object {
      *     This integer need not remain consistent from one execution of an
      *     application to another execution of the same application.
      * <li>If two objects are equal according to the {@link
-     *     equals(Object) equals} method, then calling the {@code
+     *     #equals(Object) equals} method, then calling the {@code
      *     hashCode} method on each of the two objects must produce the
      *     same integer result.
      * <li>It is <em>not</em> required that if two objects are unequal
-     *     according to the {@link equals(Object) equals} method, then
+     *     according to the {@link #equals(Object) equals} method, then
      *     calling the {@code hashCode} method on each of the two objects
      *     must produce distinct integer results.  However, the programmer
      *     should be aware that producing distinct integer results for
@@ -191,7 +191,7 @@ public class Object {
      * relation, each equivalence class only has a single element.
      *
      * @apiNote
-     * It is generally necessary to override the {@link hashCode hashCode}
+     * It is generally necessary to override the {@link #hashCode hashCode}
      * method whenever this method is overridden, so as to maintain the
      * general contract for the {@code hashCode} method, which states
      * that equal objects must have equal hash codes.

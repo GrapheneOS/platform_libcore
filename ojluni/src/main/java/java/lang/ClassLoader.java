@@ -66,6 +66,7 @@ import jdk.internal.util.StaticProperty;
 import sun.reflect.misc.ReflectUtil;
 import sun.security.util.SecurityConstants;
 
+// Android-changed: Removed javadoc related to getPlatformClassLoader().
 /**
  * A class loader is an object that is responsible for loading classes. The
  * class {@code ClassLoader} is an abstract class.  Given the <a
@@ -108,9 +109,9 @@ import sun.security.util.SecurityConstants;
  * find the class or resource itself.
  *
  * <p> Class loaders that support concurrent loading of classes are known as
- * <em>{@linkplain #isRegisteredAsParallelCapable() parallel capable}</em> class
+ * <em>{@code #isRegisteredAsParallelCapable() parallel capable}</em> class
  * loaders and are required to register themselves at their class initialization
- * time by invoking the {@link
+ * time by invoking the {@code
  * #registerAsParallelCapable ClassLoader.registerAsParallelCapable}
  * method. Note that the {@code ClassLoader} class is registered as parallel
  * capable by default. However, its subclasses still need to register themselves
@@ -129,21 +130,6 @@ import sun.security.util.SecurityConstants;
  * <li><p>Bootstrap class loader.
  *     It is the virtual machine's built-in class loader, typically represented
  *     as {@code null}, and does not have a parent.</li>
- * <li><p>{@linkplain #getPlatformClassLoader() Platform class loader}.
- *     The platform class loader is responsible for loading the
- *     <em>platform classes</em>.  Platform classes include Java SE platform APIs,
- *     their implementation classes and JDK-specific run-time classes that are
- *     defined by the platform class loader or its ancestors.
- *     The platform class loader can be used as the parent of a {@code ClassLoader}
- *     instance.
- *     <p> To allow for upgrading/overriding of modules defined to the platform
- *     class loader, and where upgraded modules read modules defined to class
- *     loaders other than the platform class loader and its ancestors, then
- *     the platform class loader may have to delegate to other class loaders,
- *     the application class loader for example.
- *     In other words, classes in named modules defined to class loaders
- *     other than the platform class loader and its ancestors may be visible
- *     to the platform class loader. </li>
  * <li><p>{@linkplain #getSystemClassLoader() System class loader}.
  *     It is also known as <em>application class loader</em> and is distinct
  *     from the platform class loader.
@@ -964,14 +950,6 @@ public abstract class ClassLoader {
      * class you are defining as well as the bytes.  This ensures that the
      * class you are defining is indeed the class you think it is.
      *
-     * <p> If the specified {@code name} begins with "{@code java.}", it can
-     * only be defined by the {@linkplain #getPlatformClassLoader()
-     * platform class loader} or its ancestors; otherwise {@code SecurityException}
-     * will be thrown.  If {@code name} is not {@code null}, it must be equal to
-     * the <a href="#binary-name">binary name</a> of the class
-     * specified by the byte array {@code b}, otherwise a {@link
-     * NoClassDefFoundError NoClassDefFoundError} will be thrown.
-     *
      * <p> This method defines a package in this class loader corresponding to the
      * package of the {@code Class} (if such a package has not already been defined
      * in this class loader). The name of the defined package is derived from
@@ -1022,6 +1000,7 @@ public abstract class ClassLoader {
      * @revised 9
      */
     // Android-changed: Remove <tt> from link for NoClassDefFoundError
+    // Android-changed: Removed javadoc related to the getPlatformClassLoader().
     protected final Class<?> defineClass(String name, byte[] b, int off, int len,
                                          ProtectionDomain protectionDomain)
         throws ClassFormatError
@@ -1579,7 +1558,7 @@ public abstract class ClassLoader {
 
     /**
      * Registers the caller as
-     * {@linkplain #isRegisteredAsParallelCapable() parallel capable}.
+     * {@code #isRegisteredAsParallelCapable() parallel capable}.
      * The registration succeeds if and only if all of the following
      * conditions are met:
      * <ol>
@@ -1593,8 +1572,6 @@ public abstract class ClassLoader {
      * @return  {@code true} if the caller is successfully registered as
      *          parallel capable and {@code false} if otherwise.
      *
-     * @see #isRegisteredAsParallelCapable()
-     *
      * @since   1.7
      */
     @CallerSensitive
@@ -1604,13 +1581,11 @@ public abstract class ClassLoader {
 
     /**
      * Returns {@code true} if this class loader is registered as
-     * {@linkplain #registerAsParallelCapable parallel capable}, otherwise
+     * {@code #registerAsParallelCapable parallel capable}, otherwise
      * {@code false}.
      *
      * @return  {@code true} if this class loader is parallel capable,
      *          otherwise {@code false}.
-     *
-     * @see #registerAsParallelCapable()
      *
      * @since   9
      * @hide
@@ -1844,6 +1819,7 @@ public abstract class ClassLoader {
 
     // Android-changed: Removed "java.system.class.loader" paragraph.
     // Android-changed: Removed SecurityManager-related paragraph.
+    // Android-changed: Removed "jdk.net.URLClassPath.showIgnoredClassPathEntries" paragraph.
     /**
      * Returns the system class loader.  This is the default
      * delegation parent for new {@code ClassLoader} instances, and is
@@ -1879,10 +1855,7 @@ public abstract class ClassLoader {
      * {@code Class-Path} entries must meet certain conditions for validity (see
      * the <a href="{@docRoot}/../specs/jar/jar.html#class-path-attribute">
      * JAR File Specification</a> for details).  Invalid {@code Class-Path}
-     * entries are ignored.  For debugging purposes, ignored entries can be
-     * printed to the console if the
-     * {@systemProperty jdk.net.URLClassPath.showIgnoredClassPathEntries} system
-     * property is set to {@code true}.
+     * entries are ignored.
      *
      * @return  The system {@code ClassLoader}
      *
@@ -2264,6 +2237,8 @@ public abstract class ClassLoader {
         return packages.values().toArray(Package[]::new);
     }
 
+    // Android-changed: Removed the apinote related to the platform class loader.
+    // Android-changed: Removed the hidden getDefinedPackage() in the javadoc.
     /**
      * Finds a package by <a href="#binary-name">name</a> in this class loader and its ancestors.
      * <p>
@@ -2271,12 +2246,6 @@ public abstract class ClassLoader {
      * the {@code Package} is returned. Otherwise, the ancestors of
      * this class loader are searched recursively (parent by parent)
      * for a {@code Package} of the given name.
-     *
-     * @apiNote The {@link #getPlatformClassLoader() platform class loader}
-     * may delegate to the application class loader but the application class
-     * loader is not its ancestor.  When invoked on the platform class loader,
-     * this method  will not find packages defined to the application
-     * class loader.
      *
      * @param  name
      *         The <a href="#binary-name">package name</a>
@@ -2296,11 +2265,7 @@ public abstract class ClassLoader {
      * For example, the {@code Package} will only expose annotations from the
      * {@code package-info.class} file defined by the parent loader, even if
      * annotations exist in a {@code package-info.class} file defined by
-     * a child loader.  A more robust approach is to use the
-     * {@link ClassLoader#getDefinedPackage} method which returns
-     * a {@code Package} for the specified class loader.
-     *
-     * @see ClassLoader#getDefinedPackage(String)
+     * a child loader.
      *
      * @since  1.2
      * @revised 9
@@ -2322,24 +2287,16 @@ public abstract class ClassLoader {
         return packages.get(name);
     }
 
+    // Android-changed: Removed the link to the hidden getDefinedPackages().
+    // Android-changed: Removed the link to the hidden getPlatformClassLoader().
     /**
      * Returns all of the {@code Package}s that have been defined by
      * this class loader and its ancestors.  The returned array may contain
      * more than one {@code Package} object of the same package name, each
      * defined by a different class loader in the class loader hierarchy.
      *
-     * @apiNote The {@link #getPlatformClassLoader() platform class loader}
-     * may delegate to the application class loader. In other words,
-     * packages in modules defined to the application class loader may be
-     * visible to the platform class loader.  On the other hand,
-     * the application class loader is not its ancestor and hence
-     * when invoked on the platform class loader, this method will not
-     * return any packages defined to the application class loader.
-     *
      * @return  The array of {@code Package} objects that have been defined by
      *          this class loader and its ancestors
-     *
-     * @see ClassLoader#getDefinedPackages()
      *
      * @since  1.2
      * @revised 9

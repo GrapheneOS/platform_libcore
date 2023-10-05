@@ -1008,11 +1008,6 @@ public final class Class<T> implements java.io.Serializable,
      *
      * <p> If this {@code Class} object represents a class or interface,
      * not an array class, then:
-     * <ul>
-     * <li> If the class or interface is not {@linkplain #isHidden() hidden},
-     *      then the <a href="ClassLoader.html#binary-name">binary name</a>
-     *      of the class or interface is returned.
-     * </ul>
      *
      * <p> If this {@code Class} object represents an array class, then
      * the result is a string consisting of one or more '{@code [}' characters
@@ -1991,9 +1986,6 @@ public final class Class<T> implements java.io.Serializable,
     /**
      * Returns {@code true} if and only if the underlying class
      * is an anonymous class.
-     *
-     * @apiNote
-     * An anonymous class is not a {@linkplain #isHidden() hidden class}.
      *
      * @return {@code true} if and only if this class is an anonymous class.
      * @since 1.5
@@ -4826,7 +4818,7 @@ public final class Class<T> implements java.io.Serializable,
             = new BasicLruCache<Class, Type[]>(8);
     }
 
-    // Android-changed: Remove javadoc related to hidden classes.
+    // Android-changed: Remove javadoc related to hidden classes and ClassDesc.
     /**
      * Returns the descriptor string of the entity (class, interface, array class,
      * primitive type, or {@code void}) represented by this {@code Class} object.
@@ -4834,12 +4826,8 @@ public final class Class<T> implements java.io.Serializable,
      * <p> If this {@code Class} object represents a class or interface,
      * not an array class, then:
      * <ul>
-     * <li> If the class or interface is not {@linkplain Class#isHidden() hidden},
-     *      then the result is a field descriptor (JVMS {@jvms 4.3.2})
-     *      for the class or interface. Calling
-     *      {@link ClassDesc#ofDescriptor(String) ClassDesc::ofDescriptor}
-     *      with the result descriptor string produces a {@link ClassDesc ClassDesc}
-     *      describing this class or interface.
+     * <li> The result is a field descriptor (JVMS {@jvms 4.3.2})
+     *      for the class or interface.
      * </ul>
      *
      * <p> If this {@code Class} object represents an array class, then
@@ -4847,14 +4835,7 @@ public final class Class<T> implements java.io.Serializable,
      * representing the depth of the array nesting, followed by the
      * descriptor string of the element type.
      * <ul>
-     * <li> If the element type is not a {@linkplain Class#isHidden() hidden} class
-     * or interface, then this array class can be described nominally.
-     * Calling {@link ClassDesc#ofDescriptor(String) ClassDesc::ofDescriptor}
-     * with the result descriptor string produces a {@link ClassDesc ClassDesc}
-     * describing this array class.
-     * <li> If the element type is a {@linkplain Class#isHidden() hidden} class or
-     * interface, then this array class cannot be described nominally.
-     * The result string is not a type descriptor.
+     * <li> This array class can be described nominally.
      * </ul>
      *
      * <p> If this {@code Class} object represents a primitive type or
