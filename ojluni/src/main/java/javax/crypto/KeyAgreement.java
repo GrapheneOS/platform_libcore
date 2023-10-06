@@ -692,4 +692,16 @@ public class KeyAgreement {
         chooseFirstProvider();
         return spi.engineGenerateSecret(algorithm);
     }
+
+    // BEGIN Android-added: Allow access to the current SPI for testing purposes.
+    /**
+     * Returns the {@code KeyAgreementSpi} backing this {@code KeyAgreement} or
+     * {@code null} if no {@code KeyAgreementSpi} is backing this {@code KeyAgreement}.
+     *
+     * @hide
+     */
+    public KeyAgreementSpi getCurrentSpi() {
+        return spi;
+    }
+    // END Android-added: Allow access to the current SPI for testing purposes.
 }
