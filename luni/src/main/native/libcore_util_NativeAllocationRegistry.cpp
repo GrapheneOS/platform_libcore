@@ -49,7 +49,7 @@ static jstring NativeAllocationRegistry_dlAddr(JNIEnv* env, jclass, jlong freeFu
 }
 
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(NativeAllocationRegistry, applyFreeFunction, "(JJ)V"),
     NATIVE_METHOD(NativeAllocationRegistry, dlAddr, "(J)Ljava/lang/String;"),
 };

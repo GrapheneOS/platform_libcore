@@ -175,7 +175,7 @@ Java_java_io_ObjectInputStream_bytesToDoubles(JNIEnv *env,
     (*env)->ReleasePrimitiveArrayCritical(env, dst, doubles, 0);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(ObjectInputStream, bytesToFloats, "([BI[FII)V"),
     NATIVE_METHOD(ObjectInputStream, bytesToDoubles, "([BI[DII)V"),
 };
