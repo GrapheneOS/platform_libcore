@@ -68,7 +68,7 @@ Java_java_util_zip_Adler32_updateByteBuffer(JNIEnv *env, jclass cls, jint adler,
 #define NATIVE_METHOD(className, functionName, signature) \
 { #functionName, signature, (void*)(className ## _ ## functionName) }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Java_java_util_zip_Adler32, update, "(II)I"),
   NATIVE_METHOD(Java_java_util_zip_Adler32, updateBytes, "(I[BII)I"),
   NATIVE_METHOD(Java_java_util_zip_Adler32, updateByteBuffer, "(IJII)I"),
