@@ -74,7 +74,7 @@ Java_java_util_zip_CRC32_updateByteBuffer0(JNIEnv *env, jclass cls, jint crc,
 #define NATIVE_METHOD(className, functionName, signature) \
 { #functionName, signature, (void*)(className ## _ ## functionName) }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Java_java_util_zip_CRC32, update, "(II)I"),
   NATIVE_METHOD(Java_java_util_zip_CRC32, updateBytes0, "(I[BII)I"),
   NATIVE_METHOD(Java_java_util_zip_CRC32, updateByteBuffer0, "(IJII)I"),
