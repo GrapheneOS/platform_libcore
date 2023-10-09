@@ -552,7 +552,7 @@ Java_java_io_UnixFileSystem_getNameMax0(JNIEnv *env, jobject this,
     return length != -1 ? length : (jlong)NAME_MAX;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(UnixFileSystem, initIDs, "()V"),
     NATIVE_METHOD(UnixFileSystem, canonicalize0, "(Ljava/lang/String;)Ljava/lang/String;"),
     NATIVE_METHOD(UnixFileSystem, getBooleanAttributes0, "(Ljava/lang/String;)I"),
