@@ -167,7 +167,7 @@ Character_codePointOfImpl(JNIEnv* env, jclass, jstring s) {
     return U_SUCCESS(status) ? cp : -1;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   FAST_NATIVE_METHOD(Character, codePointOfImpl, "(Ljava/lang/String;)I"),
   FAST_NATIVE_METHOD(Character, digitImpl, "(II)I"),
   FAST_NATIVE_METHOD(Character, getDirectionalityImpl, "(I)B"),
