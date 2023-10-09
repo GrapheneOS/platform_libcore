@@ -115,7 +115,7 @@ NativeThread_signal(JNIEnv *env, jclass cl, jlong thread)
         JNU_ThrowIOExceptionWithLastError(env, "Thread signal failed");
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(NativeThread, current, "()J"),
   NATIVE_METHOD(NativeThread, signal, "(J)V"),
 };
