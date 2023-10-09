@@ -892,7 +892,7 @@ static jdouble StringToReal_parseDblImpl(JNIEnv* env, jclass, jstring s, jint e)
     return createDouble(env, str.c_str(), e);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(StringToReal, parseFltImpl, "(Ljava/lang/String;I)F"),
     NATIVE_METHOD(StringToReal, parseDblImpl, "(Ljava/lang/String;I)D"),
 };
