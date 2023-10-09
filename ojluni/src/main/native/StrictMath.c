@@ -151,7 +151,7 @@ StrictMath_expm1(jdouble d)
     return (jdouble) ieee_expm1((double)d);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   CRITICAL_NATIVE_METHOD(StrictMath, cos, "(D)D"),
   CRITICAL_NATIVE_METHOD(StrictMath, sin, "(D)D"),
   CRITICAL_NATIVE_METHOD(StrictMath, tan, "(D)D"),

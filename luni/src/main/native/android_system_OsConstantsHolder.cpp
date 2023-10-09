@@ -191,7 +191,7 @@ static void OsConstantsHolder_initConstants(JNIEnv* env, jclass c) {
     initConstant(env, c, "_SC_XOPEN_XCU_VERSION", _SC_XOPEN_XCU_VERSION);
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
     NATIVE_METHOD(OsConstantsHolder, initConstants, "()V"),
 };
 void register_android_system_OsConstantsHolder(JNIEnv* env) {
