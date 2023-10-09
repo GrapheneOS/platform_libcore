@@ -75,7 +75,7 @@ FileDescriptor_getAppend(jint fd) {
 }
 
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(FileDescriptor, sync, "()V"),
   CRITICAL_NATIVE_METHOD(FileDescriptor, isSocket, "(I)Z"),
   CRITICAL_NATIVE_METHOD(FileDescriptor, getAppend, "(I)Z"),
