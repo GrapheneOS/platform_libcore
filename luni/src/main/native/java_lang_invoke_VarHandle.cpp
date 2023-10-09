@@ -210,7 +210,7 @@ static jboolean VarHandle_weakCompareAndSetRelease(JNIEnv* env, jobject, jobject
   return JNI_FALSE;
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(VarHandle, compareAndExchange, "([Ljava/lang/Object;)Ljava/lang/Object;"),
   NATIVE_METHOD(VarHandle, compareAndExchangeAcquire, "([Ljava/lang/Object;)Ljava/lang/Object;"),
   NATIVE_METHOD(VarHandle, compareAndExchangeRelease, "([Ljava/lang/Object;)Ljava/lang/Object;"),
