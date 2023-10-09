@@ -106,7 +106,7 @@ Java_java_nio_MappedByteBuffer_force0(JNIEnv *env, jobject obj, jobject fdo,
 }
 
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(MappedByteBuffer, isLoaded0, "(JJJ)Z"),
   NATIVE_METHOD(MappedByteBuffer, load0, "(JJ)V"),
   NATIVE_METHOD(MappedByteBuffer, force0, "(Ljava/io/FileDescriptor;JJ)V"),

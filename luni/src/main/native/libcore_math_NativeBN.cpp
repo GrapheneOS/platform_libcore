@@ -164,7 +164,7 @@ static void NativeBN_BN_mod_exp(JNIEnv* env, jclass, jlong r, jlong a, jlong p, 
   }
 }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
    NATIVE_METHOD(NativeBN, BN_div, "(JJJJ)V"),
    NATIVE_METHOD(NativeBN, BN_free, "(J)V"),
    NATIVE_METHOD(NativeBN, BN_mod_exp, "(JJJJ)V"),

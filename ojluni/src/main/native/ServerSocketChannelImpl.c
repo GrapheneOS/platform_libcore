@@ -137,7 +137,7 @@ Java_sun_nio_ch_ServerSocketChannelImpl_accept0(JNIEnv *env, jobject this,
 
 
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Java_sun_nio_ch_ServerSocketChannelImpl, initIDs, "()V"),
   NATIVE_METHOD(Java_sun_nio_ch_ServerSocketChannelImpl, accept0,
                 "(Ljava/io/FileDescriptor;Ljava/io/FileDescriptor;[Ljava/net/InetSocketAddress;)I"),
