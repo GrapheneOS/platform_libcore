@@ -1233,7 +1233,7 @@ Java_sun_nio_fs_UnixNativeDispatcher_getgrnam0(JNIEnv* env, jclass this,
 #define NATIVE_METHOD(className, functionName, signature) \
 { #functionName, signature, (void*)(className ## _ ## functionName) }
 
-static JNINativeMethod gMethods[] = {
+static const JNINativeMethod gMethods[] = {
   NATIVE_METHOD(Java_sun_nio_fs_UnixNativeDispatcher, getcwd, "()[B"),
   NATIVE_METHOD(Java_sun_nio_fs_UnixNativeDispatcher, dup, "(I)I"),
   NATIVE_METHOD(Java_sun_nio_fs_UnixNativeDispatcher, open0, "(JII)I"),
