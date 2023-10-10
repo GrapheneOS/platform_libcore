@@ -547,8 +547,14 @@ public class Main {
 
         public static final String NAME = "list-new-apis";
 
+        @Parameter(names = {"-b", "--base"},
+                description = "file path to a .jmod or .jar file or"
+                        + "one of the following OpenJDK version: 8, 9, 11, 17")
+        public String base = "oj";
+
         @Parameter(names = {"-t", "--target"},
-                description = "one of the following OpenJDK version: 8, 9, 11, 17")
+                description = "file path to a .jmod or .jar file or"
+                        + "one of the following OpenJDK version: 8, 9, 11, 17")
         public String classpath = "17";
 
         @Parameter(names = {"-d"},
@@ -559,13 +565,8 @@ public class Main {
         public boolean help = false;
 
         private void run() throws UncheckedIOException {
-            if (classpath.matches("\\d+") && !List.of("8", "9", "11", "17").contains(classpath)) {
-                throw new IllegalArgumentException("Only 8, 9, 11, 17 java version is supported. "
-                        + "This java version isn't supported: " + classpath);
-            }
-
             Path newClassPath = AndroidHostEnvUtil.parseInputClasspath(classpath);
-            Path baseClasspath = AndroidHostEnvUtil.parseInputClasspath("oj");
+            Path baseClasspath = AndroidHostEnvUtil.parseInputClasspath(base);
 
             SignaturesCollector collector = new SignaturesCollector();
             // Set up filter if it's enabled.

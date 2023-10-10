@@ -11,6 +11,7 @@ git fetch -t aosp upstream-openjdk8u
 git fetch -t aosp upstream-openjdk9
 git fetch -t aosp upstream-openjdk11u
 git fetch -t aosp upstream-openjdk17u
+git fetch -t aosp upstream-openjdk21u
 git fetch -t aosp upstream-openjdk
 popd
 
