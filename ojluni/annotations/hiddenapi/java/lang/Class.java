@@ -331,8 +331,6 @@ public final class Class<T>
         throw new RuntimeException("Stub!");
     }
 
-    private native java.lang.String getInnerClassName();
-
     private native int getInnerClassFlags(int defaultValue);
 
     public boolean isEnum() {

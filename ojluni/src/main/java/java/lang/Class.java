@@ -1893,26 +1893,7 @@ public final class Class<T> implements java.io.Serializable,
         if (isArray())
             return getComponentType().getSimpleName()+"[]";
 
-        if (isAnonymousClass()) {
-            return "";
-        }
-
-        if (isMemberClass() || isLocalClass()) {
-            // Note that we obtain this information from getInnerClassName(), which uses
-            // dex system annotations to obtain the name. It is possible for this information
-            // to disagree with the actual enclosing class name. For example, if dex
-            // manipulation tools have renamed the enclosing class without adjusting
-            // the system annotation to match. See http://b/28800927.
-            return getInnerClassName();
-        }
-
-        String simpleName = getName();
-        final int dot = simpleName.lastIndexOf(".");
-        if (dot > 0) {
-            return simpleName.substring(simpleName.lastIndexOf(".")+1); // strip the package name
-        }
-
-        return simpleName;
+        return getSimpleNameNative();
     }
 
     /**
@@ -4038,7 +4019,7 @@ public final class Class<T> implements java.io.Serializable,
      * Returns the simple name of a member or local class, or {@code null} otherwise.
      */
     @FastNative
-    private native String getInnerClassName();
+    private native String getSimpleNameNative();
 
     @FastNative
     private native int getInnerClassFlags(int defaultValue);

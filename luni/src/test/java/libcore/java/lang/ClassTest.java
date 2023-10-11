@@ -122,6 +122,19 @@ public class ClassTest {
         assertEquals("TestBadInnerClass_InnerXXXXX", cl.getSimpleName());
     }
 
+    @Test
+    public void testGetSimpleName() {
+        assertEquals("ClassTest", this.getClass().getSimpleName());
+        assertEquals("int[]", int[].class.getSimpleName());
+        assertEquals("int[][]", int[][].class.getSimpleName());
+        assertEquals("ClassTest[]", ClassTest[].class.getSimpleName());
+        assertEquals("", new A() {}.getClass().getSimpleName()); // Anonymous class
+        assertEquals("A", A.class.getSimpleName()); // member interface
+        assertEquals("X", X.class.getSimpleName()); // member class
+        class LocalClass implements A {}
+        assertEquals("LocalClass", LocalClass.class.getSimpleName());
+    }
+
     interface A {
         public static String name = "A";
     }

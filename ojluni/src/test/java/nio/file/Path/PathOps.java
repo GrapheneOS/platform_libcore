@@ -500,8 +500,6 @@ public class PathOps {
 
     @Test
     public static void doOfTests() {
-        Path cwd = Paths.get("").toAbsolutePath();
-
         // construction
         testOf("file:///foo/")
                 .string("/foo");
