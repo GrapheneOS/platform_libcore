@@ -27,6 +27,7 @@
  */
 package test.java.nio.file.Path;
 
+import java.net.URI;
 import java.nio.file.FileSystems;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -42,6 +43,14 @@ public class PathOps {
     private PathOps(String first, String... more) {
         try {
             path = FileSystems.getDefault().getPath(first, more);
+        } catch (Exception x) {
+            exc = x;
+        }
+    }
+
+    private PathOps(URI uri) {
+        try {
+            path = Path.of(uri);
         } catch (Exception x) {
             exc = x;
         }
@@ -479,6 +488,27 @@ public class PathOps {
                 .parent("/foo")
                 .name("bar");
     }
+
+    // BEGIN Android-added: Tests for of().
+    static PathOps testOf(String first) {
+        try {
+          return new PathOps(new URI (first));
+        } catch (Exception e) {
+          return null;
+        }
+    }
+
+    @Test
+    public static void doOfTests() {
+        Path cwd = Paths.get("").toAbsolutePath();
+
+        // construction
+        testOf("file:///foo/")
+                .string("/foo");
+        testOf("file:///foo/bar/gus/")
+                .string("/foo/bar/gus");
+    }
+    // END Android-added: Tests for of().
 
     @Test
     public static void npes() {
