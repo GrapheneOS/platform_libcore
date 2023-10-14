@@ -1,6 +1,4 @@
 // Signature format: 2.0
-// - add-additional-overrides=no
-// - migrating=Migration in progress see b/299366704
 package android.compat {
 
   public final class Compatibility {
@@ -453,7 +451,48 @@ package java.nio {
   public class DirectByteBuffer extends java.nio.MappedByteBuffer {
     ctor public DirectByteBuffer(int, long, java.io.FileDescriptor, Runnable, boolean);
     method public final long address();
+    method public final java.nio.CharBuffer asCharBuffer();
+    method public final java.nio.DoubleBuffer asDoubleBuffer();
+    method public final java.nio.FloatBuffer asFloatBuffer();
+    method public final java.nio.IntBuffer asIntBuffer();
+    method public final java.nio.LongBuffer asLongBuffer();
+    method public final java.nio.ByteBuffer asReadOnlyBuffer();
+    method public final java.nio.ShortBuffer asShortBuffer();
+    method public final java.nio.ByteBuffer compact();
+    method public final java.nio.MappedByteBuffer duplicate();
+    method public final byte get();
+    method public final byte get(int);
+    method public final char getChar();
+    method public final char getChar(int);
+    method public final double getDouble();
+    method public final double getDouble(int);
+    method public final float getFloat();
+    method public final float getFloat(int);
+    method public int getInt();
+    method public int getInt(int);
+    method public final long getLong();
+    method public final long getLong(int);
+    method public final short getShort();
+    method public final short getShort(int);
+    method public final boolean isDirect();
+    method public final boolean isReadOnly();
+    method public final java.nio.ByteBuffer put(byte);
+    method public final java.nio.ByteBuffer put(int, byte);
+    method public final java.nio.ByteBuffer putChar(char);
+    method public final java.nio.ByteBuffer putChar(int, char);
+    method public final java.nio.ByteBuffer putDouble(double);
+    method public final java.nio.ByteBuffer putDouble(int, double);
+    method public final java.nio.ByteBuffer putFloat(float);
+    method public final java.nio.ByteBuffer putFloat(int, float);
+    method public final java.nio.ByteBuffer putInt(int);
+    method public final java.nio.ByteBuffer putInt(int, int);
+    method public final java.nio.ByteBuffer putLong(long);
+    method public final java.nio.ByteBuffer putLong(int, long);
+    method public final java.nio.ByteBuffer putShort(short);
+    method public final java.nio.ByteBuffer putShort(int, short);
     method public final void setAccessible(boolean);
+    method public final java.nio.MappedByteBuffer slice();
+    method public final java.nio.MappedByteBuffer slice(int, int);
   }
 
   public final class NIOAccess {

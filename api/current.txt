@@ -1,6 +1,4 @@
 // Signature format: 2.0
-// - add-additional-overrides=no
-// - migrating=Migration in progress see b/299366704
 package android.system {
 
   public final class ErrnoException extends java.lang.Exception {
@@ -4113,6 +4111,7 @@ package java.lang {
     method public char[] toCharArray();
     method @NonNull public String toLowerCase(@NonNull java.util.Locale);
     method @NonNull public String toLowerCase();
+    method @NonNull public String toString();
     method @NonNull public String toUpperCase(@NonNull java.util.Locale);
     method @NonNull public String toUpperCase();
     method public <R> R transform(@NonNull java.util.function.Function<? super java.lang.String,? extends R>);
@@ -4184,6 +4183,7 @@ package java.lang {
     method @NonNull public CharSequence subSequence(int, int);
     method @NonNull public String substring(int);
     method @NonNull public String substring(int, int);
+    method @NonNull public String toString();
     method public void trimToSize();
   }
 
@@ -4241,6 +4241,7 @@ package java.lang {
     method @NonNull public CharSequence subSequence(int, int);
     method @NonNull public String substring(int);
     method @NonNull public String substring(int, int);
+    method @NonNull public String toString();
     method public void trimToSize();
   }
 
@@ -6319,6 +6320,7 @@ package java.nio {
     method public abstract java.nio.CharBuffer slice();
     method public abstract java.nio.CharBuffer slice(int, int);
     method public abstract java.nio.CharBuffer subSequence(int, int);
+    method public String toString();
     method public static java.nio.CharBuffer wrap(char[], int, int);
     method public static java.nio.CharBuffer wrap(char[]);
     method public static java.nio.CharBuffer wrap(CharSequence, int, int);
@@ -7597,6 +7599,7 @@ package java.nio.file.attribute {
   }
 
   public interface PosixFileAttributeView extends java.nio.file.attribute.BasicFileAttributeView java.nio.file.attribute.FileOwnerAttributeView {
+    method public String name();
     method public java.nio.file.attribute.PosixFileAttributes readAttributes() throws java.io.IOException;
     method public void setGroup(java.nio.file.attribute.GroupPrincipal) throws java.io.IOException;
     method public void setPermissions(java.util.Set<java.nio.file.attribute.PosixFilePermission>) throws java.io.IOException;
@@ -7891,10 +7894,12 @@ package java.security {
     method @Deprecated public final String getName();
     method @Deprecated public java.security.PublicKey getPublicKey();
     method @Deprecated public final java.security.IdentityScope getScope();
+    method @Deprecated public int hashCode();
     method @Deprecated protected boolean identityEquals(java.security.Identity);
     method @Deprecated public void removeCertificate(java.security.Certificate) throws java.security.KeyManagementException;
     method @Deprecated public void setInfo(String);
     method @Deprecated public void setPublicKey(java.security.PublicKey) throws java.security.KeyManagementException;
+    method @Deprecated public String toString();
     method @Deprecated public String toString(boolean);
   }
 
@@ -10805,6 +10810,7 @@ package java.text {
     method public abstract int compare(String, String);
     method public int compare(Object, Object);
     method public boolean equals(String, String);
+    method public boolean equals(Object);
     method public static java.util.Locale[] getAvailableLocales();
     method public abstract java.text.CollationKey getCollationKey(String);
     method public int getDecomposition();
@@ -11139,6 +11145,7 @@ package java.text {
     method public java.text.CollationElementIterator getCollationElementIterator(java.text.CharacterIterator);
     method public java.text.CollationKey getCollationKey(String);
     method public String getRules();
+    method public int hashCode();
   }
 
   public class SimpleDateFormat extends java.text.DateFormat {
@@ -11337,6 +11344,7 @@ package java.time {
     method public java.time.OffsetDateTime atTime(java.time.OffsetTime);
     method public java.util.stream.Stream<java.time.LocalDate> datesUntil(java.time.LocalDate);
     method public java.util.stream.Stream<java.time.LocalDate> datesUntil(java.time.LocalDate, java.time.Period);
+    method public boolean equals(Object);
     method public static java.time.LocalDate from(java.time.temporal.TemporalAccessor);
     method public java.time.chrono.IsoChronology getChronology();
     method public int getDayOfMonth();
@@ -11346,6 +11354,9 @@ package java.time {
     method public java.time.Month getMonth();
     method public int getMonthValue();
     method public int getYear();
+    method public int hashCode();
+    method public boolean isSupported(java.time.temporal.TemporalField);
+    method public boolean isSupported(java.time.temporal.TemporalUnit);
     method public int lengthOfMonth();
     method public java.time.LocalDate minus(java.time.temporal.TemporalAmount);
     method public java.time.LocalDate minus(long, java.time.temporal.TemporalUnit);
@@ -11370,6 +11381,7 @@ package java.time {
     method public java.time.LocalDate plusWeeks(long);
     method public java.time.LocalDate plusYears(long);
     method public long toEpochSecond(java.time.LocalTime, java.time.ZoneOffset);
+    method public String toString();
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
     method public java.time.Period until(java.time.chrono.ChronoLocalDate);
     method public java.time.LocalDate with(java.time.temporal.TemporalAdjuster);
@@ -11386,6 +11398,7 @@ package java.time {
   public final class LocalDateTime implements java.time.chrono.ChronoLocalDateTime<java.time.LocalDate> java.io.Serializable java.time.temporal.Temporal java.time.temporal.TemporalAdjuster {
     method public java.time.OffsetDateTime atOffset(java.time.ZoneOffset);
     method public java.time.ZonedDateTime atZone(java.time.ZoneId);
+    method public boolean equals(Object);
     method public static java.time.LocalDateTime from(java.time.temporal.TemporalAccessor);
     method public int getDayOfMonth();
     method public java.time.DayOfWeek getDayOfWeek();
@@ -11398,7 +11411,9 @@ package java.time {
     method public int getNano();
     method public int getSecond();
     method public int getYear();
+    method public int hashCode();
     method public boolean isSupported(java.time.temporal.TemporalField);
+    method public boolean isSupported(java.time.temporal.TemporalUnit);
     method public java.time.LocalDateTime minus(java.time.temporal.TemporalAmount);
     method public java.time.LocalDateTime minus(long, java.time.temporal.TemporalUnit);
     method public java.time.LocalDateTime minusDays(long);
@@ -11435,6 +11450,7 @@ package java.time {
     method public java.time.LocalDateTime plusYears(long);
     method public java.time.LocalDate toLocalDate();
     method public java.time.LocalTime toLocalTime();
+    method public String toString();
     method public java.time.LocalDateTime truncatedTo(java.time.temporal.TemporalUnit);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
     method public java.time.LocalDateTime with(java.time.temporal.TemporalAdjuster);
@@ -11697,6 +11713,7 @@ package java.time {
   public final class Period implements java.time.chrono.ChronoPeriod java.io.Serializable {
     method public java.time.temporal.Temporal addTo(java.time.temporal.Temporal);
     method public static java.time.Period between(java.time.LocalDate, java.time.LocalDate);
+    method public boolean equals(Object);
     method public static java.time.Period from(java.time.temporal.TemporalAmount);
     method public long get(java.time.temporal.TemporalUnit);
     method public java.time.chrono.IsoChronology getChronology();
@@ -11704,6 +11721,7 @@ package java.time {
     method public int getMonths();
     method public java.util.List<java.time.temporal.TemporalUnit> getUnits();
     method public int getYears();
+    method public int hashCode();
     method public java.time.Period minus(java.time.temporal.TemporalAmount);
     method public java.time.Period minusDays(long);
     method public java.time.Period minusMonths(long);
@@ -11722,6 +11740,7 @@ package java.time {
     method public java.time.Period plusMonths(long);
     method public java.time.Period plusYears(long);
     method public java.time.temporal.Temporal subtractFrom(java.time.temporal.Temporal);
+    method public String toString();
     method public long toTotalMonths();
     method public java.time.Period withDays(int);
     method public java.time.Period withMonths(int);
@@ -11842,11 +11861,13 @@ package java.time {
   }
 
   public final class ZonedDateTime implements java.time.chrono.ChronoZonedDateTime<java.time.LocalDate> java.io.Serializable java.time.temporal.Temporal {
+    method public boolean equals(Object);
     method public static java.time.ZonedDateTime from(java.time.temporal.TemporalAccessor);
     method public int getDayOfMonth();
     method public java.time.DayOfWeek getDayOfWeek();
     method public int getDayOfYear();
     method public int getHour();
+    method public long getLong(java.time.temporal.TemporalField);
     method public int getMinute();
     method public java.time.Month getMonth();
     method public int getMonthValue();
@@ -11855,7 +11876,9 @@ package java.time {
     method public int getSecond();
     method public int getYear();
     method public java.time.ZoneId getZone();
+    method public int hashCode();
     method public boolean isSupported(java.time.temporal.TemporalField);
+    method public boolean isSupported(java.time.temporal.TemporalUnit);
     method public java.time.ZonedDateTime minus(java.time.temporal.TemporalAmount);
     method public java.time.ZonedDateTime minus(long, java.time.temporal.TemporalUnit);
     method public java.time.ZonedDateTime minusDays(long);
@@ -11891,6 +11914,7 @@ package java.time {
     method public java.time.LocalDate toLocalDate();
     method public java.time.LocalDateTime toLocalDateTime();
     method public java.time.OffsetDateTime toOffsetDateTime();
+    method public String toString();
     method public java.time.ZonedDateTime truncatedTo(java.time.temporal.TemporalUnit);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
     method public java.time.ZonedDateTime with(java.time.temporal.TemporalAdjuster);
@@ -11917,7 +11941,10 @@ package java.time.chrono {
   public abstract class AbstractChronology implements java.time.chrono.Chronology {
     ctor protected AbstractChronology();
     method public int compareTo(java.time.chrono.Chronology);
+    method public boolean equals(Object);
+    method public int hashCode();
     method public java.time.chrono.ChronoLocalDate resolveDate(java.util.Map<java.time.temporal.TemporalField,java.lang.Long>, java.time.format.ResolverStyle);
+    method public String toString();
   }
 
   public interface ChronoLocalDate extends java.time.temporal.Temporal java.lang.Comparable<java.time.chrono.ChronoLocalDate> java.time.temporal.TemporalAdjuster {
@@ -12768,6 +12795,8 @@ package java.util {
     ctor protected AbstractList();
     method public void add(int, E);
     method public boolean addAll(int, @NonNull java.util.Collection<? extends E>);
+    method public boolean equals(@Nullable Object);
+    method public int hashCode();
     method public int indexOf(@Nullable Object);
     method @NonNull public java.util.Iterator<E> iterator();
     method public int lastIndexOf(@Nullable Object);
@@ -12785,7 +12814,9 @@ package java.util {
     method public void clear();
     method public boolean containsKey(@Nullable Object);
     method public boolean containsValue(@Nullable Object);
+    method public boolean equals(@Nullable Object);
     method @Nullable public V get(@Nullable Object);
+    method public int hashCode();
     method public boolean isEmpty();
     method @NonNull public java.util.Set<K> keySet();
     method @Nullable public V put(K, V);
@@ -12798,16 +12829,20 @@ package java.util {
   public static class AbstractMap.SimpleEntry<K, V> implements java.util.Map.Entry<K,V> java.io.Serializable {
     ctor public AbstractMap.SimpleEntry(K, V);
     ctor public AbstractMap.SimpleEntry(@NonNull java.util.Map.Entry<? extends K,? extends V>);
+    method public boolean equals(@Nullable Object);
     method public K getKey();
     method public V getValue();
+    method public int hashCode();
     method public V setValue(V);
   }
 
   public static class AbstractMap.SimpleImmutableEntry<K, V> implements java.util.Map.Entry<K,V> java.io.Serializable {
     ctor public AbstractMap.SimpleImmutableEntry(K, V);
     ctor public AbstractMap.SimpleImmutableEntry(@NonNull java.util.Map.Entry<? extends K,? extends V>);
+    method public boolean equals(@Nullable Object);
     method public K getKey();
     method public V getValue();
+    method public int hashCode();
     method public V setValue(V);
   }
 
@@ -12824,6 +12859,8 @@ package java.util {
 
   public abstract class AbstractSet<E> extends java.util.AbstractCollection<E> implements java.util.Set<E> {
     ctor protected AbstractSet();
+    method public boolean equals(@Nullable Object);
+    method public int hashCode();
   }
 
   public class ArrayDeque<E> extends java.util.AbstractCollection<E> implements java.lang.Cloneable java.util.Deque<E> java.io.Serializable {
@@ -13657,7 +13694,9 @@ package java.util {
     method public boolean containsValue(Object);
     method public java.util.Enumeration<V> elements();
     method public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
+    method public boolean equals(Object);
     method public V get(Object);
+    method public int hashCode();
     method public boolean isEmpty();
     method public java.util.Set<K> keySet();
     method public java.util.Enumeration<K> keys();
@@ -13804,6 +13843,7 @@ package java.util {
     method public E element();
     method public E getFirst();
     method public E getLast();
+    method @NonNull public java.util.ListIterator<E> listIterator(int);
     method public boolean offer(E);
     method public boolean offerFirst(E);
     method public boolean offerLast(E);
@@ -14903,12 +14943,22 @@ package java.util.concurrent {
   }
 
   public interface BlockingDeque<E> extends java.util.concurrent.BlockingQueue<E> java.util.Deque<E> {
+    method public boolean add(E);
+    method public boolean contains(Object);
+    method public E element();
+    method public java.util.Iterator<E> iterator();
+    method public boolean offer(E);
     method public boolean offerFirst(E, long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
     method public boolean offerLast(E, long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
+    method public E peek();
+    method public E poll();
     method public E pollFirst(long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
     method public E pollLast(long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
     method public void putFirst(E) throws java.lang.InterruptedException;
     method public void putLast(E) throws java.lang.InterruptedException;
+    method public E remove();
+    method public boolean remove(Object);
+    method public int size();
     method public E takeFirst() throws java.lang.InterruptedException;
     method public E takeLast() throws java.lang.InterruptedException;
   }
@@ -15103,6 +15153,7 @@ package java.util.concurrent {
     method public long mappingCount();
     method @NonNull public static <K> java.util.concurrent.ConcurrentHashMap.KeySetView<K,java.lang.Boolean> newKeySet();
     method @NonNull public static <K> java.util.concurrent.ConcurrentHashMap.KeySetView<K,java.lang.Boolean> newKeySet(int);
+    method @Nullable public V putIfAbsent(@NonNull K, @NonNull V);
     method @Nullable public <U> U reduce(long, @NonNull java.util.function.BiFunction<? super K,? super V,? extends U>, @NonNull java.util.function.BiFunction<? super U,? super U,? extends U>);
     method @Nullable public java.util.Map.Entry<K,V> reduceEntries(long, @NonNull java.util.function.BiFunction<java.util.Map.Entry<K,V>,java.util.Map.Entry<K,V>,? extends java.util.Map.Entry<K,V>>);
     method @Nullable public <U> U reduceEntries(long, @NonNull java.util.function.Function<java.util.Map.Entry<K,V>,? extends U>, @NonNull java.util.function.BiFunction<? super U,? super U,? extends U>);
@@ -15122,6 +15173,9 @@ package java.util.concurrent {
     method public double reduceValuesToDouble(long, @NonNull java.util.function.ToDoubleFunction<? super V>, double, @NonNull java.util.function.DoubleBinaryOperator);
     method public int reduceValuesToInt(long, @NonNull java.util.function.ToIntFunction<? super V>, int, @NonNull java.util.function.IntBinaryOperator);
     method public long reduceValuesToLong(long, @NonNull java.util.function.ToLongFunction<? super V>, long, @NonNull java.util.function.LongBinaryOperator);
+    method public boolean remove(@NonNull Object, @Nullable Object);
+    method public boolean replace(@NonNull K, @NonNull V, @NonNull V);
+    method @Nullable public V replace(@NonNull K, @NonNull V);
     method @Nullable public <U> U search(long, @NonNull java.util.function.BiFunction<? super K,? super V,? extends U>);
     method @Nullable public <U> U searchEntries(long, @NonNull java.util.function.Function<java.util.Map.Entry<K,V>,? extends U>);
     method @Nullable public <U> U searchKeys(long, @NonNull java.util.function.Function<? super K,? extends U>);
@@ -15134,9 +15188,11 @@ package java.util.concurrent {
     method public final void clear();
     method public boolean contains(@NonNull Object);
     method public final boolean containsAll(@NonNull java.util.Collection<?>);
+    method public boolean equals(@Nullable Object);
     method public void forEach(@NonNull java.util.function.Consumer<? super K>);
     method @NonNull public java.util.concurrent.ConcurrentHashMap<K,V> getMap();
     method @Nullable public V getMappedValue();
+    method public int hashCode();
     method public final boolean isEmpty();
     method @NonNull public java.util.Iterator<K> iterator();
     method public boolean remove(@NonNull Object);
@@ -15236,6 +15292,10 @@ package java.util.concurrent {
     method public java.util.NavigableSet<K> navigableKeySet();
     method public java.util.Map.Entry<K,V> pollFirstEntry();
     method public java.util.Map.Entry<K,V> pollLastEntry();
+    method public V putIfAbsent(K, V);
+    method public boolean remove(Object, Object);
+    method public boolean replace(K, V, V);
+    method public V replace(K, V);
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> subMap(K, boolean, K, boolean);
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> subMap(K, K);
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> tailMap(K, boolean);
@@ -15283,8 +15343,10 @@ package java.util.concurrent {
     method @NonNull public Object clone();
     method public boolean contains(@Nullable Object);
     method public boolean containsAll(@NonNull java.util.Collection<?>);
+    method public boolean equals(@Nullable Object);
     method public void forEach(@NonNull java.util.function.Consumer<? super E>);
     method public E get(int);
+    method public int hashCode();
     method public int indexOf(@Nullable Object);
     method public int indexOf(@Nullable E, int);
     method public boolean isEmpty();
@@ -16781,9 +16843,11 @@ package java.util.jar {
     method public boolean containsKey(Object);
     method public boolean containsValue(Object);
     method public java.util.Set<java.util.Map.Entry<java.lang.Object,java.lang.Object>> entrySet();
+    method public boolean equals(Object);
     method public Object get(Object);
     method public String getValue(String);
     method public String getValue(java.util.jar.Attributes.Name);
+    method public int hashCode();
     method public boolean isEmpty();
     method public java.util.Set<java.lang.Object> keySet();
     method public Object put(Object, Object);
@@ -17361,6 +17425,7 @@ package java.util.prefs {
     method protected abstract void removeSpi(String);
     method public void sync() throws java.util.prefs.BackingStoreException;
     method protected abstract void syncSpi() throws java.util.prefs.BackingStoreException;
+    method public String toString();
     field protected final Object lock;
     field protected boolean newNode;
   }
@@ -19249,10 +19314,13 @@ package javax.security.auth.x500 {
     ctor public X500Principal(String, java.util.Map<java.lang.String,java.lang.String>);
     ctor public X500Principal(byte[]);
     ctor public X500Principal(java.io.InputStream);
+    method public boolean equals(Object);
     method public byte[] getEncoded();
     method public String getName();
     method public String getName(String);
     method public String getName(String, java.util.Map<java.lang.String,java.lang.String>);
+    method public int hashCode();
+    method public String toString();
     field public static final String CANONICAL = "CANONICAL";
     field public static final String RFC1779 = "RFC1779";
     field public static final String RFC2253 = "RFC2253";
