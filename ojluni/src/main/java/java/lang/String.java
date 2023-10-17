@@ -210,6 +210,10 @@ public final class String
     // Android-changed: Inline the constant on ART.
     static final boolean COMPACT_STRINGS = true;
 
+    // Android-added: Add a canonical empty string used by ART.
+    /** @hide */
+    public static final String EMPTY = "";
+
     @Native static final byte LATIN1 = 0;
     @Native static final byte UTF16  = 1;
 

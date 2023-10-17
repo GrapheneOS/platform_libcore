@@ -398,10 +398,16 @@ ojluni/src/main/java/java/net/package-info.java,jdk8u/jdk8u121-b13,jdk/src/share
 # Some java.nio Buffer and Exception classes are generated from templates, and thus has no direct mapping to an upstream file.
 ojluni/src/main/java/java/nio/Bits.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/Bits.java
 ojluni/src/main/java/java/nio/Buffer.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/Buffer.java
+ojluni/src/main/java/java/nio/ByteBufferAs-X-Buffer.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/ByteBufferAs-X-Buffer.java.template
 ojluni/src/main/java/java/nio/ByteOrder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/ByteOrder.java
 ojluni/src/main/java/java/nio/CharBufferSpliterator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/CharBufferSpliterator.java
+ojluni/src/main/java/java/nio/Direct-X-Buffer-bin.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/Direct-X-Buffer-bin.java.template
+ojluni/src/main/java/java/nio/Direct-X-Buffer.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/Direct-X-Buffer.java.template
+ojluni/src/main/java/java/nio/Heap-X-Buffer.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/Heap-X-Buffer.java.template
 ojluni/src/main/java/java/nio/MappedByteBuffer.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/MappedByteBuffer.java
 ojluni/src/main/java/java/nio/StringCharBuffer.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/StringCharBuffer.java
+ojluni/src/main/java/java/nio/X-Buffer-bin.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/X-Buffer-bin.java.template
+ojluni/src/main/java/java/nio/X-Buffer.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/X-Buffer.java.template
 ojluni/src/main/java/java/nio/channels/AsynchronousByteChannel.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/channels/AsynchronousByteChannel.java
 ojluni/src/main/java/java/nio/channels/AsynchronousChannel.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/channels/AsynchronousChannel.java
 ojluni/src/main/java/java/nio/channels/AsynchronousChannelGroup.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/channels/AsynchronousChannelGroup.java
@@ -2481,6 +2487,7 @@ ojluni/src/test/java/util/zip/TestChecksum.java,jdk17u/jdk-17.0.6-ga,test/jdk/ja
 ojluni/src/test/java/util/zip/TestExtraTime.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/zip/TestExtraTime.java
 ojluni/src/test/java/util/zip/TestLocalTime.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/util/zip/TestLocalTime.java
 ojluni/src/test/java/util/zip/ZipFile/Zip64SizeTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/util/zip/ZipFile/Zip64SizeTest.java
+ojluni/src/tools/make/gensrc/GensrcBuffer.gmk,jdk17u/jdk-17.0.6-ga,make/modules/java.base/gensrc/GensrcBuffer.gmk
 ojluni/src/tools/make/gensrc/GensrcCharsetCoder.gmk,jdk17u/jdk-17.0.6-ga,make/modules/java.base/gensrc/GensrcCharsetCoder.gmk
 ojluni/src/tools/scripts/addNotices.sh,jdk17u/jdk-17.0.6-ga,make/scripts/addNotices.sh
 ojluni/src/tools/scripts/genExceptions.sh,jdk17u/jdk-17.0.6-ga,make/scripts/genExceptions.sh

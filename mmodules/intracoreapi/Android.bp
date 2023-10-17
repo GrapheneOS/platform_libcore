@@ -91,6 +91,7 @@ java_sdk_library {
 java_system_modules {
     name: "art-module-intra-core-api-stubs-bootstrap-system-modules",
     visibility: [
+        "//libcore/toolchainapi",
         "//build/soong/java/core-libraries",
     ],
     libs: [

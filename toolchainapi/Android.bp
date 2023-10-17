@@ -47,9 +47,11 @@ droidstubs {
             removed_api_file: "api/removed.txt",
         },
     },
-    // LambdaMetaFactory depends on CallSite etc. which are part of ART's
-    // Public API surface
-    sdk_version: "current",
+    // LambdaMetaFactory depends on CallSite etc. which are provided by
+    // the system module art-module-intra-core-api-stubs-bootstrap-system-modules
+    // via art.module.intra.core.api.stubs
+    sdk_version: "none",
+    system_modules: "art-module-intra-core-api-stubs-bootstrap-system-modules",
 
     // Use -target 8 so that it works with old JDKs.
     java_version: "1.8",
