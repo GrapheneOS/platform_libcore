@@ -34,8 +34,31 @@ ${ANDROID_BUILD_TOP}/libcore/ojluni/src/tools/scripts/genExceptions.sh \
 
 MAKE_ROOT=${ANDROID_BUILD_TOP}/libcore/ojluni/src/tools/make
 gmake -C ${MAKE_ROOT} all
-mv ${MAKE_ROOT}/out/gensrc/java.base/java/nio/charset/CharsetEncoder.java \
-  ${OJLUNI_JAVA_ROOT}/java/nio/charset/CharsetEncoder.java
-mv ${MAKE_ROOT}/out/gensrc/java.base/java/nio/charset/CharsetDecoder.java \
-  ${OJLUNI_JAVA_ROOT}/java/nio/charset/CharsetDecoder.java
 
+JAVA_NIO_OUT=${MAKE_ROOT}/out/gensrc/java.base/java/nio
+OJLUNI_NIO_ROOT=${OJLUNI_JAVA_ROOT}/java/nio
+cp ${JAVA_NIO_OUT}/charset/CharsetEncoder.java \
+  ${OJLUNI_NIO_ROOT}/charset/CharsetEncoder.java
+cp ${JAVA_NIO_OUT}/charset/CharsetDecoder.java \
+  ${OJLUNI_NIO_ROOT}/charset/CharsetDecoder.java
+
+NIO_CLASSES=(
+  "HeapByteBuffer"
+  "HeapCharBuffer"
+  "HeapDoubleBuffer"
+  "HeapFloatBuffer"
+  "HeapIntBuffer"
+  "HeapLongBuffer"
+  "HeapShortBuffer"
+  "ByteBuffer"
+  "CharBuffer"
+  "DoubleBuffer"
+  "FloatBuffer"
+  "IntBuffer"
+  "LongBuffer"
+  "ShortBuffer"
+)
+
+for clazz in ${NIO_CLASSES[*]}; do
+  cp ${JAVA_NIO_OUT}/${clazz}.java ${OJLUNI_NIO_ROOT}/${clazz}.java
+done

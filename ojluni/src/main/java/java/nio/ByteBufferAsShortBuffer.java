@@ -55,6 +55,13 @@ class ByteBufferAsShortBuffer extends ShortBuffer {       // package-private
         offset = off;
     }
 
+    @Override
+    Object base() {
+        // Android-changed: DirectByteBuffer allocated directly assigns both hb and address field.
+        // return bb.hb;
+        return bb.base();
+    }
+
     public ShortBuffer slice() {
         int pos = this.position();
         int lim = this.limit();

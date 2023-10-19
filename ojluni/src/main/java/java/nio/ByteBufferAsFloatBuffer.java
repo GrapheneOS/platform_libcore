@@ -57,7 +57,9 @@ class ByteBufferAsFloatBuffer extends FloatBuffer {       // package-private
 
     @Override
     Object base() {
-        return bb.hb;
+        // Android-changed: DirectByteBuffer allocated directly assigns both hb and address field.
+        // return bb.hb;
+        return bb.base();
     }
 
     public FloatBuffer slice() {

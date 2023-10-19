@@ -155,6 +155,11 @@ public class DirectByteBuffer extends MappedByteBuffer implements DirectBuffer {
     }
 
     @Override
+    Object base() {
+        return null;
+    }
+
+    @Override
     public final MappedByteBuffer slice() {
         if (!memoryRef.isAccessible) {
         throw new IllegalStateException("buffer is inaccessible");

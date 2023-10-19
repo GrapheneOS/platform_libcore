@@ -60,11 +60,21 @@ public abstract byte get(int index);
 
 @libcore.util.NonNull public java.nio.ByteBuffer get(byte @libcore.util.NonNull [] dst) { throw new RuntimeException("Stub!"); }
 
+@libcore.util.NonNull public java.nio.ByteBuffer get(int index, byte @libcore.util.NonNull [] dst) { throw new RuntimeException("Stub!"); }
+
+@libcore.util.NonNull public java.nio.ByteBuffer get(int index, byte @libcore.util.NonNull [] dst, int offset, int length) { throw new RuntimeException("Stub!"); }
+
 @libcore.util.NonNull public java.nio.ByteBuffer put(@libcore.util.NonNull java.nio.ByteBuffer src) { throw new RuntimeException("Stub!"); }
 
 @libcore.util.NonNull public java.nio.ByteBuffer put(byte @libcore.util.NonNull [] src, int offset, int length) { throw new RuntimeException("Stub!"); }
 
+@libcore.util.NonNull public java.nio.ByteBuffer put(int index, byte @libcore.util.NonNull [] src) { throw new RuntimeException("Stub!"); }
+
+@libcore.util.NonNull public java.nio.ByteBuffer put(int index, byte @libcore.util.NonNull [] src, int offset, int length) { throw new RuntimeException("Stub!"); }
+
 @libcore.util.NonNull public final java.nio.ByteBuffer put(byte @libcore.util.NonNull [] src) { throw new RuntimeException("Stub!"); }
+
+@libcore.util.NonNull public final java.nio.ByteBuffer put(int index, @libcore.util.NonNull java.nio.ByteBuffer src, int offset, int length) { throw new RuntimeException("Stub!"); }
 
 public final boolean hasArray() { throw new RuntimeException("Stub!"); }
 

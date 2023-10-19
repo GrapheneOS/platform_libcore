@@ -84,6 +84,11 @@ class XXX {
      */
     public abstract $type$ get$Type$(int index);
 
+    // BEGIN Android-added: {get,put}*Unchecked() accessors.
+    abstract $type$ get$Type$Unchecked(int index);
+    abstract void getUnchecked(int pos, $type$[] dst, int dstOffset, int length);
+    // END Android-added: {get,put}*Unchecked() accessors.
+
     /**
      * Absolute <i>put</i> method for writing $a$ $type$
      * value&nbsp;&nbsp;<i>(optional operation)</i>.
@@ -108,6 +113,11 @@ class XXX {
      *          If this buffer is read-only
      */
     public abstract ByteBuffer put$Type$(int index, $type$ value);
+
+    // BEGIN Android-added: {get,put}*Unchecked() accessors.
+    abstract void put$Type$Unchecked(int index, $type$ value);
+    abstract void putUnchecked(int pos, $type$[] dst, int srcOffset, int length);
+    // END Android-added: {get,put}*Unchecked() accessors.
 
     /**
      * Creates a view of this byte buffer as $a$ $type$ buffer.

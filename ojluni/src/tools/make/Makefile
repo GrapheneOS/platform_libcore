@@ -35,6 +35,14 @@ MKDIR := mkdir
 RM := rm -f # ignore if the file doesn't exist
 MV := mv
 JAVAC := javac
+TOUCH := touch
+SED := sed
+PRINTF := printf
+# Define NEWLINE. See https://www.gnu.org/software/make/manual/html_node/Multi_002dLine.html
+define NEWLINE
+
+
+endef
 
 # Define BUILD_TOOLS and rules to build BUILD_TOOLS
 # BUILD_TOOLS is defined in the upstream ToolsJdk.gmk
@@ -49,6 +57,9 @@ $(BUILD_TOOLS_JDK): $(SPP_SRC)
 	$(JAVAC) -d $(BUILD_TOOLS_JDK_DIR) $(SPP_SRC)
 
 ExecuteWithLog = $(2) | tee -a $(1)
+LogAll = $(foreach v,                                        \
+      $(.VARIABLES), \
+      $(info $(v) = $($(v))))
 
 MakeTargetDir = mkdir -p $(dir $@)
 
@@ -57,9 +68,16 @@ GENSRC_CHARSETCODER_SRC := $(ANDROID_BUILD_TOP)/libcore/ojluni/src/main/java/jav
 
 include gensrc/GensrcCharsetCoder.gmk
 
+# Define variables only needed for GensrcBuffer.gmk
+GENSRC_BUFFER_SRC := $(ANDROID_BUILD_TOP)/libcore/ojluni/src/main/java/java/nio
+
+include gensrc/GensrcBuffer.gmk
+
 all: \
-  $(GENSRC_CHARSETCODER)
+  $(GENSRC_CHARSETCODER) \
+  $(GENSRC_BUFFER)
 
 clean:
 	rm -rf $(BUILD_TOOLS_JDK_DIR)
 	rm -f $(GENSRC_CHARSETCODER)
+	rm -f $(GENSRC_BUFFER)

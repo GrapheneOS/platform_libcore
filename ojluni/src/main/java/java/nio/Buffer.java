@@ -28,6 +28,8 @@ package java.nio;
 
 import java.util.Spliterator;
 
+import jdk.internal.misc.Unsafe;
+
 /**
  * A container for data of a specific primitive type.
  *
@@ -174,6 +176,9 @@ import java.util.Spliterator;
  */
 
 public abstract class Buffer {
+    // Cached unsafe-access object
+    static final Unsafe UNSAFE = Unsafe.getUnsafe();
+
 
     /**
      * The characteristics of Spliterators that traverse and split elements
@@ -739,6 +744,16 @@ public abstract class Buffer {
             // Android-changed: Add bounds details to exception.
             throw new IndexOutOfBoundsException(
                     "off=" + off + ", len=" + len + " out of bounds (size=" + size + ")");
+    }
+
+    final void checkScope() {
+        // Android-removed: ScopedMemoryAccess isn't used, as Android doesn't support it yet.
+        /*
+        ScopedMemoryAccess.Scope scope = scope();
+        if (scope != null) {
+            scope.checkValidState();
+        }
+        */
     }
 
     // Android-added: getElementSizeShift() method for testing.

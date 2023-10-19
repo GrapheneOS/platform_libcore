@@ -3142,7 +3142,7 @@ public final class URLConnectionTest {
         // Leave out one protocol.  First in the array will be the oldest protocol with
         // Conscrypt, but it shouldn't matter which we omit.
         String[] expectedProtocols =
-            Arrays.copyOfRange(platformProtocols, 1, platformProtocols.length - 1);
+            Arrays.copyOfRange(platformProtocols, 1, platformProtocols.length);
 
         TestSSLContext testSSLContext = createDefaultTestSSLContext();
         SSLSocketFactory serverSocketFactory =
@@ -3166,7 +3166,10 @@ public final class URLConnectionTest {
     }
 
     private String[] platformDefaultTlsProtocols() throws Exception {
-        return SSLContext.getDefault().getSupportedSSLParameters().getProtocols();
+        try (SSLSocket socket = (SSLSocket) SSLContext.getDefault().getSocketFactory()
+            .createSocket()) {
+            return socket.getEnabledProtocols();
+        }
     }
 
     private static void assertSslSocket(TlsFallbackDisabledScsvSSLSocket socket,

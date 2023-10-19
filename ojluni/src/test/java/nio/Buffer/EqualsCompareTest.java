@@ -669,30 +669,29 @@ public class EqualsCompareTest {
                                 }
                             }
                         }
-                        // TODO(b/271236407): fix this
-//                            if (aLength > 0 && !a.isReadOnly()) {
-//                                for (int i = aFrom; i < aTo; i++) {
-//                                    B c = aConstructor.apply(bt, a.capacity());
-//                                    B cs = aLength != s
-//                                            ? bt.slice(c, aFrom, aTo, dupOtherwiseSlice)
-//                                            : c;
-//
-//                                    // Create common prefix with a length of i - aFrom
-//                                    bt.set(c, i, -1);
-//
-//                                    Assert.assertFalse(bt.equals(c, a));
-//
-//                                    int cCa = bt.compare(cs, as);
-//                                    int aCc = bt.compare(as, cs);
-//                                    int v = Integer.signum(cCa) * Integer.signum(aCc);
-//                                    Assert.assertTrue(v == -1);
-//
-//                                    int cMa = bt.mismatch(cs, as);
-//                                    int aMc = bt.mismatch(as, cs);
-//                                    Assert.assertEquals(cMa, aMc);
-//                                    Assert.assertEquals(cMa, i - aFrom);
-//                                }
-//                            }
+                        if (aLength > 0 && !a.isReadOnly()) {
+                            for (int i = aFrom; i < aTo; i++) {
+                                B c = aConstructor.apply(bt, a.capacity());
+                                B cs = aLength != s
+                                        ? bt.slice(c, aFrom, aTo, dupOtherwiseSlice)
+                                        : c;
+
+                                // Create common prefix with a length of i - aFrom
+                                bt.set(c, i, -1);
+
+                                Assert.assertFalse(bt.equals(c, a));
+
+                                int cCa = bt.compare(cs, as);
+                                int aCc = bt.compare(as, cs);
+                                int v = Integer.signum(cCa) * Integer.signum(aCc);
+                                Assert.assertTrue(v == -1);
+
+                                int cMa = bt.mismatch(cs, as);
+                                int aMc = bt.mismatch(as, cs);
+                                Assert.assertEquals(cMa, aMc);
+                                Assert.assertEquals(cMa, i - aFrom);
+                            }
+                        }
                     }
                 }
             }
