@@ -284,11 +284,8 @@ public abstract class DoubleBuffer
     final int offset;
     boolean isReadOnly;
 
-    // Android-added: Added ELEMENT_SIZE_SHIFT for NIOAccess class and framework native code.
-    // This ELEMENT_SIZE_SHIFT line is generated. The value is expected to be inlined by javac
-    // during the build-time. Simple implementation of log2 for the size = 1,2,4,8
-    // log2(1) = 0 = 1/2, log2(2) = 1 = 2 / 2, log2(4) = 2 = 4 / 2, log2(8) = 3
-    private static final int ELEMENT_SIZE_SHIFT = Double.BYTES <= 4 ? (Double.BYTES / 2) : 3;
+    // Android-added: Added ELEMENT_SIZE_SHIFT for NIOAccess class and @UnsupportedAppUsage.
+    private static final int ELEMENT_SIZE_SHIFT = 3;
 
     // Creates a new buffer with the given mark, position, limit, capacity,
     // backing array, and array offset

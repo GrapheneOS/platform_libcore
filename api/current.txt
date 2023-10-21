@@ -13547,6 +13547,7 @@ package java.util {
     ctor public EnumMap(java.util.Map<K,? extends V>);
     method public java.util.EnumMap<K,V> clone();
     method public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
+    method public V put(K, V);
   }
 
   public abstract class EnumSet<E extends java.lang.Enum<E>> extends java.util.AbstractSet<E> implements java.lang.Cloneable java.io.Serializable {
@@ -15422,6 +15423,7 @@ package java.util.concurrent {
   public class DelayQueue<E extends java.util.concurrent.Delayed> extends java.util.AbstractQueue<E> implements java.util.concurrent.BlockingQueue<E> {
     ctor public DelayQueue();
     ctor public DelayQueue(java.util.Collection<? extends E>);
+    method public boolean add(E);
     method public int drainTo(java.util.Collection<? super E>);
     method public int drainTo(java.util.Collection<? super E>, int);
     method public java.util.Iterator<E> iterator();

@@ -62,3 +62,16 @@ NIO_CLASSES=(
 for clazz in ${NIO_CLASSES[*]}; do
   cp ${JAVA_NIO_OUT}/${clazz}.java ${OJLUNI_NIO_ROOT}/${clazz}.java
 done
+
+NIO_AS_CLASSES=(
+  "ByteBufferAsCharBuffer"
+  "ByteBufferAsDoubleBuffer"
+  "ByteBufferAsFloatBuffer"
+  "ByteBufferAsIntBuffer"
+  "ByteBufferAsLongBuffer"
+  "ByteBufferAsShortBuffer"
+)
+
+for clazz in ${NIO_AS_CLASSES[*]}; do
+  cp ${JAVA_NIO_OUT}/${clazz}L.java ${OJLUNI_NIO_ROOT}/${clazz}.java
+done
