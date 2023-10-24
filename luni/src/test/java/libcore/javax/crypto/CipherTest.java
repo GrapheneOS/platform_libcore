@@ -24,6 +24,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import dalvik.annotation.compat.VersionCodes;
 import java.nio.charset.StandardCharsets;
 import java.security.AlgorithmParameters;
 import java.security.InvalidAlgorithmParameterException;
@@ -44,7 +45,9 @@ import javax.crypto.SecretKeyFactory;
 import junit.framework.TestCase;
 import libcore.java.security.StandardNames;
 import libcore.test.annotation.NonCts;
+import libcore.test.annotation.NonMts;
 import libcore.test.reasons.NonCtsReasons;
+import libcore.test.reasons.NonMtsReasons;
 import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -617,6 +620,8 @@ public final class CipherTest {
      * mixing them is not recommended.
      */
     @NonCts(bug = 290912610, reason = NonCtsReasons.NON_BREAKING_BEHAVIOR_FIX)
+    @NonMts(reason = NonMtsReasons.ICU_VERSION_DEPENDENCY,
+            disabledUntilSdk = VersionCodes.UPSIDE_DOWN_CAKE)
     @Test
     public void test_PBKDF2WITHHMACSHA1_SKFactory_and_PBEAESCBC_Cipher_noIV() throws Exception {
         Assume.assumeNotNull(Security.getProvider("BC"));
