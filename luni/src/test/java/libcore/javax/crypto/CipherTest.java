@@ -620,7 +620,7 @@ public final class CipherTest {
      * mixing them is not recommended.
      */
     @NonCts(bug = 290912610, reason = NonCtsReasons.NON_BREAKING_BEHAVIOR_FIX)
-    @NonMts(reason = NonMtsReasons.ICU_VERSION_DEPENDENCY,
+    @NonMts(bug = 306151427, reason = NonMtsReasons.API_LEVEL_GATING,
             disabledUntilSdk = VersionCodes.UPSIDE_DOWN_CAKE)
     @Test
     public void test_PBKDF2WITHHMACSHA1_SKFactory_and_PBEAESCBC_Cipher_noIV() throws Exception {

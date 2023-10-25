@@ -25,8 +25,14 @@ public class NonMtsReasons {
      * If the test depends on a new API from ICU, and version-specific API behavior or locale data,
      * you can use this reason.
      */
-    public static final String ICU_VERSION_DEPENDENCY = "The test depends on a "
-            + "specific ICU version.";
+    public static final String ICU_VERSION_DEPENDENCY = "The API behavior depends on the "
+           + "platform version. The test only passes above a certain API level.";
+
+    /**
+     * If the test only passes above a certain API level.
+     */
+    public static final String API_LEVEL_GATING = "The test only passes above "
+            + "a certain API level.";
 
     /**
      * If the test asserts a new behavior not tested in CTS, OEMs have the right to customize the
