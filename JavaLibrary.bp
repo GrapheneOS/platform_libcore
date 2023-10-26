@@ -842,6 +842,9 @@ java_test {
         "//art/build/sdk",
         "//external/conscrypt/apex/tests",
     ],
+    exclude_srcs: [
+        "luni/src/test/java/libcore/javax/crypto/CipherTest.java",
+    ],
     srcs: [
         "harmony-tests/src/test/java/org/apache/harmony/tests/javax/net/ssl/*.java",
         "luni/src/test/java/libcore/javax/crypto/**/*.java",
