@@ -6436,9 +6436,16 @@ package java.nio {
   }
 
   public abstract class MappedByteBuffer extends java.nio.ByteBuffer {
+    method public final java.nio.Buffer clear();
+    method public final java.nio.Buffer flip();
     method public final java.nio.MappedByteBuffer force();
     method public final boolean isLoaded();
+    method public final java.nio.Buffer limit(int);
     method public final java.nio.MappedByteBuffer load();
+    method public final java.nio.Buffer mark();
+    method public final java.nio.Buffer position(int);
+    method public final java.nio.Buffer reset();
+    method public final java.nio.Buffer rewind();
     method public abstract java.nio.MappedByteBuffer slice(int, int);
   }
 
@@ -8283,32 +8290,13 @@ package java.security {
 
   public abstract class Provider extends java.util.Properties {
     ctor protected Provider(String, double, String);
-    method public Object compute(Object, java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
-    method public Object computeIfAbsent(Object, java.util.function.Function<? super java.lang.Object,?>);
-    method public Object computeIfPresent(Object, java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
-    method public java.util.Enumeration<java.lang.Object> elements();
-    method public java.util.Set<java.util.Map.Entry<java.lang.Object,java.lang.Object>> entrySet();
-    method public void forEach(java.util.function.BiConsumer<? super java.lang.Object,? super java.lang.Object>);
-    method public Object get(Object);
     method public String getInfo();
     method public String getName();
-    method public Object getOrDefault(Object, Object);
     method public java.security.Provider.Service getService(String, String);
     method public java.util.Set<java.security.Provider.Service> getServices();
     method public double getVersion();
-    method public java.util.Set<java.lang.Object> keySet();
-    method public java.util.Enumeration<java.lang.Object> keys();
-    method public Object merge(Object, Object, java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
-    method public Object put(Object, Object);
-    method public void putAll(java.util.Map<?,?>);
-    method public Object putIfAbsent(Object, Object);
     method protected void putService(java.security.Provider.Service);
-    method public Object remove(Object);
     method protected void removeService(java.security.Provider.Service);
-    method public boolean replace(Object, Object, Object);
-    method public Object replace(Object, Object);
-    method public void replaceAll(java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
-    method public java.util.Collection<java.lang.Object> values();
   }
 
   public static class Provider.Service {
@@ -14303,23 +14291,44 @@ package java.util {
 
   public class Properties extends java.util.Hashtable<java.lang.Object,java.lang.Object> {
     ctor public Properties();
+    ctor public Properties(int);
     ctor public Properties(java.util.Properties);
+    method public Object compute(Object, java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
+    method public Object computeIfAbsent(Object, java.util.function.Function<? super java.lang.Object,?>);
+    method public Object computeIfPresent(Object, java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
+    method public java.util.Enumeration<java.lang.Object> elements();
+    method public java.util.Set<java.util.Map.Entry<java.lang.Object,java.lang.Object>> entrySet();
+    method public void forEach(java.util.function.BiConsumer<? super java.lang.Object,? super java.lang.Object>);
+    method public Object get(Object);
+    method public Object getOrDefault(Object, Object);
     method public String getProperty(String);
     method public String getProperty(String, String);
+    method public java.util.Set<java.lang.Object> keySet();
+    method public java.util.Enumeration<java.lang.Object> keys();
     method public void list(java.io.PrintStream);
     method public void list(java.io.PrintWriter);
     method public void load(java.io.Reader) throws java.io.IOException;
     method public void load(java.io.InputStream) throws java.io.IOException;
     method public void loadFromXML(java.io.InputStream) throws java.io.IOException, java.util.InvalidPropertiesFormatException;
+    method public Object merge(Object, Object, java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
     method public java.util.Enumeration<?> propertyNames();
+    method public Object put(Object, Object);
+    method public void putAll(java.util.Map<?,?>);
+    method public Object putIfAbsent(Object, Object);
+    method public Object remove(Object);
+    method public boolean replace(Object, Object, Object);
+    method public Object replace(Object, Object);
+    method public void replaceAll(java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
     method @Deprecated public void save(java.io.OutputStream, String);
     method public Object setProperty(String, String);
     method public void store(java.io.Writer, String) throws java.io.IOException;
     method public void store(java.io.OutputStream, String) throws java.io.IOException;
     method public void storeToXML(java.io.OutputStream, String) throws java.io.IOException;
     method public void storeToXML(java.io.OutputStream, String, String) throws java.io.IOException;
+    method public void storeToXML(java.io.OutputStream, String, java.nio.charset.Charset) throws java.io.IOException;
     method public java.util.Set<java.lang.String> stringPropertyNames();
-    field protected java.util.Properties defaults;
+    method public java.util.Collection<java.lang.Object> values();
+    field protected volatile java.util.Properties defaults;
   }
 
   public final class PropertyPermission extends java.security.BasicPermission {

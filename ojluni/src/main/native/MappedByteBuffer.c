@@ -36,9 +36,10 @@
 #define NATIVE_METHOD(className, functionName, signature) \
 { #functionName, signature, (void*)(Java_java_nio_ ## className ## _ ## functionName) }
 
+// Android-changed: Use jlong for numPages to support 64-bit address.
 JNIEXPORT jboolean JNICALL
 Java_java_nio_MappedByteBuffer_isLoaded0(JNIEnv *env, jobject obj, jlong address,
-                                         jlong len, jint numPages)
+                                         jlong len, jlong numPages)
 {
 // BEGIN Android-added: Fuchsia holds all pages in memory. http://b/119503290
 #if defined(__Fuchsia__)
@@ -106,7 +107,7 @@ Java_java_nio_MappedByteBuffer_force0(JNIEnv *env, jobject obj, jobject fdo,
 
 
 static JNINativeMethod gMethods[] = {
-  NATIVE_METHOD(MappedByteBuffer, isLoaded0, "(JJI)Z"),
+  NATIVE_METHOD(MappedByteBuffer, isLoaded0, "(JJJ)Z"),
   NATIVE_METHOD(MappedByteBuffer, load0, "(JJ)V"),
   NATIVE_METHOD(MappedByteBuffer, force0, "(Ljava/io/FileDescriptor;JJ)V"),
 };

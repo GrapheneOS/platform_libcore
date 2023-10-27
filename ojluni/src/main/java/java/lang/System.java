@@ -34,8 +34,12 @@ import java.io.*;
 import java.nio.channels.Channel;
 import java.nio.channels.spi.SelectorProvider;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Properties;
 import java.util.PropertyPermission;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 import libcore.icu.ICU;
 import libcore.io.Libcore;
 
@@ -938,6 +942,52 @@ public final class System {
         }
 
         @Override
+        public synchronized Object compute(Object key,
+                BiFunction<? super Object, ? super Object, ?> remappingFunction) {
+            if (defaults == null || !defaults.containsKey(key)) {
+                return super.compute(key, remappingFunction);
+            } else {
+                logE("Ignoring attempt to modify property " + key);
+                // No new value is associated with the key, hence null.
+                return null;
+            }
+        }
+
+        @Override
+        public synchronized Object computeIfAbsent(Object key,
+                Function<? super Object, ?> mappingFunction) {
+            if (defaults == null || !defaults.containsKey(key)) {
+                return super.computeIfAbsent(key, mappingFunction);
+            } else {
+                logE("Ignoring attempt to modify property " + key);
+                return defaults.get(key);
+            }
+        }
+
+        @Override
+        public synchronized Object computeIfPresent(Object key,
+                BiFunction<? super Object, ? super Object, ?> remappingFunction) {
+            if (defaults == null || !defaults.containsKey(key)) {
+                return super.computeIfPresent(key, remappingFunction);
+            } else {
+                logE("Ignoring attempt to modify property " + key);
+                return defaults.get(key);
+            }
+        }
+
+        @Override
+        public synchronized Object merge(Object key, Object value,
+                BiFunction<? super Object, ? super Object, ?> remappingFunction) {
+            if (defaults == null || !defaults.containsKey(key)) {
+                return super.merge(key, value, remappingFunction);
+            } else {
+                logE("Ignoring attempt to modify property " + key);
+                // No new value is associated with the key, but
+                return defaults.get(key);
+            }
+        }
+
+        @Override
         public Object put(Object key, Object value) {
             if (defaults.containsKey(key)) {
                 logE("Ignoring attempt to set property \"" + key +
@@ -949,6 +999,22 @@ public final class System {
         }
 
         @Override
+        public synchronized void putAll(Map<?, ?> m) {
+            m.forEach(this::put);
+        }
+
+        @Override
+        public synchronized Object putIfAbsent(Object key, Object value) {
+            if (defaults == null || !defaults.containsKey(key)) {
+                return super.putIfAbsent(key, value);
+            } else {
+                logE("Ignoring attempt to modify property " + key);
+                // Returned values is in sync with put(Object, Object).
+                return defaults.get(key);
+            }
+        }
+
+        @Override
         public Object remove(Object key) {
             if (defaults.containsKey(key)) {
                 logE("Ignoring attempt to remove property \"" + key + "\".");
@@ -956,6 +1022,28 @@ public final class System {
             }
 
             return super.remove(key);
+        }
+
+
+        @Override
+        public synchronized Object replace(Object key, Object value) {
+            if (defaults == null || !defaults.containsKey(key)) {
+                return super.replace(key, value);
+            } else {
+                logE("Ignoring attempt to replace property \"" + key + "\".");
+                return defaults.get(key);
+            }
+        }
+
+        @Override
+        public synchronized boolean replace(Object key, Object oldValue, Object newValue) {
+            if (defaults == null || !defaults.containsKey(key)) {
+                return super.replace(key, oldValue, newValue);
+            } else {
+                logE("Ignoring attempt to replace property \"" + key + "\".");
+                // As it was not changed.
+                return false;
+            }
         }
     }
 

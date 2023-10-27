@@ -22,6 +22,9 @@
 
 package org.apache.harmony.security.tests.java.security;
 
+import libcore.test.annotation.NonCts;
+import libcore.test.reasons.NonCtsReasons;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -221,17 +224,8 @@ public class ProviderTest extends TestCase {
         } catch(NullPointerException expected) {}
     }
 
-    public void testForEachCME() throws Exception {
-        p.put("MessageDigest.SHA-1", "aaa.bbb.ccc.ddd");
-        p.put("MessageDigest.abc", "value 1");
-        try {
-            p.forEach(new java.util.function.BiConsumer<Object, Object>() {
-                    @Override
-                    public void accept(Object k, Object v) {p.put("foo", "bar");}
-                });
-            fail();
-        } catch(ConcurrentModificationException expected) {}
-    }
+    @NonCts(bug = 259671905, reason = NonCtsReasons.NON_BREAKING_BEHAVIOR_FIX)
+    public void testForEachCME() throws Exception {}
 
     /*
      * Class under test for Set keySet()

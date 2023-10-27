@@ -880,7 +880,7 @@ public class PropertiesTest extends junit.framework.TestCase {
 
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();
-            myProps.storeToXML(out, null, null);
+            myProps.storeToXML(out, (String) null, (String) null);
             fail("should throw nullPointerException");
         } catch (NullPointerException ne) {
             // expected

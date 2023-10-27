@@ -396,16 +396,16 @@ ojluni/src/main/java/java/net/UnknownHostException.java,jdk11u/jdk-11.0.13-ga,sr
 ojluni/src/main/java/java/net/UnknownServiceException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/net/UnknownServiceException.java
 ojluni/src/main/java/java/net/package-info.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/net/package-info.java
 # Some java.nio Buffer and Exception classes are generated from templates, and thus has no direct mapping to an upstream file.
-ojluni/src/main/java/java/nio/Bits.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/Bits.java
-ojluni/src/main/java/java/nio/Buffer.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/Buffer.java
+ojluni/src/main/java/java/nio/Bits.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/Bits.java
+ojluni/src/main/java/java/nio/Buffer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/Buffer.java
 ojluni/src/main/java/java/nio/ByteBufferAs-X-Buffer.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/ByteBufferAs-X-Buffer.java.template
-ojluni/src/main/java/java/nio/ByteOrder.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/ByteOrder.java
+ojluni/src/main/java/java/nio/ByteOrder.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/ByteOrder.java
 ojluni/src/main/java/java/nio/CharBufferSpliterator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/CharBufferSpliterator.java
 ojluni/src/main/java/java/nio/Direct-X-Buffer-bin.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/Direct-X-Buffer-bin.java.template
 ojluni/src/main/java/java/nio/Direct-X-Buffer.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/Direct-X-Buffer.java.template
 ojluni/src/main/java/java/nio/Heap-X-Buffer.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/Heap-X-Buffer.java.template
-ojluni/src/main/java/java/nio/MappedByteBuffer.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/MappedByteBuffer.java
-ojluni/src/main/java/java/nio/StringCharBuffer.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/nio/StringCharBuffer.java
+ojluni/src/main/java/java/nio/MappedByteBuffer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/MappedByteBuffer.java
+ojluni/src/main/java/java/nio/StringCharBuffer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/StringCharBuffer.java
 ojluni/src/main/java/java/nio/X-Buffer-bin.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/X-Buffer-bin.java.template
 ojluni/src/main/java/java/nio/X-Buffer.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/X-Buffer.java.template
 ojluni/src/main/java/java/nio/channels/AsynchronousByteChannel.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/channels/AsynchronousByteChannel.java
@@ -973,9 +973,9 @@ ojluni/src/main/java/java/util/OptionalInt.java,jdk17u/jdk-17.0.6-ga,src/java.ba
 ojluni/src/main/java/java/util/OptionalLong.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/OptionalLong.java
 ojluni/src/main/java/java/util/PrimitiveIterator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/PrimitiveIterator.java
 ojluni/src/main/java/java/util/PriorityQueue.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/PriorityQueue.java
-ojluni/src/main/java/java/util/Properties.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/Properties.java
-ojluni/src/main/java/java/util/PropertyPermission.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/PropertyPermission.java
-ojluni/src/main/java/java/util/PropertyResourceBundle.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/PropertyResourceBundle.java
+ojluni/src/main/java/java/util/Properties.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Properties.java
+ojluni/src/main/java/java/util/PropertyPermission.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/PropertyPermission.java
+ojluni/src/main/java/java/util/PropertyResourceBundle.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/PropertyResourceBundle.java
 ojluni/src/main/java/java/util/Queue.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Queue.java
 ojluni/src/main/java/java/util/Random.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/Random.java
 ojluni/src/main/java/java/util/RandomAccess.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/RandomAccess.java
@@ -1768,6 +1768,7 @@ ojluni/src/main/java/sun/security/x509/X509CRLImpl.java,jdk8u/jdk8u121-b13,jdk/s
 ojluni/src/main/java/sun/security/x509/X509CertImpl.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/x509/X509CertImpl.java
 ojluni/src/main/java/sun/security/x509/X509CertInfo.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/x509/X509CertInfo.java
 ojluni/src/main/java/sun/security/x509/X509Key.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/sun/security/x509/X509Key.java
+ojluni/src/main/java/sun/util/PropertyResourceBundleCharset.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/util/PropertyResourceBundleCharset.java
 ojluni/src/main/java/sun/util/ResourceBundleEnumeration.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/util/ResourceBundleEnumeration.java
 ojluni/src/main/java/sun/util/calendar/AbstractCalendar.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/util/calendar/AbstractCalendar.java
 ojluni/src/main/java/sun/util/calendar/BaseCalendar.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/sun/util/calendar/BaseCalendar.java

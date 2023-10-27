@@ -179,6 +179,35 @@ public class SystemTest extends TestCase {
         System.setProperties(p);
 
         assertEquals(userDir, System.getProperty("user.dir"));
+
+        System.getProperties().merge("user.dir", "meh", (s1, s2) -> s2.toString() + s1);
+
+        assertEquals(userDir, System.getProperty("user.dir"));
+
+        System.getProperties().compute("user.dir", (key, oldValue) -> "meh");
+
+        assertEquals(userDir, System.getProperty("user.dir"));
+
+        System.getProperties().computeIfAbsent("user.dir", (key) -> "meh");
+
+        assertEquals(userDir, System.getProperty("user.dir"));
+
+        System.getProperties().putIfAbsent("user.dir", "meh");
+
+        assertEquals(userDir, System.getProperty("user.dir"));
+
+        System.getProperties().replace("user.dir", "meh");
+
+        assertEquals(userDir, System.getProperty("user.dir"));
+
+        // null as Properties.map does not have user.dir
+        System.getProperties().replace("user.dir", null, "meh");
+
+        assertEquals(userDir, System.getProperty("user.dir"));
+
+        System.getProperties().replaceAll((key, value) -> "meh");
+
+        assertEquals(userDir, System.getProperty("user.dir"));
     }
 
     public void testSystemProperties_mutable() {
