@@ -84,7 +84,7 @@ public class VerifyStackTrace {
             "8: VerifyStackTrace.main(VerifyStackTrace.java:182)\n";
             */
             "1: test.java.lang.StackWalker.VerifyStackTrace.lambda$test$1(VerifyStackTrace.java:209)\n" +
-            "2: test.java.lang.StackWalker.VerifyStackTrace$$ExternalSyntheticLambda1.run(Unknown Source:8)\n" +
+            "2: test.java.lang.StackWalker.VerifyStackTrace$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)\n" +
             "3: test.java.lang.StackWalker.VerifyStackTrace$Handle.execute(VerifyStackTrace.java:145)\n" +
             "4: test.java.lang.StackWalker.VerifyStackTrace$Handle.run(VerifyStackTrace.java:158)\n" +
             "5: test.java.lang.StackWalker.VerifyStackTrace.invoke(VerifyStackTrace.java:188)\n" +
@@ -131,7 +131,7 @@ public class VerifyStackTrace {
             "12: VerifyStackTrace.main(VerifyStackTrace.java:185)\n";
             */
             "1: test.java.lang.StackWalker.VerifyStackTrace.lambda$test$1(VerifyStackTrace.java:211)\n" +
-            "2: test.java.lang.StackWalker.VerifyStackTrace$$ExternalSyntheticLambda1.run(Unknown Source:8)\n" +
+            "2: test.java.lang.StackWalker.VerifyStackTrace$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)\n" +
             "3: test.java.lang.StackWalker.VerifyStackTrace$Handle.execute(VerifyStackTrace.java:147)\n" +
             "4: test.java.lang.StackWalker.VerifyStackTrace$Handle.run(VerifyStackTrace.java:160)\n" +
             "5: test.java.lang.StackWalker.VerifyStackTrace.invoke(VerifyStackTrace.java:190)\n" +
@@ -165,7 +165,7 @@ public class VerifyStackTrace {
                 // lambda and OpenJDK classes with a different call chain.
             /*
             "1: VerifyStackTrace.lambda$test$1(VerifyStackTrace.java:213)\n" +
-            "2: VerifyStackTrace$$Lambda$1/0x00000007c0089430.run(Unknown Source)\n" +
+            "2: VerifyStackTrace$$Lambda$1/0x00000007c0089430.run(D8$$SyntheticClass:0)\n" +
             "3: VerifyStackTrace$Handle.execute(VerifyStackTrace.java:149)\n" +
             "4: java.base/java.lang.invoke.LambdaForm$DMH/0x00000007c008a830.invokeVirtual_LL_V(LambdaForm$DMH)\n" +
             "5: java.base/java.lang.invoke.LambdaForm$MH/0x00000007c008a830.invoke_MT(LambdaForm$MH)\n" +
@@ -182,7 +182,7 @@ public class VerifyStackTrace {
             "16: VerifyStackTrace.main(VerifyStackTrace.java:188)\n";
             */
             "1: test.java.lang.StackWalker.VerifyStackTrace.lambda$test$1(VerifyStackTrace.java:213)\n" +
-            "2: test.java.lang.StackWalker.VerifyStackTrace$$ExternalSyntheticLambda1.run(Unknown Source:8)\n" +
+            "2: test.java.lang.StackWalker.VerifyStackTrace$$ExternalSyntheticLambda1.run(D8$$SyntheticClass:0)\n" +
             "3: test.java.lang.StackWalker.VerifyStackTrace$Handle.execute(VerifyStackTrace.java:149)\n" +
             "4: test.java.lang.StackWalker.VerifyStackTrace$Handle.run(VerifyStackTrace.java:162)\n" +
             "5: test.java.lang.StackWalker.VerifyStackTrace.invoke(VerifyStackTrace.java:192)\n" +
