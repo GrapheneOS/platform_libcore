@@ -463,28 +463,8 @@ java_defaults {
 // are also in the public SDK API from API level 26 onwards.
 java_library {
     name: "core-lambda-stubs",
-    visibility: ["//visibility:public"],
-    defaults: ["core_lambda_stubs_defaults"],
-    static_libs: [
-        "core-lambda-stubs.from-source",
-    ],
-    product_variables: {
-        build_from_text_stub: {
-            static_libs: [
-                "core-lambda-stubs.from-text",
-            ],
-            exclude_static_libs: [
-                "core-lambda-stubs.from-source",
-            ],
-        },
-    },
-}
-
-java_library {
-    name: "core-lambda-stubs.from-source",
     visibility: [
-        "//visibility:override",
-        "//visibility:private",
+        "//visibility:public",
     ],
     defaults: ["core_lambda_stubs_defaults"],
     srcs: [
