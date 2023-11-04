@@ -16,10 +16,25 @@
 
 package libcore.java.util;
 
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import libcore.junit.util.compat.CoreCompatChangeRule.DisableCompatChanges;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
 import java.util.Arrays;
 import java.util.Random;
 
-public class RandomTest extends junit.framework.TestCase {
+@RunWith(JUnit4.class)
+public class RandomTest {
+
+    @Test
     public void test_subclassing() throws Exception {
         // http://b/2502231
         // Ensure that Random's constructors call setSeed by emulating the active ingredient
@@ -42,6 +57,7 @@ public class RandomTest extends junit.framework.TestCase {
         assertNotNull(r2.state);
     }
 
+    @Test
     public void test_ints$() {
         final int limit = 128; // We can't test for every element in an infinite stream.
 
@@ -55,6 +71,7 @@ public class RandomTest extends junit.framework.TestCase {
         assertTrue(Arrays.equals(rands, streamRands));
     }
 
+    @Test
     public void test_ints$L() {
         final int size = 32;
 
@@ -74,6 +91,8 @@ public class RandomTest extends junit.framework.TestCase {
         } catch (IllegalArgumentException expected) {}
     }
 
+    @Test
+    @DisableCompatChanges({Random.STREAM_INT_DIFFERS_FROM_NEXT_INT})
     public void test_ints$II() {
         final int limit = 128; // We can't test for every element in an infinite stream.
         final int origin = 128, bound = 256;
@@ -85,7 +104,7 @@ public class RandomTest extends junit.framework.TestCase {
         }
 
         int[] streamRands = new Random(0).ints(origin, bound).limit(limit).toArray();
-        assertTrue(Arrays.equals(rands, streamRands));
+        assertArrayEquals(rands, streamRands);
 
         try {
             new Random(0).ints(100, 0);
@@ -93,6 +112,8 @@ public class RandomTest extends junit.framework.TestCase {
         } catch (IllegalArgumentException expected) {}
     }
 
+    @Test
+    @DisableCompatChanges({Random.STREAM_INT_DIFFERS_FROM_NEXT_INT})
     public void test_ints$LII() {
         final int size = 32;
         final int origin = 128, bound = 256;
@@ -104,7 +125,7 @@ public class RandomTest extends junit.framework.TestCase {
         }
 
         int[] streamRands = new Random(0).ints(size, origin, bound).toArray();
-        assertTrue(Arrays.equals(rands, streamRands));
+        assertArrayEquals(rands, streamRands);
         assertEquals(size, new Random(0).ints(size, origin, bound).count());
 
         try {
@@ -117,6 +138,7 @@ public class RandomTest extends junit.framework.TestCase {
         } catch (IllegalArgumentException expected) {}
     }
 
+    @Test
     public void test_longs$() {
         final int limit = 128; // We can't test for every element in an infinite stream.
 
@@ -130,6 +152,7 @@ public class RandomTest extends junit.framework.TestCase {
         assertTrue(Arrays.equals(rands, streamRands));
     }
 
+    @Test
     public void test_longs$L() {
         final int size = 32;
 
@@ -149,6 +172,7 @@ public class RandomTest extends junit.framework.TestCase {
         } catch (IllegalArgumentException expected) {}
     }
 
+    @Test
     public void test_longs$II() {
         final int limit = 128; // We can't test for every element in an infinite stream.
         final int origin = 128, bound = 256;
@@ -168,6 +192,7 @@ public class RandomTest extends junit.framework.TestCase {
         } catch (IllegalArgumentException expected) {}
     }
 
+    @Test
     public void test_longs$LII() {
         final int size = 32;
         final int origin = 128, bound = 256;
@@ -192,6 +217,7 @@ public class RandomTest extends junit.framework.TestCase {
         } catch (IllegalArgumentException expected) {}
     }
 
+    @Test
     public void test_doubles$() {
         final int limit = 128; // We can't test for every element in an infinite stream.
 
@@ -205,6 +231,7 @@ public class RandomTest extends junit.framework.TestCase {
         assertTrue(Arrays.equals(rands, streamRands));
     }
 
+    @Test
     public void test_doubles$L() {
         final int size = 32;
 
@@ -224,6 +251,7 @@ public class RandomTest extends junit.framework.TestCase {
         } catch (IllegalArgumentException expected) {}
     }
 
+    @Test
     public void test_doubles$II() {
         final int limit = 128; // We can't test for every element in an infinite stream.
         final int origin = 128, bound = 256;
@@ -247,6 +275,7 @@ public class RandomTest extends junit.framework.TestCase {
         } catch (IllegalArgumentException expected) {}
     }
 
+    @Test
     public void test_doubles$LII() {
         final int size = 32;
         final int origin = 128, bound = 256;

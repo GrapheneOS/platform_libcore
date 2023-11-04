@@ -14350,29 +14350,10 @@ package java.util {
     method public E remove();
   }
 
-  public class Random implements java.io.Serializable {
+  public class Random implements java.util.random.RandomGenerator java.io.Serializable {
     ctor public Random();
     ctor public Random(long);
-    method public java.util.stream.DoubleStream doubles(long);
-    method public java.util.stream.DoubleStream doubles();
-    method public java.util.stream.DoubleStream doubles(long, double, double);
-    method public java.util.stream.DoubleStream doubles(double, double);
-    method public java.util.stream.IntStream ints(long);
-    method public java.util.stream.IntStream ints();
-    method public java.util.stream.IntStream ints(long, int, int);
-    method public java.util.stream.IntStream ints(int, int);
-    method public java.util.stream.LongStream longs(long);
-    method public java.util.stream.LongStream longs();
-    method public java.util.stream.LongStream longs(long, long, long);
-    method public java.util.stream.LongStream longs(long, long);
     method protected int next(int);
-    method public boolean nextBoolean();
-    method public void nextBytes(byte[]);
-    method public double nextDouble();
-    method public float nextFloat();
-    method public double nextGaussian();
-    method public int nextInt();
-    method public int nextInt(int);
     method public long nextLong();
     method public void setSeed(long);
   }
@@ -14678,33 +14659,15 @@ package java.util {
     method public java.util.Spliterator<T> trySplit();
   }
 
-  public final class SplittableRandom {
+  public final class SplittableRandom implements java.util.random.RandomGenerator java.util.random.RandomGenerator.SplittableGenerator {
     ctor public SplittableRandom(long);
     ctor public SplittableRandom();
-    method public java.util.stream.DoubleStream doubles(long);
-    method public java.util.stream.DoubleStream doubles();
-    method public java.util.stream.DoubleStream doubles(long, double, double);
-    method public java.util.stream.DoubleStream doubles(double, double);
-    method public java.util.stream.IntStream ints(long);
-    method public java.util.stream.IntStream ints();
-    method public java.util.stream.IntStream ints(long, int, int);
-    method public java.util.stream.IntStream ints(int, int);
-    method public java.util.stream.LongStream longs(long);
-    method public java.util.stream.LongStream longs();
-    method public java.util.stream.LongStream longs(long, long, long);
-    method public java.util.stream.LongStream longs(long, long);
-    method public boolean nextBoolean();
-    method public void nextBytes(byte[]);
-    method public double nextDouble();
-    method public double nextDouble(double);
-    method public double nextDouble(double, double);
-    method public int nextInt();
-    method public int nextInt(int);
-    method public int nextInt(int, int);
     method public long nextLong();
-    method public long nextLong(long);
-    method public long nextLong(long, long);
     method public java.util.SplittableRandom split();
+    method public java.util.SplittableRandom split(java.util.random.RandomGenerator.SplittableGenerator);
+    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long);
+    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(java.util.random.RandomGenerator.SplittableGenerator);
+    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long, java.util.random.RandomGenerator.SplittableGenerator);
   }
 
   public class Stack<E> extends java.util.Vector<E> {
@@ -15925,11 +15888,6 @@ package java.util.concurrent {
 
   public class ThreadLocalRandom extends java.util.Random {
     method public static java.util.concurrent.ThreadLocalRandom current();
-    method public double nextDouble(double);
-    method public double nextDouble(double, double);
-    method public int nextInt(int, int);
-    method public long nextLong(long);
-    method public long nextLong(long, long);
   }
 
   public class ThreadPoolExecutor extends java.util.concurrent.AbstractExecutorService {
@@ -17523,6 +17481,118 @@ package java.util.prefs {
   public interface PreferencesFactory {
     method public java.util.prefs.Preferences systemRoot();
     method public java.util.prefs.Preferences userRoot();
+  }
+
+}
+
+package java.util.random {
+
+  public interface RandomGenerator {
+    method public default java.util.stream.DoubleStream doubles();
+    method public default java.util.stream.DoubleStream doubles(double, double);
+    method public default java.util.stream.DoubleStream doubles(long);
+    method public default java.util.stream.DoubleStream doubles(long, double, double);
+    method public static java.util.random.RandomGenerator getDefault();
+    method public default java.util.stream.IntStream ints();
+    method public default java.util.stream.IntStream ints(int, int);
+    method public default java.util.stream.IntStream ints(long);
+    method public default java.util.stream.IntStream ints(long, int, int);
+    method public default boolean isDeprecated();
+    method public default java.util.stream.LongStream longs();
+    method public default java.util.stream.LongStream longs(long, long);
+    method public default java.util.stream.LongStream longs(long);
+    method public default java.util.stream.LongStream longs(long, long, long);
+    method public default boolean nextBoolean();
+    method public default void nextBytes(byte[]);
+    method public default double nextDouble();
+    method public default double nextDouble(double);
+    method public default double nextDouble(double, double);
+    method public default double nextExponential();
+    method public default float nextFloat();
+    method public default float nextFloat(float);
+    method public default float nextFloat(float, float);
+    method public default double nextGaussian();
+    method public default double nextGaussian(double, double);
+    method public default int nextInt();
+    method public default int nextInt(int);
+    method public default int nextInt(int, int);
+    method public long nextLong();
+    method public default long nextLong(long);
+    method public default long nextLong(long, long);
+    method public static java.util.random.RandomGenerator of(String);
+  }
+
+  public static interface RandomGenerator.ArbitrarilyJumpableGenerator extends java.util.random.RandomGenerator.LeapableGenerator {
+    method public java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator copy();
+    method public default java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator copyAndJump(double);
+    method public void jump(double);
+    method public default void jump();
+    method public void jumpPowerOfTwo(int);
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator> jumps(double);
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator> jumps(long, double);
+    method public default void leap();
+    method public static java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator of(String);
+  }
+
+  public static interface RandomGenerator.JumpableGenerator extends java.util.random.RandomGenerator.StreamableGenerator {
+    method public java.util.random.RandomGenerator.JumpableGenerator copy();
+    method public default java.util.random.RandomGenerator copyAndJump();
+    method public void jump();
+    method public double jumpDistance();
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator> jumps();
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator> jumps(long);
+    method public static java.util.random.RandomGenerator.JumpableGenerator of(String);
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator> rngs();
+  }
+
+  public static interface RandomGenerator.LeapableGenerator extends java.util.random.RandomGenerator.JumpableGenerator {
+    method public java.util.random.RandomGenerator.LeapableGenerator copy();
+    method public default java.util.random.RandomGenerator.JumpableGenerator copyAndLeap();
+    method public void leap();
+    method public double leapDistance();
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator.JumpableGenerator> leaps();
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator.JumpableGenerator> leaps(long);
+    method public static java.util.random.RandomGenerator.LeapableGenerator of(String);
+  }
+
+  public static interface RandomGenerator.SplittableGenerator extends java.util.random.RandomGenerator.StreamableGenerator {
+    method public static java.util.random.RandomGenerator.SplittableGenerator of(String);
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator> rngs();
+    method public java.util.random.RandomGenerator.SplittableGenerator split();
+    method public java.util.random.RandomGenerator.SplittableGenerator split(java.util.random.RandomGenerator.SplittableGenerator);
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits();
+    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long);
+    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(java.util.random.RandomGenerator.SplittableGenerator);
+    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long, java.util.random.RandomGenerator.SplittableGenerator);
+  }
+
+  public static interface RandomGenerator.StreamableGenerator extends java.util.random.RandomGenerator {
+    method public static java.util.random.RandomGenerator.StreamableGenerator of(String);
+    method public java.util.stream.Stream<java.util.random.RandomGenerator> rngs();
+    method public default java.util.stream.Stream<java.util.random.RandomGenerator> rngs(long);
+  }
+
+  public final class RandomGeneratorFactory<T extends java.util.random.RandomGenerator> {
+    method public static java.util.stream.Stream<java.util.random.RandomGeneratorFactory<java.util.random.RandomGenerator>> all();
+    method public T create();
+    method public T create(long);
+    method public T create(byte[]);
+    method public int equidistribution();
+    method public static java.util.random.RandomGeneratorFactory<java.util.random.RandomGenerator> getDefault();
+    method public String group();
+    method public boolean isArbitrarilyJumpable();
+    method public boolean isDeprecated();
+    method public boolean isHardware();
+    method public boolean isJumpable();
+    method public boolean isLeapable();
+    method public boolean isSplittable();
+    method public boolean isStatistical();
+    method public boolean isStochastic();
+    method public boolean isStreamable();
+    method public String name();
+    method public static <T extends java.util.random.RandomGenerator> java.util.random.RandomGeneratorFactory<T> of(String);
+    method public java.math.BigInteger period();
+    method public int stateBits();
   }
 
 }
