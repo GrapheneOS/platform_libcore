@@ -42,7 +42,11 @@ class ByteBufferAsCharBuffer                  // package-private
 
 
     // Android-added: Added offset as address can be zero on Android.
-    protected final int offset;
+    /**
+      * The offset from the Bytebuffer at the position 0 (in addition to bb.offset) in the
+      * number of bytes.
+      */
+    protected final int byteOffset;
     // Android-added: Merge with little- and big-endian classes.
     private final ByteOrder order;
 
@@ -72,7 +76,7 @@ class ByteBufferAsCharBuffer                  // package-private
         }
         this.bb.order(order);
         this.order = order;
-        offset = off;
+        byteOffset = off;
 
 
 
@@ -85,6 +89,7 @@ class ByteBufferAsCharBuffer                  // package-private
         return bb.base();
     }
 
+    @Override
     public CharBuffer slice() {
         int pos = this.position();
         int lim = this.limit();
@@ -92,7 +97,7 @@ class ByteBufferAsCharBuffer                  // package-private
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
         // long addr = byteOffset(pos);
         // return new ByteBufferAsCharBuffer(bb, -1, 0, rem, rem, addr, order);
-        int off = (pos << 1) + offset;
+        int off = (pos << 1) + byteOffset;
         return new ByteBufferAsCharBuffer(bb, -1, 0, rem, rem, off, order);
     }
 
@@ -105,9 +110,10 @@ class ByteBufferAsCharBuffer                  // package-private
                                                     length,
                                                     length,
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public CharBuffer duplicate() {
         return new ByteBufferAsCharBuffer(bb,
                                                     this.markValue(),
@@ -115,9 +121,10 @@ class ByteBufferAsCharBuffer                  // package-private
                                                     this.limit(),
                                                     this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public CharBuffer asReadOnlyBuffer() {
 
         return new ByteBufferAsCharBuffer(bb.asReadOnlyBuffer(),
@@ -126,7 +133,7 @@ class ByteBufferAsCharBuffer                  // package-private
                                                  this.limit(),
                                                  this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                 offset, order);
+                                                 byteOffset, order);
 
 
 
@@ -138,7 +145,7 @@ class ByteBufferAsCharBuffer                  // package-private
         // Android-changed: address can be zero on Android.
         // int off = (int) (address - bb.address);
         // return (i << 1) + off;
-        return (i << 1) + offset;
+        return (i << 1) + byteOffset;
     }
 
     // Android-removed: Removed unused byteOffset(long).
@@ -148,6 +155,7 @@ class ByteBufferAsCharBuffer                  // package-private
     }
     */
 
+    @Override
     public char get() {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // char x = SCOPED_MEMORY_ACCESS.getCharUnaligned(scope(), bb.hb, byteOffset(nextGetIndex()),
@@ -156,6 +164,7 @@ class ByteBufferAsCharBuffer                  // package-private
         return get(nextGetIndex());
     }
 
+    @Override
     public char get(int i) {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // char x = SCOPED_MEMORY_ACCESS.getCharUnaligned(scope(), bb.hb, byteOffset(checkIndex(i)),
@@ -166,17 +175,18 @@ class ByteBufferAsCharBuffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public CharBuffer get(char[] dst, int offset, int length) {
-        checkBounds(offset, length, dst.length);
+    public CharBuffer get(char[] dst, int off, int length) {
+        checkBounds(off, length, dst.length);
         if (length > remaining())
             throw new BufferUnderflowException();
-        bb.getUnchecked(ix(position), dst, offset, length);
+        bb.getUnchecked(ix(position), dst, off, length);
         position += length;
         return this;
     }
     // END Android-added: Improve the efficiency of put(type$[], int, int).
 
 
+    @Override
     char getUnchecked(int i) {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // char x = SCOPED_MEMORY_ACCESS.getCharUnaligned(null, bb.hb, byteOffset(i),
@@ -188,6 +198,7 @@ class ByteBufferAsCharBuffer                  // package-private
 
 
 
+    @Override
     public CharBuffer put(char x) {
 
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
@@ -201,6 +212,7 @@ class ByteBufferAsCharBuffer                  // package-private
 
     }
 
+    @Override
     public CharBuffer put(int i, char x) {
 
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -218,16 +230,17 @@ class ByteBufferAsCharBuffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public CharBuffer put(char[] src, int offset, int length) {
-        checkBounds(offset, length, src.length);
+    public CharBuffer put(char[] src, int off, int length) {
+        checkBounds(off, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
-        bb.putUnchecked(ix(position), src, offset, length);
+        bb.putUnchecked(ix(position), src, off, length);
         position += length;
         return this;
     }
     // END Android-added: Improve the efficiency of put(type$[], int, int).
 
+    @Override
     public CharBuffer compact() {
 
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -258,16 +271,19 @@ class ByteBufferAsCharBuffer                  // package-private
 
     }
 
+    @Override
     public boolean isDirect() {
         return bb.isDirect();
     }
 
+    @Override
     public boolean isReadOnly() {
         return isReadOnly;
     }
 
 
 
+    @Override
     public String toString(int start, int end) {
         Objects.checkFromToIndex(start, end, limit());
         try {
@@ -287,6 +303,7 @@ class ByteBufferAsCharBuffer                  // package-private
 
     // --- Methods to support CharSequence ---
 
+    @Override
     public CharBuffer subSequence(int start, int end) {
         int pos = position();
         int lim = limit();
@@ -300,17 +317,19 @@ class ByteBufferAsCharBuffer                  // package-private
                                                   pos + end,
                                                   capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                  offset, order);
+                                                  byteOffset, order);
     }
 
 
 
 
+    @Override
     public ByteOrder order() {
         return order;
     }
 
 
+    @Override
     ByteOrder charRegionOrder() {
         return order();
     }

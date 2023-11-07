@@ -42,7 +42,11 @@ class ByteBufferAsIntBuffer                  // package-private
 
 
     // Android-added: Added offset as address can be zero on Android.
-    protected final int offset;
+    /**
+      * The offset from the Bytebuffer at the position 0 (in addition to bb.offset) in the
+      * number of bytes.
+      */
+    protected final int byteOffset;
     // Android-added: Merge with little- and big-endian classes.
     private final ByteOrder order;
 
@@ -72,7 +76,7 @@ class ByteBufferAsIntBuffer                  // package-private
         }
         this.bb.order(order);
         this.order = order;
-        offset = off;
+        byteOffset = off;
 
 
 
@@ -85,6 +89,7 @@ class ByteBufferAsIntBuffer                  // package-private
         return bb.base();
     }
 
+    @Override
     public IntBuffer slice() {
         int pos = this.position();
         int lim = this.limit();
@@ -92,7 +97,7 @@ class ByteBufferAsIntBuffer                  // package-private
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
         // long addr = byteOffset(pos);
         // return new ByteBufferAsIntBuffer(bb, -1, 0, rem, rem, addr, order);
-        int off = (pos << 2) + offset;
+        int off = (pos << 2) + byteOffset;
         return new ByteBufferAsIntBuffer(bb, -1, 0, rem, rem, off, order);
     }
 
@@ -105,9 +110,10 @@ class ByteBufferAsIntBuffer                  // package-private
                                                     length,
                                                     length,
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public IntBuffer duplicate() {
         return new ByteBufferAsIntBuffer(bb,
                                                     this.markValue(),
@@ -115,9 +121,10 @@ class ByteBufferAsIntBuffer                  // package-private
                                                     this.limit(),
                                                     this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public IntBuffer asReadOnlyBuffer() {
 
         return new ByteBufferAsIntBuffer(bb.asReadOnlyBuffer(),
@@ -126,7 +133,7 @@ class ByteBufferAsIntBuffer                  // package-private
                                                  this.limit(),
                                                  this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                 offset, order);
+                                                 byteOffset, order);
 
 
 
@@ -138,7 +145,7 @@ class ByteBufferAsIntBuffer                  // package-private
         // Android-changed: address can be zero on Android.
         // int off = (int) (address - bb.address);
         // return (i << 2) + off;
-        return (i << 2) + offset;
+        return (i << 2) + byteOffset;
     }
 
     // Android-removed: Removed unused byteOffset(long).
@@ -148,6 +155,7 @@ class ByteBufferAsIntBuffer                  // package-private
     }
     */
 
+    @Override
     public int get() {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // int x = SCOPED_MEMORY_ACCESS.getIntUnaligned(scope(), bb.hb, byteOffset(nextGetIndex()),
@@ -156,6 +164,7 @@ class ByteBufferAsIntBuffer                  // package-private
         return get(nextGetIndex());
     }
 
+    @Override
     public int get(int i) {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // int x = SCOPED_MEMORY_ACCESS.getIntUnaligned(scope(), bb.hb, byteOffset(checkIndex(i)),
@@ -166,11 +175,11 @@ class ByteBufferAsIntBuffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public IntBuffer get(int[] dst, int offset, int length) {
-        checkBounds(offset, length, dst.length);
+    public IntBuffer get(int[] dst, int off, int length) {
+        checkBounds(off, length, dst.length);
         if (length > remaining())
             throw new BufferUnderflowException();
-        bb.getUnchecked(ix(position), dst, offset, length);
+        bb.getUnchecked(ix(position), dst, off, length);
         position += length;
         return this;
     }
@@ -188,6 +197,8 @@ class ByteBufferAsIntBuffer                  // package-private
 
 
 
+
+    @Override
     public IntBuffer put(int x) {
 
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
@@ -201,6 +212,7 @@ class ByteBufferAsIntBuffer                  // package-private
 
     }
 
+    @Override
     public IntBuffer put(int i, int x) {
 
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -218,16 +230,17 @@ class ByteBufferAsIntBuffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public IntBuffer put(int[] src, int offset, int length) {
-        checkBounds(offset, length, src.length);
+    public IntBuffer put(int[] src, int off, int length) {
+        checkBounds(off, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
-        bb.putUnchecked(ix(position), src, offset, length);
+        bb.putUnchecked(ix(position), src, off, length);
         position += length;
         return this;
     }
     // END Android-added: Improve the efficiency of put(type$[], int, int).
 
+    @Override
     public IntBuffer compact() {
 
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -258,10 +271,12 @@ class ByteBufferAsIntBuffer                  // package-private
 
     }
 
+    @Override
     public boolean isDirect() {
         return bb.isDirect();
     }
 
+    @Override
     public boolean isReadOnly() {
         return isReadOnly;
     }
@@ -306,9 +321,13 @@ class ByteBufferAsIntBuffer                  // package-private
 
 
 
+
+
+    @Override
     public ByteOrder order() {
         return order;
     }
+
 
 
 

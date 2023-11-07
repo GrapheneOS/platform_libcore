@@ -42,7 +42,11 @@ class ByteBufferAs$Type$Buffer                  // package-private
 
 #end[rw]
     // Android-added: Added offset as address can be zero on Android.
-    protected final int offset;
+    /**
+      * The offset from the Bytebuffer at the position 0 (in addition to bb.offset) in the
+      * number of bytes.
+      */
+    protected final int byteOffset;
     // Android-added: Merge with little- and big-endian classes.
     private final ByteOrder order;
 
@@ -72,7 +76,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
         }
         this.bb.order(order);
         this.order = order;
-        offset = off;
+        byteOffset = off;
 #else[rw]
         super(bb, mark, pos, lim, cap, addr, segment);
 #end[rw]
@@ -85,6 +89,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
         return bb.base();
     }
 
+    @Override
     public $Type$Buffer slice() {
         int pos = this.position();
         int lim = this.limit();
@@ -92,7 +97,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
         // long addr = byteOffset(pos);
         // return new ByteBufferAs$Type$Buffer(bb, -1, 0, rem, rem, addr, order);
-        int off = (pos << $LG_BYTES_PER_VALUE$) + offset;
+        int off = (pos << $LG_BYTES_PER_VALUE$) + byteOffset;
         return new ByteBufferAs$Type$Buffer(bb, -1, 0, rem, rem, off, order);
     }
 
@@ -105,9 +110,10 @@ class ByteBufferAs$Type$Buffer                  // package-private
                                                     length,
                                                     length,
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public $Type$Buffer duplicate() {
         return new ByteBufferAs$Type$Buffer(bb,
                                                     this.markValue(),
@@ -115,9 +121,10 @@ class ByteBufferAs$Type$Buffer                  // package-private
                                                     this.limit(),
                                                     this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public $Type$Buffer asReadOnlyBuffer() {
 #if[rw]
         return new ByteBufferAs$Type$Buffer(bb.asReadOnlyBuffer(),
@@ -126,7 +133,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
                                                  this.limit(),
                                                  this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                 offset, order);
+                                                 byteOffset, order);
 #else[rw]
         return duplicate();
 #end[rw]
@@ -138,7 +145,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
         // Android-changed: address can be zero on Android.
         // int off = (int) (address - bb.address);
         // return (i << $LG_BYTES_PER_VALUE$) + off;
-        return (i << $LG_BYTES_PER_VALUE$) + offset;
+        return (i << $LG_BYTES_PER_VALUE$) + byteOffset;
     }
 
     // Android-removed: Removed unused byteOffset(long).
@@ -148,6 +155,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
     }
     */
 
+    @Override
     public $type$ get() {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // $memtype$ x = SCOPED_MEMORY_ACCESS.get$Memtype$Unaligned(scope(), bb.hb, byteOffset(nextGetIndex()),
@@ -156,6 +164,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
         return get(nextGetIndex());
     }
 
+    @Override
     public $type$ get(int i) {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // $memtype$ x = SCOPED_MEMORY_ACCESS.get$Memtype$Unaligned(scope(), bb.hb, byteOffset(checkIndex(i)),
@@ -166,17 +175,18 @@ class ByteBufferAs$Type$Buffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public $Type$Buffer get($type$[] dst, int offset, int length) {
-        checkBounds(offset, length, dst.length);
+    public $Type$Buffer get($type$[] dst, int off, int length) {
+        checkBounds(off, length, dst.length);
         if (length > remaining())
             throw new BufferUnderflowException();
-        bb.getUnchecked(ix(position), dst, offset, length);
+        bb.getUnchecked(ix(position), dst, off, length);
         position += length;
         return this;
     }
     // END Android-added: Improve the efficiency of put(type$[], int, int).
 
 #if[streamableType]
+    @Override
     $type$ getUnchecked(int i) {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // $memtype$ x = SCOPED_MEMORY_ACCESS.get$Memtype$Unaligned(null, bb.hb, byteOffset(i),
@@ -188,6 +198,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
 
 #end[rw]
 
+    @Override
     public $Type$Buffer put($type$ x) {
 #if[rw]
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
@@ -201,6 +212,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
 #end[rw]
     }
 
+    @Override
     public $Type$Buffer put(int i, $type$ x) {
 #if[rw]
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -218,16 +230,17 @@ class ByteBufferAs$Type$Buffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public $Type$Buffer put($type$[] src, int offset, int length) {
-        checkBounds(offset, length, src.length);
+    public $Type$Buffer put($type$[] src, int off, int length) {
+        checkBounds(off, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
-        bb.putUnchecked(ix(position), src, offset, length);
+        bb.putUnchecked(ix(position), src, off, length);
         position += length;
         return this;
     }
     // END Android-added: Improve the efficiency of put(type$[], int, int).
 
+    @Override
     public $Type$Buffer compact() {
 #if[rw]
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -258,16 +271,19 @@ class ByteBufferAs$Type$Buffer                  // package-private
 #end[rw]
     }
 
+    @Override
     public boolean isDirect() {
         return bb.isDirect();
     }
 
+    @Override
     public boolean isReadOnly() {
         return isReadOnly;
     }
 
 #if[char]
 
+    @Override
     public String toString(int start, int end) {
         Objects.checkFromToIndex(start, end, limit());
         try {
@@ -287,6 +303,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
 
     // --- Methods to support CharSequence ---
 
+    @Override
     public CharBuffer subSequence(int start, int end) {
         int pos = position();
         int lim = limit();
@@ -300,17 +317,19 @@ class ByteBufferAs$Type$Buffer                  // package-private
                                                   pos + end,
                                                   capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                  offset, order);
+                                                  byteOffset, order);
     }
 
 #end[char]
 
 
+    @Override
     public ByteOrder order() {
         return order;
     }
 
 #if[char]
+    @Override
     ByteOrder charRegionOrder() {
         return order();
     }

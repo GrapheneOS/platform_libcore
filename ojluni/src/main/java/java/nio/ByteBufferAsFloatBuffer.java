@@ -42,7 +42,11 @@ class ByteBufferAsFloatBuffer                  // package-private
 
 
     // Android-added: Added offset as address can be zero on Android.
-    protected final int offset;
+    /**
+      * The offset from the Bytebuffer at the position 0 (in addition to bb.offset) in the
+      * number of bytes.
+      */
+    protected final int byteOffset;
     // Android-added: Merge with little- and big-endian classes.
     private final ByteOrder order;
 
@@ -72,7 +76,7 @@ class ByteBufferAsFloatBuffer                  // package-private
         }
         this.bb.order(order);
         this.order = order;
-        offset = off;
+        byteOffset = off;
 
 
 
@@ -85,6 +89,7 @@ class ByteBufferAsFloatBuffer                  // package-private
         return bb.base();
     }
 
+    @Override
     public FloatBuffer slice() {
         int pos = this.position();
         int lim = this.limit();
@@ -92,7 +97,7 @@ class ByteBufferAsFloatBuffer                  // package-private
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
         // long addr = byteOffset(pos);
         // return new ByteBufferAsFloatBuffer(bb, -1, 0, rem, rem, addr, order);
-        int off = (pos << 2) + offset;
+        int off = (pos << 2) + byteOffset;
         return new ByteBufferAsFloatBuffer(bb, -1, 0, rem, rem, off, order);
     }
 
@@ -105,9 +110,10 @@ class ByteBufferAsFloatBuffer                  // package-private
                                                     length,
                                                     length,
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public FloatBuffer duplicate() {
         return new ByteBufferAsFloatBuffer(bb,
                                                     this.markValue(),
@@ -115,9 +121,10 @@ class ByteBufferAsFloatBuffer                  // package-private
                                                     this.limit(),
                                                     this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public FloatBuffer asReadOnlyBuffer() {
 
         return new ByteBufferAsFloatBuffer(bb.asReadOnlyBuffer(),
@@ -126,7 +133,7 @@ class ByteBufferAsFloatBuffer                  // package-private
                                                  this.limit(),
                                                  this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                 offset, order);
+                                                 byteOffset, order);
 
 
 
@@ -138,7 +145,7 @@ class ByteBufferAsFloatBuffer                  // package-private
         // Android-changed: address can be zero on Android.
         // int off = (int) (address - bb.address);
         // return (i << 2) + off;
-        return (i << 2) + offset;
+        return (i << 2) + byteOffset;
     }
 
     // Android-removed: Removed unused byteOffset(long).
@@ -148,6 +155,7 @@ class ByteBufferAsFloatBuffer                  // package-private
     }
     */
 
+    @Override
     public float get() {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // int x = SCOPED_MEMORY_ACCESS.getIntUnaligned(scope(), bb.hb, byteOffset(nextGetIndex()),
@@ -156,6 +164,7 @@ class ByteBufferAsFloatBuffer                  // package-private
         return get(nextGetIndex());
     }
 
+    @Override
     public float get(int i) {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // int x = SCOPED_MEMORY_ACCESS.getIntUnaligned(scope(), bb.hb, byteOffset(checkIndex(i)),
@@ -166,11 +175,11 @@ class ByteBufferAsFloatBuffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public FloatBuffer get(float[] dst, int offset, int length) {
-        checkBounds(offset, length, dst.length);
+    public FloatBuffer get(float[] dst, int off, int length) {
+        checkBounds(off, length, dst.length);
         if (length > remaining())
             throw new BufferUnderflowException();
-        bb.getUnchecked(ix(position), dst, offset, length);
+        bb.getUnchecked(ix(position), dst, off, length);
         position += length;
         return this;
     }
@@ -188,6 +197,8 @@ class ByteBufferAsFloatBuffer                  // package-private
 
 
 
+
+    @Override
     public FloatBuffer put(float x) {
 
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
@@ -201,6 +212,7 @@ class ByteBufferAsFloatBuffer                  // package-private
 
     }
 
+    @Override
     public FloatBuffer put(int i, float x) {
 
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -218,16 +230,17 @@ class ByteBufferAsFloatBuffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public FloatBuffer put(float[] src, int offset, int length) {
-        checkBounds(offset, length, src.length);
+    public FloatBuffer put(float[] src, int off, int length) {
+        checkBounds(off, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
-        bb.putUnchecked(ix(position), src, offset, length);
+        bb.putUnchecked(ix(position), src, off, length);
         position += length;
         return this;
     }
     // END Android-added: Improve the efficiency of put(type$[], int, int).
 
+    @Override
     public FloatBuffer compact() {
 
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -258,10 +271,12 @@ class ByteBufferAsFloatBuffer                  // package-private
 
     }
 
+    @Override
     public boolean isDirect() {
         return bb.isDirect();
     }
 
+    @Override
     public boolean isReadOnly() {
         return isReadOnly;
     }
@@ -306,9 +321,13 @@ class ByteBufferAsFloatBuffer                  // package-private
 
 
 
+
+
+    @Override
     public ByteOrder order() {
         return order;
     }
+
 
 
 

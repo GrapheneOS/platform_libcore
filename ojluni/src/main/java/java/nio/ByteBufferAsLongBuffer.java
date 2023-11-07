@@ -42,7 +42,11 @@ class ByteBufferAsLongBuffer                  // package-private
 
 
     // Android-added: Added offset as address can be zero on Android.
-    protected final int offset;
+    /**
+      * The offset from the Bytebuffer at the position 0 (in addition to bb.offset) in the
+      * number of bytes.
+      */
+    protected final int byteOffset;
     // Android-added: Merge with little- and big-endian classes.
     private final ByteOrder order;
 
@@ -72,7 +76,7 @@ class ByteBufferAsLongBuffer                  // package-private
         }
         this.bb.order(order);
         this.order = order;
-        offset = off;
+        byteOffset = off;
 
 
 
@@ -85,6 +89,7 @@ class ByteBufferAsLongBuffer                  // package-private
         return bb.base();
     }
 
+    @Override
     public LongBuffer slice() {
         int pos = this.position();
         int lim = this.limit();
@@ -92,7 +97,7 @@ class ByteBufferAsLongBuffer                  // package-private
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
         // long addr = byteOffset(pos);
         // return new ByteBufferAsLongBuffer(bb, -1, 0, rem, rem, addr, order);
-        int off = (pos << 3) + offset;
+        int off = (pos << 3) + byteOffset;
         return new ByteBufferAsLongBuffer(bb, -1, 0, rem, rem, off, order);
     }
 
@@ -105,9 +110,10 @@ class ByteBufferAsLongBuffer                  // package-private
                                                     length,
                                                     length,
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public LongBuffer duplicate() {
         return new ByteBufferAsLongBuffer(bb,
                                                     this.markValue(),
@@ -115,9 +121,10 @@ class ByteBufferAsLongBuffer                  // package-private
                                                     this.limit(),
                                                     this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    offset, order);
+                                                    byteOffset, order);
     }
 
+    @Override
     public LongBuffer asReadOnlyBuffer() {
 
         return new ByteBufferAsLongBuffer(bb.asReadOnlyBuffer(),
@@ -126,7 +133,7 @@ class ByteBufferAsLongBuffer                  // package-private
                                                  this.limit(),
                                                  this.capacity(),
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                 offset, order);
+                                                 byteOffset, order);
 
 
 
@@ -138,7 +145,7 @@ class ByteBufferAsLongBuffer                  // package-private
         // Android-changed: address can be zero on Android.
         // int off = (int) (address - bb.address);
         // return (i << 3) + off;
-        return (i << 3) + offset;
+        return (i << 3) + byteOffset;
     }
 
     // Android-removed: Removed unused byteOffset(long).
@@ -148,6 +155,7 @@ class ByteBufferAsLongBuffer                  // package-private
     }
     */
 
+    @Override
     public long get() {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // long x = SCOPED_MEMORY_ACCESS.getLongUnaligned(scope(), bb.hb, byteOffset(nextGetIndex()),
@@ -156,6 +164,7 @@ class ByteBufferAsLongBuffer                  // package-private
         return get(nextGetIndex());
     }
 
+    @Override
     public long get(int i) {
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // long x = SCOPED_MEMORY_ACCESS.getLongUnaligned(scope(), bb.hb, byteOffset(checkIndex(i)),
@@ -166,11 +175,11 @@ class ByteBufferAsLongBuffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public LongBuffer get(long[] dst, int offset, int length) {
-        checkBounds(offset, length, dst.length);
+    public LongBuffer get(long[] dst, int off, int length) {
+        checkBounds(off, length, dst.length);
         if (length > remaining())
             throw new BufferUnderflowException();
-        bb.getUnchecked(ix(position), dst, offset, length);
+        bb.getUnchecked(ix(position), dst, off, length);
         position += length;
         return this;
     }
@@ -188,6 +197,8 @@ class ByteBufferAsLongBuffer                  // package-private
 
 
 
+
+    @Override
     public LongBuffer put(long x) {
 
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
@@ -201,6 +212,7 @@ class ByteBufferAsLongBuffer                  // package-private
 
     }
 
+    @Override
     public LongBuffer put(int i, long x) {
 
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -218,16 +230,17 @@ class ByteBufferAsLongBuffer                  // package-private
 
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
-    public LongBuffer put(long[] src, int offset, int length) {
-        checkBounds(offset, length, src.length);
+    public LongBuffer put(long[] src, int off, int length) {
+        checkBounds(off, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
-        bb.putUnchecked(ix(position), src, offset, length);
+        bb.putUnchecked(ix(position), src, off, length);
         position += length;
         return this;
     }
     // END Android-added: Improve the efficiency of put(type$[], int, int).
 
+    @Override
     public LongBuffer compact() {
 
         // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
@@ -258,10 +271,12 @@ class ByteBufferAsLongBuffer                  // package-private
 
     }
 
+    @Override
     public boolean isDirect() {
         return bb.isDirect();
     }
 
+    @Override
     public boolean isReadOnly() {
         return isReadOnly;
     }
@@ -306,9 +321,13 @@ class ByteBufferAsLongBuffer                  // package-private
 
 
 
+
+
+    @Override
     public ByteOrder order() {
         return order;
     }
+
 
 
 
