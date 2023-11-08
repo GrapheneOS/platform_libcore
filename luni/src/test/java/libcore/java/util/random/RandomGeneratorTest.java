@@ -17,12 +17,14 @@
 package libcore.java.util.random;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
 
 @RunWith(JUnit4.class)
 public class RandomGeneratorTest {
@@ -30,6 +32,19 @@ public class RandomGeneratorTest {
     @Test
     public void defaultExists() {
         assertNotNull(RandomGenerator.getDefault());
+    }
+
+    @Test
+    public void constructorInvalidArgs() {
+        assertThrows(NullPointerException.class, () -> RandomGenerator.of(null));
+        assertThrows(IllegalArgumentException.class, () -> RandomGenerator.of("invalid-arg"));
+    }
+
+    @Test
+    public void randomGeneratorFactory_and_randomGenerator_consistency() {
+        RandomGeneratorFactory.all()
+            .map(rngFactory -> rngFactory.name())
+            .forEach(RandomGenerator::of);;
     }
 
 }

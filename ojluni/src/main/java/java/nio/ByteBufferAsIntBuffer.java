@@ -97,8 +97,7 @@ class ByteBufferAsIntBuffer                  // package-private
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
         // long addr = byteOffset(pos);
         // return new ByteBufferAsIntBuffer(bb, -1, 0, rem, rem, addr, order);
-        int off = (pos << 2) + byteOffset;
-        return new ByteBufferAsIntBuffer(bb, -1, 0, rem, rem, off, order);
+        return new ByteBufferAsIntBuffer(bb, -1, 0, rem, rem, ix(pos), order);
     }
 
     @Override
@@ -110,7 +109,7 @@ class ByteBufferAsIntBuffer                  // package-private
                                                     length,
                                                     length,
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    byteOffset, order);
+                                                    ix(index), order);
     }
 
     @Override
@@ -201,6 +200,8 @@ class ByteBufferAsIntBuffer                  // package-private
     @Override
     public IntBuffer put(int x) {
 
+        // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
+        throwIfReadOnly();
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // int y = (x);
         // SCOPED_MEMORY_ACCESS.putIntUnaligned(scope(), bb.hb, byteOffset(nextPutIndex()), y,
@@ -231,6 +232,8 @@ class ByteBufferAsIntBuffer                  // package-private
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
     public IntBuffer put(int[] src, int off, int length) {
+        // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
+        throwIfReadOnly();
         checkBounds(off, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
@@ -260,7 +263,9 @@ class ByteBufferAsIntBuffer                  // package-private
         if (!(bb instanceof DirectByteBuffer)) {
             System.arraycopy(bb.array(), ix(pos), bb.array(), ix(0), rem << 2);
         } else {
-            Memory.memmove(this, ix(0), this, ix(pos), rem << 2);
+            // Use pos << 2 instead of ix(pos) to avoid double counting of the offset
+            // because this.address == bb.address + offset;
+            Memory.memmove(this, 0, this, pos << 2, rem << 2);
         }
         position(rem);
         limit(capacity());

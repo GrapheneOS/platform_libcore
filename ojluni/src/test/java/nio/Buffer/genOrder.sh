@@ -23,6 +23,8 @@
 # questions.
 #
 
+# Android-changed: Spp.java is located at a different path in AOSP.
+# javac -d . ../../../../../make/jdk/src/classes/build/tools/spp/Spp.java
 javac -d . ../../../../tools/build/tools/spp/Spp.java
 
 gen() {

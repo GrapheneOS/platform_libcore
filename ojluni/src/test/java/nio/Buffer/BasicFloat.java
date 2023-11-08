@@ -98,6 +98,18 @@ public class BasicFloat
         }
     }
 
+    private static void absBulkGet(FloatBuffer b) {
+        int n = b.capacity();
+        int len = n - 7*2;
+        float[] a = new float[n + 7];
+        b.position(42);
+        b.get(7, a, 7, len);
+        ck(b, b.position() == 42);
+        for (int i = 0; i < len; i++) {
+            ck(b, (long)a[i + 7], (long)((float)ic(i)));
+        }
+    }
+
     private static void relPut(FloatBuffer b) {
         int n = b.capacity();
         b.clear();
@@ -145,6 +157,20 @@ public class BasicFloat
                      + " put into same buffer");
             }
         }
+    }
+
+    private static void absBulkPutArray(FloatBuffer b) {
+        int n = b.capacity();
+        b.clear();
+        int lim = n - 7;
+        int len = lim - 7;
+        b.limit(lim);
+        float[] a = new float[len + 7];
+        for (int i = 0; i < len; i++)
+            a[i + 7] = (float)ic(i);
+        b.position(42);
+        b.put(7, a, 7, len);
+        ck(b, b.position() == 42);
     }
 
     //6231529
@@ -465,6 +491,67 @@ public class BasicFloat
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private static void fail(String problem,
                              FloatBuffer xb, FloatBuffer yb,
                              float x, float y) {
@@ -514,7 +601,11 @@ public class BasicFloat
         tryCatch(FloatBuffer.wrap(t), ex, thunk);
     }
 
+    // Android-changed: Add @SuppressWarnings as the operation is tested to be reflexive.
+    @SuppressWarnings({"SelfComparison", "SelfEquals"})
     public static void test(int level, final FloatBuffer b, boolean direct) {
+
+        show(level, b);
 
         if (direct != b.isDirect())
             fail("Wrong direction", b);
@@ -536,6 +627,9 @@ public class BasicFloat
 
         bulkPutBuffer(b);
         relGet(b);
+
+        absBulkPutArray(b);
+        absBulkGet(b);
 
 
 
@@ -593,9 +687,10 @@ public class BasicFloat
         catchIndexOutOfBounds(b, () -> b.get(b.limit()));
         catchIndexOutOfBounds(b, () -> b.get(-1));
         catchIndexOutOfBounds(b, () -> b.put(b.limit(), (float)42));
-        FloatBuffer intermediate = (FloatBuffer) b.position(0).mark();
         tryCatch(b, InvalidMarkException.class,
-                () -> intermediate.compact().reset());
+                // Android-changed: Explicit casting due to @CovariantReturnType methods.
+                // () -> b.position(0).mark().compact().reset());
+                () -> ((FloatBuffer) b.position(0).mark()).compact().reset());
 
         try {
             b.position(b.limit() + 1);
@@ -638,6 +733,24 @@ public class BasicFloat
         }
 
         // Exceptions in absolute bulk and slice operations
+
+        catchNullArgument(b, () -> b.get(7, null, 0, 42));
+        catchNullArgument(b, () -> b.put(7, (float[])null, 0, 42));
+
+        float[] tmpa = new float[42];
+        catchIndexOutOfBounds(b, () -> b.get(7, tmpa, -1, 42));
+        catchIndexOutOfBounds(b, () -> b.get(7, tmpa, 42, 1));
+        catchIndexOutOfBounds(b, () -> b.get(7, tmpa, 41, -1));
+        catchIndexOutOfBounds(b, () -> b.get(-1, tmpa, 0, 1));
+        catchIndexOutOfBounds(b, () -> b.get(b.limit(), tmpa, 0, 1));
+        catchIndexOutOfBounds(b, () -> b.get(b.limit() - 41, tmpa, 0, 42));
+
+        catchIndexOutOfBounds(b, () -> b.put(7, tmpa, -1, 42));
+        catchIndexOutOfBounds(b, () -> b.put(7, tmpa, 42, 1));
+        catchIndexOutOfBounds(b, () -> b.put(7, tmpa, 41, -1));
+        catchIndexOutOfBounds(b, () -> b.put(-1, tmpa, 0, 1));
+        catchIndexOutOfBounds(b, () -> b.put(b.limit(), tmpa, 0, 1));
+        catchIndexOutOfBounds(b, () -> b.put(b.limit() - 41, tmpa, 0, 42));
 
         catchIndexOutOfBounds(b, () -> b.slice(-1, 7));
         catchIndexOutOfBounds(b, () -> b.slice(b.limit() + 1, 7));
@@ -721,6 +834,7 @@ public class BasicFloat
                     || Float.compare(x, y) != 0
 
                     ) {
+                    out.println("[" + i + "] " + x + " != " + y);
                 }
             }
             fail("Identical buffers not equal", b, b2);
@@ -748,6 +862,12 @@ public class BasicFloat
         // Check equals and compareTo with interesting values
         for (float x : VALUES) {
             FloatBuffer xb = FloatBuffer.wrap(new float[] { x });
+            if (xb.compareTo(xb) != 0) {
+                fail("compareTo not reflexive", xb, xb, x, x);
+            }
+            if (!xb.equals(xb)) {
+                fail("equals not reflexive", xb, xb, x, x);
+            }
             for (float y : VALUES) {
                 FloatBuffer yb = FloatBuffer.wrap(new float[] { y });
                 if (xb.compareTo(yb) != - yb.compareTo(xb)) {
@@ -850,7 +970,104 @@ public class BasicFloat
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+        // Read-only views
+
+        b.rewind();
+        final FloatBuffer rb = b.asReadOnlyBuffer();
+        if (!b.equals(rb))
+            fail("Buffer not equal to read-only view", b, rb);
+        show(level + 1, rb);
+
+        catchReadOnlyBuffer(b, () -> relPut(rb));
+        catchReadOnlyBuffer(b, () -> absPut(rb));
+        catchReadOnlyBuffer(b, () -> bulkPutArray(rb));
+        catchReadOnlyBuffer(b, () -> bulkPutBuffer(rb));
+        catchReadOnlyBuffer(b, () -> absBulkPutArray(rb));
+
+        // put(FloatBuffer) should not change source position
+        final FloatBuffer src = FloatBuffer.allocate(1);
+        catchReadOnlyBuffer(b, () -> rb.put(src));
+        ck(src, src.position(), 0);
+
+        catchReadOnlyBuffer(b, () -> rb.compact());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (rb.getClass().getName().startsWith("java.nio.Heap")) {
+            catchReadOnlyBuffer(b, () -> rb.array());
+            catchReadOnlyBuffer(b, () -> rb.arrayOffset());
+            if (rb.hasArray()) {
+                fail("Read-only heap buffer's backing array is accessible", rb);
+            }
+        }
+
+        // Bulk puts from read-only buffers
+
+        b.clear();
+        rb.rewind();
+        b.put(rb);
+
+
+
+
+
+
+
+
+
+
+
+        relPut(b);                       // Required by testViews
+
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
 
 
 
@@ -898,6 +1115,7 @@ public class BasicFloat
         int offset = 47;
         int length = 900;
         final FloatBuffer b = FloatBuffer.wrap(ba, offset, length);
+        show(0, b);
         ck(b, b.capacity(), ba.length);
         ck(b, b.position(), offset);
         ck(b, b.limit(), offset + length);
@@ -939,6 +1157,26 @@ public class BasicFloat
 
     }
 
+    public static void testToString() {
+        final int cap = 10;
+
+
+
+
+
+
+
+
+
+
+        FloatBuffer nondirect1 = FloatBuffer.allocate(cap);
+        if (!nondirect1.toString().equals(Basic.toString(nondirect1))) {
+           fail("Heap buffer toString is incorrect: "
+                  + nondirect1.toString() + " vs " + Basic.toString(nondirect1));
+        }
+
+    }
+
     public static void test() {
         testAllocate();
         test(0, FloatBuffer.allocate(7 * 1024), false);
@@ -960,6 +1198,8 @@ public class BasicFloat
 
         putBuffer();
 
+
+        testToString();
     }
 
 }

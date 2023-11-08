@@ -97,8 +97,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
         // long addr = byteOffset(pos);
         // return new ByteBufferAs$Type$Buffer(bb, -1, 0, rem, rem, addr, order);
-        int off = (pos << $LG_BYTES_PER_VALUE$) + byteOffset;
-        return new ByteBufferAs$Type$Buffer(bb, -1, 0, rem, rem, off, order);
+        return new ByteBufferAs$Type$Buffer(bb, -1, 0, rem, rem, ix(pos), order);
     }
 
     @Override
@@ -110,7 +109,7 @@ class ByteBufferAs$Type$Buffer                  // package-private
                                                     length,
                                                     length,
         // Android-changed: Added ByteOrder and removed MemorySegmentProxy to be supported yet.
-                                                    byteOffset, order);
+                                                    ix(index), order);
     }
 
     @Override
@@ -201,6 +200,8 @@ class ByteBufferAs$Type$Buffer                  // package-private
     @Override
     public $Type$Buffer put($type$ x) {
 #if[rw]
+        // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
+        throwIfReadOnly();
         // Android-changed: Removed MemorySegmentProxy to be supported yet.
         // $memtype$ y = $toBits$(x);
         // SCOPED_MEMORY_ACCESS.put$Memtype$Unaligned(scope(), bb.hb, byteOffset(nextPutIndex()), y,
@@ -231,6 +232,8 @@ class ByteBufferAs$Type$Buffer                  // package-private
     // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
     @Override
     public $Type$Buffer put($type$[] src, int off, int length) {
+        // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
+        throwIfReadOnly();
         checkBounds(off, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
@@ -260,7 +263,9 @@ class ByteBufferAs$Type$Buffer                  // package-private
         if (!(bb instanceof DirectByteBuffer)) {
             System.arraycopy(bb.array(), ix(pos), bb.array(), ix(0), rem << $LG_BYTES_PER_VALUE$);
         } else {
-            Memory.memmove(this, ix(0), this, ix(pos), rem << $LG_BYTES_PER_VALUE$);
+            // Use pos << $LG_BYTES_PER_VALUE$ instead of ix(pos) to avoid double counting of the offset
+            // because this.address == bb.address + offset;
+            Memory.memmove(this, 0, this, pos << $LG_BYTES_PER_VALUE$, rem << $LG_BYTES_PER_VALUE$);
         }
         position(rem);
         limit(capacity());

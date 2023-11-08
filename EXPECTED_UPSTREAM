@@ -2059,7 +2059,15 @@ ojluni/src/test/java/net/InetSocketAddress/CreateUnresolved.java,jdk17u/jdk-17.0
 ojluni/src/test/java/net/InetSocketAddress/ToString.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/net/InetSocketAddress/ToString.java
 ojluni/src/test/java/net/UnixDomainSocketAddress/LengthTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/net/UnixDomainSocketAddress/LengthTest.java
 ojluni/src/test/java/net/UnixDomainSocketAddress/UnixDomainSocketAddressSerializationTest.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/net/UnixDomainSocketAddress/UnixDomainSocketAddressSerializationTest.java
+ojluni/src/test/java/nio/Buffer/Basic-X.java.template,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/Buffer/Basic-X.java.template
+ojluni/src/test/java/nio/Buffer/BulkPutBuffer.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/Buffer/BulkPutBuffer.java
+ojluni/src/test/java/nio/Buffer/CopyDirect-X-Memory.java.template,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/Buffer/CopyDirect-X-Memory.java.template
 ojluni/src/test/java/nio/Buffer/EqualsCompareTest.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/nio/Buffer/EqualsCompareTest.java
+ojluni/src/test/java/nio/Buffer/Order-X.java.template,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/Buffer/Order-X.java.template
+ojluni/src/test/java/nio/Buffer/genBasic.sh,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/Buffer/genBasic.sh
+ojluni/src/test/java/nio/Buffer/genCopyDirectMemory.sh,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/Buffer/genCopyDirectMemory.sh
+ojluni/src/test/java/nio/Buffer/genOrder.sh,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/Buffer/genOrder.sh
+ojluni/src/test/java/nio/MappedByteBuffer/ForceViews.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/MappedByteBuffer/ForceViews.java
 ojluni/src/test/java/nio/channels/SelectionKey/AtomicUpdates.java,jdk11u/jdk-11.0.13-ga,test/jdk/java/nio/channels/SelectionKey/AtomicUpdates.java
 ojluni/src/test/java/nio/channels/Selector/ByteServer.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/channels/Selector/ByteServer.java
 ojluni/src/test/java/nio/channels/Selector/SelectAfterRead.java,jdk17u/jdk-17.0.6-ga,test/jdk/java/nio/channels/Selector/SelectAfterRead.java

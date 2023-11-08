@@ -98,6 +98,18 @@ public class BasicByte
         }
     }
 
+    private static void absBulkGet(ByteBuffer b) {
+        int n = b.capacity();
+        int len = n - 7*2;
+        byte[] a = new byte[n + 7];
+        b.position(42);
+        b.get(7, a, 7, len);
+        ck(b, b.position() == 42);
+        for (int i = 0; i < len; i++) {
+            ck(b, (long)a[i + 7], (long)((byte)ic(i)));
+        }
+    }
+
     private static void relPut(ByteBuffer b) {
         int n = b.capacity();
         b.clear();
@@ -145,6 +157,20 @@ public class BasicByte
                      + " put into same buffer");
             }
         }
+    }
+
+    private static void absBulkPutArray(ByteBuffer b) {
+        int n = b.capacity();
+        b.clear();
+        int lim = n - 7;
+        int len = lim - 7;
+        b.limit(lim);
+        byte[] a = new byte[len + 7];
+        for (int i = 0; i < len; i++)
+            a[i + 7] = (byte)ic(i);
+        b.position(42);
+        b.put(7, a, 7, len);
+        ck(b, b.position() == 42);
     }
 
     //6231529
@@ -242,53 +268,105 @@ public class BasicByte
             });
     }
 
+    private static void testViews(int level, ByteBuffer b, boolean direct) {
+
+        ShortBuffer sb = b.asShortBuffer();
+        BasicShort.test(level, sb, direct);
+        checkBytes(b, new byte[] { 0, (byte)ic(0) });
+        checkInvalidMarkException(sb);
+
+        CharBuffer cb = b.asCharBuffer();
+        BasicChar.test(level, cb, direct);
+        checkBytes(b, new byte[] { 0, (byte)ic(0) });
+        checkInvalidMarkException(cb);
+
+        IntBuffer ib = b.asIntBuffer();
+        BasicInt.test(level, ib, direct);
+        checkBytes(b, new byte[] { 0, 0, 0, (byte)ic(0) });
+        checkInvalidMarkException(ib);
+
+        LongBuffer lb = b.asLongBuffer();
+        BasicLong.test(level, lb, direct);
+        checkBytes(b, new byte[] { 0, 0, 0, 0, 0, 0, 0, (byte)ic(0) });
+        checkInvalidMarkException(lb);
+
+        FloatBuffer fb = b.asFloatBuffer();
+        BasicFloat.test(level, fb, direct);
+        checkBytes(b, new byte[] { 0x42, (byte)0xc2, 0, 0 });
+        checkInvalidMarkException(fb);
+
+        DoubleBuffer db = b.asDoubleBuffer();
+        BasicDouble.test(level, db, direct);
+        checkBytes(b, new byte[] { 0x40, 0x58, 0x40, 0, 0, 0, 0, 0 });
+        checkInvalidMarkException(db);
+    }
+
     private static void testHet(int level, ByteBuffer b) {
 
         int p = b.position();
         b.limit(b.capacity());
+        show(level, b);
+        out.print("    put:");
 
         b.putChar((char)1);
         b.putChar((char)Character.MAX_VALUE);
+        out.print(" char");
 
         b.putShort((short)1);
         b.putShort((short)Short.MAX_VALUE);
+        out.print(" short");
 
         b.putInt(1);
         b.putInt(Integer.MAX_VALUE);
+        out.print(" int");
 
         b.putLong((long)1);
         b.putLong((long)Long.MAX_VALUE);
+        out.print(" long");
 
         b.putFloat((float)1);
         b.putFloat((float)Float.MIN_VALUE);
         b.putFloat((float)Float.MAX_VALUE);
+        out.print(" float");
 
         b.putDouble((double)1);
         b.putDouble((double)Double.MIN_VALUE);
         b.putDouble((double)Double.MAX_VALUE);
+        out.print(" double");
 
+        out.println();
         b.limit(b.position());
         b.position(p);
+        show(level, b);
+        out.print("    get:");
 
         ck(b, b.getChar(), 1);
         ck(b, b.getChar(), Character.MAX_VALUE);
+        out.print(" char");
 
         ck(b, b.getShort(), 1);
         ck(b, b.getShort(), Short.MAX_VALUE);
+        out.print(" short");
 
         ck(b, b.getInt(), 1);
         ck(b, b.getInt(), Integer.MAX_VALUE);
+        out.print(" int");
 
         ck(b, b.getLong(), 1);
         ck(b, b.getLong(), Long.MAX_VALUE);
+        out.print(" long");
 
         ck(b, (long)b.getFloat(), 1);
         ck(b, (long)b.getFloat(), (long)Float.MIN_VALUE);
         ck(b, (long)b.getFloat(), (long)Float.MAX_VALUE);
+        out.print(" float");
 
         ck(b, (long)b.getDouble(), 1);
         ck(b, (long)b.getDouble(), (long)Double.MIN_VALUE);
         ck(b, (long)b.getDouble(), (long)Double.MAX_VALUE);
+        out.print(" double");
+
+        out.println();
 
     }
 
@@ -360,8 +438,9 @@ public class BasicByte
         // Created aligned slice to test against
         int ap = 8 - longMisalignmentAtZero;
         int al = b.limit() - b.alignmentOffset(b.limit(), 8);
-        ByteBuffer intermediate = (ByteBuffer) b.position(ap).limit(al);
-        ByteBuffer ab = intermediate.slice();
+        // Android-changed: Explicit casting due to @CovariantReturnType methods invisible to javac.
+        ByteBuffer ab = (ByteBuffer) b.position(ap).limit(al).
+                slice();
         if (ab.limit() == 0) {
             fail("Test input buffer not sufficiently sized to cover" +
                     " an aligned region for all values", b);
@@ -373,8 +452,9 @@ public class BasicByte
             for (int p = 1; p < 16; p++) {
                 int l = ab.limit() - p;
 
-                intermediate = (ByteBuffer) ab.slice().position(p).limit(l);
-                ByteBuffer as = intermediate.alignedSlice(us);
+                // Android-changed: Explicit casting due to @CovariantReturnType methods.
+                ByteBuffer as = ((ByteBuffer) ab.slice().position(p).limit(l)).
+                        alignedSlice(us);
 
                 ck(as, 0, as.position());
                 ck(as, as.capacity(), as.limit());
@@ -382,6 +462,12 @@ public class BasicByte
                     fail("Lost direction", as);
                 if (b.isReadOnly() != as.isReadOnly())
                     fail("Lost read-only", as);
+
+                if (as.alignmentOffset(0, us) != 0)
+                    fail("Buffer not correctly aligned at index 0", as);
+
+                if (as.alignmentOffset(as.limit(), us) != 0)
+                    fail("Buffer not correctly aligned at limit", as);
 
                 int p_mod = ab.alignmentOffset(p, us);
                 int l_mod = ab.alignmentOffset(l, us);
@@ -404,6 +490,7 @@ public class BasicByte
                     int offset = bb.alignmentOffset(1, 4);
                     ck(bb, offset >= 0);
                 } catch (UnsupportedOperationException e) {
+                    System.out.println("Not applicable, UOE thrown: ");
                 }
             }
         } catch (IOException e) {
@@ -514,7 +601,11 @@ public class BasicByte
         tryCatch(ByteBuffer.wrap(t), ex, thunk);
     }
 
+    // Android-changed: Add @SuppressWarnings as the operation is tested to be reflexive.
+    @SuppressWarnings({"SelfComparison", "SelfEquals"})
     public static void test(int level, final ByteBuffer b, boolean direct) {
+
+        show(level, b);
 
         if (direct != b.isDirect())
             fail("Wrong direction", b);
@@ -536,6 +627,9 @@ public class BasicByte
 
         bulkPutBuffer(b);
         relGet(b);
+
+        absBulkPutArray(b);
+        absBulkGet(b);
 
 
 
@@ -593,9 +687,10 @@ public class BasicByte
         catchIndexOutOfBounds(b, () -> b.get(b.limit()));
         catchIndexOutOfBounds(b, () -> b.get(-1));
         catchIndexOutOfBounds(b, () -> b.put(b.limit(), (byte)42));
-        ByteBuffer intermediate = (ByteBuffer) b.position(0).mark();
         tryCatch(b, InvalidMarkException.class,
-                () -> intermediate.compact().reset());
+                // Android-changed: Explicit casting due to @CovariantReturnType methods.
+                // () -> b.position(0).mark().compact().reset());
+                () -> ((ByteBuffer) b.position(0).mark()).compact().reset());
 
         try {
             b.position(b.limit() + 1);
@@ -638,6 +733,24 @@ public class BasicByte
         }
 
         // Exceptions in absolute bulk and slice operations
+
+        catchNullArgument(b, () -> b.get(7, null, 0, 42));
+        catchNullArgument(b, () -> b.put(7, (byte[])null, 0, 42));
+
+        byte[] tmpa = new byte[42];
+        catchIndexOutOfBounds(b, () -> b.get(7, tmpa, -1, 42));
+        catchIndexOutOfBounds(b, () -> b.get(7, tmpa, 42, 1));
+        catchIndexOutOfBounds(b, () -> b.get(7, tmpa, 41, -1));
+        catchIndexOutOfBounds(b, () -> b.get(-1, tmpa, 0, 1));
+        catchIndexOutOfBounds(b, () -> b.get(b.limit(), tmpa, 0, 1));
+        catchIndexOutOfBounds(b, () -> b.get(b.limit() - 41, tmpa, 0, 42));
+
+        catchIndexOutOfBounds(b, () -> b.put(7, tmpa, -1, 42));
+        catchIndexOutOfBounds(b, () -> b.put(7, tmpa, 42, 1));
+        catchIndexOutOfBounds(b, () -> b.put(7, tmpa, 41, -1));
+        catchIndexOutOfBounds(b, () -> b.put(-1, tmpa, 0, 1));
+        catchIndexOutOfBounds(b, () -> b.put(b.limit(), tmpa, 0, 1));
+        catchIndexOutOfBounds(b, () -> b.put(b.limit() - 41, tmpa, 0, 42));
 
         catchIndexOutOfBounds(b, () -> b.slice(-1, 7));
         catchIndexOutOfBounds(b, () -> b.slice(b.limit() + 1, 7));
@@ -721,6 +834,7 @@ public class BasicByte
 
 
                     ) {
+                    out.println("[" + i + "] " + x + " != " + y);
                 }
             }
             fail("Identical buffers not equal", b, b2);
@@ -748,6 +862,12 @@ public class BasicByte
         // Check equals and compareTo with interesting values
         for (byte x : VALUES) {
             ByteBuffer xb = ByteBuffer.wrap(new byte[] { x });
+            if (xb.compareTo(xb) != 0) {
+                fail("compareTo not reflexive", xb, xb, x, x);
+            }
+            if (!xb.equals(xb)) {
+                fail("equals not reflexive", xb, xb, x, x);
+            }
             for (byte y : VALUES) {
                 ByteBuffer yb = ByteBuffer.wrap(new byte[] { y });
                 if (xb.compareTo(yb) != - yb.compareTo(xb)) {
@@ -833,7 +953,21 @@ public class BasicByte
 
 
 
+        // Views
 
+        b.clear();
+        b.order(ByteOrder.BIG_ENDIAN);
+        testViews(level + 1, b, direct);
+
+        for (int i = 1; i <= 9; i++) {
+            b.position(i);
+            show(level + 1, b);
+            testViews(level + 2, b, direct);
+        }
+
+        b.position(0);
+        b.order(ByteOrder.LITTLE_ENDIAN);
+        testViews(level + 1, b, direct);
 
         // Heterogeneous accessors
 
@@ -845,6 +979,81 @@ public class BasicByte
         b.order(ByteOrder.LITTLE_ENDIAN);
         b.position(3);
         testHet(level + 1, b);
+
+
+
+        // Read-only views
+
+        b.rewind();
+        final ByteBuffer rb = b.asReadOnlyBuffer();
+        if (!b.equals(rb))
+            fail("Buffer not equal to read-only view", b, rb);
+        show(level + 1, rb);
+
+        catchReadOnlyBuffer(b, () -> relPut(rb));
+        catchReadOnlyBuffer(b, () -> absPut(rb));
+        catchReadOnlyBuffer(b, () -> bulkPutArray(rb));
+        catchReadOnlyBuffer(b, () -> bulkPutBuffer(rb));
+        catchReadOnlyBuffer(b, () -> absBulkPutArray(rb));
+
+        // put(ByteBuffer) should not change source position
+        final ByteBuffer src = ByteBuffer.allocate(1);
+        catchReadOnlyBuffer(b, () -> rb.put(src));
+        ck(src, src.position(), 0);
+
+        catchReadOnlyBuffer(b, () -> rb.compact());
+
+
+
+        catchReadOnlyBuffer(b, () -> rb.putChar((char)1));
+        catchReadOnlyBuffer(b, () -> rb.putChar(0, (char)1));
+        catchReadOnlyBuffer(b, () -> rb.putShort((short)1));
+        catchReadOnlyBuffer(b, () -> rb.putShort(0, (short)1));
+        catchReadOnlyBuffer(b, () -> rb.putInt(1));
+        catchReadOnlyBuffer(b, () -> rb.putInt(0, 1));
+        catchReadOnlyBuffer(b, () -> rb.putLong((long)1));
+        catchReadOnlyBuffer(b, () -> rb.putLong(0, (long)1));
+        catchReadOnlyBuffer(b, () -> rb.putFloat((float)1));
+        catchReadOnlyBuffer(b, () -> rb.putFloat(0, (float)1));
+        catchReadOnlyBuffer(b, () -> rb.putDouble((double)1));
+        catchReadOnlyBuffer(b, () -> rb.putDouble(0, (double)1));
+
+
+
+
+
+
+
+
+
+
+
+        if (rb.getClass().getName().startsWith("java.nio.Heap")) {
+            catchReadOnlyBuffer(b, () -> rb.array());
+            catchReadOnlyBuffer(b, () -> rb.arrayOffset());
+            if (rb.hasArray()) {
+                fail("Read-only heap buffer's backing array is accessible", rb);
+            }
+        }
+
+        // Bulk puts from read-only buffers
+
+        b.clear();
+        rb.rewind();
+        b.put(rb);
+
+
+        // For byte buffers, test both the direct and non-direct cases
+        ByteBuffer ob
+            = (b.isDirect()
+               ? ByteBuffer.allocate(rb.capacity())
+               : ByteBuffer.allocateDirect(rb.capacity()));
+        rb.rewind();
+        ob.put(rb);
+
+
+        relPut(b);                       // Required by testViews
+
 
         // Test alignment
 
@@ -894,10 +1103,19 @@ public class BasicByte
 
 
 
+
+
+
+
+
+
+
+
     public static void test(final byte [] ba) {
         int offset = 47;
         int length = 900;
         final ByteBuffer b = ByteBuffer.wrap(ba, offset, length);
+        show(0, b);
         ck(b, b.capacity(), ba.length);
         ck(b, b.position(), offset);
         ck(b, b.limit(), offset + length);
@@ -939,6 +1157,26 @@ public class BasicByte
 
     }
 
+    public static void testToString() {
+        final int cap = 10;
+
+
+        ByteBuffer direct1 = ByteBuffer.allocateDirect(cap);
+        if (!direct1.toString().equals(Basic.toString(direct1))) {
+           fail("Direct buffer toString is incorrect: "
+                  + direct1.toString() + " vs " + Basic.toString(direct1));
+        }
+
+
+
+        ByteBuffer nondirect1 = ByteBuffer.allocate(cap);
+        if (!nondirect1.toString().equals(Basic.toString(nondirect1))) {
+           fail("Heap buffer toString is incorrect: "
+                  + nondirect1.toString() + " vs " + Basic.toString(nondirect1));
+        }
+
+    }
+
     public static void test() {
         testAllocate();
         test(0, ByteBuffer.allocate(7 * 1024), false);
@@ -960,6 +1198,8 @@ public class BasicByte
 
 
 
+
+        testToString();
     }
 
 }

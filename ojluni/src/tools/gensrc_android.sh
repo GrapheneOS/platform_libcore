@@ -75,3 +75,9 @@ NIO_AS_CLASSES=(
 for clazz in ${NIO_AS_CLASSES[*]}; do
   cp ${JAVA_NIO_OUT}/${clazz}L.java ${OJLUNI_NIO_ROOT}/${clazz}.java
 done
+
+pushd ${ANDROID_BUILD_TOP}/libcore/ojluni/src/test/java/nio/Buffer/
+./genBasic.sh
+./genCopyDirectMemory.sh
+./genOrder.sh
+popd

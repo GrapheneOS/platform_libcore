@@ -190,7 +190,9 @@ public class DirectByteBuffer extends MappedByteBuffer implements DirectBuffer {
                                               0,
                                               length,
                                               length,
-                                              index << 0,
+        // Android-changed: The constructor's argument means the offset from the allocated address.
+                                              // index << 0,
+                                              index + offset,
                                               isReadOnly);
     }
 

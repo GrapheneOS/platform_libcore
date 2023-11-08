@@ -1507,4 +1507,24 @@ public class BufferTest extends TestCase {
         alignmentOffsetChecks(ByteBuffer.wrap(array));
         alignmentOffsetChecks(ByteBuffer.wrap(array, 1, 31));
     }
+
+    public void testPut() {
+        ByteBuffer bb = ByteBuffer.allocateDirect(1024);
+        bb.limit(6);
+        CharBuffer cb = bb.asCharBuffer();
+        cb.put('a');
+        cb.flip();
+        assertEquals("a", cb.toString());
+
+        cb.limit(3);
+        CharBuffer midCb = cb.slice(1,2);
+        midCb.put('b');
+        cb.limit(2);
+        assertEquals("ab", cb.toString());
+
+        midCb.put(1, cb, 0, 1);
+        cb.limit(3);
+        assertEquals("aba", cb.toString());
+
+    }
 }

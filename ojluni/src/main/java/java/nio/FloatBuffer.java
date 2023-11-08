@@ -1179,8 +1179,48 @@ public abstract class FloatBuffer
 
 
         int posMax = pos + n;
-        for (int i = pos, j = srcPos; i < posMax; i++, j++) {
-            put(i, src.get(j));
+        Object thisBase = base();
+        // If this buffer and the source buffer share the same backing array or memory, then the
+        // result will be as if the source elements were first copied to an intermediate location
+        // before being written into this buffer.
+        // Instead of copying to an intermediate location, we change the writing order.
+        // It's possible to use System.arrayCopy / Memory.memmove if their backing array are float[]
+        // or they use the same byte order.
+        boolean ascendingOrder;
+        if (isDirect() && src.isDirect()) {
+            // Both src and dst should be ByteBufferAsFloatBuffer classes.
+            // this.offset and src.offset should be zero, and can be ignored.
+            long dstStart = this.address + ((long) pos << 2);
+            long srcStart = src.address + ((long) srcPos << 2);
+            // The second condition is optional, but the ascending order is the preferred behavior.
+            ascendingOrder = (dstStart <= srcStart) || (srcStart + ((long) n << 2) < dstStart);
+            // We may just do memmove here if both buffer uses the same byte order.
+        } else if (thisBase != null && thisBase == src.base()) { // Share the same float[] or byte[]
+            if (thisBase == this.hb) { // Both this and src should be HeapFloatBuffer
+                int dstStart = this.offset + pos;
+                int srcStart = src.offset + srcPos;
+                ascendingOrder = (dstStart <= srcStart) || (srcStart + n < dstStart);
+            } else if (this instanceof ByteBufferAsFloatBuffer asDst &&
+                src instanceof ByteBufferAsFloatBuffer asSrc && thisBase instanceof byte[]) {
+                // this.offset and src.offset should be zero, and can be ignored.
+                long dstStart = asDst.byteOffset + asDst.bb.offset + ((long) pos << 2);
+                long srcStart = asSrc.byteOffset + asSrc.bb.offset + ((long) srcPos << 2);
+                ascendingOrder = (dstStart <= srcStart) || (srcStart + ((long) n << 2) < dstStart);
+            } else {
+                // There isn't a known case following into this condition. We should add a DCHECK here.
+                ascendingOrder = true;
+            }
+        } else {
+            ascendingOrder = true;
+        }
+        if (ascendingOrder) {
+            for (int i = pos, j = srcPos; i < posMax; i++, j++) {
+                put(i, src.get(j));
+            }
+        } else {
+            for (int i = posMax - 1, j = srcPos + n - 1; i >= pos; i--, j--) {
+                put(i, src.get(j));
+            }
         }
 
 

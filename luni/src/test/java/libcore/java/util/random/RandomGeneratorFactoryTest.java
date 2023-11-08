@@ -16,6 +16,7 @@
 
 package libcore.java.util.random;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThrows;
@@ -30,9 +31,12 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.math.BigInteger;
+import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.random.RandomGenerator;
 import java.util.random.RandomGeneratorFactory;
+import jdk.internal.util.random.RandomSupport;
 
 
 @RunWith(JUnit4.class)
@@ -100,5 +104,110 @@ public class RandomGeneratorFactoryTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void checkConsistency_initializeWithLongSeed() {
+        RandomGeneratorFactory.all()
+            .forEach(RandomGeneratorFactoryTest::checkConsistencyWithLongSeed);
+    }
 
+    @Test
+    public void checkConsistency_initializeWithBytesSeed() {
+        RandomGeneratorFactory.all()
+            .forEach(RandomGeneratorFactoryTest::checkConsistencyWithBytesSeed);
+    }
+
+    private static void checkConsistencyWithLongSeed(RandomGeneratorFactory rngFactory) {
+        long seed = RandomSupport.initialSeed();
+
+        System.out.println("Testing with seed=" + seed);
+
+        checkNextBoolean(rngFactory.create(seed), rngFactory.create(seed));
+        checkNextInt(rngFactory.create(seed), rngFactory.create(seed));
+        checkInts(rngFactory.create(seed), rngFactory.create(seed));
+        checkNextLong(rngFactory.create(seed), rngFactory.create(seed));
+        checkLongs(rngFactory.create(seed), rngFactory.create(seed));
+        checkNextDouble(rngFactory.create(seed), rngFactory.create(seed));
+        checkDoubles(rngFactory.create(seed), rngFactory.create(seed));
+    }
+
+    private static void checkConsistencyWithBytesSeed(RandomGeneratorFactory rngFactory) {
+        byte[] seedBytes = new SecureRandom().generateSeed(256);
+
+        System.out.println("Testing with seed=" + Arrays.toString(seedBytes));
+
+        checkNextBoolean(rngFactory.create(seedBytes),  rngFactory.create(seedBytes));
+        checkNextInt(rngFactory.create(seedBytes), rngFactory.create(seedBytes));
+        checkInts(rngFactory.create(seedBytes), rngFactory.create(seedBytes));
+        checkNextLong(rngFactory.create(seedBytes), rngFactory.create(seedBytes));
+        checkLongs(rngFactory.create(seedBytes), rngFactory.create(seedBytes));
+        checkNextDouble(rngFactory.create(seedBytes), rngFactory.create(seedBytes));
+        checkDoubles(rngFactory.create(seedBytes), rngFactory.create(seedBytes));
+    }
+
+     private static void checkNextBoolean(RandomGenerator first, RandomGenerator second) {
+        for (int i = 0; i < 1_000; ++i) {
+            boolean firstResult = first.nextBoolean();
+            boolean secondResult = second.nextBoolean();
+            String errorMsg = String.format("At iteration %d %s returned %b, but %s returned %b",
+                                            i, first, firstResult, second, secondResult);
+            assertEquals(errorMsg, firstResult, secondResult);
+        }
+    }
+
+    private static void checkNextInt(RandomGenerator first, RandomGenerator second) {
+        for (int i = 0; i < 1_000; ++i) {
+            int firstResult = first.nextInt();
+            int secondResult = second.nextInt();
+            String errorMsg = String.format("At iteration %d %s returned %d, but %s returned %d",
+                                            i, first, firstResult, second, secondResult);
+            assertEquals(errorMsg, firstResult, secondResult);
+        }
+    }
+
+    private static void checkNextLong(RandomGenerator first, RandomGenerator second) {
+        for (int i = 0; i < 1_000; ++i) {
+            long firstResult = first.nextLong();
+            long secondResult = second.nextLong();
+            String errorMsg = String.format("At iteration %d %s returned %d, but %s returned %d",
+                                            i, first, firstResult, second, secondResult);
+            assertEquals(errorMsg, firstResult, secondResult);
+        }
+    }
+
+    private static void checkNextDouble(RandomGenerator first, RandomGenerator second) {
+        for (int i = 0; i < 1_000; ++i) {
+            double firstResult = first.nextDouble();
+            double secondResult = second.nextDouble();
+            String errorMsg = String.format("At iteration %d %s returned %f, but %s returned %f",
+                                            i, first, firstResult, second, secondResult);
+            assertEquals(errorMsg, firstResult, secondResult, 0.0d);
+        }
+    }
+
+    private static void checkInts(RandomGenerator first, RandomGenerator second) {
+        int[] firstResult = first.ints().limit(1_000).toArray();
+        int[] secondResult = second.ints().limit(1_000).toArray();
+
+        String errorMsg = String.format("%s.ints() and %s.ints() generated different sequences",
+                                        first, second);
+        assertArrayEquals(errorMsg, firstResult, secondResult);
+    }
+
+    private static void checkLongs(RandomGenerator first, RandomGenerator second) {
+        long[] firstResult = first.longs().limit(1_000).toArray();
+        long[] secondResult = second.longs().limit(1_000).toArray();
+
+        String errorMsg = String.format("%s.longs() and %s.longs() generated different sequences",
+                                        first, second);
+        assertArrayEquals(errorMsg, firstResult, secondResult);
+    }
+
+    private static void checkDoubles(RandomGenerator first, RandomGenerator second) {
+        double[] firstResult = first.doubles().limit(1_000).toArray();
+        double[] secondResult = second.doubles().limit(1_000).toArray();
+
+        String errorMsg = String.format("%s.doubles() and %s.doubles() generated different sequences",
+                                        first, second);
+        assertArrayEquals(errorMsg, firstResult, secondResult, 0.0d);
+    }
 }

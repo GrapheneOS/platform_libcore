@@ -33,6 +33,7 @@
  */
 package test.java.nio.Buffer;
 
+import java.io.OutputStream;
 import java.io.PrintStream;
 
 import java.nio.Buffer;
@@ -43,7 +44,10 @@ import org.testng.annotations.Test;
 
 public class Basic {
 
-    static PrintStream out = System.err;
+    // Android-changed: Discard test messages to avoid spamming the logcat.
+    // static PrintStream out = System.err;
+    private static final boolean DEBUG = false;
+    static PrintStream out = DEBUG ? System.err : new PrintStream(OutputStream.nullOutputStream());
 
     static long ic(int i) {
         int j = i % 54;
@@ -56,6 +60,11 @@ public class Basic {
                 + " lim=" + b.limit()
                 + " cap=" + b.capacity()
                 + "]");
+    }
+    static void show(int level, Buffer b) {
+        for (int i = 0; i < level; i++)
+            out.print("  ");
+        out.println(toString(b) + " " + Integer.toHexString(b.hashCode()));
     }
 
     static void fail(String s) {

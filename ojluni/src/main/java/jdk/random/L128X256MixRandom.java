@@ -234,8 +234,10 @@ public final class L128X256MixRandom extends AbstractSplittableWithBrineGenerato
      * @param seed the initial seed
      */
     public L128X256MixRandom(byte[] seed) {
-        // Convert the seed to 6 long values, of which the last 4 are not all zero.
-        long[] data = RandomSupport.convertSeedBytesToLongs(seed, 6, 4);
+        // Android-changed: backport https://bugs.openjdk.org/browse/JDK-8283083.
+        // Convert the seed to 8 long values, of which the last 4 are not all zero.
+        // long[] data = RandomSupport.convertSeedBytesToLongs(seed, 6, 4);
+        long[] data = RandomSupport.convertSeedBytesToLongs(seed, 8, 4);
         long ah = data[0], al = data[1], sh = data[2], sl = data[3],
              x0 = data[4], x1 = data[5], x2 = data[6], x3 = data[7];
         // Force a to be odd.
