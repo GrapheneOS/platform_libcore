@@ -44,6 +44,9 @@ import java.nio.*;
 
 
 
+import static org.testng.Assert.assertEquals;
+
+
 public class BasicShort
     extends Basic
 {
@@ -1200,6 +1203,25 @@ public class BasicShort
 
 
         testToString();
+
+        // Android-added: Add API coverage for get, put(int, short[]).
+        testGetPutArrayWithIndex();
     }
 
+    // BEGIN Android-added: Add API coverage for get, put(int, short[]).
+    private static void testGetPutArrayWithIndex() {
+        ShortBuffer buf = ShortBuffer.allocate(16);
+        short firstElement = 11, secondElement = 12;
+        buf.put(firstElement);
+        buf.put(secondElement);
+        buf.position(0);
+        short[] arr = new short[] { 4, 3, 2, 1 };
+        buf.put(2, arr);
+        short[] actual = new short[4];
+        buf.get(2, actual);
+        assertEquals(actual, arr);
+        buf.get(0, actual);
+        assertEquals(actual, new short[] {firstElement, secondElement, 4, 3});
+    }
+    // END Android-added: Add API coverage for get, put(int, short[]).
 }

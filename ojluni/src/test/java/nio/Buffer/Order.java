@@ -70,6 +70,8 @@ public class Order {
         ckCopyViews(bb);
     }
 
+    // Android-changed: Use TsetNg.
+    // public static void main(String args[]) throws Exception {
     @Test
     public void testOrder() throws Exception {
 

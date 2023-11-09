@@ -44,6 +44,9 @@ import java.util.Random;
 #end[byte]
 
 
+import static org.testng.Assert.assertEquals;
+
+
 public class Basic$Type$
     extends Basic
 {
@@ -1200,6 +1203,25 @@ public class Basic$Type$
 #end[byte]
 
         testToString();
+
+        // Android-added: Add API coverage for get, put(int, $type$[]).
+        testGetPutArrayWithIndex();
     }
 
+    // BEGIN Android-added: Add API coverage for get, put(int, $type$[]).
+    private static void testGetPutArrayWithIndex() {
+        $Type$Buffer buf = $Type$Buffer.allocate(16);
+        $type$ firstElement = 11, secondElement = 12;
+        buf.put(firstElement);
+        buf.put(secondElement);
+        buf.position(0);
+        $type$[] arr = new $type$[] { 4, 3, 2, 1 };
+        buf.put(2, arr);
+        $type$[] actual = new $type$[4];
+        buf.get(2, actual);
+        assertEquals(actual, arr);
+        buf.get(0, actual);
+        assertEquals(actual, new $type$[] {firstElement, secondElement, 4, 3});
+    }
+    // END Android-added: Add API coverage for get, put(int, $type$[]).
 }

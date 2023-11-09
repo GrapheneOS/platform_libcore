@@ -35,30 +35,49 @@ import org.testng.annotations.Test;
 
 public class StringCharBufferSliceTest {
 
+    // Android-changed: Use TestNg.
+    // public static void main( String[] args) throws Exception {
     @Test
     public void testSlice() throws Exception {
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //     ">>> StringCharBufferSliceTest-main: testing the slice method...");
 
         final String in = "for testing";
+
+        System.out.println(
+            ">>> StringCharBufferSliceTest-main: testing with the position 0.");
 
         CharBuffer buff = CharBuffer.wrap(in);
         helper(buff, buff.slice());
         helper(buff, buff.slice(0, buff.remaining()));
 
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //     ">>> StringCharBufferSliceTest-main: testing with new position.");
+
         buff.position(2);
         helper(buff, buff.slice());
         helper(buff, buff.slice(2, buff.remaining()));
+
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //   ">>> StringCharBufferSliceTest-main: testing with non zero initial position.");
 
         buff = CharBuffer.wrap(in, 3, in.length());
         helper(buff, buff.slice());
         helper(buff, buff.slice(0, buff.remaining()));
 
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //     ">>> StringCharBufferSliceTest-main: testing slice result with get()");
         buff.position(4);
         buff.limit(7);
         BiConsumer<CharBuffer,CharBuffer> bitest = (b, s) -> {
             for (int i = 0; i < 3; i++) {
                 if (s.get() != b.get()) {
                     throw new RuntimeException
-                            ("Wrong characters in slice result.");
+                        ("Wrong characters in slice result.");
                 }
             }
         };
@@ -66,13 +85,17 @@ public class StringCharBufferSliceTest {
         buff.position(4);
         bitest.accept(buff, buff.slice(4, 3));
 
+
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //     ">>> StringCharBufferSliceTest-main: testing slice result with get(int)");
         buff.position(4);
         buff.limit(7);
         bitest = (b, s) -> {
             for (int i = 0; i < 3; i++) {
                 if (s.get(i) != b.get(4 + i)) {
                     throw new RuntimeException
-                            ("Wrong characters in slice result.");
+                        ("Wrong characters in slice result.");
                 }
             }
         };
@@ -80,6 +103,9 @@ public class StringCharBufferSliceTest {
         buff.position(4);
         bitest.accept(buff, buff.slice(4, 3));
 
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //   ">>> StringCharBufferSliceTest-main: testing slice with result of slice");
         buff.position(0);
         buff.limit(buff.capacity());
         Consumer<CharBuffer> test = (s) -> {
@@ -88,7 +114,7 @@ public class StringCharBufferSliceTest {
                 CharBuffer nextSlice = s.slice();
                 if (nextSlice.position() != 0)
                     throw new RuntimeException
-                            ("New buffer's position should be zero");
+                        ("New buffer's position should be zero");
                 if (!nextSlice.equals(s))
                     throw new RuntimeException("New buffer should be equal");
                 s = nextSlice;
@@ -97,44 +123,57 @@ public class StringCharBufferSliceTest {
         test.accept(buff.slice());
         test.accept(buff.slice(0, buff.capacity()));
 
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //   ">>> StringCharBufferSliceTest-main: testing toString.");
         buff.position(4);
         buff.limit(7);
         test = (s) -> {
             if (!s.toString().equals("tes")) {
                 throw new RuntimeException
-                        ("bad toString() after slice(): " + s.toString());
+                    ("bad toString() after slice(): " + s.toString());
             }
         };
         test.accept(buff.slice());
         test.accept(buff.slice(4, 3));
 
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //   ">>> StringCharBufferSliceTest-main: testing subSequence.");
         buff.position(4);
         buff.limit(8);
         test = (s) -> {
             CharSequence subSeq = s.subSequence(1, 3);
             if (subSeq.charAt(0) != 'e' || subSeq.charAt(1) != 's') {
                 throw new RuntimeException
-                        ("bad subSequence() after slice(): '" + subSeq + "'");
+                    ("bad subSequence() after slice(): '" + subSeq + "'");
             }
         };
         test.accept(buff.slice());
         test.accept(buff.slice(4, 4));
 
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(
+        //   ">>> StringCharBufferSliceTest-main: testing duplicate.");
         buff.position(4);
         buff.limit(8);
         test = (s) -> {
             CharBuffer dupe = s.duplicate();
             if (dupe.charAt(0) != 't' || dupe.charAt(1) != 'e'
-                    || dupe.charAt(2) != 's' || dupe.charAt(3) != 't') {
+                || dupe.charAt(2) != 's' || dupe.charAt(3) != 't') {
                 throw new RuntimeException
-                        ("bad duplicate() after slice(): '" + dupe + "'");
+                    ("bad duplicate() after slice(): '" + dupe + "'");
             }
         };
         test.accept(buff.slice());
         test.accept(buff.slice(4, 4));
 
+        // Android-changed: Remove System.out to avoid spamming logcat.
+        // System.out.println(">>> StringCharBufferSliceTest-main: done!");
     }
 
+    // Android-changed: Rename the method to avoid confusing JUnit / TestNg.
+    // public static void test(CharBuffer buff, CharBuffer slice) throws RuntimeException {
     public static void helper(CharBuffer buff, CharBuffer slice) throws RuntimeException {
         boolean marked = false;
 
@@ -147,12 +186,12 @@ public class StringCharBufferSliceTest {
         }
 
         if (marked ||
-                slice.position() != 0 ||
-                buff.remaining() != slice.limit() ||
-                buff.remaining() != slice.capacity()) {
+            slice.position() != 0 ||
+            buff.remaining() != slice.limit() ||
+            buff.remaining() != slice.capacity()) {
 
             throw new RuntimeException(
-                    "Calling the CharBuffer.slice method failed.");
+                 "Calling the CharBuffer.slice method failed.");
         }
     }
 }

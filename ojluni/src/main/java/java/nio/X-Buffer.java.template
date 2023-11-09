@@ -890,7 +890,6 @@ public abstract class $Type$Buffer
      *          {@code length} parameters do not hold
      *
      * @since 13
-     * @hide
      */
     public $Type$Buffer get(int index, $type$[] dst, int offset, int length) {
         Objects.checkFromIndexSize(index, length, limit());
@@ -927,7 +926,6 @@ public abstract class $Type$Buffer
      *          or {@code limit() - index < dst.length}
      *
      * @since 13
-     * @hide
      */
     public $Type$Buffer get(int index, $type$[] dst) {
         return get(index, dst, 0, dst.length);
@@ -1093,7 +1091,6 @@ public abstract class $Type$Buffer
      *         If this buffer is read-only
      *
      * @since 16
-     * @hide
      */
     public $Type$Buffer put(int index, $Type$Buffer src, int offset, int length) {
         Objects.checkFromIndexSize(index, length, limit());
@@ -1363,7 +1360,6 @@ public abstract class $Type$Buffer
      *          If this buffer is read-only
      *
      * @since 13
-     * @hide
      */
     public $Type$Buffer put(int index, $type$[] src, int offset, int length) {
         if (isReadOnly())
@@ -1404,7 +1400,6 @@ public abstract class $Type$Buffer
      *          If this buffer is read-only
      *
      * @since 13
-     * @hide
      */
     public $Type$Buffer put(int index, $type$[] src) {
         return put(index, src, 0, src.length);

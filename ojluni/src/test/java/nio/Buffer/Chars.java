@@ -107,15 +107,15 @@ public class Chars {
         addCases(CharBuffer.allocate(SIZE), buffers);
         addCases(CharBuffer.wrap(new char[SIZE]), buffers);
         addCases(ByteBuffer.allocate(SIZE*2).order(ByteOrder.BIG_ENDIAN).asCharBuffer(),
-                buffers);
+                 buffers);
         addCases(ByteBuffer.allocate(SIZE*2).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer(),
-                buffers);
+                 buffers);
 
         // direct
         addCases(ByteBuffer.allocateDirect(SIZE*2).order(ByteOrder.BIG_ENDIAN).asCharBuffer(),
-                buffers);
+                 buffers);
         addCases(ByteBuffer.allocateDirect(SIZE*2).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer(),
-                buffers);
+                 buffers);
 
         // read-only buffer backed by a CharSequence
         buffers.add(CharBuffer.wrap(randomize(CharBuffer.allocate(SIZE))));
@@ -131,6 +131,8 @@ public class Chars {
 
     @Test(dataProvider = "charbuffers")
     public void testChars(String type, CharBuffer cb) {
+        // Android-changed: Avoid spamming the logcat.
+        // System.out.format("%s position=%d, limit=%d%n", type, cb.position(), cb.limit());
         int expected = intSum(cb);
         assertEquals(cb.chars().sum(), expected);
         assertEquals(cb.chars().parallel().sum(), expected);

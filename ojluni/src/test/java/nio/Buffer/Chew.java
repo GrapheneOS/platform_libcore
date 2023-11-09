@@ -31,12 +31,10 @@
 package test.java.nio.Buffer;
 
 import java.nio.*;
-import org.testng.annotations.Test;
 
 
 public class Chew {
 
-    @Test
     public static void main(String[] args) {
         for (int i = 0; i < 64; i++)
             ByteBuffer.allocateDirect(1 << 20);

@@ -44,6 +44,9 @@ import java.util.Random;
 
 
 
+import static org.testng.Assert.assertEquals;
+
+
 public class BasicByte
     extends Basic
 {
@@ -1200,6 +1203,25 @@ public class BasicByte
 
 
         testToString();
+
+        // Android-added: Add API coverage for get, put(int, byte[]).
+        testGetPutArrayWithIndex();
     }
 
+    // BEGIN Android-added: Add API coverage for get, put(int, byte[]).
+    private static void testGetPutArrayWithIndex() {
+        ByteBuffer buf = ByteBuffer.allocate(16);
+        byte firstElement = 11, secondElement = 12;
+        buf.put(firstElement);
+        buf.put(secondElement);
+        buf.position(0);
+        byte[] arr = new byte[] { 4, 3, 2, 1 };
+        buf.put(2, arr);
+        byte[] actual = new byte[4];
+        buf.get(2, actual);
+        assertEquals(actual, arr);
+        buf.get(0, actual);
+        assertEquals(actual, new byte[] {firstElement, secondElement, 4, 3});
+    }
+    // END Android-added: Add API coverage for get, put(int, byte[]).
 }

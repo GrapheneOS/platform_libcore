@@ -44,6 +44,9 @@ import java.nio.*;
 
 
 
+import static org.testng.Assert.assertEquals;
+
+
 public class BasicChar
     extends Basic
 {
@@ -1200,6 +1203,25 @@ public class BasicChar
 
 
         testToString();
+
+        // Android-added: Add API coverage for get, put(int, char[]).
+        testGetPutArrayWithIndex();
     }
 
+    // BEGIN Android-added: Add API coverage for get, put(int, char[]).
+    private static void testGetPutArrayWithIndex() {
+        CharBuffer buf = CharBuffer.allocate(16);
+        char firstElement = 11, secondElement = 12;
+        buf.put(firstElement);
+        buf.put(secondElement);
+        buf.position(0);
+        char[] arr = new char[] { 4, 3, 2, 1 };
+        buf.put(2, arr);
+        char[] actual = new char[4];
+        buf.get(2, actual);
+        assertEquals(actual, arr);
+        buf.get(0, actual);
+        assertEquals(actual, new char[] {firstElement, secondElement, 4, 3});
+    }
+    // END Android-added: Add API coverage for get, put(int, char[]).
 }

@@ -61,6 +61,7 @@ public class Basic {
                 + " cap=" + b.capacity()
                 + "]");
     }
+
     static void show(int level, Buffer b) {
         for (int i = 0; i < level; i++)
             out.print("  ");
@@ -77,12 +78,12 @@ public class Basic {
 
     static void fail(String s, Buffer b, Buffer b2) {
         throw new RuntimeException(s + ": "
-                + toString(b) + ", " + toString(b2));
+                                   + toString(b) + ", " + toString(b2));
     }
 
     static void fail(Buffer b,
-            String expected, char expectedChar,
-            String got, char gotChar)
+                     String expected, char expectedChar,
+                     String got, char gotChar)
     {
         if (b instanceof ByteBuffer) {
             ByteBuffer bb = (ByteBuffer)b;
@@ -99,16 +100,16 @@ public class Basic {
             out.println();
         }
         throw new RuntimeException(toString(b)
-                + ": Expected '" + expectedChar + "'=0x"
-                + expected
-                + ", got '" + gotChar + "'=0x"
-                + got);
+                                   + ": Expected '" + expectedChar + "'=0x"
+                                   + expected
+                                   + ", got '" + gotChar + "'=0x"
+                                   + got);
     }
 
     static void fail(Buffer b, long expected, long got) {
         fail(b,
-                Long.toHexString(expected), (char)expected,
-                Long.toHexString(got), (char)got);
+             Long.toHexString(expected), (char)expected,
+             Long.toHexString(got), (char)got);
     }
 
     static void ck(Buffer b, boolean cond) {
@@ -124,17 +125,19 @@ public class Basic {
     static void ck(Buffer b, float got, float expected) {
         if (expected != got)
             fail(b,
-                    Float.toString(expected), (char)expected,
-                    Float.toString(got), (char)got);
+                 Float.toString(expected), (char)expected,
+                 Float.toString(got), (char)got);
     }
 
     static void ck(Buffer b, double got, double expected) {
         if (expected != got)
             fail(b,
-                    Double.toString(expected), (char)expected,
-                    Double.toString(got), (char)got);
+                 Double.toString(expected), (char)expected,
+                 Double.toString(got), (char)got);
     }
 
+    // Android-change: Use TestNg.
+    // public static void main(String[] args) {
     @Test
     public void testAll() {
         BasicByte.test();

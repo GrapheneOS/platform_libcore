@@ -44,6 +44,9 @@ import java.nio.*;
 
 
 
+import static org.testng.Assert.assertEquals;
+
+
 public class BasicDouble
     extends Basic
 {
@@ -1200,6 +1203,25 @@ public class BasicDouble
 
 
         testToString();
+
+        // Android-added: Add API coverage for get, put(int, double[]).
+        testGetPutArrayWithIndex();
     }
 
+    // BEGIN Android-added: Add API coverage for get, put(int, double[]).
+    private static void testGetPutArrayWithIndex() {
+        DoubleBuffer buf = DoubleBuffer.allocate(16);
+        double firstElement = 11, secondElement = 12;
+        buf.put(firstElement);
+        buf.put(secondElement);
+        buf.position(0);
+        double[] arr = new double[] { 4, 3, 2, 1 };
+        buf.put(2, arr);
+        double[] actual = new double[4];
+        buf.get(2, actual);
+        assertEquals(actual, arr);
+        buf.get(0, actual);
+        assertEquals(actual, new double[] {firstElement, secondElement, 4, 3});
+    }
+    // END Android-added: Add API coverage for get, put(int, double[]).
 }

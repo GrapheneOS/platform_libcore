@@ -175,6 +175,8 @@ public class RandomTestCoverage {
         coverRandomGenerator(factory.create());
         coverRandomGenerator(factory.create(12345L));
         coverRandomGenerator(factory.create(new byte[] {1, 2, 3, 4, 5, 6, 7, 8}));
+        // Android-added: call one more method.
+        checkPredicates(factory);
     }
 
     static void coverDefaults() {

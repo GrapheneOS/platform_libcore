@@ -44,6 +44,9 @@ import java.nio.*;
 
 
 
+import static org.testng.Assert.assertEquals;
+
+
 public class BasicFloat
     extends Basic
 {
@@ -1200,6 +1203,25 @@ public class BasicFloat
 
 
         testToString();
+
+        // Android-added: Add API coverage for get, put(int, float[]).
+        testGetPutArrayWithIndex();
     }
 
+    // BEGIN Android-added: Add API coverage for get, put(int, float[]).
+    private static void testGetPutArrayWithIndex() {
+        FloatBuffer buf = FloatBuffer.allocate(16);
+        float firstElement = 11, secondElement = 12;
+        buf.put(firstElement);
+        buf.put(secondElement);
+        buf.position(0);
+        float[] arr = new float[] { 4, 3, 2, 1 };
+        buf.put(2, arr);
+        float[] actual = new float[4];
+        buf.get(2, actual);
+        assertEquals(actual, arr);
+        buf.get(0, actual);
+        assertEquals(actual, new float[] {firstElement, secondElement, 4, 3});
+    }
+    // END Android-added: Add API coverage for get, put(int, float[]).
 }

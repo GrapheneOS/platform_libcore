@@ -385,7 +385,6 @@ public abstract class MappedByteBuffer
      * @return  This buffer
      *
      * @since 13
-     * @hide
      */
     public final MappedByteBuffer force(int index, int length) {
         // Android-note: Android doesn't throw UOE, because new API doesn't need forward compat.

@@ -44,6 +44,9 @@ import java.nio.*;
 
 
 
+import static org.testng.Assert.assertEquals;
+
+
 public class BasicLong
     extends Basic
 {
@@ -1200,6 +1203,25 @@ public class BasicLong
 
 
         testToString();
+
+        // Android-added: Add API coverage for get, put(int, long[]).
+        testGetPutArrayWithIndex();
     }
 
+    // BEGIN Android-added: Add API coverage for get, put(int, long[]).
+    private static void testGetPutArrayWithIndex() {
+        LongBuffer buf = LongBuffer.allocate(16);
+        long firstElement = 11, secondElement = 12;
+        buf.put(firstElement);
+        buf.put(secondElement);
+        buf.position(0);
+        long[] arr = new long[] { 4, 3, 2, 1 };
+        buf.put(2, arr);
+        long[] actual = new long[4];
+        buf.get(2, actual);
+        assertEquals(actual, arr);
+        buf.get(0, actual);
+        assertEquals(actual, new long[] {firstElement, secondElement, 4, 3});
+    }
+    // END Android-added: Add API coverage for get, put(int, long[]).
 }
