@@ -3101,8 +3101,10 @@ package java.lang {
     method @Nullable public Object[] getSigners();
     method @NonNull public String getSimpleName();
     method @Nullable public Class<? super T> getSuperclass();
+    method @NonNull public String getTypeName();
     method @NonNull public java.lang.reflect.TypeVariable<java.lang.Class<T>>[] getTypeParameters();
     method public boolean isAnnotation();
+    method public boolean isAnnotationPresent(@NonNull Class<? extends java.lang.annotation.Annotation>);
     method public boolean isAnonymousClass();
     method public boolean isArray();
     method public boolean isAssignableFrom(@NonNull Class<?>);
@@ -3701,6 +3703,7 @@ package java.lang {
     method public String getSpecificationTitle();
     method public String getSpecificationVendor();
     method public String getSpecificationVersion();
+    method public boolean isAnnotationPresent(Class<? extends java.lang.annotation.Annotation>);
     method public boolean isCompatibleWith(String) throws java.lang.NumberFormatException;
     method public boolean isSealed();
     method public boolean isSealed(java.net.URL);
@@ -4052,9 +4055,11 @@ package java.lang {
     ctor public String(@NonNull StringBuffer);
     ctor public String(@NonNull StringBuilder);
     method public char charAt(int);
+    method @NonNull public java.util.stream.IntStream chars();
     method public int codePointAt(int);
     method public int codePointBefore(int);
     method public int codePointCount(int, int);
+    method @NonNull public java.util.stream.IntStream codePoints();
     method public int compareTo(@NonNull String);
     method public int compareToIgnoreCase(@NonNull String);
     method @NonNull public String concat(@NonNull String);
@@ -4080,6 +4085,7 @@ package java.lang {
     method public int indexOf(@NonNull String, int);
     method @NonNull public String intern();
     method public boolean isBlank();
+    method public boolean isEmpty();
     method @NonNull public static String join(@NonNull CharSequence, @Nullable java.lang.CharSequence...);
     method @NonNull public static String join(@NonNull CharSequence, @NonNull Iterable<? extends java.lang.CharSequence>);
     method public int lastIndexOf(int);
@@ -4150,9 +4156,11 @@ package java.lang {
     method @NonNull public StringBuffer appendCodePoint(int);
     method public int capacity();
     method public char charAt(int);
+    method @NonNull public java.util.stream.IntStream chars();
     method public int codePointAt(int);
     method public int codePointBefore(int);
     method public int codePointCount(int, int);
+    method @NonNull public java.util.stream.IntStream codePoints();
     method public int compareTo(@NonNull StringBuffer);
     method @NonNull public StringBuffer delete(int, int);
     method @NonNull public StringBuffer deleteCharAt(int);
@@ -4208,9 +4216,11 @@ package java.lang {
     method @NonNull public StringBuilder appendCodePoint(int);
     method public int capacity();
     method public char charAt(int);
+    method @NonNull public java.util.stream.IntStream chars();
     method public int codePointAt(int);
     method public int codePointBefore(int);
     method public int codePointCount(int, int);
+    method @NonNull public java.util.stream.IntStream codePoints();
     method public int compareTo(@NonNull StringBuilder);
     method @NonNull public StringBuilder delete(int, int);
     method @NonNull public StringBuilder deleteCharAt(int);
@@ -4885,8 +4895,12 @@ package java.lang.reflect {
     ctor protected AccessibleObject();
     method @Nullable public <T extends java.lang.annotation.Annotation> T getAnnotation(@NonNull Class<T>);
     method @NonNull public java.lang.annotation.Annotation[] getAnnotations();
+    method public <T extends java.lang.annotation.Annotation> T[] getAnnotationsByType(@NonNull Class<T>);
+    method @Nullable public <T extends java.lang.annotation.Annotation> T getDeclaredAnnotation(@NonNull Class<T>);
     method @NonNull public java.lang.annotation.Annotation[] getDeclaredAnnotations();
+    method public <T extends java.lang.annotation.Annotation> T[] getDeclaredAnnotationsByType(@NonNull Class<T>);
     method public boolean isAccessible();
+    method public boolean isAnnotationPresent(@NonNull Class<? extends java.lang.annotation.Annotation>);
     method public static void setAccessible(java.lang.reflect.AccessibleObject[], boolean) throws java.lang.SecurityException;
     method public void setAccessible(boolean) throws java.lang.SecurityException;
   }
@@ -5078,7 +5092,10 @@ package java.lang.reflect {
   public final class Parameter implements java.lang.reflect.AnnotatedElement {
     method @Nullable public <T extends java.lang.annotation.Annotation> T getAnnotation(@NonNull Class<T>);
     method @NonNull public java.lang.annotation.Annotation[] getAnnotations();
+    method public <T extends java.lang.annotation.Annotation> T[] getAnnotationsByType(@NonNull Class<T>);
+    method @Nullable public <T extends java.lang.annotation.Annotation> T getDeclaredAnnotation(@NonNull Class<T>);
     method @NonNull public java.lang.annotation.Annotation[] getDeclaredAnnotations();
+    method public <T extends java.lang.annotation.Annotation> T[] getDeclaredAnnotationsByType(@NonNull Class<T>);
     method @NonNull public java.lang.reflect.Executable getDeclaringExecutable();
     method public int getModifiers();
     method @NonNull public String getName();
@@ -6302,6 +6319,7 @@ package java.nio {
     method public final int arrayOffset();
     method public abstract java.nio.CharBuffer asReadOnlyBuffer();
     method public final char charAt(int);
+    method public java.util.stream.IntStream chars();
     method public abstract java.nio.CharBuffer compact();
     method public int compareTo(java.nio.CharBuffer);
     method public abstract java.nio.CharBuffer duplicate();
@@ -8124,14 +8142,17 @@ package java.security {
   public static class KeyStore.PasswordProtection implements javax.security.auth.Destroyable java.security.KeyStore.ProtectionParameter {
     ctor public KeyStore.PasswordProtection(char[]);
     ctor public KeyStore.PasswordProtection(char[], String, java.security.spec.AlgorithmParameterSpec);
+    method public void destroy() throws javax.security.auth.DestroyFailedException;
     method public char[] getPassword();
     method public String getProtectionAlgorithm();
     method public java.security.spec.AlgorithmParameterSpec getProtectionParameters();
+    method public boolean isDestroyed();
   }
 
   public static final class KeyStore.PrivateKeyEntry implements java.security.KeyStore.Entry {
     ctor public KeyStore.PrivateKeyEntry(java.security.PrivateKey, java.security.cert.Certificate[]);
     ctor public KeyStore.PrivateKeyEntry(java.security.PrivateKey, java.security.cert.Certificate[], java.util.Set<java.security.KeyStore.Entry.Attribute>);
+    method public java.util.Set<java.security.KeyStore.Entry.Attribute> getAttributes();
     method public java.security.cert.Certificate getCertificate();
     method public java.security.cert.Certificate[] getCertificateChain();
     method public java.security.PrivateKey getPrivateKey();
@@ -8143,12 +8164,14 @@ package java.security {
   public static final class KeyStore.SecretKeyEntry implements java.security.KeyStore.Entry {
     ctor public KeyStore.SecretKeyEntry(javax.crypto.SecretKey);
     ctor public KeyStore.SecretKeyEntry(javax.crypto.SecretKey, java.util.Set<java.security.KeyStore.Entry.Attribute>);
+    method public java.util.Set<java.security.KeyStore.Entry.Attribute> getAttributes();
     method public javax.crypto.SecretKey getSecretKey();
   }
 
   public static final class KeyStore.TrustedCertificateEntry implements java.security.KeyStore.Entry {
     ctor public KeyStore.TrustedCertificateEntry(java.security.cert.Certificate);
     ctor public KeyStore.TrustedCertificateEntry(java.security.cert.Certificate, java.util.Set<java.security.KeyStore.Entry.Attribute>);
+    method public java.util.Set<java.security.KeyStore.Entry.Attribute> getAttributes();
     method public java.security.cert.Certificate getTrustedCertificate();
   }
 
@@ -11214,6 +11237,7 @@ package java.time {
     ctor protected Clock();
     method public static java.time.Clock fixed(java.time.Instant, java.time.ZoneId);
     method public abstract java.time.ZoneId getZone();
+    method public long millis();
     method public static java.time.Clock offset(java.time.Clock, java.time.Duration);
     method public static java.time.Clock system(java.time.ZoneId);
     method public static java.time.Clock systemDefaultZone();
@@ -11315,6 +11339,7 @@ package java.time {
     method public java.time.ZonedDateTime atZone(java.time.ZoneId);
     method public int compareTo(java.time.Instant);
     method public static java.time.Instant from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public long getEpochSecond();
     method public long getLong(java.time.temporal.TemporalField);
     method public int getNano();
@@ -11338,6 +11363,8 @@ package java.time {
     method public java.time.Instant plusMillis(long);
     method public java.time.Instant plusNanos(long);
     method public java.time.Instant plusSeconds(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public long toEpochMilli();
     method public java.time.Instant truncatedTo(java.time.temporal.TemporalUnit);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
@@ -11359,6 +11386,7 @@ package java.time {
   }
 
   public final class LocalDate implements java.time.chrono.ChronoLocalDate java.io.Serializable java.time.temporal.Temporal java.time.temporal.TemporalAdjuster {
+    method public java.time.temporal.Temporal adjustInto(java.time.temporal.Temporal);
     method public java.time.LocalDateTime atStartOfDay();
     method public java.time.ZonedDateTime atStartOfDay(java.time.ZoneId);
     method public java.time.LocalDateTime atTime(java.time.LocalTime);
@@ -11366,22 +11394,31 @@ package java.time {
     method public java.time.LocalDateTime atTime(int, int, int);
     method public java.time.LocalDateTime atTime(int, int, int, int);
     method public java.time.OffsetDateTime atTime(java.time.OffsetTime);
+    method public int compareTo(java.time.chrono.ChronoLocalDate);
     method public java.util.stream.Stream<java.time.LocalDate> datesUntil(java.time.LocalDate);
     method public java.util.stream.Stream<java.time.LocalDate> datesUntil(java.time.LocalDate, java.time.Period);
     method public boolean equals(Object);
+    method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.LocalDate from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public java.time.chrono.IsoChronology getChronology();
     method public int getDayOfMonth();
     method public java.time.DayOfWeek getDayOfWeek();
     method public int getDayOfYear();
+    method public java.time.chrono.Era getEra();
     method public long getLong(java.time.temporal.TemporalField);
     method public java.time.Month getMonth();
     method public int getMonthValue();
     method public int getYear();
     method public int hashCode();
+    method public boolean isAfter(java.time.chrono.ChronoLocalDate);
+    method public boolean isBefore(java.time.chrono.ChronoLocalDate);
+    method public boolean isEqual(java.time.chrono.ChronoLocalDate);
+    method public boolean isLeapYear();
     method public boolean isSupported(java.time.temporal.TemporalField);
     method public boolean isSupported(java.time.temporal.TemporalUnit);
     method public int lengthOfMonth();
+    method public int lengthOfYear();
     method public java.time.LocalDate minus(java.time.temporal.TemporalAmount);
     method public java.time.LocalDate minus(long, java.time.temporal.TemporalUnit);
     method public java.time.LocalDate minusDays(long);
@@ -11404,6 +11441,9 @@ package java.time {
     method public java.time.LocalDate plusMonths(long);
     method public java.time.LocalDate plusWeeks(long);
     method public java.time.LocalDate plusYears(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
+    method public long toEpochDay();
     method public long toEpochSecond(java.time.LocalTime, java.time.ZoneOffset);
     method public String toString();
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
@@ -11420,10 +11460,14 @@ package java.time {
   }
 
   public final class LocalDateTime implements java.time.chrono.ChronoLocalDateTime<java.time.LocalDate> java.io.Serializable java.time.temporal.Temporal java.time.temporal.TemporalAdjuster {
+    method public java.time.temporal.Temporal adjustInto(java.time.temporal.Temporal);
     method public java.time.OffsetDateTime atOffset(java.time.ZoneOffset);
     method public java.time.ZonedDateTime atZone(java.time.ZoneId);
+    method public int compareTo(java.time.chrono.ChronoLocalDateTime<?>);
     method public boolean equals(Object);
+    method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.LocalDateTime from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public int getDayOfMonth();
     method public java.time.DayOfWeek getDayOfWeek();
     method public int getDayOfYear();
@@ -11436,6 +11480,9 @@ package java.time {
     method public int getSecond();
     method public int getYear();
     method public int hashCode();
+    method public boolean isAfter(java.time.chrono.ChronoLocalDateTime<?>);
+    method public boolean isBefore(java.time.chrono.ChronoLocalDateTime<?>);
+    method public boolean isEqual(java.time.chrono.ChronoLocalDateTime<?>);
     method public boolean isSupported(java.time.temporal.TemporalField);
     method public boolean isSupported(java.time.temporal.TemporalUnit);
     method public java.time.LocalDateTime minus(java.time.temporal.TemporalAmount);
@@ -11472,6 +11519,8 @@ package java.time {
     method public java.time.LocalDateTime plusSeconds(long);
     method public java.time.LocalDateTime plusWeeks(long);
     method public java.time.LocalDateTime plusYears(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public java.time.LocalDate toLocalDate();
     method public java.time.LocalTime toLocalTime();
     method public String toString();
@@ -11498,6 +11547,7 @@ package java.time {
     method public int compareTo(java.time.LocalTime);
     method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.LocalTime from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public int getHour();
     method public long getLong(java.time.temporal.TemporalField);
     method public int getMinute();
@@ -11530,6 +11580,8 @@ package java.time {
     method public java.time.LocalTime plusMinutes(long);
     method public java.time.LocalTime plusNanos(long);
     method public java.time.LocalTime plusSeconds(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public long toEpochSecond(java.time.LocalDate, java.time.ZoneOffset);
     method public long toNanoOfDay();
     method public int toSecondOfDay();
@@ -11582,6 +11634,7 @@ package java.time {
     method public int compareTo(java.time.MonthDay);
     method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.MonthDay from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public int getDayOfMonth();
     method public long getLong(java.time.temporal.TemporalField);
     method public java.time.Month getMonth();
@@ -11597,6 +11650,8 @@ package java.time {
     method public static java.time.MonthDay of(int, int);
     method public static java.time.MonthDay parse(CharSequence);
     method public static java.time.MonthDay parse(CharSequence, java.time.format.DateTimeFormatter);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public java.time.MonthDay with(java.time.Month);
     method public java.time.MonthDay withDayOfMonth(int);
     method public java.time.MonthDay withMonth(int);
@@ -11609,6 +11664,7 @@ package java.time {
     method public int compareTo(java.time.OffsetDateTime);
     method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.OffsetDateTime from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public int getDayOfMonth();
     method public java.time.DayOfWeek getDayOfWeek();
     method public int getDayOfYear();
@@ -11655,6 +11711,8 @@ package java.time {
     method public java.time.OffsetDateTime plusSeconds(long);
     method public java.time.OffsetDateTime plusWeeks(long);
     method public java.time.OffsetDateTime plusYears(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public static java.util.Comparator<java.time.OffsetDateTime> timeLineOrder();
     method public long toEpochSecond();
     method public java.time.Instant toInstant();
@@ -11687,6 +11745,7 @@ package java.time {
     method public int compareTo(java.time.OffsetTime);
     method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.OffsetTime from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public int getHour();
     method public long getLong(java.time.temporal.TemporalField);
     method public int getMinute();
@@ -11718,6 +11777,8 @@ package java.time {
     method public java.time.OffsetTime plusMinutes(long);
     method public java.time.OffsetTime plusNanos(long);
     method public java.time.OffsetTime plusSeconds(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public long toEpochSecond(java.time.LocalDate);
     method public java.time.LocalTime toLocalTime();
     method public java.time.OffsetTime truncatedTo(java.time.temporal.TemporalUnit);
@@ -11746,6 +11807,8 @@ package java.time {
     method public java.util.List<java.time.temporal.TemporalUnit> getUnits();
     method public int getYears();
     method public int hashCode();
+    method public boolean isNegative();
+    method public boolean isZero();
     method public java.time.Period minus(java.time.temporal.TemporalAmount);
     method public java.time.Period minusDays(long);
     method public java.time.Period minusMonths(long);
@@ -11781,6 +11844,7 @@ package java.time {
     method public int compareTo(java.time.Year);
     method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.Year from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public long getLong(java.time.temporal.TemporalField);
     method public int getValue();
     method public boolean isAfter(java.time.Year);
@@ -11803,6 +11867,8 @@ package java.time {
     method public java.time.Year plus(java.time.temporal.TemporalAmount);
     method public java.time.Year plus(long, java.time.temporal.TemporalUnit);
     method public java.time.Year plusYears(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
     method public java.time.Year with(java.time.temporal.TemporalAdjuster);
     method public java.time.Year with(java.time.temporal.TemporalField, long);
@@ -11817,6 +11883,7 @@ package java.time {
     method public int compareTo(java.time.YearMonth);
     method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.YearMonth from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public long getLong(java.time.temporal.TemporalField);
     method public java.time.Month getMonth();
     method public int getMonthValue();
@@ -11844,6 +11911,8 @@ package java.time {
     method public java.time.YearMonth plus(long, java.time.temporal.TemporalUnit);
     method public java.time.YearMonth plusMonths(long);
     method public java.time.YearMonth plusYears(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
     method public java.time.YearMonth with(java.time.temporal.TemporalAdjuster);
     method public java.time.YearMonth with(java.time.temporal.TemporalField, long);
@@ -11869,6 +11938,7 @@ package java.time {
     method public java.time.temporal.Temporal adjustInto(java.time.temporal.Temporal);
     method public int compareTo(java.time.ZoneOffset);
     method public static java.time.ZoneOffset from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public String getId();
     method public long getLong(java.time.temporal.TemporalField);
     method public java.time.zone.ZoneRules getRules();
@@ -11879,6 +11949,8 @@ package java.time {
     method public static java.time.ZoneOffset ofHoursMinutes(int, int);
     method public static java.time.ZoneOffset ofHoursMinutesSeconds(int, int, int);
     method public static java.time.ZoneOffset ofTotalSeconds(int);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     field public static final java.time.ZoneOffset MAX;
     field public static final java.time.ZoneOffset MIN;
     field public static final java.time.ZoneOffset UTC;
@@ -11886,7 +11958,9 @@ package java.time {
 
   public final class ZonedDateTime implements java.time.chrono.ChronoZonedDateTime<java.time.LocalDate> java.io.Serializable java.time.temporal.Temporal {
     method public boolean equals(Object);
+    method public String format(java.time.format.DateTimeFormatter);
     method public static java.time.ZonedDateTime from(java.time.temporal.TemporalAccessor);
+    method public int get(java.time.temporal.TemporalField);
     method public int getDayOfMonth();
     method public java.time.DayOfWeek getDayOfWeek();
     method public int getDayOfYear();
@@ -11935,8 +12009,11 @@ package java.time {
     method public java.time.ZonedDateTime plusSeconds(long);
     method public java.time.ZonedDateTime plusWeeks(long);
     method public java.time.ZonedDateTime plusYears(long);
+    method public <R> R query(java.time.temporal.TemporalQuery<R>);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public java.time.LocalDate toLocalDate();
     method public java.time.LocalDateTime toLocalDateTime();
+    method public java.time.LocalTime toLocalTime();
     method public java.time.OffsetDateTime toOffsetDateTime();
     method public String toString();
     method public java.time.ZonedDateTime truncatedTo(java.time.temporal.TemporalUnit);
@@ -12149,7 +12226,9 @@ package java.time.chrono {
     method public java.time.chrono.HijrahChronology getChronology();
     method public java.time.chrono.HijrahEra getEra();
     method public long getLong(java.time.temporal.TemporalField);
+    method public boolean isLeapYear();
     method public int lengthOfMonth();
+    method public int lengthOfYear();
     method public java.time.chrono.HijrahDate minus(java.time.temporal.TemporalAmount);
     method public java.time.chrono.HijrahDate minus(long, java.time.temporal.TemporalUnit);
     method public static java.time.chrono.HijrahDate now();
@@ -12158,6 +12237,8 @@ package java.time.chrono {
     method public static java.time.chrono.HijrahDate of(int, int, int);
     method public java.time.chrono.HijrahDate plus(java.time.temporal.TemporalAmount);
     method public java.time.chrono.HijrahDate plus(long, java.time.temporal.TemporalUnit);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
+    method public long toEpochDay();
     method public String toString();
     method public java.time.chrono.ChronoPeriod until(java.time.chrono.ChronoLocalDate);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
@@ -12182,6 +12263,7 @@ package java.time.chrono {
     method public java.time.LocalDate dateNow(java.time.Clock);
     method public java.time.LocalDate dateYearDay(java.time.chrono.Era, int, int);
     method public java.time.LocalDate dateYearDay(int, int);
+    method public long epochSecond(int, int, int, int, int, int, java.time.ZoneOffset);
     method public java.time.chrono.IsoEra eraOf(int);
     method public java.util.List<java.time.chrono.Era> eras();
     method public String getCalendarType();
@@ -12234,7 +12316,9 @@ package java.time.chrono {
     method public java.time.chrono.JapaneseChronology getChronology();
     method public java.time.chrono.JapaneseEra getEra();
     method public long getLong(java.time.temporal.TemporalField);
+    method public boolean isSupported(java.time.temporal.TemporalField);
     method public int lengthOfMonth();
+    method public int lengthOfYear();
     method public java.time.chrono.JapaneseDate minus(java.time.temporal.TemporalAmount);
     method public java.time.chrono.JapaneseDate minus(long, java.time.temporal.TemporalUnit);
     method public static java.time.chrono.JapaneseDate now();
@@ -12244,6 +12328,8 @@ package java.time.chrono {
     method public static java.time.chrono.JapaneseDate of(int, int, int);
     method public java.time.chrono.JapaneseDate plus(java.time.temporal.TemporalAmount);
     method public java.time.chrono.JapaneseDate plus(long, java.time.temporal.TemporalUnit);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
+    method public long toEpochDay();
     method public String toString();
     method public java.time.chrono.ChronoPeriod until(java.time.chrono.ChronoLocalDate);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
@@ -12252,8 +12338,10 @@ package java.time.chrono {
   }
 
   public final class JapaneseEra implements java.time.chrono.Era java.io.Serializable {
+    method public String getDisplayName(java.time.format.TextStyle, java.util.Locale);
     method public int getValue();
     method public static java.time.chrono.JapaneseEra of(int);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
     method public static java.time.chrono.JapaneseEra valueOf(String);
     method public static java.time.chrono.JapaneseEra[] values();
     field public static final java.time.chrono.JapaneseEra HEISEI;
@@ -12302,6 +12390,8 @@ package java.time.chrono {
     method public static java.time.chrono.MinguoDate of(int, int, int);
     method public java.time.chrono.MinguoDate plus(java.time.temporal.TemporalAmount);
     method public java.time.chrono.MinguoDate plus(long, java.time.temporal.TemporalUnit);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
+    method public long toEpochDay();
     method public String toString();
     method public java.time.chrono.ChronoPeriod until(java.time.chrono.ChronoLocalDate);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
@@ -12355,6 +12445,8 @@ package java.time.chrono {
     method public static java.time.chrono.ThaiBuddhistDate of(int, int, int);
     method public java.time.chrono.ThaiBuddhistDate plus(java.time.temporal.TemporalAmount);
     method public java.time.chrono.ThaiBuddhistDate plus(long, java.time.temporal.TemporalUnit);
+    method public java.time.temporal.ValueRange range(java.time.temporal.TemporalField);
+    method public long toEpochDay();
     method public String toString();
     method public java.time.chrono.ChronoPeriod until(java.time.chrono.ChronoLocalDate);
     method public long until(java.time.temporal.Temporal, java.time.temporal.TemporalUnit);
@@ -12914,9 +13006,11 @@ package java.util {
     method public E remove();
     method public E removeFirst();
     method public boolean removeFirstOccurrence(@Nullable Object);
+    method public boolean removeIf(@NonNull java.util.function.Predicate<? super E>);
     method public E removeLast();
     method public boolean removeLastOccurrence(@Nullable Object);
     method public int size();
+    method @NonNull public java.util.Spliterator<E> spliterator();
   }
 
   public class ArrayList<E> extends java.util.AbstractList<E> implements java.lang.Cloneable java.util.List<E> java.util.RandomAccess java.io.Serializable {
@@ -12927,7 +13021,11 @@ package java.util {
     method public void ensureCapacity(int);
     method public void forEach(@NonNull java.util.function.Consumer<? super E>);
     method public E get(int);
+    method public boolean removeIf(@NonNull java.util.function.Predicate<? super E>);
+    method public void replaceAll(@NonNull java.util.function.UnaryOperator<E>);
     method public int size();
+    method public void sort(@Nullable java.util.Comparator<? super E>);
+    method @NonNull public java.util.Spliterator<E> spliterator();
     method public void trimToSize();
   }
 
@@ -13694,7 +13792,18 @@ package java.util {
     ctor public HashMap();
     ctor public HashMap(@NonNull java.util.Map<? extends K,? extends V>);
     method @NonNull public Object clone();
+    method @Nullable public V compute(K, @NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
+    method @Nullable public V computeIfAbsent(K, @NonNull java.util.function.Function<? super K,? extends V>);
+    method @Nullable public V computeIfPresent(K, @NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
     method @NonNull public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
+    method public void forEach(@NonNull java.util.function.BiConsumer<? super K,? super V>);
+    method @Nullable public V getOrDefault(@Nullable Object, @Nullable V);
+    method @Nullable public V merge(K, @NonNull V, @NonNull java.util.function.BiFunction<? super V,? super V,? extends V>);
+    method @Nullable public V putIfAbsent(K, V);
+    method public boolean remove(@Nullable Object, @Nullable Object);
+    method public boolean replace(K, @Nullable V, V);
+    method @Nullable public V replace(K, V);
+    method public void replaceAll(@NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
   }
 
   public class HashSet<E> extends java.util.AbstractSet<E> implements java.lang.Cloneable java.io.Serializable java.util.Set<E> {
@@ -13705,6 +13814,7 @@ package java.util {
     method @NonNull public Object clone();
     method @NonNull public java.util.Iterator<E> iterator();
     method public int size();
+    method @NonNull public java.util.Spliterator<E> spliterator();
   }
 
   public class Hashtable<K, V> extends java.util.Dictionary<K,V> implements java.lang.Cloneable java.util.Map<K,V> java.io.Serializable {
@@ -13714,21 +13824,32 @@ package java.util {
     ctor public Hashtable(java.util.Map<? extends K,? extends V>);
     method public void clear();
     method public Object clone();
+    method public V compute(K, java.util.function.BiFunction<? super K,? super V,? extends V>);
+    method public V computeIfAbsent(K, java.util.function.Function<? super K,? extends V>);
+    method public V computeIfPresent(K, java.util.function.BiFunction<? super K,? super V,? extends V>);
     method public boolean contains(Object);
     method public boolean containsKey(Object);
     method public boolean containsValue(Object);
     method public java.util.Enumeration<V> elements();
     method public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
     method public boolean equals(Object);
+    method public void forEach(java.util.function.BiConsumer<? super K,? super V>);
     method public V get(Object);
+    method public V getOrDefault(Object, V);
     method public int hashCode();
     method public boolean isEmpty();
     method public java.util.Set<K> keySet();
     method public java.util.Enumeration<K> keys();
+    method public V merge(K, V, java.util.function.BiFunction<? super V,? super V,? extends V>);
     method public V put(K, V);
     method public void putAll(java.util.Map<? extends K,? extends V>);
+    method public V putIfAbsent(K, V);
     method protected void rehash();
     method public V remove(Object);
+    method public boolean remove(Object, Object);
+    method public boolean replace(K, V, V);
+    method public V replace(K, V);
+    method public void replaceAll(java.util.function.BiFunction<? super K,? super V,? extends V>);
     method public int size();
     method public java.util.Collection<V> values();
   }
@@ -13775,6 +13896,8 @@ package java.util {
     ctor public IdentityHashMap(java.util.Map<? extends K,? extends V>);
     method public Object clone();
     method public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
+    method public void forEach(java.util.function.BiConsumer<? super K,? super V>);
+    method public void replaceAll(java.util.function.BiFunction<? super K,? super V,? extends V>);
   }
 
   public class IllegalFormatCodePointException extends java.util.IllegalFormatException {
@@ -13886,6 +14009,7 @@ package java.util {
     method public E removeLast();
     method public boolean removeLastOccurrence(@Nullable Object);
     method public int size();
+    method @NonNull public java.util.Spliterator<E> spliterator();
   }
 
   public interface List<E> extends java.util.Collection<E> {
@@ -14321,6 +14445,7 @@ package java.util {
     method public boolean offer(E);
     method public E peek();
     method public E poll();
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public int size();
     method public final java.util.Spliterator<E> spliterator();
   }
@@ -14389,7 +14514,26 @@ package java.util {
   public class Random implements java.util.random.RandomGenerator java.io.Serializable {
     ctor public Random();
     ctor public Random(long);
+    method public java.util.stream.DoubleStream doubles(long);
+    method public java.util.stream.DoubleStream doubles();
+    method public java.util.stream.DoubleStream doubles(long, double, double);
+    method public java.util.stream.DoubleStream doubles(double, double);
+    method public java.util.stream.IntStream ints(long);
+    method public java.util.stream.IntStream ints();
+    method public java.util.stream.IntStream ints(long, int, int);
+    method public java.util.stream.IntStream ints(int, int);
+    method public java.util.stream.LongStream longs(long);
+    method public java.util.stream.LongStream longs();
+    method public java.util.stream.LongStream longs(long, long, long);
+    method public java.util.stream.LongStream longs(long, long);
     method protected int next(int);
+    method public boolean nextBoolean();
+    method public void nextBytes(byte[]);
+    method public double nextDouble();
+    method public float nextFloat();
+    method public double nextGaussian();
+    method public int nextInt();
+    method public int nextInt(int);
     method public long nextLong();
     method public void setSeed(long);
   }
@@ -14503,6 +14647,7 @@ package java.util {
     method public short nextShort();
     method public short nextShort(int);
     method public int radix();
+    method public void remove();
     method public java.util.Scanner reset();
     method public java.util.Scanner skip(java.util.regex.Pattern);
     method public java.util.Scanner skip(String);
@@ -14698,9 +14843,24 @@ package java.util {
   public final class SplittableRandom implements java.util.random.RandomGenerator java.util.random.RandomGenerator.SplittableGenerator {
     ctor public SplittableRandom(long);
     ctor public SplittableRandom();
+    method public java.util.stream.DoubleStream doubles(long);
+    method public java.util.stream.DoubleStream doubles();
+    method public java.util.stream.DoubleStream doubles(long, double, double);
+    method public java.util.stream.DoubleStream doubles(double, double);
+    method public java.util.stream.IntStream ints(long);
+    method public java.util.stream.IntStream ints();
+    method public java.util.stream.IntStream ints(long, int, int);
+    method public java.util.stream.IntStream ints(int, int);
+    method public java.util.stream.LongStream longs(long);
+    method public java.util.stream.LongStream longs();
+    method public java.util.stream.LongStream longs(long, long, long);
+    method public java.util.stream.LongStream longs(long, long);
+    method public void nextBytes(byte[]);
+    method public int nextInt();
     method public long nextLong();
     method public java.util.SplittableRandom split();
     method public java.util.SplittableRandom split(java.util.random.RandomGenerator.SplittableGenerator);
+    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits();
     method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long);
     method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(java.util.random.RandomGenerator.SplittableGenerator);
     method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long, java.util.random.RandomGenerator.SplittableGenerator);
@@ -14800,6 +14960,9 @@ package java.util {
     method @Nullable public K ceilingKey(K);
     method @NonNull public Object clone();
     method @Nullable public java.util.Comparator<? super K> comparator();
+    method @Nullable public V compute(K, @NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
+    method @Nullable public V computeIfAbsent(K, @NonNull java.util.function.Function<? super K,? extends V>);
+    method @Nullable public V computeIfPresent(K, @NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
     method @NonNull public java.util.NavigableSet<K> descendingKeySet();
     method @NonNull public java.util.NavigableMap<K,V> descendingMap();
     method @NonNull public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
@@ -14807,6 +14970,7 @@ package java.util {
     method public K firstKey();
     method @Nullable public java.util.Map.Entry<K,V> floorEntry(K);
     method @Nullable public K floorKey(K);
+    method public void forEach(@NonNull java.util.function.BiConsumer<? super K,? super V>);
     method @NonNull public java.util.NavigableMap<K,V> headMap(K, boolean);
     method @NonNull public java.util.SortedMap<K,V> headMap(K);
     method @Nullable public java.util.Map.Entry<K,V> higherEntry(K);
@@ -14815,9 +14979,14 @@ package java.util {
     method public K lastKey();
     method @Nullable public java.util.Map.Entry<K,V> lowerEntry(K);
     method @Nullable public K lowerKey(K);
+    method @Nullable public V merge(K, @NonNull V, @NonNull java.util.function.BiFunction<? super V,? super V,? extends V>);
     method @NonNull public java.util.NavigableSet<K> navigableKeySet();
     method @Nullable public java.util.Map.Entry<K,V> pollFirstEntry();
     method @Nullable public java.util.Map.Entry<K,V> pollLastEntry();
+    method @Nullable public V putIfAbsent(K, V);
+    method public boolean replace(K, @Nullable V, V);
+    method public V replace(K, V);
+    method public void replaceAll(@NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
     method @NonNull public java.util.NavigableMap<K,V> subMap(K, boolean, K, boolean);
     method @NonNull public java.util.SortedMap<K,V> subMap(K, K);
     method @NonNull public java.util.NavigableMap<K,V> tailMap(K, boolean);
@@ -14845,6 +15014,7 @@ package java.util {
     method public E pollFirst();
     method public E pollLast();
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
     method public java.util.NavigableSet<E> subSet(E, boolean, E, boolean);
     method public java.util.SortedSet<E> subSet(E, E);
     method public java.util.NavigableSet<E> tailSet(E, boolean);
@@ -14898,9 +15068,13 @@ package java.util {
     method public void removeAllElements();
     method public boolean removeElement(@Nullable Object);
     method public void removeElementAt(int);
+    method public boolean removeIf(@NonNull java.util.function.Predicate<? super E>);
+    method public void replaceAll(@NonNull java.util.function.UnaryOperator<E>);
     method public void setElementAt(E, int);
     method public void setSize(int);
     method public int size();
+    method public void sort(@Nullable java.util.Comparator<? super E>);
+    method @NonNull public java.util.Spliterator<E> spliterator();
     method public void trimToSize();
     field protected int capacityIncrement;
     field protected int elementCount;
@@ -14913,6 +15087,8 @@ package java.util {
     ctor public WeakHashMap();
     ctor public WeakHashMap(@NonNull java.util.Map<? extends K,? extends V>);
     method @NonNull public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
+    method public void forEach(@NonNull java.util.function.BiConsumer<? super K,? super V>);
+    method public void replaceAll(@NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
   }
 
 }
@@ -14947,7 +15123,9 @@ package java.util.concurrent {
     method public E poll(long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
     method public void put(E) throws java.lang.InterruptedException;
     method public int remainingCapacity();
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
     method public E take() throws java.lang.InterruptedException;
   }
 
@@ -15146,9 +15324,13 @@ package java.util.concurrent {
     ctor public ConcurrentHashMap(@NonNull java.util.Map<? extends K,? extends V>);
     ctor public ConcurrentHashMap(int, float);
     ctor public ConcurrentHashMap(int, float, int);
+    method @Nullable public V compute(@NonNull K, @NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
+    method @Nullable public V computeIfAbsent(@NonNull K, @NonNull java.util.function.Function<? super K,? extends V>);
+    method @Nullable public V computeIfPresent(@NonNull K, @NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
     method public boolean contains(@NonNull Object);
     method @NonNull public java.util.Enumeration<V> elements();
     method @NonNull public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
+    method public void forEach(@NonNull java.util.function.BiConsumer<? super K,? super V>);
     method public void forEach(long, @NonNull java.util.function.BiConsumer<? super K,? super V>);
     method public <U> void forEach(long, @NonNull java.util.function.BiFunction<? super K,? super V,? extends U>, @NonNull java.util.function.Consumer<? super U>);
     method public void forEachEntry(long, @NonNull java.util.function.Consumer<? super java.util.Map.Entry<K,V>>);
@@ -15157,9 +15339,11 @@ package java.util.concurrent {
     method public <U> void forEachKey(long, @NonNull java.util.function.Function<? super K,? extends U>, @NonNull java.util.function.Consumer<? super U>);
     method public void forEachValue(long, @NonNull java.util.function.Consumer<? super V>);
     method public <U> void forEachValue(long, @NonNull java.util.function.Function<? super V,? extends U>, @NonNull java.util.function.Consumer<? super U>);
+    method @Nullable public V getOrDefault(@NonNull Object, @Nullable V);
     method @NonNull public java.util.concurrent.ConcurrentHashMap.KeySetView<K,V> keySet(@NonNull V);
     method @NonNull public java.util.Enumeration<K> keys();
     method public long mappingCount();
+    method @Nullable public V merge(@NonNull K, @NonNull V, @NonNull java.util.function.BiFunction<? super V,? super V,? extends V>);
     method @NonNull public static <K> java.util.concurrent.ConcurrentHashMap.KeySetView<K,java.lang.Boolean> newKeySet();
     method @NonNull public static <K> java.util.concurrent.ConcurrentHashMap.KeySetView<K,java.lang.Boolean> newKeySet(int);
     method @Nullable public V putIfAbsent(@NonNull K, @NonNull V);
@@ -15185,6 +15369,7 @@ package java.util.concurrent {
     method public boolean remove(@NonNull Object, @Nullable Object);
     method public boolean replace(@NonNull K, @NonNull V, @NonNull V);
     method @Nullable public V replace(@NonNull K, @NonNull V);
+    method public void replaceAll(@NonNull java.util.function.BiFunction<? super K,? super V,? extends V>);
     method @Nullable public <U> U search(long, @NonNull java.util.function.BiFunction<? super K,? super V,? extends U>);
     method @Nullable public <U> U searchEntries(long, @NonNull java.util.function.Function<java.util.Map.Entry<K,V>,? extends U>);
     method @Nullable public <U> U searchKeys(long, @NonNull java.util.function.Function<? super K,? extends U>);
@@ -15239,9 +15424,11 @@ package java.util.concurrent {
     method public E remove();
     method public E removeFirst();
     method public boolean removeFirstOccurrence(Object);
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public E removeLast();
     method public boolean removeLastOccurrence(Object);
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
   }
 
   public class ConcurrentLinkedQueue<E> extends java.util.AbstractQueue<E> implements java.util.Queue<E> java.io.Serializable {
@@ -15252,7 +15439,9 @@ package java.util.concurrent {
     method public boolean offer(E);
     method public E peek();
     method public E poll();
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
   }
 
   public interface ConcurrentMap<K, V> extends java.util.Map<K,V> {
@@ -15282,6 +15471,9 @@ package java.util.concurrent {
     method public K ceilingKey(K);
     method public java.util.concurrent.ConcurrentSkipListMap<K,V> clone();
     method public java.util.Comparator<? super K> comparator();
+    method public V compute(K, java.util.function.BiFunction<? super K,? super V,? extends V>);
+    method public V computeIfAbsent(K, java.util.function.Function<? super K,? extends V>);
+    method public V computeIfPresent(K, java.util.function.BiFunction<? super K,? super V,? extends V>);
     method public java.util.NavigableSet<K> descendingKeySet();
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> descendingMap();
     method public java.util.Set<java.util.Map.Entry<K,V>> entrySet();
@@ -15289,6 +15481,8 @@ package java.util.concurrent {
     method public K firstKey();
     method public java.util.Map.Entry<K,V> floorEntry(K);
     method public K floorKey(K);
+    method public void forEach(java.util.function.BiConsumer<? super K,? super V>);
+    method public V getOrDefault(Object, V);
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> headMap(K, boolean);
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> headMap(K);
     method public java.util.Map.Entry<K,V> higherEntry(K);
@@ -15298,6 +15492,7 @@ package java.util.concurrent {
     method public K lastKey();
     method public java.util.Map.Entry<K,V> lowerEntry(K);
     method public K lowerKey(K);
+    method public V merge(K, V, java.util.function.BiFunction<? super V,? super V,? extends V>);
     method public java.util.NavigableSet<K> navigableKeySet();
     method public java.util.Map.Entry<K,V> pollFirstEntry();
     method public java.util.Map.Entry<K,V> pollLastEntry();
@@ -15305,6 +15500,7 @@ package java.util.concurrent {
     method public boolean remove(Object, Object);
     method public boolean replace(K, V, V);
     method public V replace(K, V);
+    method public void replaceAll(java.util.function.BiFunction<? super K,? super V,? extends V>);
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> subMap(K, boolean, K, boolean);
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> subMap(K, K);
     method public java.util.concurrent.ConcurrentNavigableMap<K,V> tailMap(K, boolean);
@@ -15332,6 +15528,7 @@ package java.util.concurrent {
     method public E pollFirst();
     method public E pollLast();
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
     method public java.util.NavigableSet<E> subSet(E, boolean, E, boolean);
     method public java.util.NavigableSet<E> subSet(E, E);
     method public java.util.NavigableSet<E> tailSet(E, boolean);
@@ -15367,9 +15564,13 @@ package java.util.concurrent {
     method public E remove(int);
     method public boolean remove(@Nullable Object);
     method public boolean removeAll(@NonNull java.util.Collection<?>);
+    method public boolean removeIf(@NonNull java.util.function.Predicate<? super E>);
+    method public void replaceAll(@NonNull java.util.function.UnaryOperator<E>);
     method public boolean retainAll(@NonNull java.util.Collection<?>);
     method public E set(int, E);
     method public int size();
+    method public void sort(@Nullable java.util.Comparator<? super E>);
+    method @NonNull public java.util.Spliterator<E> spliterator();
     method @NonNull public java.util.List<E> subList(int, int);
     method @NonNull public Object[] toArray();
     method @NonNull public <T> T[] toArray(@NonNull T[]);
@@ -15380,7 +15581,9 @@ package java.util.concurrent {
     ctor public CopyOnWriteArraySet(java.util.Collection<? extends E>);
     method public void forEach(java.util.function.Consumer<? super E>);
     method public java.util.Iterator<E> iterator();
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
   }
 
   public class CountDownLatch {
@@ -15698,9 +15901,11 @@ package java.util.concurrent {
     method public int remainingCapacity();
     method public E removeFirst();
     method public boolean removeFirstOccurrence(Object);
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public E removeLast();
     method public boolean removeLastOccurrence(Object);
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
     method public E take() throws java.lang.InterruptedException;
     method public E takeFirst() throws java.lang.InterruptedException;
     method public E takeLast() throws java.lang.InterruptedException;
@@ -15721,7 +15926,9 @@ package java.util.concurrent {
     method public E poll();
     method public void put(E) throws java.lang.InterruptedException;
     method public int remainingCapacity();
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
     method public E take() throws java.lang.InterruptedException;
   }
 
@@ -15741,7 +15948,9 @@ package java.util.concurrent {
     method public E poll();
     method public void put(E);
     method public int remainingCapacity();
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
     method public E take() throws java.lang.InterruptedException;
     method public void transfer(E) throws java.lang.InterruptedException;
     method public boolean tryTransfer(E);
@@ -15789,7 +15998,9 @@ package java.util.concurrent {
     method public E poll(long, java.util.concurrent.TimeUnit) throws java.lang.InterruptedException;
     method public void put(E);
     method public int remainingCapacity();
+    method public boolean removeIf(java.util.function.Predicate<? super E>);
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
     method public E take() throws java.lang.InterruptedException;
   }
 
@@ -15915,6 +16126,7 @@ package java.util.concurrent {
     method public void put(E) throws java.lang.InterruptedException;
     method public int remainingCapacity();
     method public int size();
+    method public java.util.Spliterator<E> spliterator();
     method public E take() throws java.lang.InterruptedException;
   }
 
@@ -15924,6 +16136,11 @@ package java.util.concurrent {
 
   public class ThreadLocalRandom extends java.util.Random {
     method public static java.util.concurrent.ThreadLocalRandom current();
+    method public double nextDouble(double);
+    method public double nextDouble(double, double);
+    method public int nextInt(int, int);
+    method public long nextLong(long);
+    method public long nextLong(long, long);
   }
 
   public class ThreadPoolExecutor extends java.util.concurrent.AbstractExecutorService {
@@ -18047,6 +18264,8 @@ package java.util.zip {
     method public void reset();
     method public void update(int);
     method public void update(byte[], int, int);
+    method public void update(byte[]);
+    method public void update(java.nio.ByteBuffer);
   }
 
   public class CRC32 implements java.util.zip.Checksum {
@@ -18055,6 +18274,8 @@ package java.util.zip {
     method public void reset();
     method public void update(int);
     method public void update(byte[], int, int);
+    method public void update(byte[]);
+    method public void update(java.nio.ByteBuffer);
   }
 
   public final class CRC32C implements java.util.zip.Checksum {
@@ -18063,6 +18284,7 @@ package java.util.zip {
     method public void reset();
     method public void update(int);
     method public void update(byte[], int, int);
+    method public void update(java.nio.ByteBuffer);
   }
 
   public class CheckedInputStream extends java.io.FilterInputStream {
