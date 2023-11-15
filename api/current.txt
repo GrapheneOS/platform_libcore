@@ -339,6 +339,7 @@ package android.system {
     field public static final int IFF_RUNNING;
     field public static final int IFF_SLAVE;
     field public static final int IFF_UP;
+    field public static final int IPPROTO_ESP;
     field public static final int IPPROTO_ICMP;
     field public static final int IPPROTO_ICMPV6;
     field public static final int IPPROTO_IP;
@@ -391,6 +392,7 @@ package android.system {
     field public static final int NETLINK_INET_DIAG;
     field public static final int NETLINK_NETFILTER;
     field public static final int NETLINK_ROUTE;
+    field public static final int NETLINK_XFRM;
     field public static final int NI_DGRAM;
     field public static final int NI_NAMEREQD;
     field public static final int NI_NOFQDN;

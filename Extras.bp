@@ -24,5 +24,6 @@ java_library_host {
     visibility: [
         "//packages/modules/AdServices:__subpackages__",
         "//packages/modules/Permission:__subpackages__",
+        "//frameworks/base/ravenwood:__subpackages__",
     ],
 }
