@@ -995,6 +995,9 @@ java_sdk_library {
         ":openjdk_mmodule_extra_files",
         ":okhttp_api_files",
     ],
+    api_srcs: [
+        ":openjdk_javadoc_only_files",
+    ],
     libs: [
         // Put framework-api-annotations into libs to avoid exposing the definition of framework's
         // annotations from libcore (wrong place) instead of framework (correct place).

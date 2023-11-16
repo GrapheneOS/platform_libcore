@@ -926,7 +926,7 @@ ojluni/src/main/java/java/util/Formattable.java,jdk17u/jdk-17.0.6-ga,src/java.ba
 ojluni/src/main/java/java/util/FormattableFlags.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/FormattableFlags.java
 ojluni/src/main/java/java/util/Formatter.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Formatter.java
 ojluni/src/main/java/java/util/FormatterClosedException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/FormatterClosedException.java
-ojluni/src/main/java/java/util/GregorianCalendar.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/GregorianCalendar.java
+ojluni/src/main/java/java/util/GregorianCalendar.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/GregorianCalendar.java
 ojluni/src/main/java/java/util/HashMap.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/HashMap.java
 ojluni/src/main/java/java/util/HashSet.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/HashSet.java
 ojluni/src/main/java/java/util/Hashtable.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Hashtable.java
@@ -945,7 +945,7 @@ ojluni/src/main/java/java/util/InputMismatchException.java,jdk17u/jdk-17.0.6-ga,
 ojluni/src/main/java/java/util/IntSummaryStatistics.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/IntSummaryStatistics.java
 ojluni/src/main/java/java/util/InvalidPropertiesFormatException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/InvalidPropertiesFormatException.java
 ojluni/src/main/java/java/util/Iterator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/Iterator.java
-ojluni/src/main/java/java/util/JapaneseImperialCalendar.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/util/JapaneseImperialCalendar.java
+ojluni/src/main/java/java/util/JapaneseImperialCalendar.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/JapaneseImperialCalendar.java
 ojluni/src/main/java/java/util/JumboEnumSet.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/JumboEnumSet.java
 ojluni/src/main/java/java/util/KeyValueHolder.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/KeyValueHolder.java
 ojluni/src/main/java/java/util/LinkedHashMap.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/LinkedHashMap.java

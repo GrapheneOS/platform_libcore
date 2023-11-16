@@ -1397,6 +1397,32 @@ filegroup {
     path: "ojluni/src/main/java",
 }
 
+filegroup {
+    name: "openjdk_javadoc_only_files",
+    licenses: ["libcore_ojluni_src_main_license"],
+    srcs: [
+        "ojluni/src/main/java/java/io/package.html",
+        "ojluni/src/main/java/java/nio/channels/spi/package.html",
+        "ojluni/src/main/java/java/nio/charset/spi/package.html",
+        "ojluni/src/main/java/java/sql/package.html",
+        "ojluni/src/main/java/java/text/package.html",
+        "ojluni/src/main/java/java/util/jar/package.html",
+        "ojluni/src/main/java/java/util/logging/package.html",
+        "ojluni/src/main/java/java/util/package.html",
+        "ojluni/src/main/java/java/util/prefs/package.html",
+        "ojluni/src/main/java/java/util/regex/package.html",
+        "ojluni/src/main/java/java/util/zip/package.html",
+        "ojluni/src/main/java/javax/crypto/interfaces/package.html",
+        "ojluni/src/main/java/javax/crypto/package.html",
+        "ojluni/src/main/java/javax/crypto/spec/package.html",
+        "ojluni/src/main/java/javax/net/package.html",
+        "ojluni/src/main/java/javax/net/ssl/package.html",
+        "ojluni/src/main/java/javax/sql/package.html",
+        "ojluni/src/main/java/javax/sql/rowset/package.html",
+    ],
+    path: "ojluni/src/main/java",
+}
+
 // Stubs needed to satisfy javac's dependencies when compiling lambda code. These are
 // not used on Android devices or required by the Jack compiler.
 //
