@@ -116,6 +116,7 @@ ojluni/src/main/java/java/io/UnixFileSystem.java,jdk11u/jdk-11.0.13-ga,src/java.
 ojluni/src/main/java/java/io/UnsupportedEncodingException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/io/UnsupportedEncodingException.java
 ojluni/src/main/java/java/io/WriteAbortedException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/io/WriteAbortedException.java
 ojluni/src/main/java/java/io/Writer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/io/Writer.java
+ojluni/src/main/java/java/io/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/io/package-info.java
 ojluni/src/main/java/java/lang/AbstractMethodError.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/lang/AbstractMethodError.java
 ojluni/src/main/java/java/lang/AbstractStringBuilder.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/lang/AbstractStringBuilder.java
 ojluni/src/main/java/java/lang/Appendable.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/lang/Appendable.java
@@ -443,6 +444,7 @@ ojluni/src/main/java/java/nio/channels/spi/AbstractSelectionKey.java,jdk11u/jdk-
 ojluni/src/main/java/java/nio/channels/spi/AbstractSelector.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/channels/spi/AbstractSelector.java
 ojluni/src/main/java/java/nio/channels/spi/AsynchronousChannelProvider.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/channels/spi/AsynchronousChannelProvider.java
 ojluni/src/main/java/java/nio/channels/spi/SelectorProvider.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/channels/spi/SelectorProvider.java
+ojluni/src/main/java/java/nio/channels/spi/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/channels/spi/package-info.java
 ojluni/src/main/java/java/nio/charset/Charset-X-Coder.java.template,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/charset/Charset-X-Coder.java.template
 ojluni/src/main/java/java/nio/charset/Charset.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/Charset.java
 ojluni/src/main/java/java/nio/charset/CoderMalfunctionError.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/CoderMalfunctionError.java
@@ -454,6 +456,7 @@ ojluni/src/main/java/java/nio/charset/UnmappableCharacterException.java,jdk11u/j
 ojluni/src/main/java/java/nio/charset/exceptions,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/charset/exceptions
 ojluni/src/main/java/java/nio/charset/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/charset/package-info.java
 ojluni/src/main/java/java/nio/charset/spi/CharsetProvider.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/charset/spi/CharsetProvider.java
+ojluni/src/main/java/java/nio/charset/spi/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/charset/spi/package-info.java
 ojluni/src/main/java/java/nio/file/AccessDeniedException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/file/AccessDeniedException.java
 ojluni/src/main/java/java/nio/file/AccessMode.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/nio/file/AccessMode.java
 ojluni/src/main/java/java/nio/file/AtomicMoveNotSupportedException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/nio/file/AtomicMoveNotSupportedException.java
@@ -799,6 +802,7 @@ ojluni/src/main/java/java/text/ParsePosition.java,jdk17u/jdk-17.0.6-ga,src/java.
 ojluni/src/main/java/java/text/RuleBasedCollator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/text/RuleBasedCollator.java
 ojluni/src/main/java/java/text/SimpleDateFormat.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/text/SimpleDateFormat.java
 ojluni/src/main/java/java/text/StringCharacterIterator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/text/StringCharacterIterator.java
+ojluni/src/main/java/java/text/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/text/package-info.java
 ojluni/src/main/java/java/time/Clock.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/time/Clock.java
 ojluni/src/main/java/java/time/DateTimeException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/time/DateTimeException.java
 ojluni/src/main/java/java/time/DayOfWeek.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/time/DayOfWeek.java
@@ -1152,6 +1156,7 @@ ojluni/src/main/java/java/util/jar/JarOutputStream.java,jdk11u/jdk-11.0.13-ga,sr
 ojluni/src/main/java/java/util/jar/JarVerifier.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/jar/JarVerifier.java
 ojluni/src/main/java/java/util/jar/Manifest.java,jdk17u/jdk-17.0.5-ga,src/java.base/share/classes/java/util/jar/Manifest.java
 ojluni/src/main/java/java/util/jar/Pack200.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/jar/Pack200.java
+ojluni/src/main/java/java/util/jar/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/jar/package-info.java
 ojluni/src/main/java/java/util/logging/ConsoleHandler.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/logging/ConsoleHandler.java
 ojluni/src/main/java/java/util/logging/ErrorManager.java,jdk11u/jdk-11.0.13-ga,src/java.logging/share/classes/java/util/logging/ErrorManager.java
 ojluni/src/main/java/java/util/logging/FileHandler.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/logging/FileHandler.java
@@ -1171,6 +1176,8 @@ ojluni/src/main/java/java/util/logging/SimpleFormatter.java,jdk8u/jdk8u121-b13,j
 ojluni/src/main/java/java/util/logging/SocketHandler.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/logging/SocketHandler.java
 ojluni/src/main/java/java/util/logging/StreamHandler.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/logging/StreamHandler.java
 ojluni/src/main/java/java/util/logging/XMLFormatter.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/logging/XMLFormatter.java
+ojluni/src/main/java/java/util/logging/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.logging/share/classes/java/util/logging/package-info.java
+ojluni/src/main/java/java/util/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/package-info.java
 ojluni/src/main/java/java/util/prefs/AbstractPreferences.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/prefs/AbstractPreferences.java
 ojluni/src/main/java/java/util/prefs/BackingStoreException.java,jdk17u/jdk-17.0.6-ga,src/java.prefs/share/classes/java/util/prefs/BackingStoreException.java
 ojluni/src/main/java/java/util/prefs/Base64.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/prefs/Base64.java
@@ -1184,6 +1191,7 @@ ojluni/src/main/java/java/util/prefs/PreferenceChangeListener.java,jdk8u/jdk8u12
 ojluni/src/main/java/java/util/prefs/Preferences.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/prefs/Preferences.java
 ojluni/src/main/java/java/util/prefs/PreferencesFactory.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/prefs/PreferencesFactory.java
 ojluni/src/main/java/java/util/prefs/XmlSupport.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/util/prefs/XmlSupport.java
+ojluni/src/main/java/java/util/prefs/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.prefs/share/classes/java/util/prefs/package-info.java
 ojluni/src/main/java/java/util/random/RandomGenerator.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/random/RandomGenerator.java
 ojluni/src/main/java/java/util/random/RandomGeneratorFactory.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/random/RandomGeneratorFactory.java
 ojluni/src/main/java/java/util/random/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/random/package-info.java
@@ -1192,6 +1200,7 @@ ojluni/src/main/java/java/util/regex/MatchResult.java,jdk17u/jdk-17.0.6-ga,src/j
 ojluni/src/main/java/java/util/regex/Matcher.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/regex/Matcher.java
 ojluni/src/main/java/java/util/regex/Pattern.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/regex/Pattern.java
 ojluni/src/main/java/java/util/regex/PatternSyntaxException.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/regex/PatternSyntaxException.java
+ojluni/src/main/java/java/util/regex/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/regex/package-info.java
 ojluni/src/main/java/java/util/stream/AbstractPipeline.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/stream/AbstractPipeline.java
 ojluni/src/main/java/java/util/stream/AbstractShortCircuitTask.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/stream/AbstractShortCircuitTask.java
 ojluni/src/main/java/java/util/stream/AbstractSpinedBuffer.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/stream/AbstractSpinedBuffer.java
@@ -1254,6 +1263,7 @@ ojluni/src/main/java/java/util/zip/ZipFile.java,jdk8u/jdk8u121-b13,jdk/src/share
 ojluni/src/main/java/java/util/zip/ZipInputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/ZipInputStream.java
 ojluni/src/main/java/java/util/zip/ZipOutputStream.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/ZipOutputStream.java
 ojluni/src/main/java/java/util/zip/ZipUtils.java,jdk17u/jdk-17.0.5-ga,src/java.base/share/classes/java/util/zip/ZipUtils.java
+ojluni/src/main/java/java/util/zip/package-info.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/util/zip/package-info.java
 ojluni/src/main/java/javax/crypto/AEADBadTagException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/javax/crypto/AEADBadTagException.java
 ojluni/src/main/java/javax/crypto/BadPaddingException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/javax/crypto/BadPaddingException.java
 ojluni/src/main/java/javax/crypto/Cipher.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/javax/crypto/Cipher.java
