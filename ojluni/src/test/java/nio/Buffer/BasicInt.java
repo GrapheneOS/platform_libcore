@@ -36,6 +36,7 @@ package test.java.nio.Buffer;
 
 
 import java.nio.*;
+import java.util.function.Supplier;
 
 
 
@@ -1204,11 +1205,14 @@ public class BasicInt
 
         testToString();
 
-        // Android-added: Add API coverage for get, put(int, int[]).
+        // Android-added: Add API coverage for get(), put().
         testGetPutArrayWithIndex();
+
+        testPutBuffer();
+
     }
 
-    // BEGIN Android-added: Add API coverage for get, put(int, int[]).
+    // BEGIN Android-added: Add API coverage for get(), put().
     private static void testGetPutArrayWithIndex() {
         IntBuffer buf = IntBuffer.allocate(16);
         int firstElement = 11, secondElement = 12;
@@ -1223,5 +1227,53 @@ public class BasicInt
         buf.get(0, actual);
         assertEquals(actual, new int[] {firstElement, secondElement, 4, 3});
     }
-    // END Android-added: Add API coverage for get, put(int, int[]).
+
+    private static void testPutBuffer() {
+        Supplier<IntBuffer>[] newBuffers = new Supplier[] {
+                () -> IntBuffer.allocate(512),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer(),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asIntBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asIntBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.LITTLE_ENDIAN).position(100)).asIntBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.BIG_ENDIAN).position(100)).asIntBuffer(),
+        };
+
+        int[] samples = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        for (var newSrc : newBuffers) {
+            for (var newDst : newBuffers) {
+                int[] out = new int[10];
+                IntBuffer src = newSrc.get();
+                src.put(samples);
+                src.get(0, out);
+                assertEquals(out, samples);
+                assertEquals(src.get(10), (int) 0);
+                src.limit(10);
+                src.rewind();
+
+                out = new int[10];
+                IntBuffer dst = newDst.get();
+                dst.put(src);
+                dst.get(0, out);
+                assertEquals(out, samples);
+                dst.rewind();
+
+                dst.put(6, src, 1, 2);
+                assertEquals(dst.get(6), (int) 1);
+                assertEquals(dst.get(7), (int) 2);
+                assertEquals(dst.get(8), (int) 8);
+                assertEquals(dst.get(10), (int) 0);
+
+                dst.put(12, src, 2, 2);
+                out = new int[5];
+                dst.get(10, out);
+                assertEquals(out, new int[] {0, 0, 2, 3, 0});
+
+            }
+        }
+    }
+
+    // END Android-added: Add API coverage for get(), put().
 }

@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 #end[byte]
 import java.nio.*;
+import java.util.function.Supplier;
 #if[byte]
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -1204,11 +1205,14 @@ public class Basic$Type$
 
         testToString();
 
-        // Android-added: Add API coverage for get, put(int, $type$[]).
+        // Android-added: Add API coverage for get(), put().
         testGetPutArrayWithIndex();
+#if[!byte]
+        testPutBuffer();
+#end[!byte]
     }
 
-    // BEGIN Android-added: Add API coverage for get, put(int, $type$[]).
+    // BEGIN Android-added: Add API coverage for get(), put().
     private static void testGetPutArrayWithIndex() {
         $Type$Buffer buf = $Type$Buffer.allocate(16);
         $type$ firstElement = 11, secondElement = 12;
@@ -1223,5 +1227,53 @@ public class Basic$Type$
         buf.get(0, actual);
         assertEquals(actual, new $type$[] {firstElement, secondElement, 4, 3});
     }
-    // END Android-added: Add API coverage for get, put(int, $type$[]).
+#if[!byte]
+    private static void testPutBuffer() {
+        Supplier<$Type$Buffer>[] newBuffers = new Supplier[] {
+                () -> $Type$Buffer.allocate(512),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).as$Type$Buffer(),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).as$Type$Buffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).as$Type$Buffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).as$Type$Buffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.LITTLE_ENDIAN).position(100)).as$Type$Buffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.BIG_ENDIAN).position(100)).as$Type$Buffer(),
+        };
+
+        $type$[] samples = new $type$[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        for (var newSrc : newBuffers) {
+            for (var newDst : newBuffers) {
+                $type$[] out = new $type$[10];
+                $Type$Buffer src = newSrc.get();
+                src.put(samples);
+                src.get(0, out);
+                assertEquals(out, samples);
+                assertEquals(src.get(10), ($type$) 0);
+                src.limit(10);
+                src.rewind();
+
+                out = new $type$[10];
+                $Type$Buffer dst = newDst.get();
+                dst.put(src);
+                dst.get(0, out);
+                assertEquals(out, samples);
+                dst.rewind();
+
+                dst.put(6, src, 1, 2);
+                assertEquals(dst.get(6), ($type$) 1);
+                assertEquals(dst.get(7), ($type$) 2);
+                assertEquals(dst.get(8), ($type$) 8);
+                assertEquals(dst.get(10), ($type$) 0);
+
+                dst.put(12, src, 2, 2);
+                out = new $type$[5];
+                dst.get(10, out);
+                assertEquals(out, new $type$[] {0, 0, 2, 3, 0});
+
+            }
+        }
+    }
+#end[!byte]
+    // END Android-added: Add API coverage for get(), put().
 }

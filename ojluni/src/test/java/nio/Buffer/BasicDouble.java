@@ -36,6 +36,7 @@ package test.java.nio.Buffer;
 
 
 import java.nio.*;
+import java.util.function.Supplier;
 
 
 
@@ -1204,11 +1205,14 @@ public class BasicDouble
 
         testToString();
 
-        // Android-added: Add API coverage for get, put(int, double[]).
+        // Android-added: Add API coverage for get(), put().
         testGetPutArrayWithIndex();
+
+        testPutBuffer();
+
     }
 
-    // BEGIN Android-added: Add API coverage for get, put(int, double[]).
+    // BEGIN Android-added: Add API coverage for get(), put().
     private static void testGetPutArrayWithIndex() {
         DoubleBuffer buf = DoubleBuffer.allocate(16);
         double firstElement = 11, secondElement = 12;
@@ -1223,5 +1227,53 @@ public class BasicDouble
         buf.get(0, actual);
         assertEquals(actual, new double[] {firstElement, secondElement, 4, 3});
     }
-    // END Android-added: Add API coverage for get, put(int, double[]).
+
+    private static void testPutBuffer() {
+        Supplier<DoubleBuffer>[] newBuffers = new Supplier[] {
+                () -> DoubleBuffer.allocate(512),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asDoubleBuffer(),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asDoubleBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asDoubleBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asDoubleBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.LITTLE_ENDIAN).position(100)).asDoubleBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.BIG_ENDIAN).position(100)).asDoubleBuffer(),
+        };
+
+        double[] samples = new double[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        for (var newSrc : newBuffers) {
+            for (var newDst : newBuffers) {
+                double[] out = new double[10];
+                DoubleBuffer src = newSrc.get();
+                src.put(samples);
+                src.get(0, out);
+                assertEquals(out, samples);
+                assertEquals(src.get(10), (double) 0);
+                src.limit(10);
+                src.rewind();
+
+                out = new double[10];
+                DoubleBuffer dst = newDst.get();
+                dst.put(src);
+                dst.get(0, out);
+                assertEquals(out, samples);
+                dst.rewind();
+
+                dst.put(6, src, 1, 2);
+                assertEquals(dst.get(6), (double) 1);
+                assertEquals(dst.get(7), (double) 2);
+                assertEquals(dst.get(8), (double) 8);
+                assertEquals(dst.get(10), (double) 0);
+
+                dst.put(12, src, 2, 2);
+                out = new double[5];
+                dst.get(10, out);
+                assertEquals(out, new double[] {0, 0, 2, 3, 0});
+
+            }
+        }
+    }
+
+    // END Android-added: Add API coverage for get(), put().
 }

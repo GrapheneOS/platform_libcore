@@ -36,6 +36,7 @@ package test.java.nio.Buffer;
 
 
 import java.nio.*;
+import java.util.function.Supplier;
 
 
 
@@ -1204,11 +1205,14 @@ public class BasicShort
 
         testToString();
 
-        // Android-added: Add API coverage for get, put(int, short[]).
+        // Android-added: Add API coverage for get(), put().
         testGetPutArrayWithIndex();
+
+        testPutBuffer();
+
     }
 
-    // BEGIN Android-added: Add API coverage for get, put(int, short[]).
+    // BEGIN Android-added: Add API coverage for get(), put().
     private static void testGetPutArrayWithIndex() {
         ShortBuffer buf = ShortBuffer.allocate(16);
         short firstElement = 11, secondElement = 12;
@@ -1223,5 +1227,53 @@ public class BasicShort
         buf.get(0, actual);
         assertEquals(actual, new short[] {firstElement, secondElement, 4, 3});
     }
-    // END Android-added: Add API coverage for get, put(int, short[]).
+
+    private static void testPutBuffer() {
+        Supplier<ShortBuffer>[] newBuffers = new Supplier[] {
+                () -> ShortBuffer.allocate(512),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer(),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asShortBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asShortBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.LITTLE_ENDIAN).position(100)).asShortBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.BIG_ENDIAN).position(100)).asShortBuffer(),
+        };
+
+        short[] samples = new short[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        for (var newSrc : newBuffers) {
+            for (var newDst : newBuffers) {
+                short[] out = new short[10];
+                ShortBuffer src = newSrc.get();
+                src.put(samples);
+                src.get(0, out);
+                assertEquals(out, samples);
+                assertEquals(src.get(10), (short) 0);
+                src.limit(10);
+                src.rewind();
+
+                out = new short[10];
+                ShortBuffer dst = newDst.get();
+                dst.put(src);
+                dst.get(0, out);
+                assertEquals(out, samples);
+                dst.rewind();
+
+                dst.put(6, src, 1, 2);
+                assertEquals(dst.get(6), (short) 1);
+                assertEquals(dst.get(7), (short) 2);
+                assertEquals(dst.get(8), (short) 8);
+                assertEquals(dst.get(10), (short) 0);
+
+                dst.put(12, src, 2, 2);
+                out = new short[5];
+                dst.get(10, out);
+                assertEquals(out, new short[] {0, 0, 2, 3, 0});
+
+            }
+        }
+    }
+
+    // END Android-added: Add API coverage for get(), put().
 }

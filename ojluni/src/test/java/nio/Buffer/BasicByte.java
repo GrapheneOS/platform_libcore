@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 
 import java.nio.*;
+import java.util.function.Supplier;
 
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
@@ -1204,11 +1205,14 @@ public class BasicByte
 
         testToString();
 
-        // Android-added: Add API coverage for get, put(int, byte[]).
+        // Android-added: Add API coverage for get(), put().
         testGetPutArrayWithIndex();
+
+
+
     }
 
-    // BEGIN Android-added: Add API coverage for get, put(int, byte[]).
+    // BEGIN Android-added: Add API coverage for get(), put().
     private static void testGetPutArrayWithIndex() {
         ByteBuffer buf = ByteBuffer.allocate(16);
         byte firstElement = 11, secondElement = 12;
@@ -1223,5 +1227,53 @@ public class BasicByte
         buf.get(0, actual);
         assertEquals(actual, new byte[] {firstElement, secondElement, 4, 3});
     }
-    // END Android-added: Add API coverage for get, put(int, byte[]).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // END Android-added: Add API coverage for get(), put().
 }

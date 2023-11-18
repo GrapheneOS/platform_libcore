@@ -36,6 +36,7 @@ package test.java.nio.Buffer;
 
 
 import java.nio.*;
+import java.util.function.Supplier;
 
 
 
@@ -1204,11 +1205,14 @@ public class BasicFloat
 
         testToString();
 
-        // Android-added: Add API coverage for get, put(int, float[]).
+        // Android-added: Add API coverage for get(), put().
         testGetPutArrayWithIndex();
+
+        testPutBuffer();
+
     }
 
-    // BEGIN Android-added: Add API coverage for get, put(int, float[]).
+    // BEGIN Android-added: Add API coverage for get(), put().
     private static void testGetPutArrayWithIndex() {
         FloatBuffer buf = FloatBuffer.allocate(16);
         float firstElement = 11, secondElement = 12;
@@ -1223,5 +1227,53 @@ public class BasicFloat
         buf.get(0, actual);
         assertEquals(actual, new float[] {firstElement, secondElement, 4, 3});
     }
-    // END Android-added: Add API coverage for get, put(int, float[]).
+
+    private static void testPutBuffer() {
+        Supplier<FloatBuffer>[] newBuffers = new Supplier[] {
+                () -> FloatBuffer.allocate(512),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer(),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asFloatBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asFloatBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.LITTLE_ENDIAN).position(100)).asFloatBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.BIG_ENDIAN).position(100)).asFloatBuffer(),
+        };
+
+        float[] samples = new float[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        for (var newSrc : newBuffers) {
+            for (var newDst : newBuffers) {
+                float[] out = new float[10];
+                FloatBuffer src = newSrc.get();
+                src.put(samples);
+                src.get(0, out);
+                assertEquals(out, samples);
+                assertEquals(src.get(10), (float) 0);
+                src.limit(10);
+                src.rewind();
+
+                out = new float[10];
+                FloatBuffer dst = newDst.get();
+                dst.put(src);
+                dst.get(0, out);
+                assertEquals(out, samples);
+                dst.rewind();
+
+                dst.put(6, src, 1, 2);
+                assertEquals(dst.get(6), (float) 1);
+                assertEquals(dst.get(7), (float) 2);
+                assertEquals(dst.get(8), (float) 8);
+                assertEquals(dst.get(10), (float) 0);
+
+                dst.put(12, src, 2, 2);
+                out = new float[5];
+                dst.get(10, out);
+                assertEquals(out, new float[] {0, 0, 2, 3, 0});
+
+            }
+        }
+    }
+
+    // END Android-added: Add API coverage for get(), put().
 }

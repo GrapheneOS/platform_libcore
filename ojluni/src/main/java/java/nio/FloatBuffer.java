@@ -1175,14 +1175,27 @@ public abstract class FloatBuffer
 
 
 
+        if (this.hb != null) {
+            if (src.hb != null) {
+                System.arraycopy(src.hb, srcPos + src.offset, hb, pos + offset, n);
+            } else {
+                // this and src don't share the same backed float[].
+                src.get(srcPos, this.hb, pos + offset, n);
+            }
+            return;
+        } else if (src.hb != null) {
+            // this and src don't share the same backed float[].
+            this.put(pos, src.hb, srcPos + src.offset, n);
+            return;
+        }
+
+        // Slow path using get(int).
         int posMax = pos + n;
         Object thisBase = base();
         // If this buffer and the source buffer share the same backing array or memory, then the
         // result will be as if the source elements were first copied to an intermediate location
         // before being written into this buffer.
         // Instead of copying to an intermediate location, we change the writing order.
-        // It's possible to use System.arrayCopy / Memory.memmove if their backing array are float[]
-        // or they use the same byte order.
         boolean ascendingOrder;
         if (isDirect() && src.isDirect()) {
             // Both src and dst should be ByteBufferAsFloatBuffer classes.

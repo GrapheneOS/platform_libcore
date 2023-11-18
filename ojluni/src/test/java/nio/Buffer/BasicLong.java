@@ -36,6 +36,7 @@ package test.java.nio.Buffer;
 
 
 import java.nio.*;
+import java.util.function.Supplier;
 
 
 
@@ -1204,11 +1205,14 @@ public class BasicLong
 
         testToString();
 
-        // Android-added: Add API coverage for get, put(int, long[]).
+        // Android-added: Add API coverage for get(), put().
         testGetPutArrayWithIndex();
+
+        testPutBuffer();
+
     }
 
-    // BEGIN Android-added: Add API coverage for get, put(int, long[]).
+    // BEGIN Android-added: Add API coverage for get(), put().
     private static void testGetPutArrayWithIndex() {
         LongBuffer buf = LongBuffer.allocate(16);
         long firstElement = 11, secondElement = 12;
@@ -1223,5 +1227,53 @@ public class BasicLong
         buf.get(0, actual);
         assertEquals(actual, new long[] {firstElement, secondElement, 4, 3});
     }
-    // END Android-added: Add API coverage for get, put(int, long[]).
+
+    private static void testPutBuffer() {
+        Supplier<LongBuffer>[] newBuffers = new Supplier[] {
+                () -> LongBuffer.allocate(512),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asLongBuffer(),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asLongBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asLongBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asLongBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.LITTLE_ENDIAN).position(100)).asLongBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.BIG_ENDIAN).position(100)).asLongBuffer(),
+        };
+
+        long[] samples = new long[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        for (var newSrc : newBuffers) {
+            for (var newDst : newBuffers) {
+                long[] out = new long[10];
+                LongBuffer src = newSrc.get();
+                src.put(samples);
+                src.get(0, out);
+                assertEquals(out, samples);
+                assertEquals(src.get(10), (long) 0);
+                src.limit(10);
+                src.rewind();
+
+                out = new long[10];
+                LongBuffer dst = newDst.get();
+                dst.put(src);
+                dst.get(0, out);
+                assertEquals(out, samples);
+                dst.rewind();
+
+                dst.put(6, src, 1, 2);
+                assertEquals(dst.get(6), (long) 1);
+                assertEquals(dst.get(7), (long) 2);
+                assertEquals(dst.get(8), (long) 8);
+                assertEquals(dst.get(10), (long) 0);
+
+                dst.put(12, src, 2, 2);
+                out = new long[5];
+                dst.get(10, out);
+                assertEquals(out, new long[] {0, 0, 2, 3, 0});
+
+            }
+        }
+    }
+
+    // END Android-added: Add API coverage for get(), put().
 }

@@ -172,17 +172,25 @@ class ByteBufferAsIntBuffer                  // package-private
         return bb.getIntUnchecked(ix(checkIndex(i)));
     }
 
-    // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
+    // BEGIN Android-added: Improve the efficiency of get().
     @Override
     public IntBuffer get(int[] dst, int off, int length) {
-        checkBounds(off, length, dst.length);
+        Objects.checkFromIndexSize(off, length, dst.length);
         if (length > remaining())
             throw new BufferUnderflowException();
         bb.getUnchecked(ix(position), dst, off, length);
         position += length;
         return this;
     }
-    // END Android-added: Improve the efficiency of put(type$[], int, int).
+
+    @Override
+    public IntBuffer get(int index, int[] dst, int off, int length) {
+        Objects.checkFromIndexSize(index, length, limit());
+        Objects.checkFromIndexSize(off, length, dst.length);
+        bb.getUnchecked(ix(index), dst, off, length);
+        return this;
+    }
+    // END Android-added: Improve the efficiency of get().
 
 
 
@@ -229,19 +237,48 @@ class ByteBufferAsIntBuffer                  // package-private
 
     }
 
-    // BEGIN Android-added: Improve the efficiency of put(type$[], int, int).
+    // BEGIN Android-added: Improve the efficiency of put(type$[]).
     @Override
     public IntBuffer put(int[] src, int off, int length) {
-        // Android-added: Merge the Read-only buffer class with this Read-Write buffer class.
         throwIfReadOnly();
-        checkBounds(off, length, src.length);
+        Objects.checkFromIndexSize(off, length, src.length);
         if (length > remaining())
             throw new BufferOverflowException();
         bb.putUnchecked(ix(position), src, off, length);
         position += length;
         return this;
     }
-    // END Android-added: Improve the efficiency of put(type$[], int, int).
+
+    @Override
+    public IntBuffer put(int index, int[] src, int off, int length) {
+        throwIfReadOnly();
+        Objects.checkFromIndexSize(index, length, limit());
+        Objects.checkFromIndexSize(off, length, src.length);
+        putUnchecked(index, src, off, length);
+        return this;
+    }
+
+    private void putUnchecked(int index, int[] src, int off, int length) {
+        bb.putUnchecked(ix(index), src, off, length);
+    }
+
+    @Override
+    void putBuffer(int pos, IntBuffer src, int srcPos, int n) {
+        if (src.hb != null) {
+            // this and src don't share the same backed char[].
+            putUnchecked(pos, src.hb, srcPos + src.offset, n);
+            return;
+        }
+        if (order() == src.order() &&
+              src instanceof ByteBufferAsIntBuffer asSrc) { // always true if src.hb == null
+            this.bb.putBuffer(ix(pos), asSrc.bb, asSrc.ix(srcPos), n << 2);
+            return;
+        }
+
+        // Fallback to the slow path until memmove with bswap is implemented
+        super.putBuffer(pos, src, srcPos, n);
+    }
+    // END Android-added: Improve the efficiency of put(type$[]).
 
     @Override
     public IntBuffer compact() {

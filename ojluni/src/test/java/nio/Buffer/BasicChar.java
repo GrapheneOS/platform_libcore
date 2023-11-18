@@ -36,6 +36,7 @@ package test.java.nio.Buffer;
 
 
 import java.nio.*;
+import java.util.function.Supplier;
 
 
 
@@ -1204,11 +1205,14 @@ public class BasicChar
 
         testToString();
 
-        // Android-added: Add API coverage for get, put(int, char[]).
+        // Android-added: Add API coverage for get(), put().
         testGetPutArrayWithIndex();
+
+        testPutBuffer();
+
     }
 
-    // BEGIN Android-added: Add API coverage for get, put(int, char[]).
+    // BEGIN Android-added: Add API coverage for get(), put().
     private static void testGetPutArrayWithIndex() {
         CharBuffer buf = CharBuffer.allocate(16);
         char firstElement = 11, secondElement = 12;
@@ -1223,5 +1227,53 @@ public class BasicChar
         buf.get(0, actual);
         assertEquals(actual, new char[] {firstElement, secondElement, 4, 3});
     }
-    // END Android-added: Add API coverage for get, put(int, char[]).
+
+    private static void testPutBuffer() {
+        Supplier<CharBuffer>[] newBuffers = new Supplier[] {
+                () -> CharBuffer.allocate(512),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer(),
+                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asCharBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer(),
+                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asCharBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.LITTLE_ENDIAN).position(100)).asCharBuffer(),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                        .order(ByteOrder.BIG_ENDIAN).position(100)).asCharBuffer(),
+        };
+
+        char[] samples = new char[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        for (var newSrc : newBuffers) {
+            for (var newDst : newBuffers) {
+                char[] out = new char[10];
+                CharBuffer src = newSrc.get();
+                src.put(samples);
+                src.get(0, out);
+                assertEquals(out, samples);
+                assertEquals(src.get(10), (char) 0);
+                src.limit(10);
+                src.rewind();
+
+                out = new char[10];
+                CharBuffer dst = newDst.get();
+                dst.put(src);
+                dst.get(0, out);
+                assertEquals(out, samples);
+                dst.rewind();
+
+                dst.put(6, src, 1, 2);
+                assertEquals(dst.get(6), (char) 1);
+                assertEquals(dst.get(7), (char) 2);
+                assertEquals(dst.get(8), (char) 8);
+                assertEquals(dst.get(10), (char) 0);
+
+                dst.put(12, src, 2, 2);
+                out = new char[5];
+                dst.get(10, out);
+                assertEquals(out, new char[] {0, 0, 2, 3, 0});
+
+            }
+        }
+    }
+
+    // END Android-added: Add API coverage for get(), put().
 }
