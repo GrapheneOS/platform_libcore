@@ -1231,13 +1231,15 @@ public class BasicFloat
     private static void testPutBuffer() {
         Supplier<FloatBuffer>[] newBuffers = new Supplier[] {
                 () -> FloatBuffer.allocate(512),
-                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer(),
-                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asFloatBuffer(),
-                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer(),
-                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asFloatBuffer(),
-                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                () -> FloatBuffer.allocate(512).slice(100, 412),
+                () -> ByteBuffer.allocate(512 * Float.BYTES).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer(),
+                () -> ByteBuffer.allocate(512 * Float.BYTES).order(ByteOrder.BIG_ENDIAN).asFloatBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Float.BYTES).order(ByteOrder.LITTLE_ENDIAN).asFloatBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Float.BYTES).order(ByteOrder.BIG_ENDIAN).asFloatBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Float.BYTES).asFloatBuffer().slice(100, 412),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 * Float.BYTES)
                         .order(ByteOrder.LITTLE_ENDIAN).position(100)).asFloatBuffer(),
-                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 * Float.BYTES)
                         .order(ByteOrder.BIG_ENDIAN).position(100)).asFloatBuffer(),
         };
 

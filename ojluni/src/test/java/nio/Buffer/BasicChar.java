@@ -1231,13 +1231,15 @@ public class BasicChar
     private static void testPutBuffer() {
         Supplier<CharBuffer>[] newBuffers = new Supplier[] {
                 () -> CharBuffer.allocate(512),
-                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer(),
-                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asCharBuffer(),
-                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer(),
-                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asCharBuffer(),
-                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                () -> CharBuffer.allocate(512).slice(100, 412),
+                () -> ByteBuffer.allocate(512 * Character.BYTES).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer(),
+                () -> ByteBuffer.allocate(512 * Character.BYTES).order(ByteOrder.BIG_ENDIAN).asCharBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Character.BYTES).order(ByteOrder.LITTLE_ENDIAN).asCharBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Character.BYTES).order(ByteOrder.BIG_ENDIAN).asCharBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Character.BYTES).asCharBuffer().slice(100, 412),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 * Character.BYTES)
                         .order(ByteOrder.LITTLE_ENDIAN).position(100)).asCharBuffer(),
-                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 * Character.BYTES)
                         .order(ByteOrder.BIG_ENDIAN).position(100)).asCharBuffer(),
         };
 

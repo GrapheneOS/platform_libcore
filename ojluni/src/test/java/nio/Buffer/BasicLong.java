@@ -1231,13 +1231,15 @@ public class BasicLong
     private static void testPutBuffer() {
         Supplier<LongBuffer>[] newBuffers = new Supplier[] {
                 () -> LongBuffer.allocate(512),
-                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asLongBuffer(),
-                () -> ByteBuffer.allocate(512 << 1).order(ByteOrder.BIG_ENDIAN).asLongBuffer(),
-                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.LITTLE_ENDIAN).asLongBuffer(),
-                () -> ByteBuffer.allocateDirect(512 << 1).order(ByteOrder.BIG_ENDIAN).asLongBuffer(),
-                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                () -> LongBuffer.allocate(512).slice(100, 412),
+                () -> ByteBuffer.allocate(512 * Long.BYTES).order(ByteOrder.LITTLE_ENDIAN).asLongBuffer(),
+                () -> ByteBuffer.allocate(512 * Long.BYTES).order(ByteOrder.BIG_ENDIAN).asLongBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Long.BYTES).order(ByteOrder.LITTLE_ENDIAN).asLongBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Long.BYTES).order(ByteOrder.BIG_ENDIAN).asLongBuffer(),
+                () -> ByteBuffer.allocateDirect(512 * Long.BYTES).asLongBuffer().slice(100, 412),
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 * Long.BYTES)
                         .order(ByteOrder.LITTLE_ENDIAN).position(100)).asLongBuffer(),
-                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 << 1)
+                () -> ((ByteBuffer) ByteBuffer.allocateDirect(512 * Long.BYTES)
                         .order(ByteOrder.BIG_ENDIAN).position(100)).asLongBuffer(),
         };
 
