@@ -810,6 +810,8 @@ java_test {
             "-Xep:DoubleBraceInitialization:WARN",
             "-Xep:RandomModInteger:WARN",
             "-Xep:IdentityBinaryExpression:WARN",
+            "-Xep:UnnecessaryStringBuilder:OFF", // https://github.com/google/error-prone/issues/4195
+            "-Xep:InvalidPatternSyntax:WARN",
         ],
     },
 

@@ -37,6 +37,7 @@ java_test {
         javacflags: [
             "-Xep:EqualsNull:WARN",
             "-Xep:ReturnValueIgnored:WARN",
+            "-Xep:UnnecessaryStringBuilder:OFF",
         ],
     },
 }
