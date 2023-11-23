@@ -16140,6 +16140,8 @@ package java.util.concurrent {
     method public static java.util.concurrent.ThreadLocalRandom current();
     method public double nextDouble(double);
     method public double nextDouble(double, double);
+    method public float nextFloat(float);
+    method public float nextFloat(float, float);
     method public int nextInt(int, int);
     method public long nextLong(long);
     method public long nextLong(long, long);

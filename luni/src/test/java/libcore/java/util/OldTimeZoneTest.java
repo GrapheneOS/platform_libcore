@@ -112,7 +112,6 @@ public class OldTimeZoneTest extends TestCase {
     @NonMts(reason = NonMtsReasons.ICU_VERSION_DEPENDENCY,
             disabledUntilSdk = VersionCodes.UPSIDE_DOWN_CAKE)
     public void test_getDisplayNameZILjava_util_Locale() {
-        if (true) return;  // Temporary workaround for breakage. (b/288623638)
         TimeZone tz = TimeZone.getTimeZone("America/Los_Angeles");
         assertEquals("Pacific Daylight Time", tz.getDisplayName(true,  TimeZone.LONG, Locale.US));
         assertEquals("Pacific Standard Time", tz.getDisplayName(false, TimeZone.LONG, Locale.UK));

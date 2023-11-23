@@ -266,6 +266,47 @@ public class ThreadLocalRandomTest extends JSR166TestCase {
     }
 
     /**
+     * nextFloat(non-positive) throws IllegalArgumentException
+     */
+    public void testNextFloatBoundNonPositive() {
+        ThreadLocalRandom rnd = ThreadLocalRandom.current();
+        float[] badBounds = {
+                0.0f,
+                -17.0f,
+                -Float.MIN_VALUE,
+                Float.NEGATIVE_INFINITY,
+                Float.NaN,
+        };
+        for (float bound : badBounds) {
+            try {
+                rnd.nextFloat(bound);
+                shouldThrow();
+            } catch (IllegalArgumentException success) {}
+        }
+    }
+
+    /**
+     * nextFloat(least, bound) returns least <= value < bound;
+     * repeated calls produce at least two distinct results
+     */
+    public void testNextFloatBounded2() {
+        for (float least = 0.0001f; least < 1.0e20f; least *= 8) {
+            for (float bound = least * 1.001f; bound < 1.0e20f; bound *= 16) {
+                float f = ThreadLocalRandom.current().nextFloat(least, bound);
+                assertTrue(least <= f && f < bound);
+                int i = 0;
+                float j;
+                while (i < NCALLS &&
+                        (j = ThreadLocalRandom.current().nextFloat(least, bound)) == f) {
+                    assertTrue(least <= j && j < bound);
+                    ++i;
+                }
+                assertTrue(i < NCALLS);
+            }
+        }
+    }
+
+    /**
      * nextDouble(non-positive) throws IllegalArgumentException
      */
     public void testNextDoubleBoundNonPositive() {

@@ -533,7 +533,7 @@ public abstract class MappedByteBuffer
      * {@inheritDoc}
      */
     // Android-changed: covariant overloads of *Buffer methods that return this.
-    // @CovariantReturnType(returnType = MappedByteBuffer.class, presentAfter = 34)
+    @CovariantReturnType(returnType = MappedByteBuffer.class, presentAfter = 34)
     @Override
     public abstract ByteBuffer compact();
 }
