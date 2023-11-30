@@ -51,6 +51,7 @@ import static java.util.stream.Collectors.toSet;
  * @key randomness
  */
 
+@android.platform.test.annotations.LargeTest
 public class RandomTestBsi1999 {
 
     /* A set of tests for pseudorandom number generators inspired by this report:
