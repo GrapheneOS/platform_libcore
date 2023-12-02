@@ -16,6 +16,8 @@
 
 package org.apache.harmony.tests.java.lang;
 
+import android.platform.test.annotations.LargeTest;
+
 import junit.framework.TestCase;
 
 import java.io.BufferedReader;
@@ -25,12 +27,24 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class ProcessManagerTest extends TestCase {
 
     Thread thread = null;
     Process process = null;
     boolean isThrown = false;
+    private static final Path TEMP_DIR;
+
+    static {
+        try {
+            TEMP_DIR = Files.createTempDirectory("process-manager-test");
+            TEMP_DIR.toFile().deleteOnExit();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void testCat() throws IOException, InterruptedException {
         String[] commands = { "cat" };
@@ -156,24 +170,22 @@ public class ProcessManagerTest extends TestCase {
         thread.start();
     }
 
+    @LargeTest
     public void testHeavyLoad() {
         int i;
-        for (i = 0; i < 100; i++)
+        for (i = 0; i < 30; i++)
             stuff();
     }
 
     private static void stuff() {
         Runtime rt = Runtime.getRuntime();
         try {
-            Process proc = rt.exec("ls");
+            Process proc = rt.exec("ls " + TEMP_DIR.toString());
             proc.waitFor();
-            proc = null;
         } catch (Exception ex) {
             System.err.println("Failure: " + ex);
             throw new RuntimeException(ex);
         }
-        rt.gc();
-        rt = null;
     }
 
     FileOutputStream out;

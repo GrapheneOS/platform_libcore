@@ -865,18 +865,14 @@ java_genrule {
     name: "libcore-non-cts-tests-txt",
     host_supported: true,
     srcs: [
-        ":apache-harmony-tests",
-        ":conscrypt-tests",
-        ":core-tests",
-        ":core-ojtests",
+        ":apache-harmony-tests{.jar}",
+        ":conscrypt-tests{.jar}",
+        ":core-tests{.jar}",
+        ":core-ojtests{.jar}",
     ],
     tools: ["non-cts-json-generator"],
     out: ["libcore-non-cts-tests.txt"],
-    // note: it's a hack to read the .class files in combined directory, but $(in) only returns
-    // the path to the .dexjar files, not jar files containing the .class file.
-    cmd: "LIST=; " +
-        "for src in $(in); do LIST=\"$${LIST} $$(dirname $${src})/../combined/$$(basename $${src})\"; done; " +
-        "$(location non-cts-json-generator) $${LIST} > $(out)",
+    cmd: "$(location non-cts-json-generator) $(in) > $(out)",
 }
 
 // Exports annotated stubs source files in ojluni/annotations/sdk to make them

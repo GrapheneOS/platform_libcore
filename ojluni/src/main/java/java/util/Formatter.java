@@ -28,7 +28,7 @@ package java.util;
 
 import android.compat.Compatibility;
 import android.compat.annotation.ChangeId;
-import android.compat.annotation.EnabledAfter;
+import android.compat.annotation.EnabledSince;
 
 import dalvik.annotation.compat.VersionCodes;
 import dalvik.system.VMRuntime;
@@ -2891,7 +2891,7 @@ public final class Formatter implements Closeable, Flushable {
      * @hide
      */
     @ChangeId
-    @EnabledAfter(targetSdkVersion = VersionCodes.VANILLA_ICE_CREAM)
+    @EnabledSince(targetSdkVersion = VersionCodes.VANILLA_ICE_CREAM)
     public static final long ENABLE_STRICT_FORMATTER_VALIDATION = 270674727L;
 
     private static boolean isStrictValidationEnabled() {

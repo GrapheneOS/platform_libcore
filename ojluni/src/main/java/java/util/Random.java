@@ -27,7 +27,7 @@ package java.util;
 
 import android.compat.Compatibility;
 import android.compat.annotation.ChangeId;
-import android.compat.annotation.EnabledAfter;
+import android.compat.annotation.EnabledSince;
 
 import java.io.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -37,7 +37,6 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import jdk.internal.util.random.RandomSupport;
-import jdk.internal.util.random.RandomSupport.*;
 
 import dalvik.annotation.compat.VersionCodes;
 import dalvik.system.VMRuntime;
@@ -118,7 +117,7 @@ public class Random implements RandomGenerator, java.io.Serializable {
      * @hide
      */
     @ChangeId
-    @EnabledAfter(targetSdkVersion = VersionCodes.VANILLA_ICE_CREAM)
+    @EnabledSince(targetSdkVersion = VersionCodes.VANILLA_ICE_CREAM)
     public static final long STREAM_INT_DIFFERS_FROM_NEXT_INT = 308103782L;
 
     /**
