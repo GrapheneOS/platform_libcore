@@ -24,6 +24,7 @@ import com.google.mockwebserver.RecordedRequest;
 import com.google.mockwebserver.SocketPolicy;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -973,17 +974,15 @@ public class HttpsURLConnectionTest extends TestCase {
             // connection configured to post data, do so
             OutputStream os = connection.getOutputStream();
             os.write(POST_DATA.getBytes());
+            os.close();
         }
         // read the content of HTTP(s) response
-        InputStream is = connection.getInputStream();
-        log("Client", "Input Stream obtained");
-        byte[] buff = new byte[2048];
-        int num = 0;
-        int byt;
-        while ((num < buff.length) && ((byt = is.read()) != -1)) {
-            buff[num++] = (byte) byt;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream(RESPONSE_CONTENT.length());
+        try (InputStream is = connection.getInputStream()) {
+            log("Client", "Input Stream obtained");
+            is.transferTo(baos);
         }
-        String message = new String(buff, 0, num);
+        String message = baos.toString();
         log("Client", "Got content:\n" + message);
         log("Client", "------------------");
         log("Client", "Response code: " + connection.getResponseCode());
