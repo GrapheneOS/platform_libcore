@@ -50,3 +50,9 @@ java_library {
     // Make sure that this will be added to the sdk snapshot for S.
     min_sdk_version: "S",
 }
+
+java_library_host {
+    name: "skippedCtsTest-manual-base-jar",
+    java_resources: ["skippedCtsTest_manual_base.txt"],
+    visibility: ["//libcore/tools/non-cts-json-generator"],
+}

@@ -39,10 +39,18 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import vogar.expect.Expectation;
+import vogar.expect.ExpectationStore;
+import vogar.expect.ModeId;
+import vogar.expect.util.Log;
+import vogar.expect.util.LogOutput;
 
 public class Main {
 
@@ -79,9 +87,46 @@ public class Main {
 
 
         NonCtsAnnotationReader reader = new NonCtsAnnotationReader(mainArgs.inputFiles).parse();
-        ExpectationWriter writer = ExpectationWriter.from(reader);
+        ExpectationStore baseStore = readBaseExpectationStore();
+        ExpectationWriter writer = ExpectationWriter.from(baseStore, reader);
         try {
             writer.write(out);
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    private static ExpectationStore readBaseExpectationStore() {
+        Log.setOutput(new LogOutput() {
+            @Override
+            public void verbose(String s) {
+                System.err.println(s);
+            }
+
+            @Override
+            public void warn(String message) {
+                System.err.println(message);
+            }
+
+            @Override
+            public void warn(String message, List<String> list) {
+                System.err.printf(message + '\n', list.toArray());
+            }
+
+            @Override
+            public void nativeOutput(String outputLine) {
+                System.err.println(outputLine);
+            }
+
+            @Override
+            public void info(String s) {}
+
+            @Override
+            public void info(String message, Throwable throwable) {}
+        });
+        try {
+            return ExpectationStore.parseResources(Main.class,
+                    Set.of("/skippedCtsTest_manual_base.txt"), ModeId.HOST);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -187,7 +232,8 @@ public class Main {
             this.clusterMap = clusterMap;
         }
 
-        public static ExpectationWriter from(NonCtsAnnotationReader annotationReader) {
+        public static ExpectationWriter from(ExpectationStore baseStore,
+                NonCtsAnnotationReader annotationReader) {
             TreeMap<NonCtsCluster.Key, NonCtsCluster> clusterMap = new TreeMap<>();
             for (NonCtsEntry entry : annotationReader.getEntries()) {
                 NonCtsCluster.Key key = new NonCtsCluster.Key(entry);
@@ -196,6 +242,17 @@ public class Main {
                         cluster = new NonCtsCluster(k);
                     }
                     cluster.add(entry.name());
+                    return cluster;
+                });
+            }
+            for (var entry : baseStore.getAllOutComes().entrySet()) {
+                NonCtsCluster.Key key = new NonCtsCluster.Key(entry.getValue());
+                String testName = entry.getKey();
+                clusterMap.compute(key, (k, cluster) -> {
+                    if (cluster == null) {
+                        cluster = new NonCtsCluster(k);
+                    }
+                    cluster.add(testName);
                     return cluster;
                 });
             }
@@ -255,6 +312,9 @@ public class Main {
                     .thenComparing(Key::description);
             public Key(NonCtsEntry entry) {
                 this(entry.bug, entry.description);
+            }
+            public Key(Expectation e) {
+                this(e.getBug(), e.getDescription());
             }
 
             @Override

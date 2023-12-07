@@ -16,6 +16,9 @@
 
 package libcore.java.util;
 
+import libcore.test.annotation.NonCts;
+import libcore.test.reasons.NonCtsReasons;
+
 import junit.framework.TestCase;
 
 import java.util.UUID;
@@ -52,6 +55,7 @@ public class UUIDTest extends TestCase {
     } catch (IllegalArgumentException expected) { }
   }
 
+  @NonCts(bug = 310050493, reason = NonCtsReasons.INTERNAL_APIS)
   public void testJava8Implementation_allowsLongInputs() {
     var uuid = UUID.randomUUID();
     var parsedBackWithLeadingZero = UUID.fromStringJava8("0" + uuid);
@@ -68,6 +72,7 @@ public class UUIDTest extends TestCase {
     assertEquals(0xffffffffffffffffL, uuid.getLeastSignificantBits());
   }
 
+  @NonCts(bug = 310050493, reason = NonCtsReasons.INTERNAL_APIS)
   public void testCurrentImplementation_invalidInputs() {
     var uuid = UUID.randomUUID();
     try {
@@ -79,5 +84,10 @@ public class UUIDTest extends TestCase {
       UUID.fromStringCurrentJava("0-0-0-0-0-");
       fail("0-0-0-0-0- is invalid UUID, IAE should be thrown");
     } catch (IllegalArgumentException expected) { }
+  }
+
+  @NonCts(bug = 310050493, reason = NonCtsReasons.INTERNAL_APIS)
+  public void testJava11Implementation_invalidInputs() {
+      // The test moved to testCurrentImplementation_invalidInputs()
   }
 }

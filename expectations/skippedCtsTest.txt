@@ -4,10 +4,29 @@
  */
 [
   {
+    "description": "Algorithm might not be available in the future",
+    "names": [
+      "libcore.java.util.random.RandomGeneratorFactoryTest#createsL64X256MixRandomInstance"
+    ]
+  },
+  {
+    "description": "No guarantees are provided around available implementations",
+    "names": [
+      "libcore.java.util.random.RandomGeneratorFactoryTest#checkCurrentlyAvailableImplementations"
+    ]
+  },
+  {
     "description": "Test for internal APIs.",
     "names": [
       "libcore.libcore.icu.DecimalFormatDataTest",
       "libcore.libcore.icu.SimpleDateFormatDataTest"
+    ]
+  },
+  {
+    "bug": 259671905,
+    "description": "The test asserts buggy or non-breaking behaviors, but the behavior has been fixed in a new mainline module version.",
+    "names": [
+      "org.apache.harmony.security.tests.java.security.ProviderTest#testForEachCME"
     ]
   },
   {
@@ -70,10 +89,22 @@
     ]
   },
   {
-    "bug": 290912610,
+    "bug": 310050493,
+    "description": "Test for internal APIs.",
+    "names": [
+      "libcore.java.util.UUIDTest#testCurrentImplementation_invalidInputs",
+      "libcore.java.util.UUIDTest#testJava11Implementation_invalidInputs",
+      "libcore.java.util.UUIDTest#testJava8Implementation_allowsLongInputs"
+    ]
+  },
+  {
+    "bug": 310050493,
     "description": "The test asserts buggy or non-breaking behaviors, but the behavior has been fixed in a new mainline module version.",
     "names": [
-      "com.android.org.conscrypt.javax.crypto.CipherTest#test_PBKDF2WITHHMACSHA1_SKFactory_and_PBEAESCBC_Cipher_noIV"
+      "com.android.org.conscrypt.NativeCryptoArgTest#evpMethods",
+      "com.android.org.conscrypt.javax.crypto.CipherTest#test_PBKDF2WITHHMACSHA1_SKFactory_and_PBEAESCBC_Cipher_noIV",
+      "libcore.java.util.zip.GZIPOutputStreamTest#testShortMessage",
+      "org.apache.harmony.tests.java.util.zip.ZipOutputStreamTest#test_exttSupport"
     ]
   }
 ]

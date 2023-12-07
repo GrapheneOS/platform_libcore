@@ -38,19 +38,21 @@
 jobject sockaddrToInetAddress(JNIEnv* env, const sockaddr_storage& ss, jint* port) {
     // Convert IPv4-mapped IPv6 addresses to IPv4 addresses.
     // The RI states "Java will never return an IPv4-mapped address".
-    const sockaddr_in6& sin6 = reinterpret_cast<const sockaddr_in6&>(ss);
-    if (ss.ss_family == AF_INET6 && IN6_IS_ADDR_V4MAPPED(&sin6.sin6_addr)) {
-        // Copy the IPv6 address into the temporary sockaddr_storage.
-        sockaddr_storage tmp;
-        memset(&tmp, 0, sizeof(tmp));
-        memcpy(&tmp, &ss, sizeof(sockaddr_in6));
-        // Unmap it into an IPv4 address.
-        sockaddr_in& sin = reinterpret_cast<sockaddr_in&>(tmp);
-        sin.sin_family = AF_INET;
-        sin.sin_port = sin6.sin6_port;
-        memcpy(&sin.sin_addr.s_addr, &sin6.sin6_addr.s6_addr[12], 4);
-        // Do the regular conversion using the unmapped address.
-        return sockaddrToInetAddress(env, tmp, port);
+    if (ss.ss_family == AF_INET6) {
+        const sockaddr_in6& sin6 = reinterpret_cast<const sockaddr_in6&>(ss);
+        if (IN6_IS_ADDR_V4MAPPED(&sin6.sin6_addr)) {
+            // Copy the IPv6 address into the temporary sockaddr_storage.
+            sockaddr_storage tmp;
+            memset(&tmp, 0, sizeof(tmp));
+            memcpy(&tmp, &ss, sizeof(sockaddr_in6));
+            // Unmap it into an IPv4 address.
+            sockaddr_in& sin = reinterpret_cast<sockaddr_in&>(tmp);
+            sin.sin_family = AF_INET;
+            sin.sin_port = sin6.sin6_port;
+            memcpy(&sin.sin_addr.s_addr, &sin6.sin6_addr.s6_addr[12], 4);
+            // Do the regular conversion using the unmapped address.
+            return sockaddrToInetAddress(env, tmp, port);
+        }
     }
 
     const void* rawAddress;

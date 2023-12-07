@@ -34,6 +34,9 @@ import java.util.zip.ZipOutputStream;
 import libcore.junit.junit3.TestCaseWithRules;
 import libcore.junit.util.ResourceLeakageDetector.DisableResourceLeakageDetection;
 import libcore.junit.util.ResourceLeakageDetector;
+import libcore.test.annotation.NonCts;
+import libcore.test.reasons.NonCtsReasons;
+
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 
@@ -334,6 +337,7 @@ public class ZipOutputStreamTest extends TestCaseWithRules {
     /**
      * Test info-zip extended timestamp support
      */
+    @NonCts(bug = 310050493, reason = NonCtsReasons.NON_BREAKING_BEHAVIOR_FIX)
     public void test_exttSupport() throws Exception {
         List<ZipEntry> entries = new ArrayList<>();
 

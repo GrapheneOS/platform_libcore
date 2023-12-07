@@ -32,5 +32,7 @@ java_binary_host {
         "ow2-asm",
         "ow2-asm-tree",
         "ow2-asm-util",
+        "skippedCtsTest-manual-base-jar",
+        "vogarexpectlib",
     ],
 }

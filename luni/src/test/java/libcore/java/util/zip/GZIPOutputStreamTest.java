@@ -25,6 +25,9 @@ import java.util.Random;
 import java.util.zip.GZIPOutputStream;
 import libcore.junit.junit3.TestCaseWithRules;
 import libcore.junit.util.ResourceLeakageDetector;
+import libcore.test.annotation.NonCts;
+import libcore.test.reasons.NonCtsReasons;
+
 import org.junit.Rule;
 import org.junit.rules.TestRule;
 
@@ -32,6 +35,7 @@ public final class GZIPOutputStreamTest extends TestCaseWithRules {
   @Rule
   public TestRule resourceLeakageDetectorRule = ResourceLeakageDetector.getRule();
 
+  @NonCts(bug = 310050493, reason = NonCtsReasons.NON_BREAKING_BEHAVIOR_FIX)
   public void testShortMessage() throws IOException {
     byte[] data = gzip(("Hello World").getBytes("UTF-8"));
     assertEquals("[31, -117, 8, 0, 0, 0, 0, 0, 0, -1, -13, 72, -51, -55, -55, 87, 8, -49, " +
