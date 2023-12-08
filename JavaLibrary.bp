@@ -692,9 +692,9 @@ filegroup {
 genrule {
     name: "core-tests-smali-dex",
     srcs: ["luni/src/test/java/**/*.smali"],
-    cmd: "$(location smali) ass --api 28 -o $(out) $(in)",
+    cmd: "$(location android-smali) ass --api 28 -o $(out) $(in)",
     out: ["core-tests-smali.dex"],
-    tools: ["smali"],
+    tools: ["android-smali"],
 }
 
 filegroup {

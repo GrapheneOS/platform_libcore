@@ -35,23 +35,22 @@
 #include <log/log.h>
 
 
-jobject sockaddrToInetAddress(JNIEnv* env, const sockaddr_storage& ss, jint* port) {
+jobject sockaddrToInetAddress(JNIEnv* env, const sockaddr* sa, jint* port) {
     // Convert IPv4-mapped IPv6 addresses to IPv4 addresses.
     // The RI states "Java will never return an IPv4-mapped address".
-    if (ss.ss_family == AF_INET6) {
-        const sockaddr_in6& sin6 = reinterpret_cast<const sockaddr_in6&>(ss);
+    if (sa->sa_family == AF_INET6) {
+        const sockaddr_in6& sin6 = *reinterpret_cast<const sockaddr_in6*>(sa);
         if (IN6_IS_ADDR_V4MAPPED(&sin6.sin6_addr)) {
             // Copy the IPv6 address into the temporary sockaddr_storage.
-            sockaddr_storage tmp;
-            memset(&tmp, 0, sizeof(tmp));
-            memcpy(&tmp, &ss, sizeof(sockaddr_in6));
+            sockaddr_storage tmp = {};
+            memcpy(&tmp, sa, sizeof(sockaddr_in6));
             // Unmap it into an IPv4 address.
             sockaddr_in& sin = reinterpret_cast<sockaddr_in&>(tmp);
             sin.sin_family = AF_INET;
             sin.sin_port = sin6.sin6_port;
             memcpy(&sin.sin_addr.s_addr, &sin6.sin6_addr.s6_addr[12], 4);
             // Do the regular conversion using the unmapped address.
-            return sockaddrToInetAddress(env, tmp, port);
+            return sockaddrToInetAddress(env, reinterpret_cast<sockaddr*>(&tmp), port);
         }
     }
 
@@ -59,13 +58,13 @@ jobject sockaddrToInetAddress(JNIEnv* env, const sockaddr_storage& ss, jint* por
     size_t addressLength;
     int sin_port = 0;
     int scope_id = 0;
-    if (ss.ss_family == AF_INET) {
-        const sockaddr_in& sin = reinterpret_cast<const sockaddr_in&>(ss);
+    if (sa->sa_family == AF_INET) {
+        const sockaddr_in& sin = *reinterpret_cast<const sockaddr_in*>(sa);
         rawAddress = &sin.sin_addr.s_addr;
         addressLength = 4;
         sin_port = ntohs(sin.sin_port);
-    } else if (ss.ss_family == AF_INET6) {
-        const sockaddr_in6& sin6 = reinterpret_cast<const sockaddr_in6&>(ss);
+    } else if (sa->sa_family == AF_INET6) {
+        const sockaddr_in6& sin6 = *reinterpret_cast<const sockaddr_in6*>(sa);
         rawAddress = &sin6.sin6_addr.s6_addr;
         addressLength = 16;
         sin_port = ntohs(sin6.sin6_port);
@@ -74,7 +73,7 @@ jobject sockaddrToInetAddress(JNIEnv* env, const sockaddr_storage& ss, jint* por
         // We can't throw SocketException. We aren't meant to see bad addresses, so seeing one
         // really does imply an internal error.
         jniThrowExceptionFmt(env, "java/lang/IllegalArgumentException",
-                             "sockaddrToInetAddress unsupported ss_family: %i", ss.ss_family);
+                             "sockaddrToInetAddress unsupported family: %d", sa->sa_family);
         return NULL;
     }
     if (port != NULL) {

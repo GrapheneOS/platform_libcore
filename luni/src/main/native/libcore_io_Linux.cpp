@@ -397,7 +397,7 @@ static jbyteArray getUnixSocketPath(JNIEnv* env, const sockaddr_storage& ss,
 static jobject makeSocketAddress(JNIEnv* env, const sockaddr_storage& ss, const socklen_t sa_len) {
     if (ss.ss_family == AF_INET || ss.ss_family == AF_INET6) {
         jint port;
-        jobject inetAddress = sockaddrToInetAddress(env, ss, &port);
+        jobject inetAddress = sockaddrToInetAddress(env, reinterpret_cast<const sockaddr*>(&ss), &port);
         if (inetAddress == NULL) {
             return NULL;  // Exception already thrown.
         }
@@ -601,7 +601,7 @@ static bool fillInetSocketAddress(JNIEnv* env, jobject javaInetSocketAddress,
     }
     // Fill out the passed-in InetSocketAddress with the sender's IP address and port number.
     jint port;
-    jobject sender = sockaddrToInetAddress(env, ss, &port);
+    jobject sender = sockaddrToInetAddress(env, reinterpret_cast<const sockaddr*>(&ss), &port);
     if (sender == NULL) {
         return false;
     }
@@ -1421,8 +1421,7 @@ static jobjectArray Linux_android_getaddrinfo(JNIEnv* env, jobject, jstring java
         }
 
         // Convert each IP address into a Java byte array.
-        sockaddr_storage& address = *reinterpret_cast<sockaddr_storage*>(ai->ai_addr);
-        ScopedLocalRef<jobject> inetAddress(env, sockaddrToInetAddress(env, address, NULL));
+        ScopedLocalRef<jobject> inetAddress(env, sockaddrToInetAddress(env, ai->ai_addr, NULL));
         if (inetAddress.get() == NULL) {
             return NULL;
         }
@@ -1536,7 +1535,7 @@ static jobject Linux_getsockoptInAddr(JNIEnv* env, jobject, jobject javaFd, jint
         throwErrnoException(env, "getsockopt");
         return NULL;
     }
-    return sockaddrToInetAddress(env, ss, NULL);
+    return sockaddrToInetAddress(env, reinterpret_cast<sockaddr*>(&ss), NULL);
 }
 
 static jint Linux_getsockoptInt(JNIEnv* env, jobject, jobject javaFd, jint level, jint option) {
@@ -1676,29 +1675,25 @@ static jobjectArray Linux_getifaddrs(JNIEnv* env, jobject) {
     for (ifaddrs* ifa = ifaddr; ifa != NULL; ifa = ifa->ifa_next, ++index) {
         TO_JAVA_STRING(name, ifa->ifa_name);
         jint flags = ifa->ifa_flags;
-        sockaddr_storage* interfaceAddr = reinterpret_cast<sockaddr_storage*>(ifa->ifa_addr);
-        sockaddr_storage* netmaskAddr = reinterpret_cast<sockaddr_storage*>(ifa->ifa_netmask);
-        sockaddr_storage* broadAddr = reinterpret_cast<sockaddr_storage*>(ifa->ifa_broadaddr);
-
         jobject addr, netmask, broad;
         jbyteArray hwaddr = NULL;
-        if (interfaceAddr != NULL) {
-            switch (interfaceAddr->ss_family) {
+        if (ifa->ifa_addr != NULL) {
+            switch (ifa->ifa_addr->sa_family) {
             case AF_INET:
             case AF_INET6:
                 // IPv4 / IPv6.
                 // interfaceAddr and netmaskAddr are never null.
                 // sockaddrToInetAddress is not expected to return null.
-                if ((addr = sockaddrToInetAddress(env, *interfaceAddr, NULL)) == NULL) {
+                if ((addr = sockaddrToInetAddress(env, ifa->ifa_addr, NULL)) == NULL) {
                     DCHECK(env->ExceptionCheck());
                     return NULL;
                 }
-                if ((netmask = sockaddrToInetAddress(env, *netmaskAddr, NULL)) == NULL) {
+                if ((netmask = sockaddrToInetAddress(env, ifa->ifa_netmask, NULL)) == NULL) {
                     DCHECK(env->ExceptionCheck());
                     return NULL;
                 }
-                if (broadAddr != NULL && (ifa->ifa_flags & IFF_BROADCAST)) {
-                    if ((broad = sockaddrToInetAddress(env, *broadAddr, NULL)) == NULL) {
+                if (ifa->ifa_broadaddr != NULL && (ifa->ifa_flags & IFF_BROADCAST)) {
+                    if ((broad = sockaddrToInetAddress(env, ifa->ifa_broadaddr, NULL)) == NULL) {
                         DCHECK(env->ExceptionCheck());
                         return NULL;
                     }
@@ -1784,7 +1779,7 @@ static jobject Linux_inet_pton(JNIEnv* env, jobject, jint family, jstring javaNa
         return NULL;
     }
     ss.ss_family = family;
-    return sockaddrToInetAddress(env, ss, NULL);
+    return sockaddrToInetAddress(env, reinterpret_cast<sockaddr*>(&ss), NULL);
 }
 
 static jint Linux_ioctlFlags(JNIEnv* env, jobject, jobject javaFd, jstring javaInterfaceName) {
@@ -1807,7 +1802,7 @@ static jobject Linux_ioctlInetAddress(JNIEnv* env, jobject, jobject javaFd, jint
     if (rc == -1) {
         return NULL;
     }
-    return sockaddrToInetAddress(env, reinterpret_cast<sockaddr_storage&>(req.ifr_addr), NULL);
+    return sockaddrToInetAddress(env, &req.ifr_addr, NULL);
 }
 
 static jint Linux_ioctlInt(JNIEnv* env, jobject, jobject javaFd, jint cmd) {

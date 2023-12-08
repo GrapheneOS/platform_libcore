@@ -18,10 +18,10 @@
 #include <sys/socket.h>
 #include "ScopedByteBufferArray.h"
 
-// Convert from sockaddr_storage to Inet4Address (AF_INET) or Inet6Address (AF_INET6).
+// Convert from sockaddr to Inet4Address (AF_INET) or Inet6Address (AF_INET6).
 // If 'port' is non-NULL and the address family includes a notion
 // of port number, *port will be set to the port number.
-jobject sockaddrToInetAddress(JNIEnv* env, const sockaddr_storage& ss, int* port);
+jobject sockaddrToInetAddress(JNIEnv* env, const sockaddr* sa, int* port);
 
 // Convert from InetAddress to sockaddr_storage. An Inet6Address will be converted to an
 // AF_INET6 sockaddr_in6. An Inet4Address will be converted to an IPv4-mapped AF_INET6
