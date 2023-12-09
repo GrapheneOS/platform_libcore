@@ -45,3 +45,13 @@ phony {
         "core-all",
     ],
 }
+
+filegroup {
+    name: "ojluni-AbstractCollection",
+    srcs: [
+        "java/java/util/AbstractCollection.java",
+    ],
+    visibility: [
+        "//art/test:__subpackages__",
+    ],
+}

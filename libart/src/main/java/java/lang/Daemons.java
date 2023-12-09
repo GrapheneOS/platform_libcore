@@ -61,13 +61,13 @@ public final class Daemons {
             FinalizerDaemon.INSTANCE,
             FinalizerWatchdogDaemon.INSTANCE,
     };
-    private static final CountDownLatch POST_ZYGOTE_START_LATCH = new CountDownLatch(DAEMONS.length);
-    private static final CountDownLatch PRE_ZYGOTE_START_LATCH = new CountDownLatch(DAEMONS.length);
+    private static CountDownLatch zygoteStartLatch;
 
     private static boolean postZygoteFork = false;
 
     @UnsupportedAppUsage
     public static void start() {
+        zygoteStartLatch = new CountDownLatch(DAEMONS.length);
         for (Daemon daemon : DAEMONS) {
             daemon.start();
         }
@@ -75,9 +75,7 @@ public final class Daemons {
 
     public static void startPostZygoteFork() {
         postZygoteFork = true;
-        for (Daemon daemon : DAEMONS) {
-            daemon.startPostZygoteFork();
-        }
+        start();
     }
 
     @UnsupportedAppUsage
@@ -88,11 +86,7 @@ public final class Daemons {
     }
 
     private static void waitForDaemonStart() throws Exception {
-        if (postZygoteFork) {
-            POST_ZYGOTE_START_LATCH.await();
-        } else {
-            PRE_ZYGOTE_START_LATCH.await();
-        }
+        zygoteStartLatch.await();
     }
 
     /**
@@ -104,7 +98,6 @@ public final class Daemons {
         @UnsupportedAppUsage
         private Thread thread;
         private String name;
-        private boolean postZygoteFork;
 
         protected Daemon(String name) {
             this.name = name;
@@ -112,11 +105,6 @@ public final class Daemons {
 
         @UnsupportedAppUsage
         public synchronized void start() {
-            startInternal();
-        }
-
-        public synchronized void startPostZygoteFork() {
-            postZygoteFork = true;
             startInternal();
         }
 
@@ -137,10 +125,8 @@ public final class Daemons {
                 // priority. We (may) use a native priority that doesn't have a corresponding
                 // java.lang.Thread-level priority (native priorities are more coarse-grained.)
                 VMRuntime.getRuntime().setSystemDaemonThreadPriority();
-                POST_ZYGOTE_START_LATCH.countDown();
-            } else {
-                PRE_ZYGOTE_START_LATCH.countDown();
             }
+            zygoteStartLatch.countDown();
             try {
                 runInternal();
             } catch (Throwable ex) {
