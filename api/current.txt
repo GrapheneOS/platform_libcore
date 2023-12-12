@@ -7930,6 +7930,37 @@ package java.security {
     method public java.util.Map<java.lang.String,java.security.KeyStore.ProtectionParameter> getProtectionParams();
   }
 
+  public class DrbgParameters {
+    method public static java.security.DrbgParameters.Instantiation instantiation(int, java.security.DrbgParameters.Capability, byte[]);
+    method public static java.security.DrbgParameters.NextBytes nextBytes(int, boolean, byte[]);
+    method public static java.security.DrbgParameters.Reseed reseed(boolean, byte[]);
+  }
+
+  public enum DrbgParameters.Capability {
+    method public boolean supportsPredictionResistance();
+    method public boolean supportsReseeding();
+    enum_constant public static final java.security.DrbgParameters.Capability NONE;
+    enum_constant public static final java.security.DrbgParameters.Capability PR_AND_RESEED;
+    enum_constant public static final java.security.DrbgParameters.Capability RESEED_ONLY;
+  }
+
+  public static final class DrbgParameters.Instantiation implements java.security.SecureRandomParameters {
+    method public java.security.DrbgParameters.Capability getCapability();
+    method public byte[] getPersonalizationString();
+    method public int getStrength();
+  }
+
+  public static final class DrbgParameters.NextBytes implements java.security.SecureRandomParameters {
+    method public byte[] getAdditionalInput();
+    method public boolean getPredictionResistance();
+    method public int getStrength();
+  }
+
+  public static final class DrbgParameters.Reseed implements java.security.SecureRandomParameters {
+    method public byte[] getAdditionalInput();
+    method public boolean getPredictionResistance();
+  }
+
   public class GeneralSecurityException extends java.lang.Exception {
     ctor public GeneralSecurityException();
     ctor public GeneralSecurityException(String);
@@ -8399,17 +8430,31 @@ package java.security {
     method public static java.security.SecureRandom getInstance(String) throws java.security.NoSuchAlgorithmException;
     method public static java.security.SecureRandom getInstance(String, String) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
     method public static java.security.SecureRandom getInstance(String, java.security.Provider) throws java.security.NoSuchAlgorithmException;
+    method public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters) throws java.security.NoSuchAlgorithmException;
+    method public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters, String) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
+    method public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters, java.security.Provider) throws java.security.NoSuchAlgorithmException;
     method public static java.security.SecureRandom getInstanceStrong() throws java.security.NoSuchAlgorithmException;
+    method public java.security.SecureRandomParameters getParameters();
     method public final java.security.Provider getProvider();
     method public static byte[] getSeed(int);
     method protected final int next(int);
+    method public void nextBytes(byte[], java.security.SecureRandomParameters);
+    method public void reseed();
+    method public void reseed(java.security.SecureRandomParameters);
     method public void setSeed(byte[]);
+  }
+
+  public interface SecureRandomParameters {
   }
 
   public abstract class SecureRandomSpi implements java.io.Serializable {
     ctor public SecureRandomSpi();
+    ctor protected SecureRandomSpi(java.security.SecureRandomParameters);
     method protected abstract byte[] engineGenerateSeed(int);
+    method protected java.security.SecureRandomParameters engineGetParameters();
     method protected abstract void engineNextBytes(byte[]);
+    method protected void engineNextBytes(byte[], java.security.SecureRandomParameters);
+    method protected void engineReseed(java.security.SecureRandomParameters);
     method protected abstract void engineSetSeed(byte[]);
   }
 
@@ -9248,6 +9293,14 @@ package java.security.spec {
   public interface AlgorithmParameterSpec {
   }
 
+  public final class DSAGenParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+    ctor public DSAGenParameterSpec(int, int);
+    ctor public DSAGenParameterSpec(int, int, int);
+    method public int getPrimePLength();
+    method public int getSeedLength();
+    method public int getSubprimeQLength();
+  }
+
   public class DSAParameterSpec implements java.security.spec.AlgorithmParameterSpec java.security.interfaces.DSAParams {
     ctor public DSAParameterSpec(java.math.BigInteger, java.math.BigInteger, java.math.BigInteger);
     method public java.math.BigInteger getG();
@@ -9320,6 +9373,13 @@ package java.security.spec {
     ctor public ECPublicKeySpec(java.security.spec.ECPoint, java.security.spec.ECParameterSpec);
     method public java.security.spec.ECParameterSpec getParams();
     method public java.security.spec.ECPoint getW();
+  }
+
+  public class EdDSAParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+    ctor public EdDSAParameterSpec(boolean);
+    ctor public EdDSAParameterSpec(boolean, byte[]);
+    method public java.util.Optional<byte[]> getContext();
+    method public boolean isPrehash();
   }
 
   public final class EdECPoint {
@@ -18989,6 +19049,12 @@ package javax.crypto.interfaces {
 
 package javax.crypto.spec {
 
+  public final class ChaCha20ParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+    ctor public ChaCha20ParameterSpec(byte[], int);
+    method public int getCounter();
+    method public byte[] getNonce();
+  }
+
   public class DESKeySpec implements java.security.spec.KeySpec {
     ctor public DESKeySpec(byte[]) throws java.security.InvalidKeyException;
     ctor public DESKeySpec(byte[], int) throws java.security.InvalidKeyException;
@@ -19667,6 +19733,16 @@ package javax.security.auth.x500 {
     field public static final String CANONICAL = "CANONICAL";
     field public static final String RFC1779 = "RFC1779";
     field public static final String RFC2253 = "RFC2253";
+  }
+
+  public final class X500PrivateCredential implements javax.security.auth.Destroyable {
+    ctor public X500PrivateCredential(java.security.cert.X509Certificate, java.security.PrivateKey);
+    ctor public X500PrivateCredential(java.security.cert.X509Certificate, java.security.PrivateKey, String);
+    method public void destroy();
+    method public String getAlias();
+    method public java.security.cert.X509Certificate getCertificate();
+    method public java.security.PrivateKey getPrivateKey();
+    method public boolean isDestroyed();
   }
 
 }

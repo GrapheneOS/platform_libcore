@@ -17,6 +17,9 @@
 
 package org.apache.harmony.tests.javax.security;
 
+import libcore.test.annotation.NonCts;
+import libcore.test.reasons.NonCtsReasons;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
@@ -52,11 +55,12 @@ public class OldSHA1PRNGSecureRandomTest extends TestCase {
      * test against the "void generateSeed(int)" method; it checks out that the
      * method throws NegativeArraySizeException if argument <0
      */
+    @NonCts(bug = 260847206, reason = NonCtsReasons.NON_BREAKING_BEHAVIOR_FIX)
     public final void testGenerateSeedint01() {
         try {
             sr.generateSeed(-1);
             fail("generateSeed(-1) :: No NegativeArraySizeException");
-        } catch (NegativeArraySizeException e) {
+        } catch (NegativeArraySizeException | IllegalArgumentException e) {
         }
     }
 

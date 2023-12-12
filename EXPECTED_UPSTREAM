@@ -593,9 +593,9 @@ ojluni/src/main/java/java/security/Provider.java,jdk8u/jdk8u121-b13,jdk/src/shar
 ojluni/src/main/java/java/security/ProviderException.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/ProviderException.java
 ojluni/src/main/java/java/security/PublicKey.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/PublicKey.java
 ojluni/src/main/java/java/security/SecureClassLoader.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/SecureClassLoader.java
-ojluni/src/main/java/java/security/SecureRandom.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/SecureRandom.java
+ojluni/src/main/java/java/security/SecureRandom.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/SecureRandom.java
 ojluni/src/main/java/java/security/SecureRandomParameters.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/SecureRandomParameters.java
-ojluni/src/main/java/java/security/SecureRandomSpi.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/SecureRandomSpi.java
+ojluni/src/main/java/java/security/SecureRandomSpi.java,jdk17u/jdk-17.0.6-ga,src/java.base/share/classes/java/security/SecureRandomSpi.java
 ojluni/src/main/java/java/security/Security.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/Security.java
 ojluni/src/main/java/java/security/SecurityPermission.java,jdk11u/jdk-11.0.13-ga,src/java.base/share/classes/java/security/SecurityPermission.java
 ojluni/src/main/java/java/security/Signature.java,jdk8u/jdk8u121-b13,jdk/src/share/classes/java/security/Signature.java
