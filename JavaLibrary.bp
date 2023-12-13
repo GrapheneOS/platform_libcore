@@ -902,6 +902,12 @@ droiddoc_exported_dir {
     path: "ojluni/annotations/mmodule",
 }
 
+droiddoc_exported_dir {
+    name: "ojluni-annotated-flagged-stubs",
+    path: "ojluni/annotations/flagged_api",
+    visibility: ["//visibility:private"],
+}
+
 // A file containing the list of tags that are "known" to us from the OpenJdk
 // source code and so should not cause an error or warning.
 filegroup {
@@ -1028,7 +1034,10 @@ java_sdk_library {
         "--hide-annotation libcore.api.Hide",
     ],
 
-    merge_inclusion_annotations_dirs: ["ojluni-annotated-mmodule-stubs"],
+    merge_inclusion_annotations_dirs: [
+        "ojluni-annotated-flagged-stubs",
+        "ojluni-annotated-mmodule-stubs",
+    ],
     // Emit nullability annotations from the source to the stub files.
     annotations_enabled: true,
 

@@ -19,8 +19,17 @@ libcore/ojluni/annotations/sdk/nullability:
    2. for FILE in your/package/and/Class.java another/package/AnotherClass.java; do unzip out/soong/.intermediates/libcore/openjdk-sdk-stubs-no-javadoc/android_common/metalava/openjdk-sdk-stubs-no-javadoc-stubs.srcjar ${FILE} -d libcore/ojluni/annotations/sdk/nullability/ && mv libcore/ojluni/annotations/sdk/nullability/$FILE libcore/ojluni/annotations/sdk/nullability/${FILE/%.java/.annotated.java}; done
    3. Add nullability annotations to the new files.
  - To see the effect of the files under this directory:
-   1. make api-stubs-docs
-   2. Look for the file under out/soong/.intermediates/frameworks/base/api-stubs-docs/android_common/stubsDir/
+   1. m art.module.public.api.stubs.source-update-current-api
+   2. Look for the file under libcore/api/
+
+libcore/ojluni/annotations/flagged_api:
+ - Contains @FlaggedApi annotations to be included in the core_current stubs.
+ - To add some new files under this directory:
+   1. libcore/tools/ojluni-annotations/generate_flagged_api_files.sh your.package.Bar another.package.Foo
+   2. Add @FlaggedApi annotations to the new files.
+ - To see the effect of the files under this directory:
+   1. m art.module.public.api.stubs.source-update-current-api
+   2. Look for the file under libcore/api/
 
 libcore/ojluni/annotations/mmodule:
  - Contains annotations which determine what is included in the core-platform
