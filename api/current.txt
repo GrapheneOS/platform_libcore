@@ -17839,7 +17839,7 @@ package java.util.random {
     method public static java.util.random.RandomGenerator of(String);
   }
 
-  public static interface RandomGenerator.ArbitrarilyJumpableGenerator extends java.util.random.RandomGenerator.LeapableGenerator {
+  @FlaggedApi("com.android.libcore.v_apis") public static interface RandomGenerator.ArbitrarilyJumpableGenerator extends java.util.random.RandomGenerator.LeapableGenerator {
     method public java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator copy();
     method public default java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator copyAndJump(double);
     method public void jump(double);
@@ -17851,7 +17851,7 @@ package java.util.random {
     method public static java.util.random.RandomGenerator.ArbitrarilyJumpableGenerator of(String);
   }
 
-  public static interface RandomGenerator.JumpableGenerator extends java.util.random.RandomGenerator.StreamableGenerator {
+  @FlaggedApi("com.android.libcore.v_apis") public static interface RandomGenerator.JumpableGenerator extends java.util.random.RandomGenerator.StreamableGenerator {
     method public java.util.random.RandomGenerator.JumpableGenerator copy();
     method public default java.util.random.RandomGenerator copyAndJump();
     method public void jump();
@@ -17862,7 +17862,7 @@ package java.util.random {
     method public default java.util.stream.Stream<java.util.random.RandomGenerator> rngs();
   }
 
-  public static interface RandomGenerator.LeapableGenerator extends java.util.random.RandomGenerator.JumpableGenerator {
+  @FlaggedApi("com.android.libcore.v_apis") public static interface RandomGenerator.LeapableGenerator extends java.util.random.RandomGenerator.JumpableGenerator {
     method public java.util.random.RandomGenerator.LeapableGenerator copy();
     method public default java.util.random.RandomGenerator.JumpableGenerator copyAndLeap();
     method public void leap();
@@ -17872,7 +17872,7 @@ package java.util.random {
     method public static java.util.random.RandomGenerator.LeapableGenerator of(String);
   }
 
-  public static interface RandomGenerator.SplittableGenerator extends java.util.random.RandomGenerator.StreamableGenerator {
+  @FlaggedApi("com.android.libcore.v_apis") public static interface RandomGenerator.SplittableGenerator extends java.util.random.RandomGenerator.StreamableGenerator {
     method public static java.util.random.RandomGenerator.SplittableGenerator of(String);
     method public default java.util.stream.Stream<java.util.random.RandomGenerator> rngs();
     method public java.util.random.RandomGenerator.SplittableGenerator split();
@@ -17883,7 +17883,7 @@ package java.util.random {
     method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long, java.util.random.RandomGenerator.SplittableGenerator);
   }
 
-  public static interface RandomGenerator.StreamableGenerator extends java.util.random.RandomGenerator {
+  @FlaggedApi("com.android.libcore.v_apis") public static interface RandomGenerator.StreamableGenerator extends java.util.random.RandomGenerator {
     method public static java.util.random.RandomGenerator.StreamableGenerator of(String);
     method public java.util.stream.Stream<java.util.random.RandomGenerator> rngs();
     method public default java.util.stream.Stream<java.util.random.RandomGenerator> rngs(long);
