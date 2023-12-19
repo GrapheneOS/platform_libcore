@@ -551,7 +551,7 @@ package javax.crypto {
   }
 
   public class KeyAgreement {
-    method public javax.crypto.KeyAgreementSpi getCurrentSpi();
+    method @FlaggedApi("com.android.libcore.v_apis") public javax.crypto.KeyAgreementSpi getCurrentSpi();
   }
 
   public class Mac implements java.lang.Cloneable {

@@ -339,7 +339,7 @@ package android.system {
     field public static final int IFF_RUNNING;
     field public static final int IFF_SLAVE;
     field public static final int IFF_UP;
-    field public static final int IPPROTO_ESP;
+    field @FlaggedApi("com.android.libcore.v_apis") public static final int IPPROTO_ESP;
     field public static final int IPPROTO_ICMP;
     field public static final int IPPROTO_ICMPV6;
     field public static final int IPPROTO_IP;
@@ -351,7 +351,7 @@ package android.system {
     field public static final int IPV6_MULTICAST_HOPS;
     field public static final int IPV6_MULTICAST_IF;
     field public static final int IPV6_MULTICAST_LOOP;
-    field public static final int IPV6_PKTINFO;
+    field @FlaggedApi("com.android.libcore.v_apis") public static final int IPV6_PKTINFO;
     field public static final int IPV6_RECVDSTOPTS;
     field public static final int IPV6_RECVHOPLIMIT;
     field public static final int IPV6_RECVHOPOPTS;
@@ -392,7 +392,7 @@ package android.system {
     field public static final int NETLINK_INET_DIAG;
     field public static final int NETLINK_NETFILTER;
     field public static final int NETLINK_ROUTE;
-    field public static final int NETLINK_XFRM;
+    field @FlaggedApi("com.android.libcore.v_apis") public static final int NETLINK_XFRM;
     field public static final int NI_DGRAM;
     field public static final int NI_NAMEREQD;
     field public static final int NI_NOFQDN;
@@ -412,7 +412,7 @@ package android.system {
     field public static final int O_SYNC;
     field public static final int O_TRUNC;
     field public static final int O_WRONLY;
-    field public static final int PACKET_IGNORE_OUTGOING;
+    field @FlaggedApi("com.android.libcore.v_apis") public static final int PACKET_IGNORE_OUTGOING;
     field public static final int POLLERR;
     field public static final int POLLHUP;
     field public static final int POLLIN;
@@ -486,7 +486,7 @@ package android.system {
     field public static final int SOCK_RAW;
     field public static final int SOCK_SEQPACKET;
     field public static final int SOCK_STREAM;
-    field public static final int SOL_PACKET;
+    field @FlaggedApi("com.android.libcore.v_apis") public static final int SOL_PACKET;
     field public static final int SOL_SOCKET;
     field public static final int SOL_UDP;
     field public static final int SO_BINDTODEVICE;
@@ -2400,7 +2400,7 @@ package java.lang {
     method @NonNull public default java.util.stream.IntStream chars();
     method @NonNull public default java.util.stream.IntStream codePoints();
     method public static int compare(@NonNull CharSequence, @NonNull CharSequence);
-    method public default boolean isEmpty();
+    method @FlaggedApi("com.android.libcore.v_apis") public default boolean isEmpty();
     method public int length();
     method @NonNull public CharSequence subSequence(int, int);
     method @NonNull public String toString();
@@ -2418,7 +2418,7 @@ package java.lang {
     method public static int codePointBefore(char[], int, int);
     method public static int codePointCount(@NonNull CharSequence, int, int);
     method public static int codePointCount(char[], int, int);
-    method public static int codePointOf(@NonNull String);
+    method @FlaggedApi("com.android.libcore.v_apis") public static int codePointOf(@NonNull String);
     method public static int compare(char, char);
     method public int compareTo(@NonNull Character);
     method public static int digit(char, int);
@@ -2487,7 +2487,7 @@ package java.lang {
     method public static char toLowerCase(char);
     method public static int toLowerCase(int);
     method @NonNull public static String toString(char);
-    method @NonNull public static String toString(int);
+    method @FlaggedApi("com.android.libcore.v_apis") @NonNull public static String toString(int);
     method public static char toTitleCase(char);
     method public static int toTitleCase(int);
     method public static char toUpperCase(char);
@@ -6262,8 +6262,8 @@ package java.nio {
     method public abstract byte get(int);
     method @NonNull public java.nio.ByteBuffer get(@NonNull byte[], int, int);
     method @NonNull public java.nio.ByteBuffer get(@NonNull byte[]);
-    method @NonNull public java.nio.ByteBuffer get(int, @NonNull byte[], int, int);
-    method @NonNull public java.nio.ByteBuffer get(int, @NonNull byte[]);
+    method @FlaggedApi("com.android.libcore.v_apis") @NonNull public java.nio.ByteBuffer get(int, @NonNull byte[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") @NonNull public java.nio.ByteBuffer get(int, @NonNull byte[]);
     method public abstract char getChar();
     method public abstract char getChar(int);
     method public abstract double getDouble();
@@ -6283,11 +6283,11 @@ package java.nio {
     method @NonNull public abstract java.nio.ByteBuffer put(byte);
     method @NonNull public abstract java.nio.ByteBuffer put(int, byte);
     method @NonNull public java.nio.ByteBuffer put(@NonNull java.nio.ByteBuffer);
-    method @NonNull public java.nio.ByteBuffer put(int, @NonNull java.nio.ByteBuffer, int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") @NonNull public java.nio.ByteBuffer put(int, @NonNull java.nio.ByteBuffer, int, int);
     method @NonNull public java.nio.ByteBuffer put(@NonNull byte[], int, int);
     method @NonNull public final java.nio.ByteBuffer put(@NonNull byte[]);
-    method @NonNull public java.nio.ByteBuffer put(int, @NonNull byte[], int, int);
-    method @NonNull public java.nio.ByteBuffer put(int, @NonNull byte[]);
+    method @FlaggedApi("com.android.libcore.v_apis") @NonNull public java.nio.ByteBuffer put(int, @NonNull byte[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") @NonNull public java.nio.ByteBuffer put(int, @NonNull byte[]);
     method @NonNull public abstract java.nio.ByteBuffer putChar(char);
     method @NonNull public abstract java.nio.ByteBuffer putChar(int, char);
     method @NonNull public abstract java.nio.ByteBuffer putDouble(double);
@@ -6329,8 +6329,8 @@ package java.nio {
     method public abstract char get(int);
     method public java.nio.CharBuffer get(char[], int, int);
     method public java.nio.CharBuffer get(char[]);
-    method public java.nio.CharBuffer get(int, char[], int, int);
-    method public java.nio.CharBuffer get(int, char[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.CharBuffer get(int, char[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.CharBuffer get(int, char[]);
     method public final boolean hasArray();
     method public final boolean isEmpty();
     method public final int length();
@@ -6339,11 +6339,11 @@ package java.nio {
     method public abstract java.nio.CharBuffer put(char);
     method public abstract java.nio.CharBuffer put(int, char);
     method public java.nio.CharBuffer put(java.nio.CharBuffer);
-    method public java.nio.CharBuffer put(int, java.nio.CharBuffer, int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.CharBuffer put(int, java.nio.CharBuffer, int, int);
     method public java.nio.CharBuffer put(char[], int, int);
     method public final java.nio.CharBuffer put(char[]);
-    method public java.nio.CharBuffer put(int, char[], int, int);
-    method public java.nio.CharBuffer put(int, char[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.CharBuffer put(int, char[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.CharBuffer put(int, char[]);
     method public java.nio.CharBuffer put(String, int, int);
     method public final java.nio.CharBuffer put(String);
     method public int read(java.nio.CharBuffer) throws java.io.IOException;
@@ -6369,19 +6369,19 @@ package java.nio {
     method public abstract double get(int);
     method public java.nio.DoubleBuffer get(double[], int, int);
     method public java.nio.DoubleBuffer get(double[]);
-    method public java.nio.DoubleBuffer get(int, double[], int, int);
-    method public java.nio.DoubleBuffer get(int, double[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.DoubleBuffer get(int, double[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.DoubleBuffer get(int, double[]);
     method public final boolean hasArray();
     method public int mismatch(java.nio.DoubleBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.DoubleBuffer put(double);
     method public abstract java.nio.DoubleBuffer put(int, double);
     method public java.nio.DoubleBuffer put(java.nio.DoubleBuffer);
-    method public java.nio.DoubleBuffer put(int, java.nio.DoubleBuffer, int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.DoubleBuffer put(int, java.nio.DoubleBuffer, int, int);
     method public java.nio.DoubleBuffer put(double[], int, int);
     method public final java.nio.DoubleBuffer put(double[]);
-    method public java.nio.DoubleBuffer put(int, double[], int, int);
-    method public java.nio.DoubleBuffer put(int, double[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.DoubleBuffer put(int, double[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.DoubleBuffer put(int, double[]);
     method public abstract java.nio.DoubleBuffer slice();
     method public abstract java.nio.DoubleBuffer slice(int, int);
     method public static java.nio.DoubleBuffer wrap(double[], int, int);
@@ -6400,19 +6400,19 @@ package java.nio {
     method public abstract float get(int);
     method public java.nio.FloatBuffer get(float[], int, int);
     method public java.nio.FloatBuffer get(float[]);
-    method public java.nio.FloatBuffer get(int, float[], int, int);
-    method public java.nio.FloatBuffer get(int, float[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.FloatBuffer get(int, float[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.FloatBuffer get(int, float[]);
     method public final boolean hasArray();
     method public int mismatch(java.nio.FloatBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.FloatBuffer put(float);
     method public abstract java.nio.FloatBuffer put(int, float);
     method public java.nio.FloatBuffer put(java.nio.FloatBuffer);
-    method public java.nio.FloatBuffer put(int, java.nio.FloatBuffer, int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.FloatBuffer put(int, java.nio.FloatBuffer, int, int);
     method public java.nio.FloatBuffer put(float[], int, int);
     method public final java.nio.FloatBuffer put(float[]);
-    method public java.nio.FloatBuffer put(int, float[], int, int);
-    method public java.nio.FloatBuffer put(int, float[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.FloatBuffer put(int, float[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.FloatBuffer put(int, float[]);
     method public abstract java.nio.FloatBuffer slice();
     method public abstract java.nio.FloatBuffer slice(int, int);
     method public static java.nio.FloatBuffer wrap(float[], int, int);
@@ -6431,19 +6431,19 @@ package java.nio {
     method public abstract int get(int);
     method public java.nio.IntBuffer get(int[], int, int);
     method public java.nio.IntBuffer get(int[]);
-    method public java.nio.IntBuffer get(int, int[], int, int);
-    method public java.nio.IntBuffer get(int, int[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.IntBuffer get(int, int[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.IntBuffer get(int, int[]);
     method public final boolean hasArray();
     method public int mismatch(java.nio.IntBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.IntBuffer put(int);
     method public abstract java.nio.IntBuffer put(int, int);
     method public java.nio.IntBuffer put(java.nio.IntBuffer);
-    method public java.nio.IntBuffer put(int, java.nio.IntBuffer, int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.IntBuffer put(int, java.nio.IntBuffer, int, int);
     method public java.nio.IntBuffer put(int[], int, int);
     method public final java.nio.IntBuffer put(int[]);
-    method public java.nio.IntBuffer put(int, int[], int, int);
-    method public java.nio.IntBuffer put(int, int[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.IntBuffer put(int, int[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.IntBuffer put(int, int[]);
     method public abstract java.nio.IntBuffer slice();
     method public abstract java.nio.IntBuffer slice(int, int);
     method public static java.nio.IntBuffer wrap(int[], int, int);
@@ -6466,19 +6466,19 @@ package java.nio {
     method public abstract long get(int);
     method public java.nio.LongBuffer get(long[], int, int);
     method public java.nio.LongBuffer get(long[]);
-    method public java.nio.LongBuffer get(int, long[], int, int);
-    method public java.nio.LongBuffer get(int, long[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.LongBuffer get(int, long[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.LongBuffer get(int, long[]);
     method public final boolean hasArray();
     method public int mismatch(java.nio.LongBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.LongBuffer put(long);
     method public abstract java.nio.LongBuffer put(int, long);
     method public java.nio.LongBuffer put(java.nio.LongBuffer);
-    method public java.nio.LongBuffer put(int, java.nio.LongBuffer, int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.LongBuffer put(int, java.nio.LongBuffer, int, int);
     method public java.nio.LongBuffer put(long[], int, int);
     method public final java.nio.LongBuffer put(long[]);
-    method public java.nio.LongBuffer put(int, long[], int, int);
-    method public java.nio.LongBuffer put(int, long[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.LongBuffer put(int, long[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.LongBuffer put(int, long[]);
     method public abstract java.nio.LongBuffer slice();
     method public abstract java.nio.LongBuffer slice(int, int);
     method public static java.nio.LongBuffer wrap(long[], int, int);
@@ -6489,7 +6489,7 @@ package java.nio {
     method public final java.nio.Buffer clear();
     method public final java.nio.Buffer flip();
     method public final java.nio.MappedByteBuffer force();
-    method public final java.nio.MappedByteBuffer force(int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public final java.nio.MappedByteBuffer force(int, int);
     method public final boolean isLoaded();
     method public final java.nio.Buffer limit(int);
     method public final java.nio.MappedByteBuffer load();
@@ -6516,19 +6516,19 @@ package java.nio {
     method public abstract short get(int);
     method public java.nio.ShortBuffer get(short[], int, int);
     method public java.nio.ShortBuffer get(short[]);
-    method public java.nio.ShortBuffer get(int, short[], int, int);
-    method public java.nio.ShortBuffer get(int, short[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.ShortBuffer get(int, short[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.ShortBuffer get(int, short[]);
     method public final boolean hasArray();
     method public int mismatch(java.nio.ShortBuffer);
     method public abstract java.nio.ByteOrder order();
     method public abstract java.nio.ShortBuffer put(short);
     method public abstract java.nio.ShortBuffer put(int, short);
     method public java.nio.ShortBuffer put(java.nio.ShortBuffer);
-    method public java.nio.ShortBuffer put(int, java.nio.ShortBuffer, int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.ShortBuffer put(int, java.nio.ShortBuffer, int, int);
     method public java.nio.ShortBuffer put(short[], int, int);
     method public final java.nio.ShortBuffer put(short[]);
-    method public java.nio.ShortBuffer put(int, short[], int, int);
-    method public java.nio.ShortBuffer put(int, short[]);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.ShortBuffer put(int, short[], int, int);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.nio.ShortBuffer put(int, short[]);
     method public abstract java.nio.ShortBuffer slice();
     method public abstract java.nio.ShortBuffer slice(int, int);
     method public static java.nio.ShortBuffer wrap(short[], int, int);
@@ -7930,13 +7930,13 @@ package java.security {
     method public java.util.Map<java.lang.String,java.security.KeyStore.ProtectionParameter> getProtectionParams();
   }
 
-  public class DrbgParameters {
+  @FlaggedApi("com.android.libcore.v_apis") public class DrbgParameters {
     method public static java.security.DrbgParameters.Instantiation instantiation(int, java.security.DrbgParameters.Capability, byte[]);
     method public static java.security.DrbgParameters.NextBytes nextBytes(int, boolean, byte[]);
     method public static java.security.DrbgParameters.Reseed reseed(boolean, byte[]);
   }
 
-  public enum DrbgParameters.Capability {
+  @FlaggedApi("com.android.libcore.v_apis") public enum DrbgParameters.Capability {
     method public boolean supportsPredictionResistance();
     method public boolean supportsReseeding();
     enum_constant public static final java.security.DrbgParameters.Capability NONE;
@@ -7944,19 +7944,19 @@ package java.security {
     enum_constant public static final java.security.DrbgParameters.Capability RESEED_ONLY;
   }
 
-  public static final class DrbgParameters.Instantiation implements java.security.SecureRandomParameters {
+  @FlaggedApi("com.android.libcore.v_apis") public static final class DrbgParameters.Instantiation implements java.security.SecureRandomParameters {
     method public java.security.DrbgParameters.Capability getCapability();
     method public byte[] getPersonalizationString();
     method public int getStrength();
   }
 
-  public static final class DrbgParameters.NextBytes implements java.security.SecureRandomParameters {
+  @FlaggedApi("com.android.libcore.v_apis") public static final class DrbgParameters.NextBytes implements java.security.SecureRandomParameters {
     method public byte[] getAdditionalInput();
     method public boolean getPredictionResistance();
     method public int getStrength();
   }
 
-  public static final class DrbgParameters.Reseed implements java.security.SecureRandomParameters {
+  @FlaggedApi("com.android.libcore.v_apis") public static final class DrbgParameters.Reseed implements java.security.SecureRandomParameters {
     method public byte[] getAdditionalInput();
     method public boolean getPredictionResistance();
   }
@@ -8430,31 +8430,31 @@ package java.security {
     method public static java.security.SecureRandom getInstance(String) throws java.security.NoSuchAlgorithmException;
     method public static java.security.SecureRandom getInstance(String, String) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
     method public static java.security.SecureRandom getInstance(String, java.security.Provider) throws java.security.NoSuchAlgorithmException;
-    method public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters) throws java.security.NoSuchAlgorithmException;
-    method public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters, String) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
-    method public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters, java.security.Provider) throws java.security.NoSuchAlgorithmException;
+    method @FlaggedApi("com.android.libcore.v_apis") public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters) throws java.security.NoSuchAlgorithmException;
+    method @FlaggedApi("com.android.libcore.v_apis") public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters, String) throws java.security.NoSuchAlgorithmException, java.security.NoSuchProviderException;
+    method @FlaggedApi("com.android.libcore.v_apis") public static java.security.SecureRandom getInstance(String, java.security.SecureRandomParameters, java.security.Provider) throws java.security.NoSuchAlgorithmException;
     method public static java.security.SecureRandom getInstanceStrong() throws java.security.NoSuchAlgorithmException;
-    method public java.security.SecureRandomParameters getParameters();
+    method @FlaggedApi("com.android.libcore.v_apis") public java.security.SecureRandomParameters getParameters();
     method public final java.security.Provider getProvider();
     method public static byte[] getSeed(int);
     method protected final int next(int);
-    method public void nextBytes(byte[], java.security.SecureRandomParameters);
-    method public void reseed();
-    method public void reseed(java.security.SecureRandomParameters);
+    method @FlaggedApi("com.android.libcore.v_apis") public void nextBytes(byte[], java.security.SecureRandomParameters);
+    method @FlaggedApi("com.android.libcore.v_apis") public void reseed();
+    method @FlaggedApi("com.android.libcore.v_apis") public void reseed(java.security.SecureRandomParameters);
     method public void setSeed(byte[]);
   }
 
-  public interface SecureRandomParameters {
+  @FlaggedApi("com.android.libcore.v_apis") public interface SecureRandomParameters {
   }
 
   public abstract class SecureRandomSpi implements java.io.Serializable {
     ctor public SecureRandomSpi();
-    ctor protected SecureRandomSpi(java.security.SecureRandomParameters);
+    ctor @FlaggedApi("com.android.libcore.v_apis") protected SecureRandomSpi(java.security.SecureRandomParameters);
     method protected abstract byte[] engineGenerateSeed(int);
-    method protected java.security.SecureRandomParameters engineGetParameters();
+    method @FlaggedApi("com.android.libcore.v_apis") protected java.security.SecureRandomParameters engineGetParameters();
     method protected abstract void engineNextBytes(byte[]);
-    method protected void engineNextBytes(byte[], java.security.SecureRandomParameters);
-    method protected void engineReseed(java.security.SecureRandomParameters);
+    method @FlaggedApi("com.android.libcore.v_apis") protected void engineNextBytes(byte[], java.security.SecureRandomParameters);
+    method @FlaggedApi("com.android.libcore.v_apis") protected void engineReseed(java.security.SecureRandomParameters);
     method protected abstract void engineSetSeed(byte[]);
   }
 
@@ -9240,7 +9240,7 @@ package java.security.interfaces {
 
   public interface RSAKey {
     method public java.math.BigInteger getModulus();
-    method public default java.security.spec.AlgorithmParameterSpec getParams();
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.security.spec.AlgorithmParameterSpec getParams();
   }
 
   public interface RSAMultiPrimePrivateCrtKey extends java.security.interfaces.RSAPrivateKey {
@@ -9293,7 +9293,7 @@ package java.security.spec {
   public interface AlgorithmParameterSpec {
   }
 
-  public final class DSAGenParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+  @FlaggedApi("com.android.libcore.v_apis") public final class DSAGenParameterSpec implements java.security.spec.AlgorithmParameterSpec {
     ctor public DSAGenParameterSpec(int, int);
     ctor public DSAGenParameterSpec(int, int, int);
     method public int getPrimePLength();
@@ -9375,7 +9375,7 @@ package java.security.spec {
     method public java.security.spec.ECPoint getW();
   }
 
-  public class EdDSAParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+  @FlaggedApi("com.android.libcore.v_apis") public class EdDSAParameterSpec implements java.security.spec.AlgorithmParameterSpec {
     ctor public EdDSAParameterSpec(boolean);
     ctor public EdDSAParameterSpec(boolean, byte[]);
     method public java.util.Optional<byte[]> getContext();
@@ -14297,7 +14297,7 @@ package java.util {
     method @NonNull public static <K, V> java.util.Comparator<java.util.Map.Entry<K,V>> comparingByKey(@NonNull java.util.Comparator<? super K>);
     method @NonNull public static <K, V extends java.lang.Comparable<? super V>> java.util.Comparator<java.util.Map.Entry<K,V>> comparingByValue();
     method @NonNull public static <K, V> java.util.Comparator<java.util.Map.Entry<K,V>> comparingByValue(@NonNull java.util.Comparator<? super V>);
-    method @NonNull public static <K, V> java.util.Map.Entry<K,V> copyOf(@NonNull java.util.Map.Entry<? extends K,? extends V>);
+    method @FlaggedApi("com.android.libcore.v_apis") @NonNull public static <K, V> java.util.Map.Entry<K,V> copyOf(@NonNull java.util.Map.Entry<? extends K,? extends V>);
     method public boolean equals(@Nullable Object);
     method public K getKey();
     method public V getValue();
@@ -14514,7 +14514,7 @@ package java.util {
 
   public class Properties extends java.util.Hashtable<java.lang.Object,java.lang.Object> {
     ctor public Properties();
-    ctor public Properties(int);
+    ctor @FlaggedApi("com.android.libcore.v_apis") public Properties(int);
     ctor public Properties(java.util.Properties);
     method public Object compute(Object, java.util.function.BiFunction<? super java.lang.Object,? super java.lang.Object,?>);
     method public Object computeIfAbsent(Object, java.util.function.Function<? super java.lang.Object,?>);
@@ -14548,7 +14548,7 @@ package java.util {
     method public void store(java.io.OutputStream, String) throws java.io.IOException;
     method public void storeToXML(java.io.OutputStream, String) throws java.io.IOException;
     method public void storeToXML(java.io.OutputStream, String, String) throws java.io.IOException;
-    method public void storeToXML(java.io.OutputStream, String, java.nio.charset.Charset) throws java.io.IOException;
+    method @FlaggedApi("com.android.libcore.v_apis") public void storeToXML(java.io.OutputStream, String, java.nio.charset.Charset) throws java.io.IOException;
     method public java.util.Set<java.lang.String> stringPropertyNames();
     method public java.util.Collection<java.lang.Object> values();
     field protected volatile java.util.Properties defaults;
@@ -14732,10 +14732,10 @@ package java.util {
     method public static <S> java.util.ServiceLoader<S> load(Class<S>);
     method public static <S> java.util.ServiceLoader<S> loadInstalled(Class<S>);
     method public void reload();
-    method public java.util.stream.Stream<java.util.ServiceLoader.Provider<S>> stream();
+    method @FlaggedApi("com.android.libcore.v_apis") public java.util.stream.Stream<java.util.ServiceLoader.Provider<S>> stream();
   }
 
-  public static interface ServiceLoader.Provider<S> extends java.util.function.Supplier<S> {
+  @FlaggedApi("com.android.libcore.v_apis") public static interface ServiceLoader.Provider<S> extends java.util.function.Supplier<S> {
     method public S get();
     method public Class<? extends S> type();
   }
@@ -14921,11 +14921,11 @@ package java.util {
     method public int nextInt();
     method public long nextLong();
     method public java.util.SplittableRandom split();
-    method public java.util.SplittableRandom split(java.util.random.RandomGenerator.SplittableGenerator);
-    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits();
-    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long);
-    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(java.util.random.RandomGenerator.SplittableGenerator);
-    method public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long, java.util.random.RandomGenerator.SplittableGenerator);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.util.SplittableRandom split(java.util.random.RandomGenerator.SplittableGenerator);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits();
+    method @FlaggedApi("com.android.libcore.v_apis") public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(java.util.random.RandomGenerator.SplittableGenerator);
+    method @FlaggedApi("com.android.libcore.v_apis") public java.util.stream.Stream<java.util.random.RandomGenerator.SplittableGenerator> splits(long, java.util.random.RandomGenerator.SplittableGenerator);
   }
 
   public class Stack<E> extends java.util.Vector<E> {
@@ -17804,7 +17804,7 @@ package java.util.prefs {
 
 package java.util.random {
 
-  public interface RandomGenerator {
+  @FlaggedApi("com.android.libcore.v_apis") public interface RandomGenerator {
     method public default java.util.stream.DoubleStream doubles();
     method public default java.util.stream.DoubleStream doubles(double, double);
     method public default java.util.stream.DoubleStream doubles(long);
@@ -17889,7 +17889,7 @@ package java.util.random {
     method public default java.util.stream.Stream<java.util.random.RandomGenerator> rngs(long);
   }
 
-  public final class RandomGeneratorFactory<T extends java.util.random.RandomGenerator> {
+  @FlaggedApi("com.android.libcore.v_apis") public final class RandomGeneratorFactory<T extends java.util.random.RandomGenerator> {
     method public static java.util.stream.Stream<java.util.random.RandomGeneratorFactory<java.util.random.RandomGenerator>> all();
     method public T create();
     method public T create(long);
@@ -18060,7 +18060,7 @@ package java.util.stream {
     method public static <T> java.util.stream.Collector<T,?,java.lang.Double> summingDouble(java.util.function.ToDoubleFunction<? super T>);
     method public static <T> java.util.stream.Collector<T,?,java.lang.Integer> summingInt(java.util.function.ToIntFunction<? super T>);
     method public static <T> java.util.stream.Collector<T,?,java.lang.Long> summingLong(java.util.function.ToLongFunction<? super T>);
-    method public static <T, R1, R2, R> java.util.stream.Collector<T,?,R> teeing(java.util.stream.Collector<? super T,?,R1>, java.util.stream.Collector<? super T,?,R2>, java.util.function.BiFunction<? super R1,? super R2,R>);
+    method @FlaggedApi("com.android.libcore.v_apis") public static <T, R1, R2, R> java.util.stream.Collector<T,?,R> teeing(java.util.stream.Collector<? super T,?,R1>, java.util.stream.Collector<? super T,?,R2>, java.util.function.BiFunction<? super R1,? super R2,R>);
     method public static <T, C extends java.util.Collection<T>> java.util.stream.Collector<T,?,C> toCollection(java.util.function.Supplier<C>);
     method public static <T, K, U> java.util.stream.Collector<T,?,java.util.concurrent.ConcurrentMap<K,U>> toConcurrentMap(java.util.function.Function<? super T,? extends K>, java.util.function.Function<? super T,? extends U>);
     method public static <T, K, U> java.util.stream.Collector<T,?,java.util.concurrent.ConcurrentMap<K,U>> toConcurrentMap(java.util.function.Function<? super T,? extends K>, java.util.function.Function<? super T,? extends U>, java.util.function.BinaryOperator<U>);
@@ -18086,7 +18086,7 @@ package java.util.stream {
     method public static java.util.stream.DoubleStream concat(java.util.stream.DoubleStream, java.util.stream.DoubleStream);
     method public long count();
     method public java.util.stream.DoubleStream distinct();
-    method public default java.util.stream.DoubleStream dropWhile(java.util.function.DoublePredicate);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.DoubleStream dropWhile(java.util.function.DoublePredicate);
     method public static java.util.stream.DoubleStream empty();
     method public java.util.stream.DoubleStream filter(java.util.function.DoublePredicate);
     method public java.util.OptionalDouble findAny();
@@ -18096,11 +18096,11 @@ package java.util.stream {
     method public void forEachOrdered(java.util.function.DoubleConsumer);
     method public static java.util.stream.DoubleStream generate(java.util.function.DoubleSupplier);
     method public static java.util.stream.DoubleStream iterate(double, java.util.function.DoubleUnaryOperator);
-    method public static java.util.stream.DoubleStream iterate(double, java.util.function.DoublePredicate, java.util.function.DoubleUnaryOperator);
+    method @FlaggedApi("com.android.libcore.v_apis") public static java.util.stream.DoubleStream iterate(double, java.util.function.DoublePredicate, java.util.function.DoubleUnaryOperator);
     method public java.util.PrimitiveIterator.OfDouble iterator();
     method public java.util.stream.DoubleStream limit(long);
     method public java.util.stream.DoubleStream map(java.util.function.DoubleUnaryOperator);
-    method public default java.util.stream.DoubleStream mapMulti(java.util.stream.DoubleStream.DoubleMapMultiConsumer);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.DoubleStream mapMulti(java.util.stream.DoubleStream.DoubleMapMultiConsumer);
     method public java.util.stream.IntStream mapToInt(java.util.function.DoubleToIntFunction);
     method public java.util.stream.LongStream mapToLong(java.util.function.DoubleToLongFunction);
     method public <U> java.util.stream.Stream<U> mapToObj(java.util.function.DoubleFunction<? extends U>);
@@ -18119,7 +18119,7 @@ package java.util.stream {
     method public java.util.Spliterator.OfDouble spliterator();
     method public double sum();
     method public java.util.DoubleSummaryStatistics summaryStatistics();
-    method public default java.util.stream.DoubleStream takeWhile(java.util.function.DoublePredicate);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.DoubleStream takeWhile(java.util.function.DoublePredicate);
     method public double[] toArray();
   }
 
@@ -18128,7 +18128,7 @@ package java.util.stream {
     method public java.util.stream.DoubleStream build();
   }
 
-  @java.lang.FunctionalInterface public static interface DoubleStream.DoubleMapMultiConsumer {
+  @FlaggedApi("com.android.libcore.v_apis") @java.lang.FunctionalInterface public static interface DoubleStream.DoubleMapMultiConsumer {
     method public void accept(double, java.util.function.DoubleConsumer);
   }
 
@@ -18144,7 +18144,7 @@ package java.util.stream {
     method public static java.util.stream.IntStream concat(java.util.stream.IntStream, java.util.stream.IntStream);
     method public long count();
     method public java.util.stream.IntStream distinct();
-    method public default java.util.stream.IntStream dropWhile(java.util.function.IntPredicate);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.IntStream dropWhile(java.util.function.IntPredicate);
     method public static java.util.stream.IntStream empty();
     method public java.util.stream.IntStream filter(java.util.function.IntPredicate);
     method public java.util.OptionalInt findAny();
@@ -18154,11 +18154,11 @@ package java.util.stream {
     method public void forEachOrdered(java.util.function.IntConsumer);
     method public static java.util.stream.IntStream generate(java.util.function.IntSupplier);
     method public static java.util.stream.IntStream iterate(int, java.util.function.IntUnaryOperator);
-    method public static java.util.stream.IntStream iterate(int, java.util.function.IntPredicate, java.util.function.IntUnaryOperator);
+    method @FlaggedApi("com.android.libcore.v_apis") public static java.util.stream.IntStream iterate(int, java.util.function.IntPredicate, java.util.function.IntUnaryOperator);
     method public java.util.PrimitiveIterator.OfInt iterator();
     method public java.util.stream.IntStream limit(long);
     method public java.util.stream.IntStream map(java.util.function.IntUnaryOperator);
-    method public default java.util.stream.IntStream mapMulti(java.util.stream.IntStream.IntMapMultiConsumer);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.IntStream mapMulti(java.util.stream.IntStream.IntMapMultiConsumer);
     method public java.util.stream.DoubleStream mapToDouble(java.util.function.IntToDoubleFunction);
     method public java.util.stream.LongStream mapToLong(java.util.function.IntToLongFunction);
     method public <U> java.util.stream.Stream<U> mapToObj(java.util.function.IntFunction<? extends U>);
@@ -18179,7 +18179,7 @@ package java.util.stream {
     method public java.util.Spliterator.OfInt spliterator();
     method public int sum();
     method public java.util.IntSummaryStatistics summaryStatistics();
-    method public default java.util.stream.IntStream takeWhile(java.util.function.IntPredicate);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.IntStream takeWhile(java.util.function.IntPredicate);
     method public int[] toArray();
   }
 
@@ -18188,7 +18188,7 @@ package java.util.stream {
     method public java.util.stream.IntStream build();
   }
 
-  @java.lang.FunctionalInterface public static interface IntStream.IntMapMultiConsumer {
+  @FlaggedApi("com.android.libcore.v_apis") @java.lang.FunctionalInterface public static interface IntStream.IntMapMultiConsumer {
     method public void accept(int, java.util.function.IntConsumer);
   }
 
@@ -18203,7 +18203,7 @@ package java.util.stream {
     method public static java.util.stream.LongStream concat(java.util.stream.LongStream, java.util.stream.LongStream);
     method public long count();
     method public java.util.stream.LongStream distinct();
-    method public default java.util.stream.LongStream dropWhile(java.util.function.LongPredicate);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.LongStream dropWhile(java.util.function.LongPredicate);
     method public static java.util.stream.LongStream empty();
     method public java.util.stream.LongStream filter(java.util.function.LongPredicate);
     method public java.util.OptionalLong findAny();
@@ -18213,11 +18213,11 @@ package java.util.stream {
     method public void forEachOrdered(java.util.function.LongConsumer);
     method public static java.util.stream.LongStream generate(java.util.function.LongSupplier);
     method public static java.util.stream.LongStream iterate(long, java.util.function.LongUnaryOperator);
-    method public static java.util.stream.LongStream iterate(long, java.util.function.LongPredicate, java.util.function.LongUnaryOperator);
+    method @FlaggedApi("com.android.libcore.v_apis") public static java.util.stream.LongStream iterate(long, java.util.function.LongPredicate, java.util.function.LongUnaryOperator);
     method public java.util.PrimitiveIterator.OfLong iterator();
     method public java.util.stream.LongStream limit(long);
     method public java.util.stream.LongStream map(java.util.function.LongUnaryOperator);
-    method public default java.util.stream.LongStream mapMulti(java.util.stream.LongStream.LongMapMultiConsumer);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.LongStream mapMulti(java.util.stream.LongStream.LongMapMultiConsumer);
     method public java.util.stream.DoubleStream mapToDouble(java.util.function.LongToDoubleFunction);
     method public java.util.stream.IntStream mapToInt(java.util.function.LongToIntFunction);
     method public <U> java.util.stream.Stream<U> mapToObj(java.util.function.LongFunction<? extends U>);
@@ -18238,7 +18238,7 @@ package java.util.stream {
     method public java.util.Spliterator.OfLong spliterator();
     method public long sum();
     method public java.util.LongSummaryStatistics summaryStatistics();
-    method public default java.util.stream.LongStream takeWhile(java.util.function.LongPredicate);
+    method @FlaggedApi("com.android.libcore.v_apis") public default java.util.stream.LongStream takeWhile(java.util.function.LongPredicate);
     method public long[] toArray();
   }
 
@@ -18247,7 +18247,7 @@ package java.util.stream {
     method public java.util.stream.LongStream build();
   }
 
-  @java.lang.FunctionalInterface public static interface LongStream.LongMapMultiConsumer {
+  @FlaggedApi("com.android.libcore.v_apis") @java.lang.FunctionalInterface public static interface LongStream.LongMapMultiConsumer {
     method public void accept(long, java.util.function.LongConsumer);
   }
 
@@ -18507,7 +18507,7 @@ package java.util.zip {
     method public String getName();
     method public long getSize();
     method public long getTime();
-    method public java.time.LocalDateTime getTimeLocal();
+    method @FlaggedApi("com.android.libcore.v_apis") public java.time.LocalDateTime getTimeLocal();
     method public boolean isDirectory();
     method public void setComment(String);
     method public void setCompressedSize(long);
@@ -18519,7 +18519,7 @@ package java.util.zip {
     method public void setMethod(int);
     method public void setSize(long);
     method public void setTime(long);
-    method public void setTimeLocal(java.time.LocalDateTime);
+    method @FlaggedApi("com.android.libcore.v_apis") public void setTimeLocal(java.time.LocalDateTime);
     field public static final int CENATT = 36; // 0x24
     field public static final int CENATX = 38; // 0x26
     field public static final int CENCOM = 32; // 0x20
@@ -19049,7 +19049,7 @@ package javax.crypto.interfaces {
 
 package javax.crypto.spec {
 
-  public final class ChaCha20ParameterSpec implements java.security.spec.AlgorithmParameterSpec {
+  @FlaggedApi("com.android.libcore.v_apis") public final class ChaCha20ParameterSpec implements java.security.spec.AlgorithmParameterSpec {
     ctor public ChaCha20ParameterSpec(byte[], int);
     method public int getCounter();
     method public byte[] getNonce();
@@ -19735,7 +19735,7 @@ package javax.security.auth.x500 {
     field public static final String RFC2253 = "RFC2253";
   }
 
-  public final class X500PrivateCredential implements javax.security.auth.Destroyable {
+  @FlaggedApi("com.android.libcore.v_apis") public final class X500PrivateCredential implements javax.security.auth.Destroyable {
     ctor public X500PrivateCredential(java.security.cert.X509Certificate, java.security.PrivateKey);
     ctor public X500PrivateCredential(java.security.cert.X509Certificate, java.security.PrivateKey, String);
     method public void destroy();
