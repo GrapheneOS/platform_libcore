@@ -225,6 +225,7 @@ package dalvik.system {
   }
 
   public final class DexFile {
+    method public static void enableDynCodeLoadingChecks(int);
     method @Deprecated @NonNull public static dalvik.system.DexFile.OptimizationInfo getDexFileOptimizationInfo(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
     method @Nullable public static String[] getDexFileOutputPaths(@NonNull String, @NonNull String) throws java.io.FileNotFoundException;
     method @Deprecated public static int getDexOptNeeded(@NonNull String, @NonNull String, @NonNull String, @Nullable String, boolean, boolean) throws java.io.FileNotFoundException, java.io.IOException;

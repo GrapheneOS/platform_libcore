@@ -808,4 +808,8 @@ public final class DexFile {
     }
 
     private static native long getStaticSizeOfDexFile(Object cookie);
+
+    /** @hide */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static native void enableDynCodeLoadingChecks(int flags);
 }
