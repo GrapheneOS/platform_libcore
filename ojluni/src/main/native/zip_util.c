@@ -958,6 +958,17 @@ ZIP_Put_In_Cache0(JNIEnv *env, jobject thiz, const char *name, ZFILE zfd, char *
     // Assumption, zfd refers to start of file. Trivially, reuse errbuf.
     if (readFullyAt(zfd, errbuf, 4, 0 /* offset */) != -1) {  // errors will be handled later
         zip->locsig = LOCSIG_AT(errbuf) ? JNI_TRUE : JNI_FALSE;
+
+        // BEGIN Android-changed: do not accept files with invalid header.
+        if (!LOCSIG_AT(errbuf) && !ENDSIG_AT(errbuf)) {
+            if (pmsg) {
+                *pmsg = strdup("Entry at offset zero has invalid LFH signature.");
+            }
+            ZFILE_Close(zfd);
+            freeZip(zip);
+            return NULL;
+        }
+        // END Android-changed: do not accept files with invalid header.
     }
 
     // This lseek is safe because it happens during construction of the ZipFile
