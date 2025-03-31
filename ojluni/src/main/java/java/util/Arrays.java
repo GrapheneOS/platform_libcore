@@ -4962,8 +4962,16 @@ public final class Arrays {
     @SafeVarargs
     @SuppressWarnings("varargs")
     public static <T> List<T> asList(T... a) {
+        java.util.function.UnaryOperator<Object[]> hook = asListHook;
+        if (hook != null) {
+            a = (T[]) hook.apply(a);
+        }
         return new ArrayList<>(a);
     }
+
+    /** @hide */
+    @android.annotation.SystemApi(client = android.annotation.SystemApi.Client.MODULE_LIBRARIES)
+    public static java.util.function.UnaryOperator<Object[]> asListHook;
 
     /**
      * Since Android 15 Arrays.asList(...).toArray()'s component type is {@link Object},

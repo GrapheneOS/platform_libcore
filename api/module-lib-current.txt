@@ -570,6 +570,10 @@ package java.text {
 
 package java.util {
 
+  public final class Arrays {
+    field public static java.util.function.UnaryOperator<Object[]> asListHook;
+  }
+
   public class LinkedHashMap<K, V> extends java.util.HashMap<K, V> implements java.util.Map<K, V> java.util.SequencedMap<K, V> {
     method public java.util.Map.Entry<K, V> eldest();
   }
