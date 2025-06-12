@@ -119,7 +119,7 @@ public final class ZygoteHooks {
         // predating Android B.
         // SdkExtensionLevel 16 is where `preload` API was introduced to HttpEngine.
         // Explicitly avoid calling this for B+ as it will be called in the ZygoteInit code.
-        if (VMRuntime.getSdkExtensionSLevel() >= 16
+        if (fullPreload && VMRuntime.getSdkExtensionSLevel() >= 16
                 && VMRuntime.getSdkVersion() <= VersionCodes.VANILLA_ICE_CREAM) {
             try {
                 // Reflection is used here because libcore must not depend explicitly on
