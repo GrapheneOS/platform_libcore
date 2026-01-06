@@ -647,6 +647,11 @@ package libcore.io {
     method @NonNull public static java.io.FileDescriptor open(@NonNull String, int) throws java.io.FileNotFoundException;
     method public static int read(@NonNull java.io.FileDescriptor, @NonNull byte[], int, int) throws java.io.IOException;
     method public static void write(@NonNull java.io.FileDescriptor, @NonNull byte[], int, int) throws java.io.IOException;
+    field @Nullable public static libcore.io.IoBridge.OpenFdInterceptor openFdInterceptor;
+  }
+
+  public static interface IoBridge.OpenFdInterceptor {
+    method @Nullable public java.io.FileDescriptor maybeInterceptOpenFd(@NonNull String, int) throws android.system.ErrnoException;
   }
 
   public final class IoUtils {
