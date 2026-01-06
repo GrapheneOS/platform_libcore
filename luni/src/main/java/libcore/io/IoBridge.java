@@ -535,6 +535,17 @@ public final class IoBridge {
         }
     }
 
+    /** @hide */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public interface OpenFdInterceptor {
+        @Nullable FileDescriptor maybeInterceptOpenFd(@NonNull String path, int flags) throws ErrnoException;
+    }
+
+    /** @hide */
+    @Nullable
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static OpenFdInterceptor openFdInterceptor;
+
     /**
      * Wrapper for {@link Os#open(String, int, int)} that behaves similar to {@link java.io.File}.
      * When a {@link java.io.File} is opened and there is an error, it throws
@@ -557,12 +568,9 @@ public final class IoBridge {
     public static @NonNull FileDescriptor open(@NonNull String path, int flags) throws FileNotFoundException {
         FileDescriptor fd = null;
         try {
-            String gmscompatPrefix = "gmscompat_fd_";
-            if (path.startsWith(gmscompatPrefix)) {
-                int fdInt = Integer.parseInt(path.substring(gmscompatPrefix.length()));
-                FileDescriptor jfd = new FileDescriptor();
-                jfd.setInt$(fdInt);
-                fd = Os.getDefault().dup(jfd);
+            OpenFdInterceptor interceptor = openFdInterceptor;
+            if (interceptor != null) {
+                fd = interceptor.maybeInterceptOpenFd(path, flags);
             }
             if (fd == null) {
                 fd = Libcore.os.open(path, flags, 0666);
