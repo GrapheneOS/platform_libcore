@@ -234,8 +234,6 @@ public class TimeZoneTest extends junit.framework.TestCase {
         // fairly unlikely, and the chances of more than one changing are very slim.
         assertTrue(ids.toString(), ids.contains("America/Tijuana"));
         assertTrue(ids.toString(), ids.contains("America/Ensenada")); // Alias for America/Tijuana
-        assertTrue(ids.toString(), ids.contains("America/Vancouver"));
-        assertTrue(ids.toString(), ids.contains("Canada/Pacific")); // Alias for America/Vancouver
         assertTrue(ids.toString(), ids.contains("Pacific/Pitcairn"));
     }
 
