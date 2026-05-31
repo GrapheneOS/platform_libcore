@@ -272,6 +272,24 @@ public final class ZygoteHooks {
     }
 
     /**
+     * Called in an app process started through exec-based spawning.
+     *
+     * <p>The process was not forked from a zygote, so this deliberately avoids
+     * the fork-specific {@link #postForkChild} work. It applies app runtime
+     * policy that normally comes from zygote runtime flags before the app
+     * entrypoint is loaded.
+     *
+     * @param runtimeFlags The flags listed in com.android.internal.os.Zygote
+     *                     passed to the runtime.
+     *
+     * @hide
+     */
+    @SystemApi(client = MODULE_LIBRARIES)
+    public static void postExecSpawn(int runtimeFlags) {
+        nativePostExecSpawn(runtimeFlags);
+    }
+
+    /**
      * Called by the zygote in both the parent and child processes after
      * every fork. In the child process, this method is called after
      * {@code postForkChild}.
@@ -318,6 +336,9 @@ public final class ZygoteHooks {
     private static native void nativePostForkChild(long token, int runtimeFlags,
                                                    boolean isSystemServer, boolean isZygote,
                                                    String instructionSet);
+
+    // Hook for app processes started through exec-based spawning.
+    private static native void nativePostExecSpawn(int runtimeFlags);
 
     private static native boolean nativeZygoteLongSuspendOk();
 }
