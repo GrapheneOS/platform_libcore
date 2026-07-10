@@ -99,9 +99,10 @@ public class TestZoneRules {
             {CASABLANCA, LocalDate.of(2018, 6, 18), OFF_1, OFF_0, true},
             {CASABLANCA, LocalDate.of(2019, 1, 1), OFF_1, OFF_0, true},
             {CASABLANCA, LocalDate.of(2019, 5, 6), OFF_0, OFF_0, false},
-            {CASABLANCA, LocalDate.of(2037, 10, 5), OFF_0, OFF_0, false},
-            {CASABLANCA, LocalDate.of(2037, 11, 16), OFF_1, OFF_0, true},
-            {CASABLANCA, LocalDate.of(2038, 11, 8), OFF_1, OFF_0, true},
+            // Android-removed: in 2026c Morocco cancelled DST.
+            // {CASABLANCA, LocalDate.of(2037, 10, 5), OFF_0, OFF_0, false},
+            // {CASABLANCA, LocalDate.of(2037, 11, 16), OFF_1, OFF_0, true},
+            // {CASABLANCA, LocalDate.of(2038, 11, 8), OFF_1, OFF_0, true},
         };
     }
 
