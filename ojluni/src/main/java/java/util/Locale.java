@@ -2028,11 +2028,6 @@ public final class Locale implements Cloneable, Serializable {
      * @since 1.7
      */
     public static Locale forLanguageTag(String languageTag) {
-        if (languageTag.equals("en-XA")) {
-            languageTag = "en-US";
-        } else if (languageTag.equals("ar-XB")) {
-            languageTag = "ar";
-        }
         LanguageTag tag = LanguageTag.parse(languageTag, null);
         InternalLocaleBuilder bldr = new InternalLocaleBuilder();
         bldr.setLanguageTag(tag);
