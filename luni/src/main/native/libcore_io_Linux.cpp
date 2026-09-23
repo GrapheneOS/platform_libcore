@@ -2025,7 +2025,7 @@ static jobject Linux_open(JNIEnv* env, jobject, jstring javaPath, jint flags, ji
     int gmscompat_fd;
     if (strncmp("/gmscompat_fd_", path.c_str(), strlen("/gmscompat_fd_")) == 0
             && sscanf(path.c_str(), "/gmscompat_fd_%d", &gmscompat_fd) == 1) {
-        ret = dup(gmscompat_fd);
+        ret = fcntl(gmscompat_fd, F_DUPFD_CLOEXEC, 0);
     } else {
         ret = open(path.c_str(), flags, mode);
     }
